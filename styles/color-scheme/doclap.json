@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Doclap",
+	"settings": {
+		"color": {
+			"palette": [
+				{ "slug": "base", "name": "Base", "color": "oklch(98% 0.004 240)" },
+				{ "slug": "surface", "name": "Surface", "color": "oklch(100% 0 0)" },
+				{ "slug": "contrast", "name": "Contrast", "color": "oklch(15% 0.02 100)" },
+				{ "slug": "paragraph", "name": "Paragraph", "color": "oklch(40% 0.02 100)" },
+				{ "slug": "primary", "name": "Primary", "color": "oklch(73% 0.195 43)" },
+				{ "slug": "secondary", "name": "Secondary", "color": "oklch(40% 0.02 100)" },
+				{ "slug": "transparent", "name": "Transparent", "color": "transparent" },
+				{ "slug": "background", "name": "Background", "color": "oklch(98% 0.004 240)" },
+				{ "slug": "foreground", "name": "Foreground", "color": "oklch(15% 0.02 100)" },
+				{ "slug": "muted", "name": "Muted", "color": "oklch(40% 0.02 100)" },
+				{ "slug": "border", "name": "Border", "color": "oklch(15% 0.02 100)" },
+				{ "slug": "accent", "name": "Accent", "color": "oklch(73% 0.195 43)" },
+				{
+					"slug": "accent-soft",
+					"name": "Accent soft",
+					"color": "color-mix(in oklch, oklch(73% 0.195 43) 14%, transparent)"
+				},
+				{
+					"slug": "foreground-soft",
+					"name": "Foreground soft",
+					"color": "color-mix(in oklch, oklch(15% 0.02 100) 6%, transparent)"
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-about",
+  "version": "1.0.0",
+  "title": "Home — About",
+  "category": "doclap",
+  "icon": "text",
+  "description": "Craft introduction: eyebrow, heading, principle, lead and the service list.",
+  "keywords": [
+    "home",
+    "about",
+    "craft",
+    "services",
+    "thinking"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "aboutEyebrow": {
+      "type": "string",
+      "default": "02 / THINKING & CRAFT"
+    },
+    "aboutHeading": {
+      "type": "string",
+      "default": "Refinement is not about adding. It is about choosing."
+    },
+    "aboutPrinciple": {
+      "type": "string",
+      "default": "A clear idea.\nEvery detail has a reason."
+    },
+    "aboutLead": {
+      "type": "string",
+      "default": "I am an independent web designer with 10 years of experience. I care about the feel of a tap, the breathing room between two lines of text and how motion makes an experience feel more natural."
+    },
+    "services": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Digital experience design",
+          "meta": "Art direction · UI/UX · Website · Design systems"
+        },
+        {
+          "title": "Motion with intent",
+          "meta": "GSAP timeline · ScrollTrigger · Micro-interaction"
+        },
+        {
+          "title": "Technology as material",
+          "meta": "Three.js · WebGL · Generative graphics · Creative coding"
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

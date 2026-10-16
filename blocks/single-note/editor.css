@@ -1,0 +1,9 @@
+.wp-block-doclap-single-note .components-placeholder {
+	min-height: 180px;
+}
+
+.doclap-single-note-editor__notice {
+	margin: 0 0 16px;
+	color: #646970;
+	font-size: 13px;
+}

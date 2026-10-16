@@ -1,0 +1,10 @@
+node_modules/
+vendor/
+.phpunit.cache/
+.php-cs-fixer.cache
+*.log
+.DS_Store
+doclap-v*.zip
+.env
+assets/js/main.js.map
+assets/js/*.map

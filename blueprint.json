@@ -1,0 +1,24 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/",
+	"preferredVersions": {
+		"php": "8.3",
+		"wp": "latest"
+	},
+	"features": {
+		"networking": false
+	},
+	"steps": [
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "Doclap smoke",
+				"permalink_structure": "/%postname%/"
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once '/wordpress/wp-load.php'; $candidates = array( '/wordpress/wp-content/themes/doclap', get_theme_root() . '/doclap' ); foreach ( $candidates as $candidate ) { if ( is_dir( $candidate ) && is_readable( $candidate . '/theme.json' ) ) { if ( ! defined( 'DOCLAP_DIR' ) ) { define( 'DOCLAP_DIR', $candidate ); } break; } } if ( ! defined( 'DOCLAP_DIR' ) ) { throw new Exception( 'the doclap theme mount is missing' ); } require DOCLAP_DIR . '/tests/smoke/assertions.php';"
+		}
+	]
+}

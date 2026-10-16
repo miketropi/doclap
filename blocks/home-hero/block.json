@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-hero",
+  "version": "1.0.0",
+  "title": "Home — Hero",
+  "category": "doclap",
+  "icon": "slides",
+  "description": "Landing hero: kicker, edition, the sculpture viewer and its credit line.",
+  "keywords": [
+    "home",
+    "hero",
+    "sculpture",
+    "landing",
+    "kicker"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "heroKicker": {
+      "type": "string",
+      "default": "ĐỘC LẬP — DESIGN & CREATIVE TECHNOLOGY"
+    },
+    "heroEdition": {
+      "type": "string",
+      "default": "CREATIVE PROFILE / 2026"
+    },
+    "heroPanels": {
+      "type": "array",
+      "default": [
+        {
+          "eyebrow": "01 / EMOTION COMES FIRST",
+          "heading": "Not just to look.",
+          "headingAccent": "Feel it.",
+          "lead": "I turn ideas into digital experiences.\nWhere design has a soul. And technology knows how to touch.",
+          "linkLabel": "Explore the work",
+          "linkUrl": "#work"
+        },
+        {
+          "eyebrow": "02 / MOTION IS A LANGUAGE",
+          "heading": "Still in form.",
+          "headingAccent": "Moving in spirit.",
+          "lead": "Another view. A new rhythm.\nEvery movement has a reason.",
+          "linkLabel": "Into the design thinking",
+          "linkUrl": "#about"
+        }
+      ]
+    },
+    "posterId": {
+      "type": "number",
+      "default": 0
+    },
+    "posterUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "posterAlt": {
+      "type": "string",
+      "default": "The David head by Michelangelo, a 3D scan"
+    },
+    "creditText": {
+      "type": "string",
+      "default": "David, Michelangelo · SMK cast sculpture scan (CC0) · Optimised model:"
+    },
+    "creditUrl": {
+      "type": "string",
+      "default": "https://sketchfab.com/3d-models/head-of-michelangelos-david-optimised-d29af50360624e5e9b1855666475380d"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

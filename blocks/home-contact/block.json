@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-contact",
+  "version": "1.0.0",
+  "title": "Home — Contact",
+  "category": "doclap",
+  "icon": "email",
+  "description": "Closing contact band with heading, lead and call to action.",
+  "keywords": [
+    "home",
+    "contact",
+    "cta",
+    "invitation"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "contactEyebrow": {
+      "type": "string",
+      "default": "03 / A NEW BEGINNING"
+    },
+    "contactHeading": {
+      "type": "string",
+      "default": "Your idea."
+    },
+    "contactHeadingAccent": {
+      "type": "string",
+      "default": "Make it different."
+    },
+    "contactLead": {
+      "type": "string",
+      "default": "A new website, a bold experience, or simply an interesting conversation."
+    },
+    "contactCtaLabel": {
+      "type": "string",
+      "default": "Write a greeting"
+    },
+    "contactCtaUrl": {
+      "type": "string",
+      "default": "/contact/"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

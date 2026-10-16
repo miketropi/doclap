@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-work",
+  "version": "1.0.0",
+  "title": "Home — Work",
+  "category": "doclap",
+  "icon": "portfolio",
+  "description": "Work heading, two self-initiated experiment cards and their motion dialogs.",
+  "keywords": [
+    "home",
+    "work",
+    "experiments",
+    "canvas",
+    "studies"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "worksHeading": {
+      "type": "string",
+      "default": "Ideas made real."
+    },
+    "worksMeta": {
+      "type": "string",
+      "default": "01 / EXPERIMENTS · 2026"
+    },
+    "experiments": {
+      "type": "array",
+      "default": [
+        {
+          "anchor": "experiment-flow",
+          "editionPrimary": "A STUDY IN FORM",
+          "editionSecondary": "001 / 2026",
+          "title": "Currents",
+          "metaLines": "GRAPHICS\nGENERATIVE",
+          "summary": "Between order and chance,\na rhythm slowly emerges.",
+          "detailLabel": "CREATIVE CODING · CANVAS 2D",
+          "canvas": "flow"
+        },
+        {
+          "anchor": "experiment-orbit",
+          "editionPrimary": "A STUDY IN SPACE",
+          "editionSecondary": "002 / 2026",
+          "title": "Type Orbits",
+          "metaLines": "TYPOGRAPHY\nMOTION",
+          "summary": "Type leaves the page.\nThe space begins to speak.",
+          "detailLabel": "TYPOGRAPHY · MOTION STUDY",
+          "canvas": "orbit"
+        }
+      ]
+    },
+    "worksCaption": {
+      "type": "string",
+      "default": "Two self-initiated studies, programmed directly in the browser. Choose a piece to experience its motion and adjust the tempo."
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

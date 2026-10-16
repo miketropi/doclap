@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/site-footer",
+  "version": "1.0.0",
+  "title": "Site Footer",
+  "category": "doclap",
+  "icon": "admin-site-alt3",
+  "description": "Editorial site footer with navigation and colophon.",
+  "textdomain": "doclap",
+  "attributes": {
+    "kicker": { "type": "string", "default": "ĐỘC LẬP / ALWAYS EXPLORING" },
+    "heading": { "type": "string", "default": "A view of my own.\nA new connection." },
+    "intro": { "type": "string", "default": "Design with soul. Motion with intent.\nTechnology to bring ideas into form." },
+    "ctaLabel": { "type": "string", "default": "Tell us about your idea" },
+    "ctaUrl": { "type": "string", "default": "#contact" },
+    "navGroups": {
+      "type": "array",
+      "default": [
+        {
+          "kicker": "01 / STUDIO",
+          "ariaLabel": "Explore the studio",
+          "links": [
+            { "label": "Home", "url": "/" },
+            { "label": "Work", "url": "#work" },
+            { "label": "About us", "url": "/about-us/" },
+            { "label": "How I work", "url": "#process" }
+          ]
+        },
+        {
+          "kicker": "02 / DISCOVER",
+          "ariaLabel": "Notes and support",
+          "links": [
+            { "label": "Article archive", "url": "@notes" },
+            { "label": "FAQ", "url": "/faq/" },
+            { "label": "Contact", "url": "/contact/" },
+            { "label": "Search", "url": "@search" }
+          ]
+        }
+      ]
+    },
+    "brandText": { "type": "string", "default": "độc lập" },
+    "brandMark": { "type": "string", "default": "®" },
+    "brandUrl": { "type": "string", "default": "" },
+    "copyrightPrefix": { "type": "string", "default": "©" },
+    "copyrightText": { "type": "string", "default": "độc lập · Made with care." },
+    "signature": { "type": "string", "default": "DESIGN × MOTION × TECHNOLOGY" },
+    "privacyLabel": { "type": "string", "default": "Privacy" },
+    "privacyUrl": { "type": "string", "default": "" },
+    "backToTopLabel": { "type": "string", "default": "Back to top" },
+    "footerAriaLabel": { "type": "string", "default": "Footer information and navigation" }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

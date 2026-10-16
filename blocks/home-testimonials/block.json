@@ -1,0 +1,113 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-testimonials",
+  "version": "1.0.0",
+  "title": "Home — Testimonials",
+  "category": "doclap",
+  "icon": "format-quote",
+  "description": "Perspective carousel, editorial note and transparency footnote.",
+  "keywords": [
+    "home",
+    "testimonials",
+    "voices",
+    "perspectives",
+    "editorial"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "testimonialsEyebrow": {
+      "type": "string",
+      "default": "05 / TESTIMONIAL · AFTER EVERY COLLABORATION"
+    },
+    "testimonialsHeading": {
+      "type": "string",
+      "default": "The mark remains."
+    },
+    "testimonialsHeadingAccent": {
+      "type": "string",
+      "default": "Through another voice."
+    },
+    "testimonialsIntro": {
+      "type": "string",
+      "default": "One project ends.\nA relationship that continues."
+    },
+    "testimonials": {
+      "type": "array",
+      "default": [
+        {
+          "statement": "A real testimonial worth more than any",
+          "statementAccent": "self-promotion.",
+          "disclaimer": "A portfolio manifesto, not a client quote. Testimonials will appear here once confirmed.",
+          "status": "Awaiting confirmation",
+          "role": "Not provided",
+          "company": "Not provided"
+        },
+        {
+          "statement": "Reserved for the first",
+          "statementAccent": "confirmed collaboration.",
+          "disclaimer": "This slot stays open. No client has confirmed a testimonial for it yet.",
+          "status": "Slot open",
+          "role": "To be confirmed",
+          "company": "To be confirmed"
+        },
+        {
+          "statement": "A quote appears here only with the sender's",
+          "statementAccent": "written consent.",
+          "disclaimer": "Nothing is published without permission. Role, company and links follow that approval.",
+          "status": "Awaiting consent",
+          "role": "Not provided",
+          "company": "Not provided"
+        },
+        {
+          "statement": "No name, no avatar, no score — until someone",
+          "statementAccent": "chooses to share.",
+          "disclaimer": "Ratings stay empty on purpose. Honest feedback matters more than a perfect five stars.",
+          "status": "Not rated yet",
+          "role": "Not provided",
+          "company": "Not provided"
+        },
+        {
+          "statement": "Your perspective could sit in",
+          "statementAccent": "this frame.",
+          "disclaimer": "An invitation, not a claim. Real stories will replace this note once they arrive.",
+          "status": "Your story",
+          "role": "Your craft",
+          "company": "Your team"
+        }
+      ]
+    },
+    "editorialLabel": {
+      "type": "string",
+      "default": "TRUST CANNOT BE FABRICATED."
+    },
+    "editorialTitle": {
+      "type": "string",
+      "default": "Real people.\nReal projects."
+    },
+    "editorialTitleAccent": {
+      "type": "string",
+      "default": "Real feedback."
+    },
+    "editorialCopy": {
+      "type": "string",
+      "default": "No client profile or testimonial has been provided. Avatars, ratings and links are only published with the information and consent of the sender."
+    },
+    "editorialLinkLabel": {
+      "type": "string",
+      "default": "Share a collaboration story"
+    },
+    "editorialLinkUrl": {
+      "type": "string",
+      "default": "#contact"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,213 @@
+<?php
+
+/**
+ * Shared server-side rendering helpers for Doclap blocks.
+ *
+ * @package Doclap
+ */
+
+declare( strict_types=1 );
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Inline SVG bodies for every icon used by Doclap blocks.
+ *
+ * Geometry is taken from Lucide (ISC licence) and inlined so the theme ships no
+ * icon font, no sprite request and no runtime icon script.
+ *
+ * @return array<string, string> Icon name => SVG inner markup.
+ */
+function doclap_icon_paths(): array {
+	return array(
+		'arrow-up-right'  => '<path d="M7 17 17 7M7 7h10v10"/>',
+		'arrow-up'        => '<path d="m5 12 7-7 7 7M12 19V5"/>',
+		'arrow-left'      => '<path d="m12 19-7-7 7-7M19 12H5"/>',
+		'arrow-right'     => '<path d="M5 12h14m-6-6 6 6-6 6"/>',
+		'chevron-down'    => '<path d="m6 9 6 6 6-6"/>',
+		'check'           => '<path d="M20 6 9 17l-5-5"/>',
+		'x'               => '<path d="m18 6-12 12M6 6l12 12"/>',
+		'menu'            => '<path d="M4 6h16M4 12h16M4 18h16"/>',
+		'search'          => '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+		'plus'            => '<path d="M12 5v14M5 12h14"/>',
+		'minus'           => '<path d="M5 12h14"/>',
+		'play'            => '<polygon points="6 3 20 12 6 21 6 3"/>',
+		'pause'           => '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>',
+		'star'            => '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+		'user-round'      => '<circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/>',
+		'linkedin'        => '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>',
+		'globe'           => '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+		'quote'           => '<path d="M10 11H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1z"/><path d="M10 11c0 4-2 6-5 7"/><path d="M20 11h-4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1z"/><path d="M20 11c0 4-2 6-5 7"/>',
+		'move-horizontal' => '<path d="m18 8 4 4-4 4M6 8l-4 4 4 4M2 12h20"/>',
+	);
+}
+
+/**
+ * Render one inline Lucide-style icon.
+ *
+ * @param string                $name Icon name.
+ * @param array<string, string> $args Optional `class` override.
+ *
+ * @return string Escaped SVG markup, or an empty string for an unknown icon.
+ */
+function doclap_icon( string $name, array $args = array() ): string {
+	$paths = doclap_icon_paths();
+
+	if ( ! isset( $paths[ $name ] ) ) {
+		return '';
+	}
+
+	$class = $args['class'] ?? 'lucide lucide-' . $name;
+
+	return sprintf(
+		'<svg class="%1$s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">%2$s</svg>',
+		esc_attr( $class ),
+		$paths[ $name ],
+	);
+}
+
+/**
+ * Build the shared ``doclap-scope`` class list for a block wrapper.
+ *
+ * Every Doclap stylesheet selector is scoped under ``.doclap-scope``, so each
+ * block root must carry it in addition to its own block class.
+ *
+ * @param string   $class_name Block-specific root class.
+ * @param string[] $extra      Additional class names.
+ *
+ * @return string Space-separated class attribute value.
+ */
+function doclap_scope_class( string $class_name, array $extra = array() ): string {
+	return trim( implode( ' ', array_filter( array_merge( array( 'doclap-scope', $class_name ), $extra ) ) ) );
+}
+
+/**
+ * Estimate reading time in minutes for a piece of content.
+ *
+ * @param string $content Raw content, HTML or plain text.
+ *
+ * @return int Reading time in minutes, never below 1.
+ */
+function doclap_reading_time( string $content ): int {
+	$words = preg_split( '/\s+/', trim( wp_strip_all_tags( $content ) ) );
+
+	if ( false === $words ) {
+		return 1;
+	}
+
+	$count = count( array_filter( $words ) );
+
+	return max( 1, (int) ceil( $count / 220 ) );
+}
+
+/**
+ * Two-letter ordinal used by the editorial numbering in the design.
+ *
+ * @param int $index Zero-based item index.
+ *
+ * @return string Zero-padded number, e.g. ``03``.
+ */
+function doclap_ordinal( int $index ): string {
+	return str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT );
+}
+
+/**
+ * Resolve a link attribute into a real URL.
+ *
+ * Supported inputs:
+ * - `@notes`  — the blog archive (the page set as "Posts page", otherwise home)
+ * - `@search` — the WordPress search endpoint
+ * - `#anchor` / absolute URLs — passed through
+ * - `?query`  — appended to the site root
+ * - `/path/`  — resolved against the current site
+ * - empty     — the site home
+ *
+ * @param string $url Raw attribute value.
+ *
+ * @return string Escaped-ready absolute URL.
+ */
+function doclap_resolve_url( string $url ): string {
+	$url = trim( $url );
+
+	if ( '' === $url ) {
+		return home_url( '/' );
+	}
+
+	if ( '@notes' === $url ) {
+		$posts_page = (int) get_option( 'page_for_posts' );
+
+		return $posts_page > 0 ? (string) get_permalink( $posts_page ) : home_url( '/' );
+	}
+
+	if ( '@search' === $url ) {
+		return home_url( '/?s=' );
+	}
+
+	if ( str_starts_with( $url, '#' ) || str_starts_with( $url, '//' ) ) {
+		return $url;
+	}
+
+	if ( preg_match( '#^[a-z][a-z0-9+.-]*:#i', $url ) ) {
+		return $url;
+	}
+
+	if ( str_starts_with( $url, '?' ) ) {
+		return home_url( '/' ) . $url;
+	}
+
+	return home_url( '/' . ltrim( $url, '/' ) );
+}
+
+/**
+ * Path component of a URL, without a trailing slash.
+ *
+ * @param string $url Absolute or relative URL.
+ *
+ * @return string Normalised path, `''` for the site root.
+ */
+function doclap_url_path( string $url ): string {
+	$path = (string) wp_parse_url( $url, PHP_URL_PATH );
+
+	return untrailingslashit( $path );
+}
+
+/**
+ * Whether a link attribute points at the surface currently being rendered.
+ *
+ * Fragments and off-site URLs are never marked as current.
+ *
+ * @param string $url Raw attribute value.
+ *
+ * @return bool True when the resolved target is the current request.
+ */
+function doclap_link_is_current( string $url ): bool {
+	$url = trim( $url );
+
+	if ( '' === $url || str_starts_with( $url, '#' ) ) {
+		return false;
+	}
+
+	if ( '@search' === $url ) {
+		return is_search();
+	}
+
+	$target = doclap_url_path( doclap_resolve_url( $url ) );
+
+	if ( '' === $target ) {
+		return is_front_page();
+	}
+
+	if ( is_singular() ) {
+		return $target === doclap_url_path( (string) get_permalink() );
+	}
+
+	$posts_page = (int) get_option( 'page_for_posts' );
+
+	if ( is_home() && $posts_page > 0 ) {
+		return $target === doclap_url_path( (string) get_permalink( $posts_page ) );
+	}
+
+	return false;
+}

@@ -1,0 +1,141 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "doclap/site-header",
+	"title": "Doclap site header",
+	"category": "doclap",
+	"description": "Sticky editorial header with disclosure panels, quick links and a compact menu control.",
+	"keywords": ["header", "navigation", "menu", "doclap"],
+	"textdomain": "doclap",
+	"icon": "menu-alt",
+	"supports": {
+		"html": false,
+		"align": false,
+		"anchor": true,
+		"reusable": false
+	},
+	"attributes": {
+		"brandText": { "type": "string", "default": "độc lập" },
+		"brandSuffix": { "type": "string", "default": "®" },
+		"brandUrl": { "type": "string", "default": "" },
+		"skipLabel": { "type": "string", "default": "Skip to content" },
+		"navLabel": { "type": "string", "default": "Main navigation" },
+		"menuLabel": { "type": "string", "default": "Menu" },
+		"menuCloseLabel": { "type": "string", "default": "Close" },
+		"closePanelLabel": { "type": "string", "default": "Close panel" },
+		"ctaLabel": { "type": "string", "default": "Start a conversation" },
+		"ctaUrl": { "type": "string", "default": "#contact" },
+		"showProgress": { "type": "boolean", "default": true },
+		"navItems": {
+			"type": "array",
+			"default": [
+				{
+					"label": "Work",
+					"panelLayout": "mega",
+					"panelLabel": "EXPERIMENTS / 2026",
+					"panelTitle": "Where ideas\ntake shape.",
+					"panelDescription": "Two self-initiated studies exploring the intersection of design and technology.",
+					"panelAllLabel": "Explore the work",
+					"panelAllUrl": "#work",
+					"panelFooterNote": "DESIGN × MOTION × TECHNOLOGY",
+					"links": [
+						{
+							"label": "Currents",
+							"description": "Organic lines. One system of rules.\nCountless rhythms of motion.",
+							"url": "#experiment-flow",
+							"indexLabel": "STUDY / 001",
+							"footLabel": "Generative graphics"
+						},
+						{
+							"label": "Type Orbits",
+							"description": "When type leaves the plane\nand steps into the space.",
+							"url": "#experiment-orbit",
+							"indexLabel": "STUDY / 002",
+							"footLabel": "Kinetic typography"
+						}
+					]
+				},
+				{
+					"label": "Perspectives",
+					"panelLayout": "list",
+					"panelLabel": "THINKING / PEOPLE",
+					"panelTitle": "",
+					"panelDescription": "",
+					"panelAllLabel": "",
+					"panelAllUrl": "",
+					"panelFooterNote": "",
+					"links": [
+						{
+							"label": "Thinking & craft",
+							"description": "Design, motion and technology",
+							"url": "#about"
+						},
+						{
+							"label": "The process",
+							"description": "From the first question to the last detail",
+							"url": "#process"
+						},
+						{
+							"label": "Collaboration mark",
+							"description": "Transparent in every response",
+							"url": "#testimonials"
+						}
+					]
+				},
+				{
+					"label": "Discover",
+					"panelLayout": "pages",
+					"panelLabel": "ĐỘC LẬP / DISCOVER",
+					"panelTitle": "More perspective.\nCloser.",
+					"panelDescription": "Learn how I work, read the notes and start a conversation.",
+					"panelAllLabel": "",
+					"panelAllUrl": "",
+					"panelFooterNote": "PEOPLE / IDEAS / CONNECTION",
+					"links": [
+						{
+							"label": "About us",
+							"description": "Spirit, principles and collaboration",
+							"url": "/about-us/",
+							"group": "PEOPLE & CONNECTION"
+						},
+						{
+							"label": "Contact",
+							"description": "Tell us about your idea",
+							"url": "/contact/",
+							"group": "PEOPLE & CONNECTION"
+						},
+						{
+							"label": "FAQ",
+							"description": "What to know before we start",
+							"url": "/faq/",
+							"group": "PEOPLE & CONNECTION"
+						},
+						{
+							"label": "Article archive",
+							"description": "Design, motion and technology",
+							"url": "/?post_type=post",
+							"group": "NOTES & NAVIGATION"
+						},
+						{
+							"label": "Search",
+							"description": "Find the content you care about",
+							"url": "/?s=",
+							"group": "NOTES & NAVIGATION"
+						}
+					]
+				}
+			]
+		},
+		"quickLinks": {
+			"type": "array",
+			"default": [
+				{ "label": "Collaborate", "url": "#team" },
+				{ "label": "Notes", "url": "#journal" }
+			]
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,97 @@
+/**
+ * Doclap design tokens.
+ *
+ * The reference design is built on six roles. They are bound here to the
+ * WordPress preset palette so any Site Editor colour change flows through to the
+ * whole child theme, with the reference values kept as fallbacks for the case
+ * where a preset is missing (for example inside the block editor iframe).
+ *
+ * Typography roles stay bound to the parent's `--nextora-font-*` variables: the
+ * parent preset switcher overrides those inline on <html>, so the Doclap values
+ * below are the fallback for sites where the switcher is disabled.
+ */
+
+:root {
+	/* colour roles */
+	--doclap-bg: var(--wp--preset--color--base, oklch(98% 0.004 240));
+	--doclap-surface: var(--wp--preset--color--surface, oklch(100% 0 0));
+	--doclap-fg: var(--wp--preset--color--contrast, oklch(15% 0.02 100));
+	--doclap-muted: var(--wp--preset--color--paragraph, oklch(40% 0.02 100));
+	--doclap-border: var(--wp--preset--color--border, oklch(15% 0.02 100));
+	--doclap-accent: var(--wp--preset--color--primary, oklch(73% 0.195 43));
+
+	/* derived — do not redefine, they follow the roles above */
+	--doclap-accent-soft: var(
+		--wp--preset--color--accent-soft,
+		color-mix(in oklch, var(--doclap-accent) 14%, transparent)
+	);
+	--doclap-fg-soft: var(
+		--wp--preset--color--foreground-soft,
+		color-mix(in oklch, var(--doclap-fg) 6%, transparent)
+	);
+	--doclap-hairline: color-mix(in oklch, var(--doclap-fg) 18%, transparent);
+
+	/* type roles */
+	--doclap-font-display: var(--nextora-font-heading, 'Bodoni Moda', Georgia, serif);
+	--doclap-font-body: var(--nextora-font-body, 'Be Vietnam Pro', system-ui, sans-serif);
+	--doclap-font-mono: var(
+		--wp--preset--font-family--ibm-plex-mono,
+		'IBM Plex Mono',
+		ui-monospace,
+		monospace
+	);
+
+	/* scale — clamp() keeps one rule working from 1280 to 1920 */
+	--doclap-fs-h1: clamp(44px, 6vw, 76px);
+	--doclap-fs-h2: clamp(32px, 4vw, 48px);
+	--doclap-fs-h3: 22px;
+	--doclap-fs-lead: 19px;
+	--doclap-fs-body: 16px;
+	--doclap-fs-meta: 13px;
+
+	/* spacing — 8-point grid */
+	--doclap-gap-xs: 8px;
+	--doclap-gap-sm: 12px;
+	--doclap-gap-md: 20px;
+	--doclap-gap-lg: 32px;
+	--doclap-gap-xl: 56px;
+	--doclap-gap-2xl: 96px;
+
+	/* structure */
+	--doclap-container: 1120px;
+	--doclap-gutter: 32px;
+	--doclap-radius: 10px;
+	--doclap-radius-lg: 16px;
+
+	/* design typography roles consumed by theme.json */
+	--nextora-font-body: 'Be Vietnam Pro', system-ui, sans-serif;
+	--nextora-font-heading: 'Bodoni Moda', Georgia, serif;
+}
+
+/**
+ * Presentation layer.
+ *
+ * The reference renders its surfaces wider than the design-system defaults above
+ * and with square corners. Both layers are kept so the defaults stay documented
+ * and the rendered result matches the reference.
+ */
+:root {
+	--doclap-container: 1600px;
+	--doclap-gutter: 56px;
+	--doclap-fs-body: 17px;
+	--doclap-radius: 0px;
+	--doclap-radius-lg: 0px;
+	--doclap-fs-h2: clamp(40px, 4.8vw, 76px);
+}
+
+@media (max-width: 1150px) {
+	:root {
+		--doclap-gutter: 32px;
+	}
+}
+
+@media (max-width: 700px) {
+	:root {
+		--doclap-gutter: 22px;
+	}
+}

@@ -1,0 +1,27 @@
+/**
+ * Home — Testimonials.
+ *
+ * Moved here out of the theme's former single landing block. The original
+ * single-class specificity is kept on purpose: `.doclap-scope .voices-track` in
+ * `resources/css/modules/40-overrides.css` loads after every block stylesheet and
+ * owns the effective display and gap of the carousel track, so raising
+ * specificity here would turn the flex carousel back into a grid.
+ */
+
+.doclap-home-testimonials .voices-track {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(min(78vw, 700px), 1fr));
+	gap: 20px;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+}
+
+.doclap-home-testimonials .voice-slide {
+	scroll-snap-align: start;
+}
+
+@media (max-width: 760px) {
+	.doclap-home-testimonials .voices-track {
+		grid-template-columns: repeat(5, 88vw);
+	}
+}

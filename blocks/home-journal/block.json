@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-journal",
+  "version": "1.0.0",
+  "title": "Home — Journal",
+  "category": "doclap",
+  "icon": "edit",
+  "description": "Journal heading, metadata and the list of note links.",
+  "keywords": [
+    "home",
+    "journal",
+    "notes",
+    "writing"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "journalEyebrow": {
+      "type": "string",
+      "default": "06 / NOTES FROM THE DESK"
+    },
+    "journalHeading": {
+      "type": "string",
+      "default": "Think. Try. Write it down."
+    },
+    "journalMeta": {
+      "type": "string",
+      "default": "DESIGN PERSPECTIVES · 3 SHORT READS"
+    },
+    "journalLinks": {
+      "type": "array",
+      "default": [
+        {
+          "meta": "01 / MOTION",
+          "title": "Good motion knows when to stop.",
+          "copy": "On rhythm, focus and the right to turn animation off.",
+          "url": "@notes"
+        },
+        {
+          "meta": "02 / TYPE",
+          "title": "One type system. Many layers of feeling.",
+          "copy": "Designing for Vietnamese goes beyond having all the diacritics.",
+          "url": "@notes"
+        },
+        {
+          "meta": "03 / WEBGL",
+          "title": "Bring depth to the web. Without the weight.",
+          "copy": "Three.js, performance budget and deliberate choices.",
+          "url": "@notes"
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

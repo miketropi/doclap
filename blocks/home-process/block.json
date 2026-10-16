@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-process",
+  "version": "1.0.0",
+  "title": "Home — Process",
+  "category": "doclap",
+  "icon": "list-view",
+  "description": "Numbered process steps from first question to final polish.",
+  "keywords": [
+    "home",
+    "process",
+    "steps",
+    "method"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "processEyebrow": {
+      "type": "string",
+      "default": "03 / FROM IDEA TO TOUCHPOINT"
+    },
+    "processHeading": {
+      "type": "string",
+      "default": "No detail is accidental."
+    },
+    "processSteps": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Understand before you draw.",
+          "copy": "Ask the right question. Find the essence of the brand, the user and what the experience really needs to solve."
+        },
+        {
+          "title": "Find a language of its own.",
+          "copy": "From the type system and colour to layout. Try different directions, then keep the one with the clearest reason."
+        },
+        {
+          "title": "Give design a life.",
+          "copy": "Program, animate and refine directly in the browser. How it feels to use matters as much as a static image."
+        },
+        {
+          "title": "Care to the very end.",
+          "copy": "Check every screen size, interaction state and accessibility path. Polish even the things that are hard to notice."
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

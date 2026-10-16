@@ -1,0 +1,22 @@
+includes:
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+	bootstrapFiles:
+		- phpstan-bootstrap.php
+	level: 8
+	treatPhpDocTypesAsCertain: false
+	paths:
+		- functions.php
+		- inc
+		- blocks
+		- patterns
+	excludePaths:
+		analyse:
+			- vendor
+			- node_modules
+			- tests
+			- blocks/*/index.js
+			- blocks/*/view.js
+			- blocks/*/index.asset.php
+			- blocks/*/view.asset.php

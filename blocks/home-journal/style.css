@@ -1,0 +1,12 @@
+/**
+ * Home — Journal.
+ *
+ * Moved here out of the theme's former single landing block. The original
+ * single-class specificity is kept so the link reset keeps inheriting from the
+ * same cascade position it had before the split.
+ */
+
+.doclap-home-journal .journal-row {
+	text-decoration: none;
+	color: inherit;
+}

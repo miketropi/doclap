@@ -1,0 +1,57 @@
+.doclap-notes-archive .filter-bar a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 10px 18px;
+	border: 1px solid color-mix(in oklch, var(--doclap-fg) 24%, transparent);
+	font-size: 14px;
+}
+
+.doclap-notes-archive .filter-bar a:hover,
+.doclap-notes-archive .filter-bar a[aria-current="page"] {
+	background: var(--doclap-fg);
+	color: var(--doclap-bg);
+}
+
+.doclap-notes-archive .icon-link {
+	display: inline-flex;
+	width: 44px;
+	height: 44px;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--doclap-border);
+	border-radius: 50%;
+}
+
+.doclap-notes-archive .empty-state {
+	padding: 48px 0;
+	border-block: 1px solid var(--doclap-border);
+}
+
+.doclap-notes-archive .empty-state h3 {
+	font-size: clamp(26px, 2.8vw, 40px);
+}
+
+.doclap-notes-archive .pagination {
+	margin-top: 40px;
+}
+
+.doclap-notes-archive .pagination ul {
+	display: contents;
+	list-style: none;
+}
+
+.doclap-notes-archive .pagination .page-numbers {
+	display: block;
+}
+
+.doclap-notes-archive .pagination .current {
+	font-style: italic;
+}
+
+@media (max-width: 600px) {
+	.doclap-notes-archive .filter-bar a {
+		padding-inline: 12px;
+		font-size: 13px;
+	}
+}

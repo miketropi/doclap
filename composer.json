@@ -1,0 +1,31 @@
+{
+	"name": "doclap/theme",
+	"description": "Doclap child theme for Nextora (FSE)",
+	"type": "wordpress-theme",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=8.1"
+	},
+	"require-dev": {
+		"friendsofphp/php-cs-fixer": "^3.89",
+		"phpstan/phpstan": "^2.1",
+		"phpunit/phpunit": "^11.5",
+		"szepeviktor/phpstan-wordpress": "^2.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Doclap\\": "inc/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Doclap\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"phpstan": "@php vendor/bin/phpstan analyse --memory-limit=2G",
+		"php-cs-fixer": "@php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --show-progress=dots --allow-unsupported-php-version=yes",
+		"php-cs-fixer:check": "@php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff --allow-unsupported-php-version=yes",
+		"test": "@php vendor/bin/phpunit"
+	}
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-disciplines",
+  "version": "1.0.0",
+  "title": "Home — Disciplines",
+  "category": "doclap",
+  "icon": "grid-view",
+  "description": "Standalone discipline band listing the three creative disciplines.",
+  "keywords": [
+    "home",
+    "disciplines",
+    "band",
+    "design",
+    "motion",
+    "technology"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "disciplines": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Design",
+          "caption": "With intent."
+        },
+        {
+          "title": "Motion",
+          "caption": "With feeling."
+        },
+        {
+          "title": "Technology",
+          "caption": "With depth."
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

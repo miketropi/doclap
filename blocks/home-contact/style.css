@@ -1,0 +1,15 @@
+/**
+ * Home — Contact.
+ *
+ * Moved here out of the theme's former single landing block. The original
+ * single-class specificity is kept on purpose: `.doclap-scope .btn` in
+ * `resources/css/modules/20-components.css` loads after every block stylesheet
+ * and owns the effective button gap, so raising specificity here would change
+ * the rendered call to action.
+ */
+
+.doclap-home-contact .btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+}

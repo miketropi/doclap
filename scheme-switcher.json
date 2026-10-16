@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"initial": {
+		"theme": "",
+		"color": "doclap",
+		"font": "doclap-editorial"
+	},
+	"sections": {
+		"themes": {
+			"enabled": true,
+			"showDefault": true
+		},
+		"colors": {
+			"enabled": true,
+			"showDefault": true
+		},
+		"fonts": {
+			"enabled": true,
+			"showDefault": true
+		}
+	},
+	"presets": {
+		"colors": [
+			{
+				"slug": "doclap",
+				"enabled": true,
+				"label": "Doclap"
+			}
+		],
+		"fonts": [
+			{
+				"slug": "doclap-editorial",
+				"enabled": true,
+				"label": "Doclap Editorial"
+			}
+		]
+	}
+}

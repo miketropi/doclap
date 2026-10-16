@@ -1,0 +1,7 @@
+.wp-block-doclap-faq-list .doclap-faq-list {
+	min-height: 12rem;
+}
+
+.wp-block-doclap-faq-list .filter-bar button {
+	cursor: default;
+}

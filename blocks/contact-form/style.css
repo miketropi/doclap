@@ -1,0 +1,28 @@
+.doclap-contact-form .doclap-honeypot {
+  position: absolute !important;
+  inline-size: 1px !important;
+  block-size: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+.doclap-contact-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.doclap-contact-form .field-error {
+  display: block;
+  min-height: 1.25em;
+  color: var(--wp--preset--color--contrast);
+  font-size: 0.8125rem;
+}
+.doclap-contact-form [aria-invalid="true"] {
+  border-color: currentColor;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+.doclap-contact-form button[disabled] {
+  cursor: wait;
+  opacity: 0.65;
+}

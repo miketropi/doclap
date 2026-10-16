@@ -1,0 +1,81 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/home-team",
+  "version": "1.0.0",
+  "title": "Home — Team",
+  "category": "doclap",
+  "icon": "groups",
+  "description": "Collaboration heading, studio photograph and the team role cards.",
+  "keywords": [
+    "home",
+    "team",
+    "collaboration",
+    "roles",
+    "studio"
+  ],
+  "textdomain": "doclap",
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
+  "attributes": {
+    "teamHeading": {
+      "type": "string",
+      "default": "độc lập. Not alone."
+    },
+    "teamMeta": {
+      "type": "string",
+      "default": "04 / TEAM & COLLABORATION"
+    },
+    "teamIntro": {
+      "type": "string",
+      "default": "One thread of creative direction throughout. The right specialists join when a project needs to go further."
+    },
+    "teamImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "teamImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "teamImageAlt": {
+      "type": "string",
+      "default": "Open, bright workspace with a shared table and plants"
+    },
+    "teamImageCaption": {
+      "type": "string",
+      "default": "Collaboration space — illustration photo from Unsplash, not an actual office or team."
+    },
+    "teamCards": {
+      "type": "array",
+      "default": [
+        {
+          "meta": "01 / THE MAIN ROLE",
+          "title": "Design & direction",
+          "copy": "I personally lead art direction, digital experience and creative development to keep one consistent voice.",
+          "ctaLabel": "",
+          "ctaUrl": ""
+        },
+        {
+          "meta": "02 / BY PROJECT NEED",
+          "title": "Complementary expertise",
+          "copy": "Content, identity and image production are defined by scope. Collaborator profiles will be added once information is confirmed.",
+          "ctaLabel": "",
+          "ctaUrl": ""
+        },
+        {
+          "meta": "03 / AN INVITATION",
+          "title": "Make something good.",
+          "copy": "Do you love clear ideas and careful execution? Share your expertise in the greeting.",
+          "ctaLabel": "Connect & collaborate",
+          "ctaUrl": "#contact"
+        }
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,72 @@
+/**
+ * Doclap base layer — reset, layout primitives and type roles.
+ *
+ * Ported from the supplied độc lập reference stylesheet and scoped under
+ * ``.doclap-scope`` so no Doclap rule can leak into the parent theme or into the
+ * block editor canvas. Token names are namespaced ``--doclap-*``; the values are
+ * unchanged from the reference.
+ *
+ * Cascade order inside these files matches the reference: design system, then the
+ * page composition layer, then the refinement passes.
+ *
+ * Inner-page rules are additionally scoped to their owning block root
+ * (``.doclap-about-profile``, ``.doclap-contact-form`` …) because every reference
+ * page carried its own slightly drifted copy of the shared styles. Home keeps the
+ * version the home page rendered, inner surfaces keep theirs, and the two can no
+ * longer trample each other.
+ */
+
+/* ─── reset & base ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--doclap-bg); color: var(--doclap-fg); font-family: var(--doclap-font-body); font-size: var(--doclap-fs-body); line-height: 1.55; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+
+/**
+ * Body metrics follow the presentation layer (17px), while the `base` font-size
+ * preset stays at 16px for block-level typography. WordPress prints its Global
+ * Styles block after this stylesheet, so this rule deliberately carries one extra
+ * element in its selector to keep the designed size.
+ */
+html body { font-size: var(--doclap-fs-body); line-height: 1.55; }
+.doclap-scope img,
+.doclap-scope svg { display: block; max-width: 100%; }
+.doclap-scope a { color: inherit; text-decoration: none; }
+.doclap-scope button { font: inherit; cursor: pointer; }
+.doclap-scope p { text-wrap: pretty; }
+.doclap-scope h1,
+.doclap-scope h2,
+.doclap-scope h3,
+.doclap-scope h4 { text-wrap: balance; }
+/* ─── layout primitives ─────────────────────────────────────────── */
+.doclap-scope .container { max-width: var(--doclap-container); margin-inline: auto; padding-inline: var(--doclap-gutter); }
+.doclap-scope .section { padding-block: clamp(48px, 8vw, var(--doclap-gap-2xl)); }
+.doclap-scope .section + .section { border-top: 1px solid var(--doclap-border); }
+.doclap-scope .stack { display: flex; flex-direction: column; }
+.doclap-scope .stack > * + * { margin-top: var(--doclap-gap-md); }
+.doclap-scope .row { display: flex; align-items: center; gap: var(--doclap-gap-md); }
+.doclap-scope .row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--doclap-gap-md); }
+.doclap-scope .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--doclap-gap-lg); }
+.doclap-scope .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--doclap-gap-lg); }
+.doclap-scope .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--doclap-gap-md); }
+.doclap-scope .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--doclap-gap-xl); align-items: start; }
+.doclap-scope .grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: var(--doclap-gap-xl); align-items: start; }
+@media (max-width: 920px) {
+.doclap-scope .grid-2,
+.doclap-scope .grid-3,
+.doclap-scope .grid-4,
+.doclap-scope .grid-2-1,
+.doclap-scope .grid-1-2 { grid-template-columns: 1fr; }
+}
+/* ─── type ──────────────────────────────────────────────────────── */
+.doclap-scope .h1,
+.doclap-scope h1 { font-family: var(--doclap-font-display); font-size: var(--doclap-fs-h1); line-height: 1.04; letter-spacing: -0.02em; margin: 0; }
+.doclap-scope .h2,
+.doclap-scope h2 { font-family: var(--doclap-font-display); font-size: var(--doclap-fs-h2); line-height: 1.1; letter-spacing: -0.015em; margin: 0; }
+.doclap-scope .h3,
+.doclap-scope h3 { font-size: var(--doclap-fs-h3); font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; margin: 0; }
+.doclap-scope .lead { font-size: var(--doclap-fs-lead); line-height: 1.55; color: var(--doclap-muted); max-width: 60ch; margin: 0; }
+.doclap-scope .eyebrow { font-family: var(--doclap-font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--doclap-accent); margin: 0 0 var(--doclap-gap-md); }
+.doclap-scope .meta { font-family: var(--doclap-font-mono); font-size: var(--doclap-fs-meta); color: var(--doclap-muted); }
+.doclap-scope .num { font-family: var(--doclap-font-mono); font-variant-numeric: tabular-nums; }

@@ -1,0 +1,25 @@
+/**
+ * Home — Hero.
+ *
+ * Moved here out of the theme's former single landing block. The root class is
+ * swapped for this block's own scope class and the original single-class
+ * specificity is kept: the sculpture positioning is the only source for these
+ * declarations, so nothing here competes with `resources/css/modules/`.
+ */
+
+.doclap-home-hero .hero-visual {
+	aspect-ratio: 4 / 5;
+}
+
+.doclap-home-hero .doclap-sculpture-poster,
+.doclap-home-hero .doclap-sculpture {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.doclap-home-hero .doclap-sculpture {
+	z-index: 2;
+}

@@ -1,0 +1,38 @@
+/**
+ * Doclap child theme stylesheet (compiled to assets/css/app.css).
+ *
+ * Enqueued after the parent Nextora stylesheet. Import order is deliberate:
+ * tokens → base → components → surfaces → overrides. The Doclap rules are
+ * imported unlayered on purpose so they can override the parent's layered
+ * output without needing specificity tricks.
+ */
+
+@layer theme, base, components, utilities;
+
+@source "../../blocks/**/*.php";
+@source "../../blocks/**/*.tsx";
+@source "../../patterns/**/*.php";
+@source "../../templates/**/*.html";
+@source "../../parts/**/*.html";
+@source "../../inc/**/*.php";
+@source "../../functions.php";
+
+@import "tailwindcss/theme.css" layer(theme);
+
+@theme {
+	--color-doclap-bg: var(--doclap-bg);
+	--color-doclap-surface: var(--doclap-surface);
+	--color-doclap-fg: var(--doclap-fg);
+	--color-doclap-muted: var(--doclap-muted);
+	--color-doclap-border: var(--doclap-border);
+	--color-doclap-accent: var(--doclap-accent);
+	--font-doclap-display: var(--doclap-font-display);
+	--font-doclap-body: var(--doclap-font-body);
+	--font-doclap-mono: var(--doclap-font-mono);
+}
+
+@import "./modules/00-tokens.css";
+@import "./modules/10-base.css";
+@import "./modules/20-components.css";
+@import "./modules/30-surfaces.css";
+@import "./modules/40-overrides.css";

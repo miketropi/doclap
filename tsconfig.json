@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
+		"strict": true,
+		"skipLibCheck": true,
+		"noEmit": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"lib": ["ES2020", "DOM", "DOM.Iterable"]
+	},
+	"include": [
+		"resources/ts/**/*.ts",
+		"resources/ts/**/*.tsx",
+		"resources/ts/**/*.d.ts",
+		"blocks/**/*.ts",
+		"blocks/**/*.tsx",
+		"blocks/**/*.d.ts"
+	],
+	"exclude": ["node_modules", "blocks/**/*.js", "blocks/**/*.asset.php", "assets/**/*"]
+}

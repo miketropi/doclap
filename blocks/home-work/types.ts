@@ -10,6 +10,10 @@ export interface Experiment extends Record<string, unknown> {
 }
 
 export interface HomeWorkAttributes extends Record<string, unknown> {
+	/** Section colours; an empty string keeps the theme default. */
+	sectionBg?: string;
+	sectionHeading?: string;
+	sectionText?: string;
 	worksHeading: string;
 	worksMeta: string;
 	experiments: Experiment[];

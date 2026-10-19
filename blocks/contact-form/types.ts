@@ -9,7 +9,6 @@ export interface ContactFormAttributes extends Record<string, unknown> {
   breadcrumbHomeLabel: string;
   breadcrumbLabel: string;
   heading: string;
-  headingAccent: string;
   lead: string;
   asideMeta: string;
   asideHeading: string;
@@ -30,10 +29,4 @@ export interface ContactFormAttributes extends Record<string, unknown> {
   successMessage: string;
   errorMessage: string;
   formNote: string;
-  adminEmail: string;
-  adminEmailSubject: string;
-  userEmailSubject: string;
-  enableRecaptcha: boolean;
-  recaptchaSiteKey: string;
-  recaptchaSecretKey: string;
 }

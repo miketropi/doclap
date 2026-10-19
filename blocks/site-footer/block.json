@@ -3,15 +3,22 @@
   "apiVersion": 3,
   "name": "doclap/site-footer",
   "version": "1.0.0",
-  "title": "Site Footer",
+  "title": "Site footer",
   "category": "doclap",
   "icon": "admin-site-alt3",
   "description": "Editorial site footer with navigation and colophon.",
+  "keywords": [ "footer", "colophon", "navigation", "copyright" ],
   "textdomain": "doclap",
   "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
     "kicker": { "type": "string", "default": "ĐỘC LẬP / ALWAYS EXPLORING" },
-    "heading": { "type": "string", "default": "A view of my own.\nA new connection." },
-    "intro": { "type": "string", "default": "Design with soul. Motion with intent.\nTechnology to bring ideas into form." },
+    "heading": { "type": "string", "default": "A view of my own.<br>A new connection." },
+    "intro": {
+      "type": "string",
+      "default": "Design with soul. Motion with intent.<br>Technology to bring ideas into form."
+    },
     "ctaLabel": { "type": "string", "default": "Tell us about your idea" },
     "ctaUrl": { "type": "string", "default": "#contact" },
     "navGroups": {
@@ -50,10 +57,7 @@
     "backToTopLabel": { "type": "string", "default": "Back to top" },
     "footerAriaLabel": { "type": "string", "default": "Footer information and navigation" }
   },
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
+  "supports": { "html": false, "anchor": true, "reusable": false },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "render": "file:./render.php"

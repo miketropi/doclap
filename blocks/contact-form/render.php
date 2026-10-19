@@ -22,33 +22,15 @@ $steps = isset( $attributes['asideSteps'] ) && is_array( $attributes['asideSteps
 $services = isset( $attributes['services'] ) && is_array( $attributes['services'] )
 	? $attributes['services']
 	: array();
-$nonce        = wp_create_nonce( 'doclap_contact_form' );
-$rest_nonce   = wp_create_nonce( 'wp_rest' );
-$uid          = wp_unique_id( 'doclap-contact-' );
-$config_token = wp_generate_password( 32, false, false );
-set_transient(
-	'doclap_contact_config_' . wp_hash( $config_token ),
-	array(
-		'admin_email'   => sanitize_email( $attr( 'adminEmail' ) ),
-		'admin_subject' => sanitize_text_field(
-			$attr( 'adminEmailSubject', __( 'New contact form submission', 'doclap' ) ),
-		),
-		'user_subject'  => sanitize_text_field(
-			$attr( 'userEmailSubject', __( 'Thank you for contacting us', 'doclap' ) ),
-		),
-		'recaptcha'     => ! empty( $attributes['enableRecaptcha'] ),
-		'site_key'      => sanitize_text_field( $attr( 'recaptchaSiteKey' ) ),
-		'secret_key'    => sanitize_text_field( $attr( 'recaptchaSecretKey' ) ),
-	),
-	DAY_IN_SECONDS,
-);
-$recaptcha_enabled = ! empty( $attributes['enableRecaptcha'] )
-	&& '' !== $attr( 'recaptchaSiteKey' )
-	&& '' !== $attr( 'recaptchaSecretKey' );
-if ( $recaptcha_enabled && ! is_admin() ) {
+$doclap_settings   = doclap_contact_settings();
+$nonce             = wp_create_nonce( 'doclap_contact_form' );
+$rest_nonce        = wp_create_nonce( 'wp_rest' );
+$uid               = wp_unique_id( 'doclap-contact-' );
+$recaptcha_enabled = doclap_contact_form_recaptcha_is_enabled( $doclap_settings ) && ! is_admin();
+if ( $recaptcha_enabled ) {
 	wp_enqueue_script(
 		'google-recaptcha-v3',
-		'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( $attr( 'recaptchaSiteKey' ) ),
+		'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( (string) $doclap_settings['recaptcha_site_key'] ),
 		array(),
 		null,
 		array(
@@ -59,6 +41,13 @@ if ( $recaptcha_enabled && ! is_admin() ) {
 }
 $doclap_wrapper = get_block_wrapper_attributes(
 	array( 'class' => doclap_scope_class( 'doclap-contact-form' ) ),
+);
+// Saved content can still carry `headingAccent`; the editor folds the pair into
+// the merged heading and clears the legacy key on the block's first save.
+$doclap_heading = doclap_rich_accent(
+	$attr( 'heading', __( 'Start with<br><em>a greeting.</em>', 'doclap' ) ),
+	$attr( 'headingAccent' ),
+	'<br><em>',
 );
 ?>
 <div <?php echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core escaped.?>>
@@ -73,13 +62,10 @@ $doclap_wrapper = get_block_wrapper_attributes(
 					<?php echo esc_html( $attr( 'breadcrumbLabel', __( 'Contact', 'doclap' ) ) ); ?>
 				</span>
 			</nav>
-			<h1>
-				<?php echo esc_html( $attr( 'heading', __( 'Start with', 'doclap' ) ) ); ?><br>
-				<em><?php echo esc_html( $attr( 'headingAccent', __( 'a greeting.', 'doclap' ) ) ); ?></em>
-			</h1>
+			<h1 data-doclap-rich="heading"><?php echo doclap_rich( $doclap_heading ); ?></h1>
 			<div class="hero-summary">
 				<span class="hero-mark" aria-hidden="true">✳</span>
-				<p class="lead"><?php echo esc_html( $attr( 'lead' ) ); ?></p>
+				<p class="lead" data-doclap-rich="lead"><?php echo doclap_rich( $attr( 'lead' ) ); ?></p>
 			</div>
 		</div>
 	</section>
@@ -87,8 +73,8 @@ $doclap_wrapper = get_block_wrapper_attributes(
 		<div class="container grid-2 contact-grid">
 			<aside class="contact-aside">
 				<span class="meta"><?php echo esc_html( $attr( 'asideMeta' ) ); ?></span>
-				<h2><?php echo nl2br( esc_html( $attr( 'asideHeading' ) ) ); ?></h2>
-				<p><?php echo esc_html( $attr( 'asideCopy' ) ); ?></p>
+				<h2 data-doclap-rich="asideHeading"><?php echo doclap_rich( $attr( 'asideHeading' ) ); ?></h2>
+				<p data-doclap-rich="asideCopy"><?php echo doclap_rich( $attr( 'asideCopy' ) ); ?></p>
 				<span class="meta"><?php esc_html_e( 'HOW I START', 'doclap' ); ?></span>
 				<p>
 					<?php foreach ( $steps as $index => $step ) : ?>
@@ -100,7 +86,7 @@ $doclap_wrapper = get_block_wrapper_attributes(
 					class="text-link"
 					href="<?php echo esc_url( doclap_resolve_url( $attr( 'asideLinkUrl', '/faq/' ) ) ); ?>"
 				>
-					<span><?php echo esc_html( $attr( 'asideLinkLabel' ) ); ?></span>
+					<span data-doclap-rich="asideLinkLabel"><?php echo doclap_rich( $attr( 'asideLinkLabel' ) ); ?></span>
 					<?php
 					echo doclap_icon( 'arrow-up-right' );
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted helper.
@@ -114,12 +100,18 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				data-rest-url="<?php echo esc_url( rest_url( 'doclap/v1/contact' ) ); ?>"
 				data-nonce="<?php echo esc_attr( $nonce ); ?>"
 				data-rest-nonce="<?php echo esc_attr( $rest_nonce ); ?>"
-				data-config="<?php echo esc_attr( $config_token ); ?>"
 				data-sending-label="<?php echo esc_attr( $attr( 'sendingLabel', __( 'Sending…', 'doclap' ) ) ); ?>"
 				data-success-message="<?php echo esc_attr( $attr( 'successMessage' ) ); ?>"
 				data-error-message="<?php echo esc_attr( $attr( 'errorMessage' ) ); ?>"
+				data-error-required-name="<?php echo esc_attr__( 'Please enter your name.', 'doclap' ); ?>"
+				data-error-required-email="<?php echo esc_attr__( 'Please enter your email address.', 'doclap' ); ?>"
+				data-error-invalid-email="<?php echo esc_attr__( 'Please enter a valid email address.', 'doclap' ); ?>"
+				data-error-required-message="<?php echo esc_attr__( 'Please enter your message.', 'doclap' ); ?>"
+				data-error-short-message="<?php echo esc_attr__( 'Please enter at least %d characters.', 'doclap' ); ?>"
+				data-error-consent="<?php echo esc_attr__( 'Please confirm your consent.', 'doclap' ); ?>"
+				data-error-recaptcha="<?php echo esc_attr__( 'Security verification is unavailable.', 'doclap' ); ?>"
 				data-recaptcha="<?php echo $recaptcha_enabled ? '1' : '0'; ?>"
-				data-recaptcha-site-key="<?php echo esc_attr( $recaptcha_enabled ? $attr( 'recaptchaSiteKey' ) : '' ); ?>"
+				data-recaptcha-public-key="<?php echo esc_attr( $recaptcha_enabled ? (string) $doclap_settings['recaptcha_site_key'] : '' ); ?>"
 				novalidate
 			>
 				<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( $nonce ); ?>">

@@ -28,11 +28,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function doclap_notes_archive_query_args( array $attributes, int $paged, int $exclude_id = 0 ): array {
 	$args = array(
-		'post_type'           => 'post',
-		'post_status'         => 'publish',
-		'posts_per_page'      => max( 1, (int) ( $attributes['postsPerPage'] ?? 6 ) ),
-		'paged'               => max( 1, $paged ),
-		'ignore_sticky_posts' => false,
+		'post_type'              => 'post',
+		'post_status'            => 'publish',
+		'posts_per_page'         => max( 1, min( 24, (int) ( $attributes['postsPerPage'] ?? 6 ) ) ),
+		'paged'                  => max( 1, $paged ),
+		'ignore_sticky_posts'    => false,
+		'update_post_meta_cache' => false,
 	);
 
 	if ( $exclude_id > 0 ) {

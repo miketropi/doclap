@@ -7,31 +7,15 @@
   "category": "doclap",
   "icon": "text",
   "description": "Craft introduction: eyebrow, heading, principle, lead and the service list.",
-  "keywords": [
-    "home",
-    "about",
-    "craft",
-    "services",
-    "thinking"
-  ],
+  "keywords": [ "home", "about", "craft", "services", "thinking" ],
   "textdomain": "doclap",
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
   "attributes": {
-    "aboutEyebrow": {
-      "type": "string",
-      "default": "02 / THINKING & CRAFT"
-    },
-    "aboutHeading": {
-      "type": "string",
-      "default": "Refinement is not about adding. It is about choosing."
-    },
-    "aboutPrinciple": {
-      "type": "string",
-      "default": "A clear idea.\nEvery detail has a reason."
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "aboutEyebrow": { "type": "string", "default": "02 / THINKING & CRAFT" },
+    "aboutHeading": { "type": "string", "default": "Refinement is not about adding. It is about choosing." },
+    "aboutPrinciple": { "type": "string", "default": "A clear idea.<br>Every detail has a reason." },
     "aboutLead": {
       "type": "string",
       "default": "I am an independent web designer with 10 years of experience. I care about the feel of a tap, the breathing room between two lines of text and how motion makes an experience feel more natural."
@@ -43,10 +27,7 @@
           "title": "Digital experience design",
           "meta": "Art direction · UI/UX · Website · Design systems"
         },
-        {
-          "title": "Motion with intent",
-          "meta": "GSAP timeline · ScrollTrigger · Micro-interaction"
-        },
+        { "title": "Motion with intent", "meta": "GSAP timeline · ScrollTrigger · Micro-interaction" },
         {
           "title": "Technology as material",
           "meta": "Three.js · WebGL · Generative graphics · Creative coding"
@@ -54,6 +35,7 @@
       ]
     }
   },
+  "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "render": "file:./render.php"

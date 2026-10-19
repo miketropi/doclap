@@ -32,5 +32,7 @@ if ( ! defined( 'DOCLAP_URI' ) ) {
 
 require dirname( __DIR__ ) . '/inc/blocks/helpers.php';
 require dirname( __DIR__ ) . '/inc/blocks/query.php';
+require dirname( __DIR__ ) . '/inc/features/contact-form/settings.php';
 require dirname( __DIR__ ) . '/inc/features/contact-form/handle-submission.php';
+require dirname( __DIR__ ) . '/inc/features/contact-form/register-rest-route.php';
 require dirname( __DIR__ ) . '/blocks/blocks.php';

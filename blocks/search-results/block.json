@@ -3,16 +3,20 @@
   "apiVersion": 3,
   "name": "doclap/search-results",
   "version": "1.0.0",
-  "title": "Search Results",
+  "title": "Search results",
   "category": "doclap",
   "icon": "search",
   "description": "A native WordPress search form, filters, and results.",
+  "keywords": [ "search", "results", "filter", "query" ],
   "textdomain": "doclap",
   "attributes": {
     "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
     "breadcrumbLabel": { "type": "string", "default": "Search" },
-    "heading": { "type": "string", "default": "Something" },
-    "headingAccent": { "type": "string", "default": "waiting to be seen." },
+    "heading": {
+      "type": "string",
+      "default": "Something<br><em>waiting to be seen.</em>"
+    },
+    "headingAccent": { "type": "string", "default": "" },
     "lead": { "type": "string", "default": "Search across the pages, notes and studies of độc lập." },
     "searchPlaceholder": { "type": "string", "default": "What are you looking for?" },
     "searchLabel": { "type": "string", "default": "Search content" },
@@ -25,7 +29,10 @@
     "resultSingular": { "type": "string", "default": "%d result" },
     "resultPlural": { "type": "string", "default": "%d results" },
     "noResultsHeading": { "type": "string", "default": "We could not find what you need." },
-    "noResultsCopy": { "type": "string", "default": "Try a shorter word, remove diacritics or switch to the “All” group." },
+    "noResultsCopy": {
+      "type": "string",
+      "default": "Try a shorter word, remove diacritics or switch to the “All” group."
+    },
     "noResultsLinkLabel": { "type": "string", "default": "Explore notes" },
     "noResultsLinkUrl": { "type": "string", "default": "@notes" },
     "emptyHeading": { "type": "string", "default": "What are you looking for?" },

@@ -13,7 +13,6 @@ export interface FaqListAttributes extends Record<string, unknown> {
 	breadcrumbHomeLabel: string;
 	breadcrumbLabel: string;
 	heading: string;
-	headingAccent: string;
 	lead: string;
 	asideLabel: string;
 	asideHeading: string;
@@ -27,7 +26,6 @@ export interface FaqListAttributes extends Record<string, unknown> {
 	emptyLabel: string;
 	closingEyebrow: string;
 	closingHeading: string;
-	closingHeadingAccent: string;
 	closingCtaLabel: string;
 	closingCtaUrl: string;
 }

@@ -3,24 +3,32 @@
   "apiVersion": 3,
   "name": "doclap/single-note",
   "version": "1.0.0",
-  "title": "Single Note",
+  "title": "Single note",
   "category": "doclap",
+  "icon": "admin-post",
   "description": "Displays the currently queried editorial note.",
+  "keywords": [ "note", "article", "post", "archive", "related" ],
   "textdomain": "doclap",
   "attributes": {
     "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
     "archiveLabel": { "type": "string", "default": "Archive" },
     "archiveUrl": { "type": "string", "default": "@notes" },
     "articleMetaPrefix": { "type": "string", "default": "ĐỘC LẬP / EDITORIAL NOTES" },
-    "disclaimer": { "type": "string", "default": "Perspectives from the độc lập design practice. The articles present no verified metrics or client results." },
+    "disclaimer": {
+      "type": "string",
+      "default": "Perspectives from the độc lập design practice. The articles present no verified metrics or client results."
+    },
     "tocLabel": { "type": "string", "default": "IN THIS ARTICLE" },
     "tocEmptyBehaviour": { "type": "string", "default": "hide" },
     "backToArchiveLabel": { "type": "string", "default": "Back to all notes" },
     "relatedHeading": { "type": "string", "default": "Read another perspective." },
     "relatedCount": { "type": "integer", "default": 2 },
     "closingEyebrow": { "type": "string", "default": "EVERYTHING STARTS WITH A QUESTION" },
-    "closingHeading": { "type": "string", "default": "Your idea." },
-    "closingHeadingAccent": { "type": "string", "default": "Make it different." },
+    "closingHeading": {
+      "type": "string",
+      "default": "Your idea.<br><em>Make it different.</em>"
+    },
+    "closingHeadingAccent": { "type": "string", "default": "" },
     "closingCtaLabel": { "type": "string", "default": "Tell us about your idea" },
     "closingCtaUrl": { "type": "string", "default": "/contact/" }
   },

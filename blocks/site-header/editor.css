@@ -1,37 +1,10 @@
 /**
- * Editor styles for doclap/site-header.
+ * Editor canvas styles for doclap/site-header.
  *
  * Only editor-specific affordances: the front-end look comes from the compiled
  * child stylesheet, which the editor also loads.
  */
 
-.doclap-repeater {
-	border-top: 1px solid #e0e0e0;
-	margin-top: 16px;
-	padding-top: 12px;
-}
-
-.doclap-repeater__title {
-	font-weight: 600;
-	margin: 0 0 8px;
-}
-
-.doclap-repeater__empty {
-	color: #757575;
-	font-style: italic;
-	margin: 0 0 8px;
-}
-
-.doclap-repeater__item {
-	background: #f8f8f8;
-	border: 1px solid #e0e0e0;
-	border-radius: 2px;
-	margin-bottom: 8px;
-	padding: 12px;
-}
-
-.doclap-repeater__header {
-	border-bottom: 1px solid #e0e0e0;
-	margin-bottom: 8px;
-	padding-bottom: 4px;
+.wp-block-doclap-site-header {
+	min-height: 240px;
 }

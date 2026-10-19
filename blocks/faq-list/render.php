@@ -14,14 +14,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 $doclap_wrapper = get_block_wrapper_attributes(
 	array( 'class' => doclap_scope_class( 'doclap-faq-list' ) ),
 );
+// Saved content can still carry the split accent attributes; the editor folds
+// them into the merged rich values and clears the legacy keys on first save.
+$doclap_heading = doclap_rich_accent(
+	(string) ( $attributes['heading'] ?? '' ),
+	(string) ( $attributes['headingAccent'] ?? '' ),
+	'<br><em>',
+);
+$doclap_closing_heading = doclap_rich_accent(
+	(string) ( $attributes['closingHeading'] ?? '' ),
+	(string) ( $attributes['closingHeadingAccent'] ?? '' ),
+	'<br><em>',
+);
 $questions = is_array( $attributes['questions'] ?? null )
 	? $attributes['questions']
 	: array();
 $filters = is_array( $attributes['filters'] ?? null )
 	? $attributes['filters']
 	: array();
-$count_template = (string) ( $attributes['countTemplate'] ?? '%d questions' );
-$count_text = sprintf( $count_template, count( $questions ) );
+$count_template = (string) ( $attributes['countTemplate'] ?? __( '%d questions', 'doclap' ) );
+$count_text = false !== strpos( $count_template, '%d' )
+	? str_replace( '%d', (string) count( $questions ), $count_template )
+	: count( $questions ) . ' ' . $count_template;
 $instance_id = wp_unique_id( 'doclap-faq-' );
 $home_url = home_url( '/' );
 $aside_link_url = doclap_resolve_url(
@@ -50,14 +64,11 @@ $closing_link_url = doclap_resolve_url(
 					<?php echo esc_html( (string) ( $attributes['breadcrumbLabel'] ?? '' ) ); ?>
 				</span>
 			</nav>
-			<h1>
-				<?php echo esc_html( (string) ( $attributes['heading'] ?? '' ) ); ?><br>
-				<em><?php echo esc_html( (string) ( $attributes['headingAccent'] ?? '' ) ); ?></em>
-			</h1>
+			<h1 data-doclap-rich="heading"><?php echo doclap_rich( $doclap_heading ); ?></h1>
 			<div class="hero-summary">
 				<span class="hero-mark" aria-hidden="true">✳</span>
-				<p class="lead">
-					<?php echo esc_html( (string) ( $attributes['lead'] ?? '' ) ); ?>
+				<p class="lead" data-doclap-rich="lead">
+					<?php echo doclap_rich( (string) ( $attributes['lead'] ?? '' ) ); ?>
 				</p>
 			</div>
 		</div>
@@ -67,13 +78,13 @@ $closing_link_url = doclap_resolve_url(
 		<div class="container grid-1-2 body-grid">
 			<aside class="aside-title">
 				<span><?php echo esc_html( (string) ( $attributes['asideLabel'] ?? '' ) ); ?></span>
-				<h2>
-					<?php echo nl2br( esc_html( (string) ( $attributes['asideHeading'] ?? '' ) ) ); ?>
+				<h2 data-doclap-rich="asideHeading">
+					<?php echo doclap_rich( (string) ( $attributes['asideHeading'] ?? '' ) ); ?>
 				</h2>
-				<p><?php echo esc_html( (string) ( $attributes['asideCopy'] ?? '' ) ); ?></p>
+				<p data-doclap-rich="asideCopy"><?php echo doclap_rich( (string) ( $attributes['asideCopy'] ?? '' ) ); ?></p>
 				<a class="text-link" href="<?php echo esc_url( $aside_link_url ); ?>">
-					<span>
-						<?php echo esc_html( (string) ( $attributes['asideLinkLabel'] ?? '' ) ); ?>
+					<span data-doclap-rich="asideLinkLabel">
+						<?php echo doclap_rich( (string) ( $attributes['asideLinkLabel'] ?? '' ) ); ?>
 					</span>
 					<?php
 					echo doclap_icon( 'arrow-up-right' );
@@ -85,6 +96,7 @@ $closing_link_url = doclap_resolve_url(
 			<div>
 				<div
 					class="filter-bar"
+					role="group"
 					aria-label="<?php esc_attr_e( 'Question group', 'doclap' ); ?>"
 				>
 					<button type="button" data-filter="all" aria-pressed="true">
@@ -124,7 +136,7 @@ $closing_link_url = doclap_resolve_url(
 							>
 								<summary>
 									<span>
-										<?php echo esc_html( (string) ( $question['question'] ?? '' ) ); ?>
+										<?php echo doclap_rich( (string) ( $question['question'] ?? '' ) ); ?>
 									</span>
 									<?php
 									echo doclap_icon( 'plus' );
@@ -132,7 +144,7 @@ $closing_link_url = doclap_resolve_url(
 									?>
 								</summary>
 								<p>
-									<?php echo esc_html( (string) ( $question['answer'] ?? '' ) ); ?>
+									<?php echo doclap_rich( (string) ( $question['answer'] ?? '' ) ); ?>
 								</p>
 							</details>
 						<?php endif; ?>
@@ -161,16 +173,13 @@ $closing_link_url = doclap_resolve_url(
 				<p class="eyebrow">
 					<?php echo esc_html( (string) ( $attributes['closingEyebrow'] ?? '' ) ); ?>
 				</p>
-				<h2>
-					<?php echo esc_html( (string) ( $attributes['closingHeading'] ?? '' ) ); ?><br>
-					<em>
-						<?php echo esc_html( (string) ( $attributes['closingHeadingAccent'] ?? '' ) ); ?>
-					</em>
+				<h2 data-doclap-rich="closingHeading">
+					<?php echo doclap_rich( $doclap_closing_heading ); ?>
 				</h2>
 			</div>
 			<a class="circle-cta" href="<?php echo esc_url( $closing_link_url ); ?>">
-				<span>
-					<?php echo esc_html( (string) ( $attributes['closingCtaLabel'] ?? '' ) ); ?>
+				<span data-doclap-rich="closingCtaLabel">
+					<?php echo doclap_rich( (string) ( $attributes['closingCtaLabel'] ?? '' ) ); ?>
 				</span>
 				<?php
 				echo doclap_icon( 'arrow-up-right' );

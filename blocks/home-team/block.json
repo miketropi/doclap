@@ -7,43 +7,21 @@
   "category": "doclap",
   "icon": "groups",
   "description": "Collaboration heading, studio photograph and the team role cards.",
-  "keywords": [
-    "home",
-    "team",
-    "collaboration",
-    "roles",
-    "studio"
-  ],
+  "keywords": [ "home", "team", "collaboration", "roles", "studio" ],
   "textdomain": "doclap",
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
   "attributes": {
-    "teamHeading": {
-      "type": "string",
-      "default": "độc lập. Not alone."
-    },
-    "teamMeta": {
-      "type": "string",
-      "default": "04 / TEAM & COLLABORATION"
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "teamHeading": { "type": "string", "default": "độc lập. Not alone." },
+    "teamMeta": { "type": "string", "default": "04 / TEAM & COLLABORATION" },
     "teamIntro": {
       "type": "string",
       "default": "One thread of creative direction throughout. The right specialists join when a project needs to go further."
     },
-    "teamImageId": {
-      "type": "number",
-      "default": 0
-    },
-    "teamImageUrl": {
-      "type": "string",
-      "default": ""
-    },
-    "teamImageAlt": {
-      "type": "string",
-      "default": "Open, bright workspace with a shared table and plants"
-    },
+    "teamImageId": { "type": "number", "default": 0 },
+    "teamImageUrl": { "type": "string", "default": "" },
+    "teamImageAlt": { "type": "string", "default": "Open, bright workspace with a shared table and plants" },
     "teamImageCaption": {
       "type": "string",
       "default": "Collaboration space — illustration photo from Unsplash, not an actual office or team."
@@ -75,6 +53,7 @@
       ]
     }
   },
+  "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "render": "file:./render.php"

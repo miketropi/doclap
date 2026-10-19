@@ -1,16 +1,10 @@
+/**
+ * Editor canvas styles for doclap/home-testimonials.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet, which the editor also loads.
+ */
+
 .wp-block-doclap-home-testimonials {
 	min-height: 240px;
-}
-
-.doclap-repeater__item {
-	border-top: 1px solid #ddd;
-	padding: 16px 0;
-}
-
-.doclap-repeater__title {
-	font-weight: 600;
-}
-
-.doclap-repeater__header {
-	margin-bottom: 12px;
 }

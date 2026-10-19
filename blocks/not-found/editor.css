@@ -1,7 +1,11 @@
-.wp-block-doclap-not-found .doclap-not-found {
-	pointer-events: none;
-}
+/**
+ * Editor canvas styles for doclap/not-found.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet, which the editor also loads. Link inertness comes from the
+ * shared `.doclap-block-preview__surface` rule in resources/css/editor.css.
+ */
 
-.wp-block-doclap-not-found .doclap-not-found a {
-	pointer-events: none;
+.wp-block-doclap-not-found {
+	min-height: 320px;
 }

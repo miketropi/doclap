@@ -211,3 +211,101 @@ function doclap_link_is_current( string $url ): bool {
 
 	return false;
 }
+
+/**
+ * Escape a rich-text attribute for output.
+ *
+ * Rich attributes are stored as sanitized HTML fragments — bold, italic, links and
+ * line breaks — instead of plain text. `wp_kses_post()` is the single output gate
+ * for every one of them, so the policy lives here rather than being repeated in
+ * fifteen renderers, and a grep for `doclap_rich(` lists every attribute that is
+ * intentionally allowed to carry markup. Plain attributes keep using `esc_html()`.
+ *
+ * Text runs are escaped *before* `wp_kses_post()` re-allows the inline markup,
+ * which keeps two behaviours identical to a plain attribute:
+ *
+ * * core runs `wptexturize()` over block-template output, and `wptexturize()`
+ *   deliberately skips existing entities — so an `esc_html()`-escaped `'` stays a
+ *   straight apostrophe while a bare `'` coming out of `wp_kses_post()` would be
+ *   curled into `&#8217;`. Escaping first means a rich value and a plain value with
+ *   the same copy render the same characters, and it matches the markup this theme
+ *   produced before rich text existed.
+ * * `esc_html()` never double-encodes: it escapes through `_wp_specialchars()`,
+ *   whose `$double_encode` default is `false`, so an entity the editor already
+ *   stored (`&amp;`) passes through untouched while a bare `&` becomes `&amp;`.
+ *
+ * @param mixed $value Stored attribute value.
+ *
+ * @return string Escaped HTML fragment.
+ */
+function doclap_rich( $value ): string {
+	$value = (string) $value;
+
+	$escaped = preg_replace_callback(
+		'#(?:<[^>]*>)|([^<]+)#',
+		static function ( array $matches ): string {
+			return isset( $matches[1] ) ? esc_html( $matches[1] ) : $matches[0];
+		},
+		$value,
+	);
+
+	return wp_kses_post( is_string( $escaped ) ? $escaped : $value );
+}
+
+/**
+ * Fold a legacy split accent attribute into its merged base value.
+ *
+ * The heading/accent pairs shipped as two attributes (e.g. `heading` plus
+ * `headingAccent`) until 1.0.0; they are now one rich attribute whose value holds
+ * the accent inside the same fragment. Saved content from before that change still
+ * carries the accent key, so renderers combine the pair on the fly and stay
+ * byte-compatible until that block is next saved in the editor — the editor folds
+ * the pair once and clears the legacy key, and a save happens to be exactly when
+ * the legacy key stops being written to the block comment. After that this
+ * function is a no-op.
+ *
+ * @param string $base   Merged base value, possibly already containing the accent.
+ * @param string $accent Legacy accent value, still present in pre-merge content.
+ * @param string $join   Literal markup the old renderer emitted between the two
+ *                       fragments: `'<br><em>'`, `'<br>'` or `' <em>'`.
+ *
+ * @return string Combined HTML fragment.
+ */
+function doclap_rich_accent( string $base, string $accent, string $join = '<br><em>' ): string {
+	$base   = trim( $base );
+	$accent = trim( $accent );
+
+	if ( '' === $accent || str_contains( $base, '<em>' ) ) {
+		return $base;
+	}
+
+	$combined = $base . $join . esc_html( $accent );
+
+	if ( ' <em>' === $join || '<br><em>' === $join ) {
+		$combined .= '</em>';
+	}
+
+	return $combined;
+}
+
+/**
+ * Plain-text label derived from a rich heading value.
+ *
+ * The hero view tabs and the editor's list labels show the accent fragment of a
+ * heading — the emphasised part inside `<em>` — falling back to the whole value
+ * when the editor produced no emphasis. Markup is always stripped, so the result
+ * is safe for `esc_html()`, an `aria-label` or a `<span>` of text.
+ *
+ * @param string $value Rich heading value.
+ *
+ * @return string Single-line, tag-free label; empty when the value carries no text.
+ */
+function doclap_rich_accent_label( string $value ): string {
+	$value = trim( $value );
+
+	if ( '' !== $value && preg_match( '#<em>(.*?)</em>#s', $value, $matches ) ) {
+		$value = $matches[1];
+	}
+
+	return trim( (string) preg_replace( '/\s+/', ' ', wp_strip_all_tags( $value ) ) );
+}

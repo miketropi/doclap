@@ -10,6 +10,10 @@ export interface FooterNavGroup extends Record<string, unknown> {
 }
 
 export interface SiteFooterAttributes extends Record<string, unknown> {
+  /** Section colours; an empty string keeps the theme default. */
+  sectionBg?: string;
+  sectionHeading?: string;
+  sectionText?: string;
   kicker: string;
   heading: string;
   intro: string;

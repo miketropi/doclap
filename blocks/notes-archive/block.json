@@ -1,37 +1,50 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "doclap/notes-archive",
-	"title": "Doclap notes archive",
-	"category": "doclap",
-	"description": "Query-driven editorial notes archive with featured post, categories and pagination.",
-	"keywords": ["notes", "archive", "journal"],
-	"textdomain": "doclap",
-	"icon": "excerpt-view",
-	"supports": { "html": false, "anchor": true },
-	"attributes": {
-		"breadcrumbHomeLabel": { "type": "string", "default": "Home" },
-		"breadcrumbLabel": { "type": "string", "default": "Archive" },
-		"heading": { "type": "string", "default": "Think. Try." },
-		"headingAccent": { "type": "string", "default": "Write it down." },
-		"lead": { "type": "string", "default": "Notes from the desk: on the small decisions that give a digital experience depth." },
-		"showFeatured": { "type": "boolean", "default": true },
-		"postsPerPage": { "type": "integer", "default": 6 },
-		"showCategories": { "type": "boolean", "default": true },
-		"headingSectionTitle": { "type": "string", "default": "From the desk." },
-		"countSingular": { "type": "string", "default": "%d note" },
-		"countPlural": { "type": "string", "default": "%d notes" },
-		"emptyHeading": { "type": "string", "default": "No notes yet." },
-		"emptyCopy": { "type": "string", "default": "New editorial notes will appear here when they are published." },
-		"disclaimer": { "type": "string", "default": "The articles are editorial notes from the portfolio, not client case studies." },
-		"closingEyebrow": { "type": "string", "default": "EVERYTHING STARTS WITH A QUESTION" },
-		"closingHeading": { "type": "string", "default": "Your idea." },
-		"closingHeadingAccent": { "type": "string", "default": "Make it different." },
-		"closingCtaLabel": { "type": "string", "default": "Tell us about your idea" },
-		"closingCtaUrl": { "type": "string", "default": "/contact/" }
-	},
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./editor.css",
-	"style": "file:./style.css",
-	"render": "file:./render.php"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/notes-archive",
+  "version": "1.0.0",
+  "title": "Doclap notes archive",
+  "category": "doclap",
+  "icon": "excerpt-view",
+  "description": "Query-driven editorial notes archive with featured post, categories and pagination.",
+  "keywords": [ "notes", "archive", "journal" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
+    "breadcrumbLabel": { "type": "string", "default": "Archive" },
+    "heading": {
+      "type": "string",
+      "default": "Think. Try.<br><em>Write it down.</em>"
+    },
+    "headingAccent": { "type": "string", "default": "" },
+    "lead": {
+      "type": "string",
+      "default": "Notes from the desk: on the small decisions that give a digital experience depth."
+    },
+    "showFeatured": { "type": "boolean", "default": true },
+    "postsPerPage": { "type": "integer", "default": 6 },
+    "showCategories": { "type": "boolean", "default": true },
+    "headingSectionTitle": { "type": "string", "default": "From the desk." },
+    "countSingular": { "type": "string", "default": "%d note" },
+    "countPlural": { "type": "string", "default": "%d notes" },
+    "emptyHeading": { "type": "string", "default": "No notes yet." },
+    "emptyCopy": { "type": "string", "default": "New editorial notes will appear here when they are published." },
+    "disclaimer": {
+      "type": "string",
+      "default": "The articles are editorial notes from the portfolio, not client case studies."
+    },
+    "closingEyebrow": { "type": "string", "default": "EVERYTHING STARTS WITH A QUESTION" },
+    "closingHeading": {
+      "type": "string",
+      "default": "Your idea.<br><em>Make it different.</em>"
+    },
+    "closingHeadingAccent": { "type": "string", "default": "" },
+    "closingCtaLabel": { "type": "string", "default": "Tell us about your idea" },
+    "closingCtaUrl": { "type": "string", "default": "/contact/" }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
 }

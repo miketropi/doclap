@@ -10,6 +10,11 @@
  *   * Doclap is a readable child theme of Nextora;
  *   * every doclap/* block registers as a dynamic block, in the Doclap inserter
  *     category, with a readable render.php;
+ *   * every block.json declares the product contract — apiVersion 3, title, icon,
+ *     description, keywords, textdomain, supports and resolvable assets;
+ *   * the site header stores a WordPress menu source (menu id plus depth), a
+ *     brand source (text or media library) and none of the removed
+ *     navigation-tree attributes;
  *   * theme.json parses under WordPress and, once merged with the parent's, exposes
  *     the Doclap palette, its child custom templates and its font families;
  *   * every declared font face points at a file that exists, and the compiled
@@ -433,3 +438,226 @@ if ( $doclap_expected_home !== $doclap_landing_names ) {
 }
 
 doclap_smoke_pass( 'patterns ' . count( $doclap_patterns ) );
+
+// 7. Per-block metadata and asset contract.
+/**
+ * Resolve a `file:./name` declaration the way WordPress does when registering a
+ * block from metadata: relative to the block.json directory, falling back to the
+ * parent theme for assets a child block inherits.
+ *
+ * @param string $slug     Block slug inside blocks/.
+ * @param string $relative Declared value, for example `file:./render.php`.
+ *
+ * @return string Absolute readable path, or an empty string when nothing resolves.
+ */
+function doclap_smoke_resolve_asset( string $slug, string $relative ): string {
+	$file       = ltrim( (string) preg_replace( '#^file:\.?/#', '', $relative ), '/' );
+	$candidates = array(
+		DOCLAP_DIR . '/blocks/' . $slug . '/' . $file,
+		get_template_directory() . '/blocks/' . $slug . '/' . $file,
+	);
+
+	foreach ( $candidates as $candidate ) {
+		if ( is_readable( $candidate ) ) {
+			return $candidate;
+		}
+	}
+
+	return '';
+}
+
+$doclap_manifests = array();
+$doclap_js_assets = 0;
+
+foreach ( $doclap_expected as $doclap_name ) {
+	$doclap_slug     = substr( $doclap_name, strlen( 'doclap/' ) );
+	$doclap_manifest = json_decode(
+		(string) file_get_contents( DOCLAP_DIR . '/blocks/' . $doclap_slug . '/block.json' ),
+		true,
+	);
+
+	if ( ! is_array( $doclap_manifest ) ) {
+		doclap_smoke_fail( $doclap_name . ' block.json does not parse as JSON' );
+	}
+
+	$doclap_manifests[ $doclap_name ] = $doclap_manifest;
+
+	if ( 3 !== ( $doclap_manifest['apiVersion'] ?? null ) ) {
+		doclap_smoke_fail( $doclap_name . ' does not declare apiVersion 3' );
+	}
+
+	if ( $doclap_name !== ( $doclap_manifest['name'] ?? '' ) ) {
+		doclap_smoke_fail( $doclap_name . ' declares the name ' . (string) ( $doclap_manifest['name'] ?? '' ) );
+	}
+
+	foreach ( array( 'title', 'category', 'icon', 'description' ) as $doclap_key ) {
+		$doclap_value = $doclap_manifest[ $doclap_key ] ?? null;
+
+		if ( ! is_string( $doclap_value ) || '' === trim( $doclap_value ) ) {
+			doclap_smoke_fail( $doclap_name . ' declares no ' . $doclap_key );
+		}
+	}
+
+	if ( ! is_array( $doclap_manifest['keywords'] ?? null ) || array() === $doclap_manifest['keywords'] ) {
+		doclap_smoke_fail( $doclap_name . ' declares no keywords' );
+	}
+
+	if ( 'doclap' !== ( $doclap_manifest['textdomain'] ?? null ) ) {
+		doclap_smoke_fail( $doclap_name . ' does not declare the doclap textdomain' );
+	}
+
+	if ( false !== ( $doclap_manifest['supports']['html'] ?? null ) ) {
+		doclap_smoke_fail( $doclap_name . ' does not declare supports.html false' );
+	}
+
+	if ( true !== ( $doclap_manifest['supports']['anchor'] ?? null ) ) {
+		doclap_smoke_fail( $doclap_name . ' does not declare supports.anchor true' );
+	}
+
+	foreach ( array( 'render', 'editorScript', 'editorStyle', 'style', 'viewScript' ) as $doclap_key ) {
+		$doclap_relative = $doclap_manifest[ $doclap_key ] ?? '';
+
+		if ( ! is_string( $doclap_relative ) || '' === $doclap_relative ) {
+			continue;
+		}
+
+		if ( ! str_starts_with( $doclap_relative, 'file:' ) ) {
+			doclap_smoke_fail( $doclap_name . ' declares a non-file ' . $doclap_key . ': ' . $doclap_relative );
+		}
+
+		$doclap_resolved = doclap_smoke_resolve_asset( $doclap_slug, $doclap_relative );
+
+		if ( '' === $doclap_resolved ) {
+			doclap_smoke_fail( $doclap_name . ' declares an unreadable ' . $doclap_key . ': ' . $doclap_relative );
+		}
+
+		if ( ! str_ends_with( $doclap_resolved, '.js' ) ) {
+			continue;
+		}
+
+		++$doclap_js_assets;
+
+		$doclap_asset_php = (string) preg_replace( '#\.js$#', '.asset.php', $doclap_resolved );
+
+		if ( ! is_readable( $doclap_asset_php ) ) {
+			doclap_smoke_fail( $doclap_name . ' has no ' . basename( $doclap_asset_php ) . ' beside ' . basename( $doclap_resolved ) );
+		}
+
+		$doclap_asset = include $doclap_asset_php;
+
+		if ( ! is_array( $doclap_asset ) || ! is_array( $doclap_asset['dependencies'] ?? null ) ) {
+			doclap_smoke_fail( $doclap_name . ' ships an ' . basename( $doclap_asset_php ) . ' without a dependency list' );
+		}
+	}
+
+	// The registered block type must carry the editor style handle and the dynamic
+	// render callback, not just the metadata declaring them.
+	$doclap_block   = $doclap_registered[ $doclap_name ];
+	$doclap_handles = array();
+
+	if ( is_array( $doclap_block->editor_style_handles ?? null ) ) {
+		$doclap_handles = $doclap_block->editor_style_handles;
+	}
+
+	if ( array() === $doclap_handles ) {
+		foreach ( array( 'editorStyle', 'style' ) as $doclap_property ) {
+			$doclap_value = $doclap_block->$doclap_property ?? null;
+
+			if ( is_array( $doclap_value ) && array() !== $doclap_value ) {
+				$doclap_handles[] = $doclap_property;
+			} elseif ( is_string( $doclap_value ) && '' !== $doclap_value ) {
+				$doclap_handles[] = $doclap_property;
+			}
+		}
+	}
+
+	if ( array() === $doclap_handles ) {
+		doclap_smoke_fail( $doclap_name . ' exposes no editor style handle' );
+	}
+
+	if ( ! is_callable( $doclap_block->render_callback ?? null ) ) {
+		doclap_smoke_fail( $doclap_name . ' has no callable render callback' );
+	}
+}
+
+// The contact delivery schema is server-side only: the six 1.0.0 delivery
+// attributes are gone and nothing secret-like has been reintroduced.
+$doclap_contact_attributes = array_keys( (array) ( $doclap_manifests['doclap/contact-form']['attributes'] ?? array() ) );
+
+foreach ( array( 'adminEmail', 'adminEmailSubject', 'userEmailSubject', 'enableRecaptcha', 'recaptchaSiteKey', 'recaptchaSecretKey' ) as $doclap_key ) {
+	if ( in_array( $doclap_key, $doclap_contact_attributes, true ) ) {
+		doclap_smoke_fail( 'the contact block still declares ' . $doclap_key );
+	}
+}
+
+foreach ( $doclap_contact_attributes as $doclap_key ) {
+	if ( preg_match( '/secret|recaptcha|subject|adminemail/i', $doclap_key ) ) {
+		doclap_smoke_fail( 'the contact block declares a delivery attribute: ' . $doclap_key );
+	}
+}
+
+foreach ( array( 'doclap/site-header', 'doclap/site-footer' ) as $doclap_name ) {
+	if ( false !== ( $doclap_manifests[ $doclap_name ]['supports']['reusable'] ?? null ) ) {
+		doclap_smoke_fail( $doclap_name . ' does not declare supports.reusable false' );
+	}
+}
+
+// The header stores a WordPress menu source (menu id and depth) and a brand
+// source (text or a media-library logo), never a mirrored menu tree or a logo URL
+// detached from its attachment.
+$doclap_header_attributes = (array) ( $doclap_manifests['doclap/site-header']['attributes'] ?? array() );
+$doclap_header_contract   = array(
+	'menuId'        => array( 'number', 0 ),
+	'menuDepth'     => array( 'number', 4 ),
+	'brandMode'     => array( 'string', 'text' ),
+	'brandMediaId'  => array( 'number', 0 ),
+	'brandMediaUrl' => array( 'string', '' ),
+	'brandMediaAlt' => array( 'string', '' ),
+);
+
+foreach ( $doclap_header_contract as $doclap_key => $doclap_expected ) {
+	$doclap_attribute = $doclap_header_attributes[ $doclap_key ] ?? null;
+
+	if (
+		! is_array( $doclap_attribute )
+		|| $doclap_expected[0] !== ( $doclap_attribute['type'] ?? null )
+		|| $doclap_expected[1] !== ( $doclap_attribute['default'] ?? null )
+	) {
+		doclap_smoke_fail(
+			'the site header does not declare '
+			. $doclap_key . ' as ' . (string) $doclap_expected[0]
+			. ' with the default ' . wp_json_encode( $doclap_expected[1] ),
+		);
+	}
+}
+
+foreach ( array( 'navItems', 'quickLinks', 'closePanelLabel' ) as $doclap_key ) {
+	if ( array_key_exists( $doclap_key, $doclap_header_attributes ) ) {
+		doclap_smoke_fail( 'the site header still declares the removed attribute ' . $doclap_key );
+	}
+}
+
+// Delivery configuration has exactly one home: the doclap_contact_settings option.
+$doclap_option_sources = array_merge(
+	(array) glob( DOCLAP_DIR . '/inc/*.php' ),
+	(array) glob( DOCLAP_DIR . '/inc/*/*.php' ),
+	(array) glob( DOCLAP_DIR . '/inc/*/*/*.php' ),
+	(array) glob( DOCLAP_DIR . '/blocks/*/*.php' ),
+	(array) glob( DOCLAP_DIR . '/functions.php' ),
+);
+$doclap_option_found   = false;
+
+foreach ( $doclap_option_sources as $doclap_source ) {
+	if ( str_contains( (string) file_get_contents( $doclap_source ), 'doclap_contact_settings' ) ) {
+		$doclap_option_found = true;
+		break;
+	}
+}
+
+if ( ! $doclap_option_found ) {
+	doclap_smoke_fail( 'no theme PHP file reads the doclap_contact_settings option' );
+}
+
+doclap_smoke_pass( 'contact-settings' );
+
+doclap_smoke_pass( 'block-metadata ' . count( $doclap_manifests ) . ' js-assets=' . $doclap_js_assets );

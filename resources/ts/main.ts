@@ -1,127 +1,22 @@
 /**
  * Doclap front-end entry.
  *
- * Shared, cross-surface behaviour only: scroll reveals built on the GSAP instance
- * the parent theme already exposes, smooth scrolling, and the reading-progress
- * bar. Everything surface-specific (navigation panels, canvas studies, the
+ * Shared, cross-surface behaviour only: the global motion runtime (section
+ * entrances, soft text, the hero choreography and the magnetic controls, all
+ * owned by `runtime/motion.ts`), the reading-progress bar and the smooth-scroll
+ * controls. Everything surface-specific (navigation panels, canvas studies, the
  * sculpture viewer, filtering) lives in the owning block's view script.
  *
  * Accessibility contract: markup is never hidden by CSS waiting for JavaScript.
- * Reveals are additive, so content stays visible when GSAP is missing, when the
+ * Entrances are additive and the motion runtime is a complete static mode under
+ * reduced motion, so content stays visible when GSAP is missing, when the
  * visitor asks for reduced motion, or when this script fails to load.
  */
 
-interface DoclapGsap {
-	fromTo: (
-		targets: Element[],
-		from: Record<string, unknown>,
-		to: Record<string, unknown>,
-	) => { kill: () => void };
-}
-
-interface DoclapScrollTrigger {
-	create: (vars: Record<string, unknown>) => { kill: () => void };
-	refresh: () => void;
-}
-
-interface DoclapMotionApi {
-	init: () => void;
-	refresh: () => void;
-	destroy: () => void;
-}
-
-declare global {
-	interface Window {
-		gsap?: DoclapGsap;
-		ScrollTrigger?: DoclapScrollTrigger;
-		doclapMotion?: DoclapMotionApi;
-	}
-}
-
-const REVEAL_SELECTOR = '[data-doclap-reveal]';
-const REVEALED_ATTR = 'data-doclap-revealed';
+import { bootMotion } from './runtime/motion';
 
 const prefersReducedMotion = (): boolean =>
 	window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-let triggers: { kill: () => void }[] = [];
-
-/**
- * Run the reveal animation for a single element.
- */
-function reveal(
-	element: Element,
-	gsap: DoclapGsap,
-	scrollTrigger: DoclapScrollTrigger | undefined,
-): { kill: () => void } | null {
-	const motion = Number(element.getAttribute('data-doclap-reveal-distance') ?? 24);
-	const duration = Number(element.getAttribute('data-doclap-reveal-duration') ?? 0.85);
-
-	const from = { opacity: 0, y: motion, filter: 'blur(4px)' };
-	const to = {
-		opacity: 1,
-		y: 0,
-		filter: 'blur(0px)',
-		duration,
-		ease: 'power3.out',
-		clearProps: 'filter,transform',
-	};
-
-	if (!scrollTrigger) {
-		return gsap.fromTo([element], from, to) as { kill: () => void };
-	}
-
-	return scrollTrigger.create({
-		trigger: element,
-		start: 'top 88%',
-		once: true,
-		onEnter: () => {
-			gsap.fromTo([element], from, to);
-		},
-	}) as { kill: () => void };
-}
-
-/**
- * Initialise every not-yet-revealed element inside `root`.
- */
-function initReveals(root: ParentNode = document): void {
-	const gsap = window.gsap;
-	const scene = prefersReducedMotion();
-
-	if (!gsap) {
-		// Nothing to animate with — leave the content exactly as rendered.
-		return;
-	}
-
-	const scrollTrigger = window.ScrollTrigger;
-	if (scene) {
-		// Content is already visible; just mark it so nothing re-runs later.
-		root.querySelectorAll(REVEAL_SELECTOR).forEach((element) => {
-			element.setAttribute(REVEALED_ATTR, 'true');
-		});
-		return;
-	}
-
-	root.querySelectorAll(REVEAL_SELECTOR).forEach((element) => {
-		if (element.getAttribute(REVEALED_ATTR) === 'true') {
-			return;
-		}
-
-		const controller = reveal(element, gsap, scrollTrigger);
-		if (controller) {
-			triggers.push(controller);
-		}
-		element.setAttribute(REVEALED_ATTR, 'true');
-	});
-}
-
-/**
- * Tear down every ScrollTrigger this module created.
- */
-function destroyReveals(): void {
-	triggers.forEach((trigger) => trigger.kill());
-	triggers = [];
-}
 
 /**
  * Animate the shared reading-progress bar.
@@ -196,38 +91,16 @@ function initScrollControls(): void {
 			});
 		});
 	});
-
-	// A preference change mid-session must not leave queued animations running.
-	window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', () => {
-		destroyReveals();
-		initReveals();
-	});
 }
 
+/**
+ * Boot the shared front-end behaviour.
+ */
 function boot(): void {
-	initReveals();
+	bootMotion();
 	initReadingProgress();
 	initScrollControls();
-
-	if (window.ScrollTrigger) {
-		window.ScrollTrigger.refresh();
-	}
 }
-
-window.doclapMotion = {
-	init: (): void => {
-		initReveals();
-		if (window.ScrollTrigger) {
-			window.ScrollTrigger.refresh();
-		}
-	},
-	refresh: (): void => {
-		if (window.ScrollTrigger) {
-			window.ScrollTrigger.refresh();
-		}
-	},
-	destroy: destroyReveals,
-};
 
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', boot, { once: true });

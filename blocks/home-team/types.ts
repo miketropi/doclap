@@ -7,6 +7,10 @@ export interface TeamCard extends Record<string, unknown> {
 }
 
 export interface HomeTeamAttributes extends Record<string, unknown> {
+	/** Section colours; an empty string keeps the theme default. */
+	sectionBg?: string;
+	sectionHeading?: string;
+	sectionText?: string;
 	teamHeading: string;
 	teamMeta: string;
 	teamIntro: string;

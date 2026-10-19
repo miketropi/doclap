@@ -197,7 +197,7 @@ html body {
 .doclap-scope .lead {
   font-size: var(--doclap-fs-lead);
   line-height: 1.55;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   max-width: 60ch;
   margin: 0;
 }
@@ -206,17 +206,20 @@ html body {
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--doclap-accent);
+  color: var(--doclap-block-text,var(--doclap-accent));
   margin: 0 0 var(--doclap-gap-md);
 }
 .doclap-scope .meta {
   font-family: var(--doclap-font-mono);
   font-size: var(--doclap-fs-meta);
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .num {
   font-family: var(--doclap-font-mono);
   font-variant-numeric: tabular-nums;
+}
+.doclap-scope.doclap-site-header {
+  overflow-x: clip;
 }
 .doclap-scope .topnav {
   position: sticky;
@@ -241,9 +244,35 @@ html body {
   font-weight: 600;
   letter-spacing: -0.01em;
 }
+.doclap-scope .topnav .logo--image {
+  display: inline-flex;
+  align-items: center;
+  max-width: 40vw;
+}
+.doclap-scope .logo-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 40px;
+  max-width: 100%;
+  object-fit: contain;
+}
 .doclap-scope .topnav nav {
   display: flex;
+}
+.doclap-scope .doclap-menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--doclap-gap-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.doclap-scope .doclap-menu .sub-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .doclap-scope .topnav nav a {
   font-size: 14px;
@@ -361,7 +390,7 @@ html body {
   font-weight: 600;
 }
 .doclap-scope .stat .stat-label {
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   font-size: 14px;
   margin-top: 8px;
   max-width: 24ch;
@@ -379,7 +408,7 @@ html body {
   max-width: 28ch;
 }
 .doclap-scope .quote-author {
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   font-size: 14px;
   margin-top: var(--doclap-gap-md);
 }
@@ -421,7 +450,7 @@ html body {
 }
 .doclap-scope .field label {
   font-size: 13px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .input, .doclap-scope .textarea {
   width: 100%;
@@ -551,7 +580,7 @@ html body {
   align-items: baseline;
 }
 .doclap-scope .log-row .meta {
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .log-row h3 {
   font-size: 19px;
@@ -697,7 +726,7 @@ body {
   width: 100%;
 }
 .doclap-scope .hero .eyebrow {
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   font-size: 12px;
   margin-bottom: 30px;
 }
@@ -760,7 +789,7 @@ body {
   bottom: 20px;
   text-align: left;
   font: 11px/1.9 var(--doclap-font-mono);
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .hero-bottom {
   display: grid;
@@ -776,7 +805,7 @@ body {
 .doclap-scope .hero .lead {
   font-size: 16px;
   line-height: 1.8;
-  color: var(--doclap-fg);
+  color: var(--doclap-block-text,var(--doclap-fg));
   margin: 0;
 }
 .doclap-scope .hero-note {
@@ -843,7 +872,7 @@ body {
 }
 .doclap-scope .eyebrow {
   font-size: 13px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .section-head .meta {
   font-size: 12px;
@@ -916,7 +945,7 @@ body {
 }
 .doclap-scope .work-sub, .doclap-scope .caption {
   font-size: 15px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   line-height: 1.8;
 }
 .doclap-scope .caption {
@@ -933,7 +962,7 @@ body {
 .doclap-scope .about-grid .lead {
   font-size: 20px;
   line-height: 1.8;
-  color: var(--doclap-fg);
+  color: var(--doclap-block-text,var(--doclap-fg));
 }
 .doclap-scope .principle {
   font-size: 15px;
@@ -958,7 +987,7 @@ body {
 }
 .doclap-scope .log-row p {
   font-size: 14px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   line-height: 1.8;
   margin: 7px 0 0;
 }
@@ -966,13 +995,13 @@ body {
   font-size: 12px;
 }
 .doclap-scope .process {
-  background: var(--doclap-fg);
-  color: var(--doclap-bg);
+  background: var(--doclap-block-bg,var(--doclap-fg));
+  color: var(--doclap-block-text,var(--doclap-bg));
 }
 .doclap-scope .process .eyebrow, .doclap-scope .process .meta {
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   @supports (color: color-mix(in lab, red, red)) {
-    color: color-mix(in oklch,var(--doclap-bg) 78%,var(--doclap-fg));
+    color: var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 78%,var(--doclap-fg)));
   }
 }
 .doclap-scope .process-row {
@@ -993,9 +1022,9 @@ body {
   margin: 0;
   font-size: 16px;
   line-height: 1.8;
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   @supports (color: color-mix(in lab, red, red)) {
-    color: color-mix(in oklch,var(--doclap-bg) 80%,var(--doclap-fg));
+    color: var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 80%,var(--doclap-fg)));
   }
 }
 .doclap-scope .team-image {
@@ -1017,7 +1046,7 @@ body {
 }
 .doclap-scope .team-image figcaption {
   font-size: 12px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   margin-top: 14px;
 }
 .doclap-scope .team-intro {
@@ -1026,7 +1055,7 @@ body {
 }
 .doclap-scope .team-intro p {
   font-size: 19px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   line-height: 1.8;
 }
 .doclap-scope .team-roles {
@@ -1044,7 +1073,7 @@ body {
 .doclap-scope .team-roles p {
   font-size: 15px;
   line-height: 1.8;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .team-roles .meta {
   font-size: 11px;
@@ -1125,7 +1154,7 @@ body {
 }
 .doclap-scope .journal-row p {
   font-size: 14px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   margin-bottom: 0;
 }
 .doclap-scope .journal-row .meta {
@@ -1147,7 +1176,7 @@ body {
   background: var(--doclap-accent);
 }
 .doclap-scope .newsletter .eyebrow {
-  color: var(--doclap-fg);
+  color: var(--doclap-block-text,var(--doclap-fg));
 }
 .doclap-scope .newsletter-inner {
   display: grid;
@@ -1165,7 +1194,7 @@ body {
 }
 .doclap-scope .newsletter .field label {
   font-size: 14px;
-  color: var(--doclap-fg);
+  color: var(--doclap-block-text,var(--doclap-fg));
 }
 .doclap-scope .email-row {
   display: flex;
@@ -1206,13 +1235,13 @@ body {
 }
 .doclap-scope .contact {
   text-align: center;
-  background: var(--doclap-fg);
-  color: var(--doclap-bg);
+  background: var(--doclap-block-bg,var(--doclap-fg));
+  color: var(--doclap-block-text,var(--doclap-bg));
 }
 .doclap-scope .contact .eyebrow, .doclap-scope .contact .lead {
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   @supports (color: color-mix(in lab, red, red)) {
-    color: color-mix(in oklch,var(--doclap-bg) 80%,var(--doclap-fg));
+    color: var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 80%,var(--doclap-fg)));
   }
 }
 .doclap-scope .contact h2 {
@@ -1334,7 +1363,7 @@ body {
 }
 .doclap-scope .form-note {
   font-size: 13px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .form-result {
   font-size: 14px;
@@ -1441,7 +1470,7 @@ body {
   .doclap-scope .process-row p {
     grid-column: 2;
   }
-  .doclap-scope .topnav nav {
+  .doclap-scope .doclap-menu {
     gap: 24px;
   }
 }
@@ -1469,6 +1498,36 @@ body {
   }
   .doclap-scope .topnav nav.open {
     display: flex;
+  }
+  .doclap-scope .topnav nav .doclap-menu {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+  }
+  .doclap-scope .topnav nav .doclap-menu>.menu-item {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+  .doclap-scope .topnav nav .doclap-menu>.menu-item>a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    font-size: 16px;
+  }
+  .doclap-scope .topnav nav .doclap-menu .sub-menu {
+    position: static;
+    flex: 1 0 100%;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    transform: none;
+    box-shadow: none;
   }
   .doclap-scope .hero {
     padding-top: 24px;
@@ -3062,7 +3121,7 @@ body {
   justify-content: space-between;
 }
 .doclap-scope .hero-edition {
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .gallery-stage {
   position: relative;
@@ -3129,7 +3188,7 @@ body {
   font: 11px/1.8 var(--doclap-font-mono);
   letter-spacing: .08em;
   margin-bottom: 24px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .gallery-panel h1, .doclap-scope .gallery-panel h2 {
   font: 500 clamp(64px,7.3vw,116px)/1.16 var(--doclap-font-display);
@@ -3187,7 +3246,7 @@ body {
   margin-top: 7px;
 }
 .doclap-scope .gallery-caption-sub {
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .gallery-vertical {
   position: absolute;
@@ -3226,7 +3285,7 @@ body {
   margin: 0;
 }
 .doclap-scope .gallery-footer>p>span {
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .gallery-pagination {
   display: flex;
@@ -3286,19 +3345,23 @@ body {
   margin-top: 15px;
   font-size: 10px;
 }
-.doclap-scope .soft-char {
-  display: inline-block;
-  will-change: auto;
-}
-.doclap-scope .soft-word {
-  display: inline-block;
-  white-space: nowrap;
-}
-.doclap-scope .soft-text {
+.doclap-scope .soft-text[aria-label] {
   display: inline;
   position: relative;
+  margin: 0;
 }
-.doclap-scope .soft-text svg {
+.doclap-scope .soft-text[aria-label] .soft-word {
+  display: inline;
+  white-space: nowrap;
+  margin: 0;
+}
+.doclap-scope .soft-text[aria-label] .soft-char {
+  display: inline-block;
+  line-height: inherit;
+  margin: 0;
+  will-change: auto;
+}
+.doclap-scope .soft-text[aria-label] svg {
   display: inline-block;
 }
 .doclap-scope .topnav nav a:after {
@@ -3372,7 +3435,7 @@ body {
   font-size: 13px;
   line-height: 1.9;
   max-width: 55ch;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   margin: 0 0 35px;
 }
 .doclap-scope .voice-person {
@@ -3410,14 +3473,14 @@ body {
 }
 .doclap-scope .voice-identity>span {
   font-size: 11px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .voice-socials {
   display: flex;
   gap: 7px;
   margin-left: auto;
 }
-.doclap-scope .voice-socials button {
+.doclap-scope .voice-socials .voice-social {
   width: 44px;
   height: 44px;
   background: transparent;
@@ -3436,8 +3499,8 @@ body {
   height: 16px;
 }
 .doclap-scope .voice-editorial {
-  background: var(--doclap-fg);
-  color: var(--doclap-bg);
+  background: var(--doclap-block-bg,var(--doclap-fg));
+  color: var(--doclap-block-text,var(--doclap-bg));
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -3456,9 +3519,9 @@ body {
 .doclap-scope .voice-editorial p {
   font-size: 13px;
   line-height: 1.9;
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   @supports (color: color-mix(in lab, red, red)) {
-    color: color-mix(in oklch,var(--doclap-bg) 82%,var(--doclap-fg));
+    color: var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 82%,var(--doclap-fg)));
   }
   max-width: 40ch;
 }
@@ -3488,7 +3551,7 @@ body {
   gap: 12px;
   margin-top: 24px;
   font: 11px/1.9 var(--doclap-font-mono);
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .process-row, .doclap-scope .log-row, .doclap-scope .team-roles .feature {
   transition: background .4s,padding .5s;
@@ -3769,11 +3832,37 @@ body {
     font-size: 12px;
   }
 }
+.doclap-scope .gallery-hero .gallery-word {
+  translate: 0 calc(var(--doclap-hero-progress,0) * 22%);
+}
+.doclap-scope .gallery-hero .hero-visual {
+  translate: 0 calc(var(--doclap-hero-progress,0) * 45px);
+}
+.doclap-scope.gallery-hero[data-current="1"] .gallery-orbit, .doclap-scope .gallery-hero[data-current="1"] .gallery-orbit {
+  transform: translateX(-8%) rotate(24deg) scale(.76,1.13);
+}
+.doclap-scope.gallery-hero[data-current="1"] .gallery-word, .doclap-scope .gallery-hero[data-current="1"] .gallery-word {
+  transform: translateY(30px);
+}
+.doclap-scope .circle-cta {
+  transition: translate .3s cubic-bezier(.22,1,.36,1);
+}
+.doclap-scope .project-open {
+  transition: translate .3s cubic-bezier(.22,1,.36,1),transform .5s,background .3s,color .3s;
+}
 @media (prefers-reduced-motion:reduce) {
-  .doclap-scope .soft-char {
+  .doclap-scope .soft-text[aria-label], .doclap-scope .soft-text[aria-label] .soft-word, .doclap-scope .soft-text[aria-label] .soft-char {
     filter: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+  .doclap-scope .circle-cta, .doclap-scope .project-open {
+    transition: none;
+    translate: 0 0 !important;
+  }
+  .doclap-scope .sub-menu.nav-submenu {
+    transition: none;
+    transform: none;
   }
 }
 @media (max-width:380px) {
@@ -3798,7 +3887,7 @@ body {
   align-items: start;
 }
 .doclap-scope #work .work-card {
-  color: var(--doclap-fg);
+  color: var(--doclap-block-text,var(--doclap-fg));
 }
 .doclap-scope #work .work-card:nth-child(2) {
   margin-top: 120px;
@@ -3915,7 +4004,7 @@ body {
   }
   padding-top: 17px;
   font: 11px/1.8 var(--doclap-font-mono);
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
 .doclap-scope .work-detail svg {
   width: 17px;
@@ -3936,40 +4025,66 @@ body {
   font-size: 14px;
   max-width: 76ch;
 }
-.doclap-scope .nav-group {
+.doclap-scope .doclap-menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--doclap-gap-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.doclap-scope .doclap-menu .sub-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.doclap-scope .doclap-menu>.menu-item {
   position: relative;
   display: flex;
   align-items: center;
 }
-.doclap-scope .nav-disclosure {
+.doclap-scope .doclap-submenu-indicator {
+  display: none;
+  align-items: center;
+  color: var(--doclap-muted);
+  pointer-events: none;
+}
+.doclap-scope .doclap-submenu-indicator>.lucide {
+  width: 14px;
+  height: 14px;
+}
+.doclap-scope .doclap-submenu-toggle {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 0;
+  min-width: 44px;
+  padding: 0 6px;
   background: transparent;
   border: 0;
-  font-size: 14px;
   color: var(--doclap-fg);
+  font: 14px/1.5 var(--doclap-font-body);
   min-height: 46px;
 }
-.doclap-scope .nav-disclosure>.lucide {
+.doclap-scope .doclap-submenu-toggle>.lucide {
   width: 14px;
   height: 14px;
   transition: transform .4s;
 }
-.doclap-scope .nav-disclosure[aria-expanded="true"]>.lucide {
+.doclap-scope .doclap-submenu-toggle[aria-expanded="true"]>.lucide {
   transform: rotate(180deg);
 }
-.doclap-scope .nav-disclosure:hover {
+.doclap-scope .doclap-submenu-toggle:hover {
   background: var(--doclap-fg-soft);
   color: var(--doclap-fg);
 }
-.doclap-scope .nav-submenu {
+.doclap-scope .sub-menu.nav-submenu {
   position: absolute;
   left: -24px;
   top: calc(100% + 12px);
   width: 320px;
-  padding: 22px;
+  padding: 14px;
   background: var(--doclap-surface);
   color: var(--doclap-fg);
   border: 1px solid var(--doclap-fg);
@@ -3980,55 +4095,89 @@ body {
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 24px 60px -24px color-mix(in oklch,var(--doclap-fg) 22%,transparent);
   }
-  animation: submenu-in .4s cubic-bezier(.22,1,.36,1);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .2s ease,transform .2s ease,visibility 0s linear .2s;
 }
-.doclap-scope .nav-submenu-label {
-  display: block;
-  font: 10px/1.8 var(--doclap-font-mono);
-  letter-spacing: .08em;
-  color: var(--doclap-muted);
-  padding: 0 10px 14px;
+.doclap-scope .menu-item>.doclap-submenu-toggle[aria-expanded="true"]~.sub-menu.nav-submenu {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: opacity .2s ease,transform .2s ease,visibility 0s;
 }
-.doclap-scope .topnav nav .nav-submenu a {
-  padding: 12px 10px;
-  display: grid;
-  grid-template-columns: 1fr 18px;
-  gap: 3px 12px;
+.doclap-scope .sub-menu.nav-submenu>.menu-item {
+  position: relative;
+  display: flex;
   align-items: center;
+  gap: 4px;
   border-top: 1px solid var(--doclap-fg-soft);
-  min-height: 68px;
+}
+.doclap-scope .sub-menu.nav-submenu>.menu-item:first-child {
+  border-top: 0;
+}
+.doclap-scope .sub-menu.nav-submenu .sub-menu.nav-submenu {
+  left: calc(100% + 10px);
+  top: -14px;
+}
+.doclap-scope .topnav nav .sub-menu a {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-top: 0;
+  min-height: 44px;
   font-size: 14px;
 }
-.doclap-scope .topnav nav .nav-submenu a:after {
+.doclap-scope .topnav nav .sub-menu a:after {
   display: none;
 }
-.doclap-scope .nav-submenu a small {
-  grid-column: 1;
-  font: 11px/1.7 var(--doclap-font-body);
-  color: var(--doclap-muted);
+.doclap-scope .topnav nav .sub-menu .doclap-submenu-toggle {
+  padding: 0 4px;
+  min-height: 44px;
 }
-.doclap-scope .nav-submenu a>.lucide {
-  grid-column: 2;
-  grid-row: 1/3;
-  width: 17px;
-  height: 17px;
-  transition: transform .4s;
-}
-.doclap-scope .topnav nav .nav-submenu a:is(:hover, :focus-visible) {
+.doclap-scope .topnav nav .sub-menu a:is(:hover, :focus-visible) {
   background: var(--doclap-fg-soft);
   color: var(--doclap-fg);
 }
-.doclap-scope .nav-submenu a:hover>.lucide {
-  transform: translate(2px,-2px);
-}
-@keyframes submenu-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
+@media (min-width:921px) and (hover:hover) and (pointer:fine) {
+  .doclap-scope .doclap-menu .doclap-submenu-toggle {
+    display: none;
   }
-  to {
+  .doclap-scope .doclap-menu .doclap-submenu-indicator {
+    display: inline-flex;
+  }
+  .doclap-scope .doclap-menu>.menu-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 14px;
+  }
+  .doclap-scope .sub-menu.nav-submenu .menu-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 12px;
+  }
+  .doclap-scope .doclap-menu .menu-item:is(:hover, :focus-within)>.sub-menu.nav-submenu {
+    visibility: visible;
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition: opacity .2s ease,transform .2s ease,visibility 0s;
+  }
+  .doclap-scope .doclap-menu .menu-item:is(:hover, :focus-within)>.doclap-submenu-indicator {
+    color: var(--doclap-fg);
+  }
+}
+@media (min-width:921px) and (max-width:1180px) and (hover:hover) and (pointer:fine) {
+  .doclap-scope .doclap-menu>.menu-item:nth-last-child(-n+3)>.sub-menu.nav-submenu {
+    left: auto;
+    right: 0;
   }
 }
 @media (max-width:920px) {
@@ -4085,320 +4234,57 @@ body {
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-  .doclap-scope .nav-group {
-    display: block;
-  }
-  .doclap-scope .nav-disclosure {
+  .doclap-scope .doclap-menu {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
     width: 100%;
-    justify-content: space-between;
+  }
+  .doclap-scope .doclap-menu>.menu-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+  .doclap-scope .doclap-menu>.menu-item>a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    font-size: 16px;
+  }
+  .doclap-scope .doclap-submenu-toggle {
+    flex: 0 0 48px;
+    justify-content: center;
     min-height: 48px;
     font-size: 16px;
   }
-  .doclap-scope .nav-submenu {
+  .doclap-scope .sub-menu.nav-submenu, .doclap-scope .sub-menu.nav-submenu .sub-menu.nav-submenu {
     position: static;
+    left: auto;
+    top: auto;
+    flex: 1 0 100%;
     width: 100%;
-    margin: 4px 0 16px;
-    padding: 16px;
+    margin: 0;
+    padding: 8px 0 14px 16px;
     box-shadow: none;
-  }
-  .doclap-scope .topnav nav>a {
-    min-height: 48px;
-    font-size: 16px;
+    transform: none;
   }
 }
 .doclap-scope .topnav-inner {
   position: relative;
 }
-.doclap-scope .nav-group-mega {
+.doclap-scope .doclap-menu>.nav-group-mega {
   position: static;
 }
-.doclap-scope .nav-mega {
-  left: var(--doclap-gutter);
-  right: var(--doclap-gutter);
+.doclap-scope .topnav .has-mega-menu>.beplus-vmn-mega-panel {
   top: calc(100% - 1px);
-  width: auto;
-  padding: 0;
   max-height: calc(100dvh - 120px);
   overflow-y: auto;
   overscroll-behavior: contain;
-  animation: mega-reveal .5s cubic-bezier(.22,1,.36,1);
 }
-.doclap-scope .mega-layout {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr 1fr;
-  padding: 32px;
-  gap: 24px;
-}
-.doclap-scope .mega-intro {
-  padding: 4px 20px 0 0;
-}
-.doclap-scope .mega-intro .nav-submenu-label {
-  padding: 0;
-  font-size: 11px;
-}
-.doclap-scope .mega-title {
-  font: clamp(28px,2.8vw,40px)/1.2 var(--doclap-font-display);
-  letter-spacing: -.035em;
-  margin: 18px 0;
-}
-.doclap-scope .mega-description {
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--doclap-muted);
-  max-width: 32ch;
-  margin: 0 0 16px;
-}
-.doclap-scope .topnav nav .nav-mega .mega-all {
-  display: flex;
-  gap: 18px;
-  border: 0;
-  padding: 8px 0;
-  min-height: 44px;
-  font-size: 14px;
-  align-items: center;
-  justify-content: space-between;
-}
-.doclap-scope .mega-all>.lucide {
-  position: static;
-  width: 18px;
-  height: 18px;
-}
-.doclap-scope .topnav nav .nav-mega .mega-all:is(:hover, :focus-visible) {
-  background: transparent;
-  text-decoration: underline;
-  text-underline-offset: 6px;
-}
-.doclap-scope .topnav nav .nav-mega .mega-project {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0;
-  padding: 24px;
-  min-width: 0;
-  border: 1px solid var(--doclap-border);
-  background: var(--doclap-bg);
-  transition: background .35s,border-color .35s,transform .5s;
-}
-.doclap-scope .mega-index {
-  font: 11px/1.7 var(--doclap-font-mono);
-  letter-spacing: .06em;
-  color: var(--doclap-muted);
-}
-.doclap-scope .mega-project-title {
-  font: clamp(27px,2.7vw,39px)/1.25 var(--doclap-font-display);
-  letter-spacing: -.035em;
-  margin: 30px 0 14px;
-}
-.doclap-scope .nav-mega .mega-project small {
-  font: 14px/1.8 var(--doclap-font-body);
-  color: var(--doclap-muted);
-}
-.doclap-scope .mega-project-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: auto;
-  padding-top: 30px;
-  font-size: 12px;
-}
-.doclap-scope .mega-project-foot>.lucide {
-  width: 19px;
-  height: 19px;
-  transition: transform .4s;
-}
-.doclap-scope .topnav nav .nav-mega .mega-project:is(:hover, :focus-visible) {
-  background: var(--doclap-fg-soft);
-  border-color: var(--doclap-fg);
-  color: var(--doclap-fg);
-  transform: translateY(-3px);
-}
-.doclap-scope .mega-project:hover .mega-project-foot>.lucide {
-  transform: translate(3px,-3px);
-}
-.doclap-scope .mega-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 10px 32px;
-  border-top: 1px solid var(--doclap-border);
-  font: 10px/1.8 var(--doclap-font-mono);
-  letter-spacing: .04em;
-  color: var(--doclap-muted);
-}
-.doclap-scope .mega-close {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: transparent;
-  border: 0;
-  padding: 8px;
-  color: var(--doclap-fg);
-  font: 12px var(--doclap-font-body);
-  min-height: 44px;
-}
-.doclap-scope .mega-close:hover {
-  background: var(--doclap-fg-soft);
-  color: var(--doclap-fg);
-}
-.doclap-scope .mega-close>.lucide {
-  width: 16px;
-  height: 16px;
-}
-@keyframes mega-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-    filter: blur(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
-@media (min-width:641px) and (max-width:920px) {
-  .doclap-scope .mega-layout {
-    padding: 22px;
-    gap: 16px;
-    grid-template-columns: 1fr 1fr;
-  }
-  .doclap-scope .mega-intro {
-    grid-column: 1/-1;
-  }
-  .doclap-scope .mega-title {
-    margin: 10px 0;
-  }
-  .doclap-scope .mega-description {
-    max-width: none;
-    margin-bottom: 4px;
-  }
-  .doclap-scope .mega-title br {
-    display: none;
-  }
-  .doclap-scope .mega-project-title {
-    font-size: 32px;
-  }
-  .doclap-scope .topnav nav .nav-mega .mega-project {
-    padding: 20px;
-  }
-}
-@media (max-width:640px) {
-  .doclap-scope .nav-mega {
-    position: static;
-    margin: 6px 0 12px;
-    max-height: none;
-    overflow: visible;
-    padding: 0;
-    box-shadow: none;
-  }
-  .doclap-scope .mega-layout {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 18px;
-  }
-  .doclap-scope .mega-intro {
-    padding: 0 0 8px;
-  }
-  .doclap-scope .mega-title {
-    font-size: 32px;
-    margin: 16px 0;
-  }
-  .doclap-scope .mega-description {
-    font-size: 14px;
-    max-width: none;
-  }
-  .doclap-scope .topnav nav .nav-mega .mega-project {
-    padding: 18px;
-  }
-  .doclap-scope .mega-project-title {
-    font-size: 30px;
-    margin: 14px 0 8px;
-  }
-  .doclap-scope .mega-project-foot {
-    padding-top: 18px;
-  }
-  .doclap-scope .mega-bottom {
-    padding: 8px 18px;
-    gap: 12px;
-  }
-  .doclap-scope .mega-bottom>span {
-    max-width: 23ch;
-    font-size: 9px;
-  }
-}
-@media (prefers-reduced-motion:reduce) {
-  .doclap-scope .nav-mega {
-    animation: none;
-  }
-  .doclap-scope .topnav nav .nav-mega .mega-project, .doclap-scope .mega-project-foot>.lucide {
-    transition: none;
-    transform: none;
-  }
-}
-.doclap-scope .nav-pages .mega-layout {
-  grid-template-columns: 1fr 1fr 1.1fr;
-  gap: 32px;
-}
-.doclap-scope .pages-column {
-  min-width: 0;
-}
-.doclap-scope .pages-column>.nav-submenu-label {
-  padding: 4px 10px 14px;
-  font-size: 11px;
-}
-.doclap-scope .topnav nav .nav-pages .pages-column a {
-  font-size: 16px;
-  padding-block: 13px;
-  min-height: 74px;
-}
-.doclap-scope .nav-pages .pages-column a small {
-  font-size: 12px;
-  line-height: 1.7;
-}
-.doclap-scope .nav-pages .mega-intro {
-  border-right: 1px solid var(--doclap-border);
-  padding-right: 28px;
-}
-.doclap-scope .nav-pages .pages-column a:is(:hover, :focus-visible)>.lucide {
-  transform: translate(2px,-2px);
-}
-@media (min-width:641px) and (max-width:920px) {
-  .doclap-scope .nav-pages .mega-layout {
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .doclap-scope .nav-pages .mega-intro {
-    border-right: 0;
-    border-bottom: 1px solid var(--doclap-border);
-    padding: 0 0 16px;
-  }
-}
-@media (max-width:640px) {
-  .doclap-scope .nav-pages .mega-layout {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  .doclap-scope .nav-pages .mega-intro {
-    border-right: 0;
-    border-bottom: 1px solid var(--doclap-border);
-    padding: 0 0 20px;
-  }
-  .doclap-scope .topnav nav .nav-pages .pages-column a {
-    font-size: 16px;
-  }
-  .doclap-scope .nav-pages .pages-column a small {
-    font-size: 13px;
-  }
-}
-@media (prefers-reduced-motion:reduce) {
-  .doclap-scope .nav-pages .pages-column a>.lucide {
-    transition: none;
-    transform: none !important;
-  }
-}
-.doclap-scope #site-header {
+.doclap-scope.doclap-site-header .topnav {
   position: sticky;
   top: 0;
   z-index: 40;
@@ -4413,7 +4299,7 @@ body {
   }
   color: var(--doclap-fg);
 }
-.doclap-scope #site-header .topnav-inner {
+.doclap-scope.doclap-site-header .topnav .topnav-inner {
   position: relative;
   display: flex;
   align-items: center;
@@ -4422,7 +4308,7 @@ body {
   min-height: 98px;
   padding-block: 14px;
 }
-.doclap-scope #site-header .logo {
+.doclap-scope.doclap-site-header .topnav .logo {
   font: 600 32px/1.5 var(--doclap-font-body);
   letter-spacing: -1.7px;
   color: var(--doclap-fg);
@@ -4430,72 +4316,92 @@ body {
   align-items: baseline;
   flex-shrink: 0;
 }
-.doclap-scope #site-header .logo sup {
+.doclap-scope.doclap-site-header .topnav .logo sup {
   font-size: 12px;
   margin: 0 0 0 4px;
   align-self: flex-start;
   letter-spacing: 0;
 }
-.doclap-scope #site-header nav {
+.doclap-scope.doclap-site-header .topnav .logo--image {
+  align-items: center;
+  max-width: min(40vw,320px);
+}
+.doclap-scope.doclap-site-header .topnav .logo-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 46px;
+  max-width: 100%;
+  object-fit: contain;
+}
+.doclap-scope.doclap-site-header .topnav nav {
   display: flex;
   align-items: center;
-  gap: 28px;
   position: static;
   padding: 0;
   border: 0;
   max-height: none;
   overflow: visible;
   background: transparent;
-  flex-direction: row;
 }
-.doclap-scope #site-header nav>a, .doclap-scope #site-header .nav-disclosure {
-  font: 400 14px/1.5 var(--doclap-font-body);
-  color: var(--doclap-fg);
-  min-height: 46px;
+.doclap-scope.doclap-site-header .topnav .doclap-menu {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.doclap-scope #site-header nav a:after {
-  display: none;
-}
-.doclap-scope #site-header nav>a:hover {
-  text-decoration: underline;
-  text-underline-offset: 7px;
-}
-.doclap-scope #site-header .nav-group {
+.doclap-scope.doclap-site-header .topnav .doclap-menu>.menu-item {
   position: relative;
   display: flex;
   align-items: center;
 }
-.doclap-scope #site-header .nav-group-mega {
+.doclap-scope.doclap-site-header .topnav .doclap-menu>.menu-item>a, .doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle {
+  font: 400 14px/1.5 var(--doclap-font-body);
+  color: var(--doclap-fg);
+  min-height: 46px;
+}
+.doclap-scope.doclap-site-header .topnav .doclap-menu>.menu-item>a {
+  display: flex;
+  align-items: center;
+}
+.doclap-scope.doclap-site-header .topnav nav a:after {
+  display: none;
+}
+.doclap-scope.doclap-site-header .topnav .doclap-menu>.menu-item>a:hover {
+  text-decoration: underline;
+  text-underline-offset: 7px;
+}
+.doclap-scope.doclap-site-header .topnav .doclap-menu>.nav-group-mega {
   position: static;
 }
-.doclap-scope #site-header .nav-disclosure {
+.doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle {
   gap: 8px;
   background: transparent;
   border: 0;
   padding: 0 3px;
   width: auto;
-  justify-content: initial;
 }
-.doclap-scope #site-header .nav-disclosure:hover {
+.doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle:hover {
   background: var(--doclap-fg-soft);
   color: var(--doclap-fg);
 }
-.doclap-scope #site-header .lucide {
+.doclap-scope.doclap-site-header .topnav .lucide {
   width: 21px;
   height: 21px;
   flex-shrink: 0;
 }
-.doclap-scope #site-header .nav-disclosure>.lucide {
+.doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle>.lucide {
   width: 14px;
   height: 14px;
   transition: transform .4s;
 }
-.doclap-scope #site-header .nav-disclosure[aria-expanded=true]>.lucide {
+.doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle[aria-expanded=true]>.lucide {
   transform: rotate(180deg);
 }
-.doclap-scope #site-header .nav-contact {
+.doclap-scope.doclap-site-header .topnav .nav-contact {
   display: flex;
   align-items: center;
   gap: 18px;
@@ -4504,10 +4410,10 @@ body {
   color: var(--doclap-fg);
   min-height: 44px;
 }
-.doclap-scope #site-header .nav-contact:hover {
+.doclap-scope.doclap-site-header .topnav .nav-contact:hover {
   background: var(--doclap-fg-soft);
 }
-.doclap-scope #site-header .menu-toggle {
+.doclap-scope.doclap-site-header .topnav .menu-toggle {
   display: none;
   background: transparent;
   color: var(--doclap-fg);
@@ -4522,12 +4428,12 @@ body {
   padding: 10px;
   font: 14px/1.5 var(--doclap-font-body);
 }
-.doclap-scope #site-header .nav-submenu {
+.doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu {
   position: absolute;
   left: -24px;
   top: calc(100% + 12px);
   width: 320px;
-  padding: 22px;
+  padding: 14px;
   margin: 0;
   background: var(--doclap-surface);
   color: var(--doclap-fg);
@@ -4539,233 +4445,78 @@ body {
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 24px 60px -24px color-mix(in oklch,var(--doclap-fg) 22%,transparent);
   }
-  animation: chrome-reveal .5s cubic-bezier(.22,1,.36,1);
 }
-.doclap-scope #site-header .nav-submenu-label {
-  display: block;
-  font: 10px/1.8 var(--doclap-font-mono);
-  letter-spacing: .08em;
-  color: var(--doclap-muted);
-  padding: 0 10px 14px;
-}
-.doclap-scope #site-header nav .nav-submenu a {
-  padding: 12px 10px;
-  display: grid;
-  grid-template-columns: minmax(0,1fr) 18px;
-  gap: 3px 12px;
+.doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu>.menu-item {
+  position: relative;
+  display: flex;
   align-items: center;
+  gap: 4px;
   border-top: 1px solid var(--doclap-fg-soft);
-  min-height: 68px;
+}
+.doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu>.menu-item:first-child {
+  border-top: 0;
+}
+.doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .sub-menu.nav-submenu {
+  left: calc(100% + 10px);
+  top: -14px;
+}
+.doclap-scope.doclap-site-header .topnav nav .sub-menu a {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-top: 0;
+  min-height: 44px;
   font-size: 14px;
   color: var(--doclap-fg);
   text-decoration: none;
 }
-.doclap-scope #site-header .nav-submenu a small {
-  grid-column: 1;
-  font: 11px/1.7 var(--doclap-font-body);
-  color: var(--doclap-muted);
+.doclap-scope.doclap-site-header .topnav nav .sub-menu .doclap-submenu-toggle {
+  padding: 0 4px;
+  min-height: 44px;
 }
-.doclap-scope #site-header .nav-submenu a>.lucide {
-  grid-column: 2;
-  grid-row: 1/3;
-  width: 17px;
-  height: 17px;
-  transition: transform .4s;
-}
-.doclap-scope #site-header nav .nav-submenu a:is(:hover, :focus-visible) {
+.doclap-scope.doclap-site-header .topnav nav .sub-menu a:is(:hover, :focus-visible) {
   background: var(--doclap-fg-soft);
   color: var(--doclap-fg);
 }
-.doclap-scope #site-header .nav-submenu a:hover>.lucide {
-  transform: translate(2px,-2px);
-}
-.doclap-scope #site-header .nav-mega {
-  left: var(--doclap-gutter);
-  right: var(--doclap-gutter);
+.doclap-scope.doclap-site-header .topnav .has-mega-menu>.beplus-vmn-mega-panel {
   top: calc(100% - 1px);
-  width: auto;
-  padding: 0;
   max-height: calc(100dvh - 120px);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
-.doclap-scope #site-header .mega-layout {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr 1fr;
-  padding: 32px;
-  gap: 24px;
-}
-.doclap-scope #site-header .mega-intro {
-  padding: 4px 20px 0 0;
-  min-width: 0;
-}
-.doclap-scope #site-header .mega-intro .nav-submenu-label {
-  padding: 0;
-  font-size: 11px;
-}
-.doclap-scope #site-header .mega-title {
-  font: 400 clamp(28px,2.8vw,40px)/1.2 var(--doclap-font-display);
-  letter-spacing: -.035em;
-  margin: 18px 0;
-}
-.doclap-scope #site-header .mega-description {
-  font: 14px/1.8 var(--doclap-font-body);
-  color: var(--doclap-muted);
-  max-width: 32ch;
-  margin: 0 0 16px;
-}
-.doclap-scope #site-header nav .nav-mega .mega-all {
-  display: flex;
-  gap: 18px;
-  border: 0;
-  padding: 8px 0;
-  min-height: 44px;
-  font-size: 14px;
-  align-items: center;
-  justify-content: space-between;
-}
-.doclap-scope #site-header nav .nav-mega .mega-all:hover {
-  background: transparent;
-  text-decoration: underline;
-  text-underline-offset: 6px;
-}
-.doclap-scope #site-header nav .nav-mega .mega-project {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0;
-  padding: 24px;
-  min-width: 0;
-  border: 1px solid var(--doclap-fg);
-  @supports (color: color-mix(in lab, red, red)) {
-    border: 1px solid color-mix(in oklch,var(--doclap-fg) 20%,transparent);
-  }
-  background: var(--doclap-bg);
-  transition: background .35s,border-color .35s,transform .5s;
-}
-.doclap-scope #site-header .mega-index {
-  font: 11px/1.7 var(--doclap-font-mono);
-  letter-spacing: .06em;
-  color: var(--doclap-muted);
-}
-.doclap-scope #site-header .mega-project-title {
-  font: 400 clamp(27px,2.7vw,39px)/1.25 var(--doclap-font-display);
-  letter-spacing: -.035em;
-  margin: 30px 0 14px;
-}
-.doclap-scope #site-header .mega-project small {
-  font: 14px/1.8 var(--doclap-font-body);
-}
-.doclap-scope #site-header .mega-project-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: auto;
-  padding-top: 30px;
-  font-size: 12px;
-}
-.doclap-scope #site-header nav .nav-mega .mega-project:is(:hover, :focus-visible) {
-  background: var(--doclap-fg-soft);
-  border-color: var(--doclap-fg);
-  transform: translateY(-3px);
-}
-.doclap-scope #site-header .mega-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 10px 32px;
-  border-top: 1px solid var(--doclap-fg);
-  @supports (color: color-mix(in lab, red, red)) {
-    border-top: 1px solid color-mix(in oklch,var(--doclap-fg) 18%,transparent);
-  }
-  font: 10px/1.8 var(--doclap-font-mono);
-  letter-spacing: .04em;
-  color: var(--doclap-muted);
-}
-.doclap-scope #site-header .mega-close {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: transparent;
-  border: 0;
-  padding: 8px;
-  color: var(--doclap-fg);
-  font: 12px var(--doclap-font-body);
-  min-height: 44px;
-}
-.doclap-scope #site-header .mega-close:hover {
-  background: var(--doclap-fg-soft);
-}
-.doclap-scope #site-header .mega-close>.lucide {
-  width: 16px;
-  height: 16px;
-}
-.doclap-scope #site-header .nav-pages .mega-layout {
-  grid-template-columns: 1fr 1fr 1.1fr;
-  gap: 32px;
-}
-.doclap-scope #site-header .pages-column {
-  min-width: 0;
-}
-.doclap-scope #site-header .pages-column>.nav-submenu-label {
-  padding: 4px 10px 14px;
-  font-size: 11px;
-}
-.doclap-scope #site-header nav .nav-pages .pages-column a {
-  font-size: 16px;
-  padding-block: 13px;
-  min-height: 74px;
-}
-.doclap-scope #site-header .nav-pages .pages-column a small {
-  font-size: 12px;
-  line-height: 1.7;
-}
-.doclap-scope #site-header .nav-pages .mega-intro {
-  border-right: 1px solid var(--doclap-fg);
-  @supports (color: color-mix(in lab, red, red)) {
-    border-right: 1px solid color-mix(in oklch,var(--doclap-fg) 18%,transparent);
-  }
-  padding-right: 28px;
-}
-.doclap-scope #site-header [aria-current=page] {
+.doclap-scope.doclap-site-header .topnav [aria-current=page] {
   text-decoration: underline !important;
   text-underline-offset: 5px;
 }
-.doclap-scope #site-header :focus-visible {
+.doclap-scope.doclap-site-header .topnav :focus-visible {
   outline: 2px solid var(--doclap-fg);
   outline-offset: 4px;
 }
-@keyframes chrome-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-    filter: blur(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
 @media (max-width:1150px) {
-  .doclap-scope #site-header .nav-contact {
+  .doclap-scope.doclap-site-header .topnav .nav-contact {
     display: none;
   }
-  .doclap-scope #site-header nav {
+  .doclap-scope.doclap-site-header .topnav .doclap-menu {
     gap: 24px;
   }
 }
 @media (max-width:920px) {
-  .doclap-scope #site-header .topnav-inner {
+  .doclap-scope.doclap-site-header .topnav .topnav-inner {
     min-height: 80px;
   }
-  .doclap-scope #site-header .menu-toggle {
+  .doclap-scope.doclap-site-header .topnav .logo--image {
+    max-width: 52vw;
+  }
+  .doclap-scope.doclap-site-header .topnav .logo-image {
+    max-height: 38px;
+  }
+  .doclap-scope.doclap-site-header .topnav .menu-toggle {
     display: flex;
     align-items: center;
   }
-  .doclap-scope #site-header nav {
+  .doclap-scope.doclap-site-header .topnav nav {
     display: none;
     position: absolute;
     left: 0;
@@ -4773,70 +4524,80 @@ body {
     top: 100%;
     background: var(--doclap-bg);
     border-bottom: 1px solid var(--doclap-fg);
-    padding: 20px var(--doclap-gutter);
+    padding: 8px var(--doclap-gutter) 20px;
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
+    gap: 0;
     max-height: calc(100dvh - 80px);
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-  .doclap-scope #site-header nav.open {
+  .doclap-scope.doclap-site-header .topnav nav.open {
     display: flex;
   }
-  .doclap-scope #site-header .nav-group {
-    display: block;
-  }
-  .doclap-scope #site-header nav>a, .doclap-scope #site-header .nav-disclosure {
+  .doclap-scope.doclap-site-header .topnav .doclap-menu {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
     width: 100%;
-    min-height: 48px;
-    font-size: 16px;
-    justify-content: space-between;
   }
-  .doclap-scope #site-header .nav-submenu, .doclap-scope #site-header .nav-mega {
+  .doclap-scope.doclap-site-header .topnav .menu-item {
+    flex-wrap: wrap;
+  }
+  .doclap-scope.doclap-site-header .topnav .doclap-menu>.menu-item {
+    width: 100%;
+    gap: 0;
+    border-bottom: 1px solid var(--doclap-fg-soft);
+  }
+  .doclap-scope.doclap-site-header .topnav .doclap-menu>.menu-item>a {
+    flex: 1;
+    min-height: 52px;
+    font-size: 16px;
+  }
+  .doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle {
+    flex: 0 0 48px;
+    min-height: 48px;
+    padding: 0;
+    border: 1px solid var(--doclap-fg);
+    @supports (color: color-mix(in lab, red, red)) {
+      border: 1px solid color-mix(in oklch,var(--doclap-fg) 22%,transparent);
+    }
+  }
+  .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu, .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .sub-menu.nav-submenu {
     position: static;
+    left: auto;
+    top: auto;
+    flex: 1 0 100%;
     width: 100%;
     max-height: none;
     overflow: visible;
-    margin: 6px 0 12px;
+    margin: 0;
+    padding: 6px 0 12px 14px;
     box-shadow: none;
+    transform: none;
+    border-inline-start: 1px solid var(--doclap-fg-soft);
   }
-  .doclap-scope #site-header .mega-layout, .doclap-scope #site-header .nav-pages .mega-layout {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 20px;
-  }
-  .doclap-scope #site-header .mega-intro, .doclap-scope #site-header .nav-pages .mega-intro {
-    border-right: 0;
+  .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu>.menu-item {
+    border-top: 0;
     border-bottom: 1px solid var(--doclap-fg-soft);
-    padding: 0 0 18px;
   }
-  .doclap-scope #site-header .mega-title {
-    font-size: 32px;
-    margin: 16px 0;
+  .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu>.menu-item:last-child {
+    border-bottom: 0;
   }
-  .doclap-scope #site-header .mega-description {
-    max-width: none;
+  .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .doclap-submenu-toggle {
+    flex: 0 0 48px;
+    min-height: 48px;
+    padding: 0;
   }
-  .doclap-scope #site-header .mega-project-title {
-    margin: 14px 0 8px;
-    font-size: 30px;
-  }
-  .doclap-scope #site-header .mega-project-foot {
-    padding-top: 18px;
-  }
-  .doclap-scope #site-header .mega-bottom {
-    padding: 8px 18px;
-  }
-  .doclap-scope #site-header .mega-bottom>span {
-    max-width: 24ch;
-    font-size: 9px;
+  .doclap-scope.doclap-site-header .topnav nav .sub-menu a {
+    min-height: 48px;
+    font-size: 15px;
   }
 }
 .doclap-scope .pagefoot.studio-footer {
   padding: 0;
-  background: var(--doclap-fg);
-  color: var(--doclap-bg);
+  background: var(--doclap-block-bg,var(--doclap-fg));
+  color: var(--doclap-block-text,var(--doclap-bg));
   border-top: 1px solid var(--doclap-bg);
   @supports (color: color-mix(in lab, red, red)) {
     border-top: 1px solid color-mix(in oklch,var(--doclap-bg) 20%,var(--doclap-fg));
@@ -4853,7 +4614,7 @@ body {
 .doclap-scope .studio-footer .sf-kicker {
   font: 12px/1.8 var(--doclap-font-mono);
   letter-spacing: .06em;
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   margin: 0 0 25px;
 }
 .doclap-scope .studio-footer h2 {
@@ -4865,7 +4626,7 @@ body {
   font-size: 16px;
   line-height: 1.9;
   margin: 0 0 22px;
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
 }
 .doclap-scope .studio-footer .sf-navigation {
   display: grid;
@@ -4891,7 +4652,7 @@ body {
   @supports (color: color-mix(in lab, red, red)) {
     border-bottom: 1px solid color-mix(in oklch,var(--doclap-bg) 18%,var(--doclap-fg));
   }
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   font-size: 15px;
 }
 .doclap-scope .studio-footer .sf-intro>a {
@@ -5050,7 +4811,7 @@ body {
   }
 }
 @media (prefers-reduced-motion:reduce) {
-  .doclap-scope #site-header *, .doclap-scope .studio-footer * {
+  .doclap-scope.doclap-site-header .topnav *, .doclap-scope .studio-footer * {
     animation: none !important;
     transition: none !important;
   }
@@ -5191,9 +4952,9 @@ body {
 .doclap-scope .voice-editorial-aside p {
   font-size: 14px;
   line-height: 1.9;
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   @supports (color: color-mix(in lab, red, red)) {
-    color: color-mix(in oklch,var(--doclap-bg) 82%,var(--doclap-fg));
+    color: var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 82%,var(--doclap-fg)));
   }
 }
 .doclap-scope .voice-editorial .voice-request {
@@ -5279,7 +5040,7 @@ body {
 .doclap-scope .doclap-discipline .discipline-number {
   font: 12px/1 var(--doclap-font-mono);
   letter-spacing: .02em;
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   align-self: start;
   padding-top: 9px;
 }
@@ -5292,13 +5053,13 @@ body {
 .doclap-scope .doclap-discipline .discipline-title {
   font: 400 clamp(26px,2.5vw,36px)/1.22 var(--doclap-font-display);
   letter-spacing: -.025em;
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   text-wrap: balance;
 }
 .doclap-scope .doclap-discipline .discipline-caption {
   font: 400 14px/1.6 var(--doclap-font-body);
   letter-spacing: .01em;
-  color: var(--doclap-bg);
+  color: var(--doclap-block-text,var(--doclap-bg));
   text-wrap: pretty;
 }
 .doclap-scope .doclap-discipline .discipline-arrow {
@@ -5426,4 +5187,17 @@ body {
   html {
     scroll-behavior: auto;
   }
+}
+.doclap-scope {
+  color: var(--doclap-block-text,inherit);
+}
+.doclap-scope :is(h1,h2,h3,h4) {
+  color: var(--doclap-block-heading,var(--doclap-fg));
+}
+.doclap-scope.process, .doclap-scope.contact, .doclap-scope.pagefoot, .doclap-scope .process, .doclap-scope .contact, .doclap-scope .pagefoot {
+  background: var(--doclap-block-bg,var(--doclap-fg));
+  color: var(--doclap-block-text,var(--doclap-bg));
+}
+.doclap-scope.process :is(h1,h2,h3,h4), .doclap-scope.contact :is(h1,h2,h3,h4), .doclap-scope.pagefoot :is(h1,h2,h3,h4), .doclap-scope .process :is(h1,h2,h3,h4), .doclap-scope .contact :is(h1,h2,h3,h4), .doclap-scope .pagefoot :is(h1,h2,h3,h4), .doclap-scope .voice-editorial :is(h1,h2,h3,h4) {
+  color: var(--doclap-block-heading,var(--doclap-bg));
 }

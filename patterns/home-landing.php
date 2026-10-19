@@ -1,6 +1,6 @@
 <?php
 /**
- * Title: Doclap — Home Landing
+ * Title: Doclap — Home landing
  * Slug: doclap/home-landing
  * Categories: doclap, page
  * Description: The full độc lập landing page, composed of nine separately selectable home section blocks.

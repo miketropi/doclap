@@ -1,16 +1,55 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl } from '@wordpress/components';
+import { PanelBody, TextControl } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import ServerSideRender from '@wordpress/server-side-render';
 
+import BlockPreview from '../../resources/ts/editor/block-preview';
+import RichTextControl from '../../resources/ts/editor/rich-text-control';
+import RichTextOverlay, {
+	type RichTextTarget,
+} from '../../resources/ts/editor/rich-text-overlay';
+import { urlHelp } from '../../resources/ts/editor/url-help';
+import {
+	mergeAccent,
+	needsAccentMerge,
+} from '../../resources/ts/editor/accent-migration';
 import type { SearchResultsAttributes } from './types';
 
 interface EditProps {
 	attributes: SearchResultsAttributes;
 	setAttributes: (attributes: Partial<SearchResultsAttributes>) => void;
+	isSelected: boolean;
 }
 
-export default function Edit({ attributes, setAttributes }: EditProps): JSX.Element {
+/** Rich values edited in place on the canvas (they render unconditionally). */
+const overlayTargets: RichTextTarget[] = [
+	{ path: 'heading', label: __('Heading', 'doclap'), multiline: true },
+	{ path: 'lead', label: __('Introduction', 'doclap'), multiline: true },
+	{
+		path: 'noResultsLinkLabel',
+		label: __('Recovery link label', 'doclap'),
+	},
+];
+
+export default function Edit({
+	attributes,
+	setAttributes,
+	isSelected,
+}: EditProps): JSX.Element {
+	// One-shot legacy fold: saved content can still carry `headingAccent`.
+	// `needsAccentMerge()` is false as soon as the accent is empty, so this runs
+	// once per block and never on a keystroke.
+	useEffect(() => {
+		const legacyAccent = String(attributes.headingAccent ?? '');
+
+		if (needsAccentMerge(attributes.heading ?? '', legacyAccent)) {
+			setAttributes({
+				heading: mergeAccent(attributes.heading ?? '', legacyAccent, '<br><em>'),
+				headingAccent: '',
+			});
+		}
+	}, [attributes.headingAccent, setAttributes]);
+
 	return (
 		<>
 			<InspectorControls>
@@ -25,22 +64,8 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						value={attributes.breadcrumbLabel ?? ''}
 						onChange={(breadcrumbLabel) => setAttributes({ breadcrumbLabel })}
 					/>
-					<TextControl
-						label={__('Heading', 'doclap')}
-						value={attributes.heading ?? ''}
-						onChange={(heading) => setAttributes({ heading })}
-					/>
-					<TextControl
-						label={__('Heading accent', 'doclap')}
-						value={attributes.headingAccent ?? ''}
-						onChange={(headingAccent) => setAttributes({ headingAccent })}
-					/>
-					<TextareaControl
-						label={__('Introduction', 'doclap')}
-						value={attributes.lead ?? ''}
-						onChange={(lead) => setAttributes({ lead })}
-					/>
 				</PanelBody>
+
 				<PanelBody title={__('Search form', 'doclap')} initialOpen={false}>
 					<TextControl
 						label={__('Input label', 'doclap')}
@@ -57,15 +82,16 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						value={attributes.submitLabel ?? ''}
 						onChange={(submitLabel) => setAttributes({ submitLabel })}
 					/>
-					<TextareaControl
+					<TextControl
 						label={__('Help note', 'doclap')}
 						value={attributes.helpNote ?? ''}
 						onChange={(helpNote) => setAttributes({ helpNote })}
 					/>
 				</PanelBody>
+
 				<PanelBody title={__('Filters and count', 'doclap')} initialOpen={false}>
 					<TextControl
-						label={__('All label', 'doclap')}
+						label={__('“All” label', 'doclap')}
 						value={attributes.filterAllLabel ?? ''}
 						onChange={(filterAllLabel) => setAttributes({ filterAllLabel })}
 					/>
@@ -86,54 +112,66 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 					/>
 					<TextControl
 						label={__('Singular result format', 'doclap')}
-						help={__('Use %d for the count.', 'doclap')}
+						help={__('Use %d for the number of results.', 'doclap')}
 						value={attributes.resultSingular ?? ''}
 						onChange={(resultSingular) => setAttributes({ resultSingular })}
 					/>
 					<TextControl
 						label={__('Plural result format', 'doclap')}
-						help={__('Use %d for the count.', 'doclap')}
+						help={__('Use %d for the number of results.', 'doclap')}
 						value={attributes.resultPlural ?? ''}
 						onChange={(resultPlural) => setAttributes({ resultPlural })}
 					/>
 				</PanelBody>
-				<PanelBody title={__('States', 'doclap')} initialOpen={false}>
-					<TextControl
+
+				<PanelBody title={__('Result and empty states', 'doclap')} initialOpen={false}>
+					<RichTextControl
 						label={__('No-results heading', 'doclap')}
 						value={attributes.noResultsHeading ?? ''}
 						onChange={(noResultsHeading) => setAttributes({ noResultsHeading })}
+						tagName="h2"
 					/>
-					<TextareaControl
+					<RichTextControl
 						label={__('No-results copy', 'doclap')}
 						value={attributes.noResultsCopy ?? ''}
 						onChange={(noResultsCopy) => setAttributes({ noResultsCopy })}
-					/>
-					<TextControl
-						label={__('Recovery link label', 'doclap')}
-						value={attributes.noResultsLinkLabel ?? ''}
-						onChange={(noResultsLinkLabel) => setAttributes({ noResultsLinkLabel })}
+						multiline
 					/>
 					<TextControl
 						label={__('Recovery link URL', 'doclap')}
-						help={__('Use @notes for the posts archive.', 'doclap')}
+						help={urlHelp}
 						value={attributes.noResultsLinkUrl ?? ''}
 						onChange={(noResultsLinkUrl) => setAttributes({ noResultsLinkUrl })}
 					/>
-					<TextControl
+					<RichTextControl
 						label={__('Pre-search heading', 'doclap')}
 						value={attributes.emptyHeading ?? ''}
 						onChange={(emptyHeading) => setAttributes({ emptyHeading })}
+						tagName="h2"
 					/>
-					<TextareaControl
+					<RichTextControl
 						label={__('Pre-search copy', 'doclap')}
 						value={attributes.emptyCopy ?? ''}
 						onChange={(emptyCopy) => setAttributes({ emptyCopy })}
+						multiline
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<ServerSideRender
+			<BlockPreview
 				block="doclap/search-results"
-				attributes={attributes as Record<string, unknown>}
+				attributes={attributes}
+				notice={__(
+					'The results come from the current search request, so the preview shows contextual data and the search form inside it is inert.',
+					'doclap',
+				)}
+			/>
+			<RichTextOverlay
+				targets={overlayTargets}
+				attributes={attributes}
+				setAttributes={(next) =>
+					setAttributes(next as Partial<SearchResultsAttributes>)
+				}
+				isSelected={isSelected}
 			/>
 		</>
 	);

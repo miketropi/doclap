@@ -1,16 +1,12 @@
+/**
+ * Editor canvas styles for doclap/home-work.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet, which the editor also loads. The experiment cards open a
+ * dialog on the front end; the shared `.doclap-block-preview__surface` rule in
+ * resources/css/editor.css already makes them inert in the canvas.
+ */
+
 .wp-block-doclap-home-work {
 	min-height: 240px;
-}
-
-.doclap-repeater__item {
-	border-top: 1px solid #ddd;
-	padding: 16px 0;
-}
-
-.doclap-repeater__title {
-	font-weight: 600;
-}
-
-.doclap-repeater__header {
-	margin-bottom: 12px;
 }

@@ -7,38 +7,22 @@
   "category": "doclap",
   "icon": "grid-view",
   "description": "Standalone discipline band listing the three creative disciplines.",
-  "keywords": [
-    "home",
-    "disciplines",
-    "band",
-    "design",
-    "motion",
-    "technology"
-  ],
+  "keywords": [ "home", "disciplines", "band", "design", "motion", "technology" ],
   "textdomain": "doclap",
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
   "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
     "disciplines": {
       "type": "array",
       "default": [
-        {
-          "title": "Design",
-          "caption": "With intent."
-        },
-        {
-          "title": "Motion",
-          "caption": "With feeling."
-        },
-        {
-          "title": "Technology",
-          "caption": "With depth."
-        }
+        { "title": "Design", "caption": "With intent." },
+        { "title": "Motion", "caption": "With feeling." },
+        { "title": "Technology", "caption": "With depth." }
       ]
     }
   },
+  "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "render": "file:./render.php"

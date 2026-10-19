@@ -2,7 +2,6 @@ export interface SearchResultsAttributes extends Record<string, unknown> {
 	breadcrumbHomeLabel?: string;
 	breadcrumbLabel?: string;
 	heading?: string;
-	headingAccent?: string;
 	lead?: string;
 	searchPlaceholder?: string;
 	searchLabel?: string;

@@ -11,7 +11,6 @@ export interface SingleNoteAttributes extends Record<string, unknown> {
 	relatedCount: number;
 	closingEyebrow: string;
 	closingHeading: string;
-	closingHeadingAccent: string;
 	closingCtaLabel: string;
 	closingCtaUrl: string;
 }

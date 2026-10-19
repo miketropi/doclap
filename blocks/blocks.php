@@ -115,6 +115,48 @@ JS;
 add_action( 'enqueue_block_editor_assets', 'doclap_enqueue_block_category_filter', 5 );
 
 /**
+ * Enqueue the shared block-editor stylesheet.
+ *
+ * Each doclap/* block keeps only canvas-preview rules in its own
+ * blocks/<slug>/editor.css; the inspector affordances shared by all eighteen
+ * blocks — the repeater list editor, the block preview shell, the image picker
+ * and the identifier notice — live in the single compiled
+ * assets/css/editor.css. The editor canvas already receives assets/css/app.css
+ * through `enqueue_block_assets` and `add_editor_style()`, so this handle only
+ * adds the inspector layer.
+ */
+function doclap_enqueue_editor_styles(): void {
+	$relative_path = '/assets/css/editor.css';
+
+	if ( ! is_readable( DOCLAP_DIR . $relative_path ) ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'doclap-editor-blocks',
+		DOCLAP_URI . $relative_path,
+		array(),
+		doclap_asset_version( $relative_path ),
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'doclap_enqueue_editor_styles' );
+
+/**
+ * Give the editor canvas the same shared stylesheet.
+ *
+ * The block editor renders block markup inside an iframe, and styles enqueued on
+ * `enqueue_block_editor_assets` stay in the editor document around it. The shared
+ * sheet carries one rule the canvas needs — the preview surface being inert — so
+ * it is registered as an editor style too, exactly like assets/css/app.css.
+ */
+function doclap_add_editor_canvas_styles(): void {
+	if ( is_readable( DOCLAP_DIR . '/assets/css/editor.css' ) ) {
+		add_editor_style( 'assets/css/editor.css' );
+	}
+}
+add_action( 'after_setup_theme', 'doclap_add_editor_canvas_styles', 20 );
+
+/**
  * Register the pattern category used by the Doclap insertion patterns.
  */
 function doclap_register_pattern_categories(): void {

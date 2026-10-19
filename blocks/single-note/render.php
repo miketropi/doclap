@@ -33,15 +33,32 @@ $doclap_categories  = $doclap_id ? get_the_category( $doclap_id ) : array();
 $doclap_category    = ! empty( $doclap_categories )
 	? $doclap_categories[0]->name
 	: __( 'Uncategorized', 'doclap' );
-$doclap_content     = '' !== $doclap_raw
-	? (string) apply_filters( 'the_content', $doclap_raw )
-	: '<p>' . esc_html__( 'This note has no published content yet.', 'doclap' ) . '</p>';
+/*
+ * The note body is the queried post's content, run through `the_content` so
+ * shortcodes and nested blocks behave exactly as they do on the post itself.
+ *
+ * That filter runs `do_blocks()`, so a post whose own content contains this block
+ * — the block placed on a page instead of on the single-note template, or two
+ * copies composed into one page — resolves to itself and renders itself again
+ * until PHP aborts. A self-referencing host has no note body to show: the body
+ * falls back to the same empty-state paragraph used when no post resolves, and
+ * the article shell, metadata, table of contents and related notes still render.
+ * A real note's content never contains this block, so its body is unaffected.
+ */
+$doclap_is_self_reference = null !== $doclap_post && has_block( 'doclap/single-note', $doclap_post );
+
+if ( '' === $doclap_raw || $doclap_is_self_reference ) {
+	$doclap_content = '<p>' . esc_html__( 'This note has no published content yet.', 'doclap' ) . '</p>';
+} else {
+	$doclap_content = (string) apply_filters( 'the_content', $doclap_raw );
+}
 $doclap_headings    = array();
+$doclap_uid         = wp_unique_id( 'doclap-note-' );
 
 $doclap_heading_index = 0;
 $doclap_content       = (string) preg_replace_callback(
 	'/<h2\b([^>]*)>(.*?)<\/h2>/is',
-	static function ( array $doclap_match ) use ( &$doclap_headings, &$doclap_heading_index ): string {
+	static function ( array $doclap_match ) use ( &$doclap_headings, &$doclap_heading_index, $doclap_uid ): string {
 		$doclap_heading_text = trim( wp_strip_all_tags( $doclap_match[2] ) );
 
 		if ( '' === $doclap_heading_text ) {
@@ -58,7 +75,7 @@ $doclap_content       = (string) preg_replace_callback(
 		}
 
 		if ( '' === $doclap_heading_id ) {
-			$doclap_heading_id = 'doclap-part-' . $doclap_heading_index;
+			$doclap_heading_id = $doclap_uid . '-part-' . $doclap_heading_index;
 			$doclap_match[1]  .= ' id="' . esc_attr( $doclap_heading_id ) . '"';
 		}
 
@@ -83,13 +100,14 @@ if ( $doclap_id && $doclap_related_count > 0 ) {
 	if ( ! empty( $doclap_category_ids ) ) {
 		$doclap_same_query = new WP_Query(
 			array(
-				'post_type'           => 'post',
-				'post_status'         => 'publish',
-				'posts_per_page'      => $doclap_related_count,
-				'post__not_in'        => $doclap_excluded,
-				'category__in'        => $doclap_category_ids,
-				'ignore_sticky_posts' => true,
-				'no_found_rows'       => true,
+				'post_type'              => 'post',
+				'post_status'            => 'publish',
+				'posts_per_page'         => $doclap_related_count,
+				'post__not_in'           => $doclap_excluded,
+				'category__in'           => $doclap_category_ids,
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
 			),
 		);
 		$doclap_related = is_array( $doclap_same_query->posts ) ? $doclap_same_query->posts : array();
@@ -103,21 +121,31 @@ if ( $doclap_id && $doclap_related_count > 0 ) {
 	if ( $doclap_remaining > 0 ) {
 		$doclap_latest_query = new WP_Query(
 			array(
-				'post_type'           => 'post',
-				'post_status'         => 'publish',
-				'posts_per_page'      => $doclap_remaining,
-				'post__not_in'        => $doclap_excluded,
-				'ignore_sticky_posts' => true,
-				'no_found_rows'       => true,
+				'post_type'              => 'post',
+				'post_status'            => 'publish',
+				'posts_per_page'         => $doclap_remaining,
+				'post__not_in'           => $doclap_excluded,
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
 			),
 		);
 		$doclap_latest = is_array( $doclap_latest_query->posts ) ? $doclap_latest_query->posts : array();
 		$doclap_related = array_merge( $doclap_related, $doclap_latest );
 	}
+
+	wp_reset_postdata();
 }
 
 $doclap_wrapper = get_block_wrapper_attributes(
 	array( 'class' => doclap_scope_class( 'doclap-single-note' ) ),
+);
+// Saved content can still carry `closingHeadingAccent`; the editor folds the pair
+// into the merged heading and clears the legacy key on the block's first save.
+$doclap_closing_heading = doclap_rich_accent(
+	(string) ( $attributes['closingHeading'] ?? __( 'Your idea.<br><em>Make it different.</em>', 'doclap' ) ),
+	(string) ( $attributes['closingHeadingAccent'] ?? '' ),
+	'<br><em>',
 );
 ?>
 <div <?php echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?>>
@@ -156,7 +184,10 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				<span>
 					<?php
 					echo esc_html(
-						(string) ( $attributes['articleMetaPrefix'] ?? 'ĐỘC LẬP / EDITORIAL NOTES' ),
+						(string) (
+							$attributes['articleMetaPrefix']
+							?? __( 'ĐỘC LẬP / EDITORIAL NOTES', 'doclap' )
+						),
 					);
 					?>
 				</span>
@@ -204,7 +235,7 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				?>
 				<?php if ( $doclap_show_toc ) : ?>
 					<span class="meta">
-						<?php echo esc_html( (string) ( $attributes['tocLabel'] ?? 'IN THIS ARTICLE' ) ); ?>
+						<?php echo esc_html( (string) ( $attributes['tocLabel'] ?? __( 'IN THIS ARTICLE', 'doclap' ) ) ); ?>
 					</span>
 					<?php if ( empty( $doclap_headings ) ) : ?>
 						<span class="form-note">
@@ -222,7 +253,13 @@ $doclap_wrapper = get_block_wrapper_attributes(
 					<?php endforeach; ?>
 				<?php endif; ?>
 				<div class="article-tools">
-					<button type="button" aria-pressed="false" data-doclap-save>
+					<button
+						type="button"
+						aria-pressed="false"
+						data-doclap-save
+						data-status-saved="<?php echo esc_attr__( 'Article saved.', 'doclap' ); ?>"
+						data-status-removed="<?php echo esc_attr__( 'Article removed from saved items.', 'doclap' ); ?>"
+					>
 						<span><?php esc_html_e( 'Save article', 'doclap' ); ?></span>
 						<?php
 						echo doclap_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG.
@@ -232,6 +269,8 @@ $doclap_wrapper = get_block_wrapper_attributes(
 						type="button"
 						data-doclap-copy
 						data-permalink="<?php echo esc_url( $doclap_permalink ); ?>"
+						data-status-copied="<?php echo esc_attr__( 'Link copied.', 'doclap' ); ?>"
+						data-status-failed="<?php echo esc_attr__( 'Unable to copy the link.', 'doclap' ); ?>"
 					>
 						<span><?php esc_html_e( 'Copy link', 'doclap' ); ?></span>
 						<?php
@@ -250,8 +289,8 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				<?php
 				echo $doclap_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the_content filters.
 				?>
-				<p class="form-note">
-					<?php echo esc_html( (string) ( $attributes['disclaimer'] ?? '' ) ); ?>
+				<p class="form-note" data-doclap-rich="disclaimer">
+					<?php echo doclap_rich( (string) ( $attributes['disclaimer'] ?? '' ) ); ?>
 				</p>
 				<a class="text-link" href="<?php echo esc_url( $doclap_archive_url ); ?>">
 					<span>
@@ -274,11 +313,11 @@ $doclap_wrapper = get_block_wrapper_attributes(
 	<section class="section">
 		<div class="container">
 			<div class="section-head">
-				<h2>
+				<h2 data-doclap-rich="relatedHeading">
 					<?php
 					$doclap_related_heading = (string) ( $attributes['relatedHeading'] ?? '' );
-					echo esc_html(
-						'' !== trim( $doclap_related_heading )
+					echo doclap_rich(
+						'' !== trim( wp_strip_all_tags( $doclap_related_heading ) )
 							? $doclap_related_heading
 							: __( 'Read another perspective.', 'doclap' ),
 					);
@@ -336,32 +375,17 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				<p class="eyebrow">
 					<?php echo esc_html( (string) ( $attributes['closingEyebrow'] ?? '' ) ); ?>
 				</p>
-				<h2>
-					<?php
-					echo esc_html(
-						(string) ( $attributes['closingHeading'] ?? __( 'Your idea.', 'doclap' ) ),
-					);
-					?>
-					<br>
-					<em>
-						<?php
-						echo esc_html(
-							(string) (
-								$attributes['closingHeadingAccent']
-								?? __( 'Make it different.', 'doclap' )
-							),
-						);
-						?>
-					</em>
+				<h2 data-doclap-rich="closingHeading">
+					<?php echo doclap_rich( $doclap_closing_heading ); ?>
 				</h2>
 			</div>
 			<a
 				class="circle-cta"
 				href="<?php echo esc_url( doclap_resolve_url( (string) ( $attributes['closingCtaUrl'] ?? '/contact/' ) ) ); ?>"
 			>
-				<span>
+				<span data-doclap-rich="closingCtaLabel">
 					<?php
-					echo esc_html(
+					echo doclap_rich(
 						(string) (
 							$attributes['closingCtaLabel']
 							?? __( 'Tell us about your idea', 'doclap' )

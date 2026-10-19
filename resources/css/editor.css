@@ -1,0 +1,213 @@
+/**
+ * Doclap block-editor-only stylesheet (compiled to assets/css/editor.css).
+ *
+ * Enqueued on `enqueue_block_editor_assets` by blocks/blocks.php and shared by
+ * every doclap/* block's inspector and canvas preview. Front-end appearance never
+ * comes from here: the compiled child stylesheet (assets/css/app.css) is also
+ * loaded in the editor for that.
+ *
+ * Shared inspector affordances live here so the eighteen block-local
+ * blocks/<slug>/editor.css files only carry canvas-preview rules.
+ */
+
+.doclap-repeater {
+	border-top: 1px solid #e0e0e0;
+	margin-top: 16px;
+	padding-top: 12px;
+}
+
+.doclap-repeater__title {
+	font-weight: 600;
+	margin: 0 0 8px;
+}
+
+.doclap-repeater__empty {
+	color: #757575;
+	font-style: italic;
+	margin: 0 0 8px;
+}
+
+/**
+ * Compact item list: one row per item on a single line — sequence number, label,
+ * five icon actions flushed right. The actions keep a 44px hit target each and
+ * the label ellipsizes instead of widening the row, so a 320px inspector still
+ * shows the whole row without horizontal scrolling. An item's fields live in the
+ * item modal, or expand in place when the repeater is nested in another editor.
+ */
+.doclap-repeater__list {
+	list-style: none;
+	margin: 0 0 8px;
+	padding: 0;
+}
+
+.doclap-repeater__row {
+	align-items: center;
+	background: #f8f8f8;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	list-style: none;
+	margin: 0 0 4px;
+	padding: 4px 8px;
+}
+
+.doclap-repeater__row-index {
+	color: #646970;
+	flex: 0 0 auto;
+	font-variant-numeric: tabular-nums;
+}
+
+.doclap-repeater__row-label {
+	flex: 1 1 0;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.doclap-repeater__row-actions {
+	display: flex;
+	flex: 0 0 auto;
+	flex-wrap: wrap;
+	gap: 0;
+	justify-content: flex-end;
+	margin-left: auto;
+}
+
+/*
+ * Every row action keeps a 44x44 minimum hit target at any panel width. The
+ * second selector is deliberately as specific as WordPress' own
+ * `.components-button.is-small.has-icon:not(.has-text)` rule (which otherwise
+ * shrinks an icon-only small button to a 24px min-width), so the target can
+ * never collapse; this stylesheet is enqueued after the component styles, so it
+ * wins the tie.
+ */
+.doclap-repeater__row-actions .components-button.has-icon,
+.doclap-repeater__row-actions .components-button.is-small.has-icon {
+	justify-content: center;
+	min-height: 44px;
+	min-width: 44px;
+	padding: 0;
+}
+
+/* Item editor fields, shared by the item modal and the in-place nested editor. */
+.doclap-repeater__modal-fields {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	max-width: 100%;
+	min-width: 0;
+}
+
+/*
+ * Modal action row. This version of the Modal has no footer slot (its API is
+ * `title`/`headerActions`/`isDismissible`/`isFullScreen`/`size`), so the row is
+ * the body's last child and stands in as the frame's footer: hairline top border,
+ * flush right, pinned to the bottom of the modal's scroll area while the fields
+ * scroll behind it.
+ */
+.doclap-repeater__modal-actions {
+	background: #fff;
+	border-top: 1px solid #e0e0e0;
+	bottom: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	justify-content: flex-end;
+	margin-top: 16px;
+	padding-bottom: 4px;
+	padding-top: 12px;
+	position: sticky;
+	z-index: 1;
+}
+
+/*
+ * Nested repeater inside an item editor: one grouped inner surface, so it reads
+ * as part of the open modal rather than as a second dialog.
+ */
+.doclap-repeater__modal-fields > .doclap-repeater {
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 2px;
+	margin-top: 0;
+	padding: 12px;
+}
+
+/*
+ * In-place item editor of a nested repeater: a clear inner surface under the row
+ * that opened it, inside the same scroll area and never a second dialog.
+ */
+.doclap-repeater__nested {
+	background: #fff;
+	border-top: 1px solid #e0e0e0;
+	flex: 0 0 100%;
+	margin-top: 8px;
+	max-width: 100%;
+	min-width: 0;
+	padding-top: 12px;
+}
+
+.doclap-repeater__status {
+	color: #646970;
+	font-size: 12px;
+	margin: 0 0 8px;
+	min-height: 18px;
+}
+
+/**
+ * Shared block preview (resources/ts/editor/block-preview.tsx).
+ *
+ * The wrapper carries `useBlockProps()`, so it must stay clickable: only the
+ * inner surface is made inert, which keeps preview-only controls (filter bars,
+ * disclosures, canvas transports) from swallowing the click that selects the
+ * block.
+ */
+.doclap-block-preview__surface {
+	pointer-events: none;
+}
+
+.doclap-block-preview__notice {
+	color: #646970;
+	font-size: 13px;
+	margin: 0 0 8px;
+}
+
+.doclap-block-preview__placeholder {
+	min-height: 120px;
+}
+
+/**
+ * Shared image picker (resources/ts/editor/image-control.tsx).
+ */
+.doclap-image-control {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.doclap-image-control__preview {
+	background: #f0f0f0;
+	display: block;
+	height: auto;
+	max-height: 180px;
+	max-width: 100%;
+	object-fit: contain;
+	width: auto;
+}
+
+/**
+ * Identifier validation notice (resources/ts/editor/slug-help.ts).
+ */
+.doclap-slug-notice {
+	margin: 8px 0 0;
+}
+
+.doclap-slug-notice__line {
+	margin: 0 0 4px;
+}
+
+.doclap-slug-notice__line:last-child {
+	margin-bottom: 0;
+}

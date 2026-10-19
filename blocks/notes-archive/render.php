@@ -74,11 +74,12 @@ if ( $doclap_is_archive_query ) {
 	if ( $doclap_show_featured ) {
 		$doclap_featured_query = new WP_Query(
 			array(
-				'post_type'           => 'post',
-				'post_status'         => 'publish',
-				'posts_per_page'      => 1,
-				'ignore_sticky_posts' => true,
-				'no_found_rows'       => true,
+				'post_type'              => 'post',
+				'post_status'            => 'publish',
+				'posts_per_page'         => 1,
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
 			),
 		);
 
@@ -112,26 +113,37 @@ if ( ! $doclap_is_archive_query && $doclap_featured instanceof WP_Post ) {
 $doclap_wrapper = get_block_wrapper_attributes(
 	array( 'class' => doclap_scope_class( 'doclap-notes-archive' ) ),
 );
+// Saved content can still carry the split accent attributes; the editor folds
+// them into the merged rich values and clears the legacy keys on first save.
+$doclap_heading         = doclap_rich_accent(
+	(string) $doclap_value( 'heading', __( 'Think. Try.<br><em>Write it down.</em>', 'doclap' ) ),
+	(string) $doclap_value( 'headingAccent', '' ),
+	'<br><em>',
+);
+$doclap_closing_heading = doclap_rich_accent(
+	(string) $doclap_value( 'closingHeading', '' ),
+	(string) $doclap_value( 'closingHeadingAccent', '' ),
+	'<br><em>',
+);
 ?>
 <div <?php echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core escaped.?>>
 	<section class="section inner-hero">
 		<div class="container">
 			<nav class="breadcrumb" aria-label="<?php echo esc_attr__( 'Page path', 'doclap' ); ?>">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<?php echo esc_html( (string) $doclap_value( 'breadcrumbHomeLabel', 'Home' ) ); ?>
+					<?php echo esc_html( (string) $doclap_value( 'breadcrumbHomeLabel', __( 'Home', 'doclap' ) ) ); ?>
 				</a>
 				<span aria-hidden="true">/</span>
 				<span aria-current="page">
-					<?php echo esc_html( (string) $doclap_value( 'breadcrumbLabel', 'Archive' ) ); ?>
+					<?php echo esc_html( (string) $doclap_value( 'breadcrumbLabel', __( 'Archive', 'doclap' ) ) ); ?>
 				</span>
 			</nav>
-			<h1>
-				<?php echo esc_html( (string) $doclap_value( 'heading', 'Think. Try.' ) ); ?><br>
-				<em><?php echo esc_html( (string) $doclap_value( 'headingAccent', 'Write it down.' ) ); ?></em>
+			<h1 data-doclap-rich="heading">
+				<?php echo doclap_rich( $doclap_heading ); ?>
 			</h1>
 			<div class="hero-summary">
 				<span class="hero-mark" aria-hidden="true">✳</span>
-				<p class="lead"><?php echo esc_html( (string) $doclap_value( 'lead', '' ) ); ?></p>
+				<p class="lead" data-doclap-rich="lead"><?php echo doclap_rich( (string) $doclap_value( 'lead', '' ) ); ?></p>
 			</div>
 		</div>
 	</section>
@@ -172,15 +184,15 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				</article>
 			<?php endif; ?>
 			<div class="section-head">
-				<h2><?php echo esc_html( (string) $doclap_value( 'headingSectionTitle', 'From the desk.' ) ); ?></h2>
+				<h2 data-doclap-rich="headingSectionTitle"><?php echo doclap_rich( (string) $doclap_value( 'headingSectionTitle', __( 'From the desk.', 'doclap' ) ) ); ?></h2>
 				<span class="meta" role="status">
 					<?php
 					echo esc_html(
 						strtoupper(
 							$doclap_count_label(
 								$doclap_found_posts,
-								(string) $doclap_value( 'countSingular', '%d note' ),
-								(string) $doclap_value( 'countPlural', '%d notes' ),
+								(string) $doclap_value( 'countSingular', __( '%d note', 'doclap' ) ),
+								(string) $doclap_value( 'countPlural', __( '%d notes', 'doclap' ) ),
 							),
 						),
 					);
@@ -213,8 +225,8 @@ $doclap_wrapper = get_block_wrapper_attributes(
 			<?php endif; ?>
 			<?php if ( empty( $doclap_list_posts ) && ! ( $doclap_featured instanceof WP_Post ) ) : ?>
 				<div class="empty-state" role="status">
-					<h3><?php echo esc_html( (string) $doclap_value( 'emptyHeading', 'No notes yet.' ) ); ?></h3>
-					<p><?php echo esc_html( (string) $doclap_value( 'emptyCopy', '' ) ); ?></p>
+					<h3><?php echo doclap_rich( (string) $doclap_value( 'emptyHeading', __( 'No notes yet.', 'doclap' ) ) ); ?></h3>
+					<p><?php echo doclap_rich( (string) $doclap_value( 'emptyCopy', '' ) ); ?></p>
 				</div>
 			<?php else : ?>
 				<div class="archive-rows">
@@ -284,16 +296,15 @@ $doclap_wrapper = get_block_wrapper_attributes(
 					?>
 				</nav>
 			<?php endif; ?>
-			<p class="form-note"><?php echo esc_html( (string) $doclap_value( 'disclaimer', '' ) ); ?></p>
+			<p class="form-note" data-doclap-rich="disclaimer"><?php echo doclap_rich( (string) $doclap_value( 'disclaimer', '' ) ); ?></p>
 		</div>
 	</section>
 	<section class="section closing">
 		<div class="container row-between">
 			<div>
 				<p class="eyebrow"><?php echo esc_html( (string) $doclap_value( 'closingEyebrow', '' ) ); ?></p>
-				<h2>
-					<?php echo esc_html( (string) $doclap_value( 'closingHeading', '' ) ); ?><br>
-					<em><?php echo esc_html( (string) $doclap_value( 'closingHeadingAccent', '' ) ); ?></em>
+				<h2 data-doclap-rich="closingHeading">
+					<?php echo doclap_rich( $doclap_closing_heading ); ?>
 				</h2>
 			</div>
 			<a
@@ -304,7 +315,7 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				);
 				?>"
 			>
-				<span><?php echo esc_html( (string) $doclap_value( 'closingCtaLabel', '' ) ); ?></span>
+				<span data-doclap-rich="closingCtaLabel"><?php echo doclap_rich( (string) $doclap_value( 'closingCtaLabel', '' ) ); ?></span>
 				<?php
 				echo doclap_icon( 'arrow-up-right' );
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted helper markup.

@@ -49,7 +49,7 @@ body {overflow-x:clip}
 .doclap-scope .hero-top {display:flex;justify-content:space-between;gap:24px;font:11px var(--doclap-font-mono);letter-spacing:.03em}
 .doclap-scope .hero-center {max-width:none;position:relative;min-height:600px;display:grid;place-items:center;padding:52px 0 50px}
 .doclap-scope .hero-copy {position:relative;z-index:2;pointer-events:none;width:100%}
-.doclap-scope .hero .eyebrow {color:var(--doclap-muted);font-size:12px;margin-bottom:30px}
+.doclap-scope .hero .eyebrow {color:var(--doclap-block-text,var(--doclap-muted));font-size:12px;margin-bottom:30px}
 .doclap-scope .hero h1 {font-size:clamp(72px,9.4vw,152px);line-height:1.04;letter-spacing:-.065em;margin:0}
 .doclap-scope .hero h1 em {font-weight:500}
 .doclap-scope .hero-visual {position:absolute;z-index:1;inset:2% 26%;pointer-events:auto;opacity:.85}
@@ -59,9 +59,9 @@ body {overflow-x:clip}
 .doclap-scope .visual-tools {position:absolute;right:-40%;bottom:30px;z-index:4}
 .doclap-scope .visual-tools button {display:grid;place-items:center;width:46px;height:46px;border:1px solid var(--doclap-border);border-radius:50%;background:var(--doclap-bg)}
 .doclap-scope .visual-tools button:hover {background:var(--doclap-fg);color:var(--doclap-bg)}
-.doclap-scope .visual-label {position:absolute;left:-42%;bottom:20px;text-align:left;font:11px/1.9 var(--doclap-font-mono);color:var(--doclap-muted)}
+.doclap-scope .visual-label {position:absolute;left:-42%;bottom:20px;text-align:left;font:11px/1.9 var(--doclap-font-mono);color:var(--doclap-block-text,var(--doclap-muted))}
 .doclap-scope .hero-bottom {display:grid;grid-template-columns:1fr 1fr auto;gap:40px;align-items:end;border-top:1px solid color-mix(in oklch,var(--doclap-fg) 20%,transparent);padding-top:26px}
-.doclap-scope .hero .lead {font-size:16px;line-height:1.8;color:var(--doclap-fg);margin:0}
+.doclap-scope .hero .lead {font-size:16px;line-height:1.8;color:var(--doclap-block-text,var(--doclap-fg));margin:0}
 .doclap-scope .hero-note {text-align:center}
 .doclap-scope .hero-note p {font-size:14px;margin-bottom:0}
 .doclap-scope .hero-cta {align-items:center;gap:16px;font-size:13px;text-align:left}
@@ -74,7 +74,7 @@ body {overflow-x:clip}
 .doclap-scope .section+.section {border-color:color-mix(in oklch,var(--doclap-fg) 17%,transparent)}
 .doclap-scope .section-head {display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-bottom:52px}
 .doclap-scope .section-head h2 {font-size:var(--doclap-fs-h2);letter-spacing:-.045em}
-.doclap-scope .eyebrow {font-size:13px;color:var(--doclap-muted)}
+.doclap-scope .eyebrow {font-size:13px;color:var(--doclap-block-text,var(--doclap-muted))}
 .doclap-scope .section-head .meta {font-size:12px}
 .doclap-scope .works {gap:40px}
 .doclap-scope .work-card {display:block;width:100%;min-width:0;text-align:left;background:none;border:none;padding:0;cursor:pointer}
@@ -88,33 +88,33 @@ body {overflow-x:clip}
 .doclap-scope .work-info h3 {font-size:38px}
 .doclap-scope .work-info .meta {font-size:11px}
 .doclap-scope .work-sub,
-.doclap-scope .caption {font-size:15px;color:var(--doclap-muted);line-height:1.8}
+.doclap-scope .caption {font-size:15px;color:var(--doclap-block-text,var(--doclap-muted));line-height:1.8}
 .doclap-scope .caption {max-width:72ch;margin:42px 0 0}
 .doclap-scope .about-grid {gap:100px}
 .doclap-scope .about-grid h2 {font-size:clamp(42px,4.7vw,70px);letter-spacing:-.04em}
-.doclap-scope .about-grid .lead {font-size:20px;line-height:1.8;color:var(--doclap-fg)}
+.doclap-scope .about-grid .lead {font-size:20px;line-height:1.8;color:var(--doclap-block-text,var(--doclap-fg))}
 .doclap-scope .principle {font-size:15px;margin-top:34px;color:var(--doclap-muted);line-height:1.8}
 .doclap-scope .discipline {margin-top:40px}
 .doclap-scope .log-row {grid-template-columns:40px 1fr 24px;padding:25px 0;gap:20px;border-color:color-mix(in oklch,var(--doclap-fg) 20%,transparent)}
 .doclap-scope .log-row h3 {font-size:29px}
-.doclap-scope .log-row p {font-size:14px;color:var(--doclap-muted);line-height:1.8;margin:7px 0 0}
+.doclap-scope .log-row p {font-size:14px;color:var(--doclap-block-text,var(--doclap-muted));line-height:1.8;margin:7px 0 0}
 .doclap-scope .log-row .meta {font-size:12px}
-.doclap-scope .process {background:var(--doclap-fg);color:var(--doclap-bg)}
+.doclap-scope .process {background:var(--doclap-block-bg,var(--doclap-fg));color:var(--doclap-block-text,var(--doclap-bg))}
 .doclap-scope .process .eyebrow,
-.doclap-scope .process .meta {color:color-mix(in oklch,var(--doclap-bg) 78%,var(--doclap-fg))}
+.doclap-scope .process .meta {color:var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 78%,var(--doclap-fg)))}
 .doclap-scope .process-row {border-top:1px solid color-mix(in oklch,var(--doclap-bg) 25%,transparent);padding:28px 0;display:grid;grid-template-columns:70px 1fr 1fr;gap:30px;align-items:baseline}
 .doclap-scope .process-row h3 {font-size:35px}
-.doclap-scope .process-row p {margin:0;font-size:16px;line-height:1.8;color:color-mix(in oklch,var(--doclap-bg) 80%,var(--doclap-fg))}
+.doclap-scope .process-row p {margin:0;font-size:16px;line-height:1.8;color:var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 80%,var(--doclap-fg)))}
 .doclap-scope .team-image {margin:0;position:relative}
 .doclap-scope .team-image img {width:auto;max-width:100%;max-height:660px;height:auto;display:block;margin-inline:auto;filter:grayscale(1);transition:filter .7s}
 .doclap-scope .team-image:hover img {filter:grayscale(0)}
-.doclap-scope .team-image figcaption {font-size:12px;color:var(--doclap-muted);margin-top:14px}
+.doclap-scope .team-image figcaption {font-size:12px;color:var(--doclap-block-text,var(--doclap-muted));margin-top:14px}
 .doclap-scope .team-intro {max-width:62ch;margin-bottom:48px}
-.doclap-scope .team-intro p {font-size:19px;color:var(--doclap-muted);line-height:1.8}
+.doclap-scope .team-intro p {font-size:19px;color:var(--doclap-block-text,var(--doclap-muted));line-height:1.8}
 .doclap-scope .team-roles {margin-top:42px;gap:40px}
 .doclap-scope .team-roles .feature {border-top:1px solid var(--doclap-fg);padding-top:24px}
 .doclap-scope .team-roles h3 {font-size:30px;margin-bottom:12px}
-.doclap-scope .team-roles p {font-size:15px;line-height:1.8;color:var(--doclap-muted)}
+.doclap-scope .team-roles p {font-size:15px;line-height:1.8;color:var(--doclap-block-text,var(--doclap-muted))}
 .doclap-scope .team-roles .meta {font-size:11px}
 .doclap-scope .quote-wrap {max-width:1050px;margin:auto;text-align:center}
 .doclap-scope .quote {font-size:clamp(30px,3.6vw,53px);max-width:none;line-height:1.35;margin:34px 0}
@@ -128,25 +128,25 @@ body {overflow-x:clip}
 .doclap-scope .journal-row h3 {font-size:32px;transition:transform .4s}
 .doclap-scope .journal-row:hover h3 {transform:translateX(12px)}
 .doclap-scope .journal-row:hover {background:var(--doclap-fg-soft)}
-.doclap-scope .journal-row p {font-size:14px;color:var(--doclap-muted);margin-bottom:0}
+.doclap-scope .journal-row p {font-size:14px;color:var(--doclap-block-text,var(--doclap-muted));margin-bottom:0}
 .doclap-scope .journal-row .meta {font-size:12px}
 .doclap-scope .journal-icon {width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--doclap-border);border-radius:50%;transition:transform .4s}
 .doclap-scope .journal-row:hover .journal-icon {transform:rotate(45deg)}
 .doclap-scope .newsletter {background:var(--doclap-accent)}
-.doclap-scope .newsletter .eyebrow {color:var(--doclap-fg)}
+.doclap-scope .newsletter .eyebrow {color:var(--doclap-block-text,var(--doclap-fg))}
 .doclap-scope .newsletter-inner {display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
 .doclap-scope .newsletter h2 {font-size:clamp(42px,4.6vw,70px);letter-spacing:-.04em}
 .doclap-scope .newsletter p {font-size:16px;line-height:1.8}
-.doclap-scope .newsletter .field label {font-size:14px;color:var(--doclap-fg)}
+.doclap-scope .newsletter .field label {font-size:14px;color:var(--doclap-block-text,var(--doclap-fg))}
 .doclap-scope .email-row {display:flex;border-bottom:1px solid var(--doclap-fg);margin-top:10px}
 .doclap-scope .email-row input {background:transparent;border:0;min-width:0;flex:1;font:inherit;padding:16px 0;color:var(--doclap-fg);min-height:60px}
 .doclap-scope .email-row input::placeholder {color:var(--doclap-fg);opacity:.8}
 .doclap-scope .email-row button {background:var(--doclap-fg);color:var(--doclap-bg);border:0;padding:16px 22px;display:flex;align-items:center;gap:15px}
 .doclap-scope .email-row button:hover {background:oklch(from var(--doclap-fg) calc(l + .1) c h);color:var(--doclap-surface)}
 .doclap-scope .newsletter .form-note {font-size:12px;line-height:1.8;margin-top:20px}
-.doclap-scope .contact {text-align:center;background:var(--doclap-fg);color:var(--doclap-bg)}
+.doclap-scope .contact {text-align:center;background:var(--doclap-block-bg,var(--doclap-fg));color:var(--doclap-block-text,var(--doclap-bg))}
 .doclap-scope .contact .eyebrow,
-.doclap-scope .contact .lead {color:color-mix(in oklch,var(--doclap-bg) 80%,var(--doclap-fg))}
+.doclap-scope .contact .lead {color:var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 80%,var(--doclap-fg)))}
 .doclap-scope .contact h2 {font-size:clamp(56px,7.4vw,115px);letter-spacing:-.05em}
 .doclap-scope .contact .lead {font-size:17px;margin:28px auto;max-width:55ch}
 .doclap-scope .btn-primary {background:var(--doclap-accent);color:var(--doclap-fg);border-color:var(--doclap-accent);font-size:16px;padding:17px 25px}
@@ -173,7 +173,7 @@ body {overflow-x:clip}
 .doclap-scope .field label {font-size:15px}
 .doclap-scope .input,
 .doclap-scope .textarea {font-size:17px;border-color:color-mix(in oklch,var(--doclap-fg) 30%,transparent)}
-.doclap-scope .form-note {font-size:13px;color:var(--doclap-muted)}
+.doclap-scope .form-note {font-size:13px;color:var(--doclap-block-text,var(--doclap-muted))}
 .doclap-scope .form-result {font-size:14px}
 .doclap-scope .skip {position:fixed;top:-100px;left:16px;background:var(--doclap-fg);color:var(--doclap-bg);padding:15px;z-index:100}
 .doclap-scope .skip:focus {top:16px}
@@ -207,7 +207,7 @@ body {overflow-x:clip}
 .doclap-scope .team-roles {gap:30px}
 .doclap-scope .process-row {grid-template-columns:40px 1fr}
 .doclap-scope .process-row p {grid-column:2}
-.doclap-scope .topnav nav {gap:24px}
+.doclap-scope .doclap-menu {gap:24px}
 }
 @media(max-width:640px){
 .doclap-scope .topnav-inner {min-height:80px}
@@ -215,6 +215,10 @@ body {overflow-x:clip}
 .doclap-scope .menu-toggle {display:flex}
 .doclap-scope .topnav nav {display:none;position:absolute;top:79px;left:0;right:0;flex-direction:column;padding:24px;background:var(--doclap-bg);border-bottom:1px solid var(--doclap-fg);gap:8px}
 .doclap-scope .topnav nav.open {display:flex}
+.doclap-scope .topnav nav .doclap-menu {flex-direction:column;align-items:stretch;gap:8px;width:100%}
+.doclap-scope .topnav nav .doclap-menu>.menu-item {position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:0;width:100%}
+.doclap-scope .topnav nav .doclap-menu>.menu-item>a {flex:1;display:flex;align-items:center;min-height:52px;font-size:16px}
+.doclap-scope .topnav nav .doclap-menu .sub-menu {position:static;flex:1 0 100%;flex-direction:column;align-items:stretch;width:100%;transform:none;box-shadow:none}
 .doclap-scope .hero {padding-top:24px}
 .doclap-scope .hero-top {display:block;font-size:9px;line-height:1.8}
 .doclap-scope .hero-top .meta {font-size:10px;display:block;margin-top:12px}

@@ -7,30 +7,15 @@
   "category": "doclap",
   "icon": "edit",
   "description": "Journal heading, metadata and the list of note links.",
-  "keywords": [
-    "home",
-    "journal",
-    "notes",
-    "writing"
-  ],
+  "keywords": [ "home", "journal", "notes", "writing" ],
   "textdomain": "doclap",
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
   "attributes": {
-    "journalEyebrow": {
-      "type": "string",
-      "default": "06 / NOTES FROM THE DESK"
-    },
-    "journalHeading": {
-      "type": "string",
-      "default": "Think. Try. Write it down."
-    },
-    "journalMeta": {
-      "type": "string",
-      "default": "DESIGN PERSPECTIVES · 3 SHORT READS"
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "journalEyebrow": { "type": "string", "default": "06 / NOTES FROM THE DESK" },
+    "journalHeading": { "type": "string", "default": "Think. Try. Write it down." },
+    "journalMeta": { "type": "string", "default": "DESIGN PERSPECTIVES · 3 SHORT READS" },
     "journalLinks": {
       "type": "array",
       "default": [
@@ -55,6 +40,7 @@
       ]
     }
   },
+  "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "style": "file:./style.css",

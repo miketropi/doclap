@@ -31,6 +31,18 @@ if ( $doclap_image_id ) {
 $doclap_wrapper = get_block_wrapper_attributes(
 	array( 'class' => doclap_scope_class( 'doclap-about-profile' ) ),
 );
+// Saved content can still carry the split accent attributes; the editor folds
+// them into the merged rich values and clears the legacy keys on first save.
+$doclap_heading = doclap_rich_accent(
+	(string) ( $attributes['heading'] ?? '' ),
+	(string) ( $attributes['headingAccent'] ?? '' ),
+	'<br><em>',
+);
+$doclap_closing_heading = doclap_rich_accent(
+	(string) ( $attributes['closingHeading'] ?? '' ),
+	(string) ( $attributes['closingHeadingAccent'] ?? '' ),
+	'<br><em>',
+);
 ?>
 <div <?php echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by core.?>>
 	<section class="section inner-hero">
@@ -51,33 +63,30 @@ $doclap_wrapper = get_block_wrapper_attributes(
 					<?php echo esc_html( (string) ( $attributes['breadcrumbLabel'] ?? '' ) ); ?>
 				</span>
 			</nav>
-			<h1>
-				<?php echo esc_html( (string) ( $attributes['heading'] ?? '' ) ); ?><br>
-				<em>
-					<?php echo esc_html( (string) ( $attributes['headingAccent'] ?? '' ) ); ?>
-				</em>
-			</h1>
+			<h1 data-doclap-rich="heading"><?php echo doclap_rich( $doclap_heading ); ?></h1>
 			<div class="hero-summary">
 				<span class="hero-mark" aria-hidden="true">✳</span>
-				<p class="lead">
-					<?php echo esc_html( (string) ( $attributes['lead'] ?? '' ) ); ?>
-				</p>
+				<p class="lead" data-doclap-rich="lead"><?php echo doclap_rich( (string) ( $attributes['lead'] ?? '' ) ); ?></p>
 			</div>
 		</div>
 	</section>
 
 	<?php if ( isset( $doclap_sections[0] ) && is_array( $doclap_sections[0] ) ) : ?>
-		<?php $doclap_section = $doclap_sections[0]; ?>
+		<?php
+		$doclap_section         = $doclap_sections[0];
+		$doclap_section_heading = doclap_rich_accent(
+			(string) ( $doclap_section['heading'] ?? '' ),
+			(string) ( $doclap_section['headingAccent'] ?? '' ),
+			'<br>',
+		);
+		?>
 		<section class="section">
 			<div class="container grid-1-2 body-grid">
 				<aside class="aside-title">
 					<span>
 						<?php echo esc_html( (string) ( $doclap_section['label'] ?? '' ) ); ?>
 					</span>
-					<h2>
-						<?php echo esc_html( (string) ( $doclap_section['heading'] ?? '' ) ); ?><br>
-						<?php echo esc_html( (string) ( $doclap_section['headingAccent'] ?? '' ) ); ?>
-					</h2>
+					<h2><?php echo doclap_rich( $doclap_section_heading ); ?></h2>
 				</aside>
 				<div class="prose">
 					<?php
@@ -85,7 +94,7 @@ $doclap_wrapper = get_block_wrapper_attributes(
 						(array) ( $doclap_section['paragraphs'] ?? array() ) as $doclap_paragraph
 					) :
 						?>
-						<p><?php echo esc_html( (string) $doclap_paragraph ); ?></p>
+						<p><?php echo doclap_rich( $doclap_paragraph ); ?></p>
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -136,10 +145,10 @@ $doclap_wrapper = get_block_wrapper_attributes(
 							<?php echo esc_html( (string) ( $doclap_principle['label'] ?? '' ) ); ?>
 						</span>
 						<h3>
-							<?php echo esc_html( (string) ( $doclap_principle['title'] ?? '' ) ); ?>
+							<?php echo doclap_rich( (string) ( $doclap_principle['title'] ?? '' ) ); ?>
 						</h3>
 						<p>
-							<?php echo esc_html( (string) ( $doclap_principle['copy'] ?? '' ) ); ?>
+							<?php echo doclap_rich( (string) ( $doclap_principle['copy'] ?? '' ) ); ?>
 						</p>
 					</article>
 				<?php endforeach; ?>
@@ -148,17 +157,21 @@ $doclap_wrapper = get_block_wrapper_attributes(
 	</section>
 
 	<?php if ( isset( $doclap_sections[1] ) && is_array( $doclap_sections[1] ) ) : ?>
-		<?php $doclap_section = $doclap_sections[1]; ?>
+		<?php
+		$doclap_section         = $doclap_sections[1];
+		$doclap_section_heading = doclap_rich_accent(
+			(string) ( $doclap_section['heading'] ?? '' ),
+			(string) ( $doclap_section['headingAccent'] ?? '' ),
+			'<br>',
+		);
+		?>
 		<section class="section">
 			<div class="container grid-1-2 body-grid">
 				<aside class="aside-title">
 					<span>
 						<?php echo esc_html( (string) ( $doclap_section['label'] ?? '' ) ); ?>
 					</span>
-					<h2>
-						<?php echo esc_html( (string) ( $doclap_section['heading'] ?? '' ) ); ?><br>
-						<?php echo esc_html( (string) ( $doclap_section['headingAccent'] ?? '' ) ); ?>
-					</h2>
+					<h2><?php echo doclap_rich( $doclap_section_heading ); ?></h2>
 				</aside>
 				<div>
 					<div class="prose">
@@ -167,10 +180,10 @@ $doclap_wrapper = get_block_wrapper_attributes(
 							(array) ( $doclap_section['paragraphs'] ?? array() ) as $doclap_paragraph
 						) :
 							?>
-							<p><?php echo esc_html( (string) $doclap_paragraph ); ?></p>
+							<p><?php echo doclap_rich( $doclap_paragraph ); ?></p>
 						<?php endforeach; ?>
 						<?php if ( '' !== (string) ( $attributes['statusNote'] ?? '' ) ) : ?>
-							<p><?php echo esc_html( (string) $attributes['statusNote'] ); ?></p>
+							<p><?php echo doclap_rich( (string) $attributes['statusNote'] ); ?></p>
 						<?php endif; ?>
 					</div>
 					<a
@@ -194,12 +207,7 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				<p class="eyebrow">
 					<?php echo esc_html( (string) ( $attributes['closingEyebrow'] ?? '' ) ); ?>
 				</p>
-				<h2>
-					<?php echo esc_html( (string) ( $attributes['closingHeading'] ?? '' ) ); ?><br>
-					<em>
-						<?php echo esc_html( (string) ( $attributes['closingHeadingAccent'] ?? '' ) ); ?>
-					</em>
-				</h2>
+				<h2 data-doclap-rich="closingHeading"><?php echo doclap_rich( $doclap_closing_heading ); ?></h2>
 			</div>
 			<a
 				class="circle-cta"
@@ -211,9 +219,7 @@ $doclap_wrapper = get_block_wrapper_attributes(
 					);
 				?>"
 			>
-				<span>
-					<?php echo esc_html( (string) ( $attributes['closingCtaLabel'] ?? '' ) ); ?>
-				</span>
+				<span data-doclap-rich="closingCtaLabel"><?php echo doclap_rich( (string) ( $attributes['closingCtaLabel'] ?? '' ) ); ?></span>
 				<?php
 				echo doclap_icon( 'arrow-up-right' );
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.

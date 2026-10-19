@@ -21,10 +21,29 @@ $doclap_links   = is_array( $attributes['journalLinks'] ?? null )
 	? $attributes['journalLinks']
 	: array();
 $doclap_anchor  = (string) ( $attributes['anchor'] ?? '' );
+// Section colours: the attribute values land as custom properties on the block
+// root, and an empty attribute emits nothing so the theme default keeps applying.
+$doclap_colour_style = '';
+
+foreach (
+	array(
+		'sectionBg'      => '--doclap-block-bg',
+		'sectionHeading' => '--doclap-block-heading',
+		'sectionText'    => '--doclap-block-text',
+	) as $doclap_attr => $doclap_var
+) {
+	$doclap_value = trim( (string) ( $attributes[ $doclap_attr ] ?? '' ) );
+
+	if ( '' !== $doclap_value ) {
+		$doclap_colour_style .= $doclap_var . ':' . $doclap_value . ';';
+	}
+}
+
 $doclap_wrapper = get_block_wrapper_attributes(
 	array(
 		'id'    => '' !== $doclap_anchor ? $doclap_anchor : 'journal',
 		'class' => doclap_scope_class( 'doclap-home-journal', array( 'section' ) ),
+		'style' => $doclap_colour_style,
 	),
 );
 $doclap_url  = static fn( string $value ): string => esc_url( doclap_resolve_url( $value ) );
@@ -34,8 +53,8 @@ $doclap_icon = static fn( string $name ): string => doclap_icon( $name );
 	echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by core.
 ?>><div class="container"><div class="section-head"><div><p class="eyebrow"><?php
 	echo esc_html( (string) ( $attributes['journalEyebrow'] ?? '' ) );
-?></p><h2><?php
-	echo esc_html( (string) ( $attributes['journalHeading'] ?? '' ) );
+?></p><h2 data-doclap-rich="journalHeading"><?php
+	echo doclap_rich( (string) ( $attributes['journalHeading'] ?? '' ) );
 ?></h2></div><span class="meta"><?php
 	echo esc_html( (string) ( $attributes['journalMeta'] ?? '' ) );
 ?></span></div><?php
@@ -46,9 +65,9 @@ $doclap_icon = static fn( string $name ): string => doclap_icon( $name );
 		?>"><span class="meta"><?php
 			echo esc_html( (string) ( $doclap_entry['meta'] ?? '' ) );
 		?></span><div><h3><?php
-			echo esc_html( (string) ( $doclap_entry['title'] ?? '' ) );
+			echo doclap_rich( (string) ( $doclap_entry['title'] ?? '' ) );
 		?></h3><p><?php
-			echo esc_html( (string) ( $doclap_entry['copy'] ?? '' ) );
+			echo doclap_rich( (string) ( $doclap_entry['copy'] ?? '' ) );
 		?></p></div><span class="journal-icon"><?php
 			echo $doclap_icon( 'arrow-up-right' );
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.

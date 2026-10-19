@@ -7,26 +7,14 @@
   "category": "doclap",
   "icon": "list-view",
   "description": "Numbered process steps from first question to final polish.",
-  "keywords": [
-    "home",
-    "process",
-    "steps",
-    "method"
-  ],
+  "keywords": [ "home", "process", "steps", "method" ],
   "textdomain": "doclap",
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
   "attributes": {
-    "processEyebrow": {
-      "type": "string",
-      "default": "03 / FROM IDEA TO TOUCHPOINT"
-    },
-    "processHeading": {
-      "type": "string",
-      "default": "No detail is accidental."
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "processEyebrow": { "type": "string", "default": "03 / FROM IDEA TO TOUCHPOINT" },
+    "processHeading": { "type": "string", "default": "No detail is accidental." },
     "processSteps": {
       "type": "array",
       "default": [
@@ -49,6 +37,7 @@
       ]
     }
   },
+  "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "render": "file:./render.php"

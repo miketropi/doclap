@@ -1,9 +1,11 @@
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
-import ServerSideRender from '@wordpress/server-side-render';
 
+import BlockPreview from '../../resources/ts/editor/block-preview';
+import ColourControls from '../../resources/ts/editor/colour-controls';
 import Repeater, { type RepeaterItem } from '../../resources/ts/editor/repeater';
+import { truncateLabel } from '../../resources/ts/editor/accent-migration';
 import type { Discipline, HomeDisciplinesAttributes } from './types';
 
 interface EditProps {
@@ -17,33 +19,43 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Items', 'doclap')} initialOpen>
+				<PanelBody title={__('Disciplines', 'doclap')} initialOpen>
 					<Repeater
 						label={__('Disciplines', 'doclap')}
 						items={disciplines as unknown as RepeaterItem[]}
 						fields={[
-							{ key: 'title', label: __('Title', 'doclap') },
-							{ key: 'caption', label: __('Caption', 'doclap') },
+							{
+								key: 'title',
+								label: __('Title', 'doclap'),
+								control: 'rich',
+								tagName: 'span',
+							},
+							{
+								key: 'caption',
+								label: __('Caption', 'doclap'),
+								control: 'rich',
+								tagName: 'span',
+								multiline: true,
+							},
 						]}
 						onChange={(items) =>
 							setAttributes({ disciplines: items as unknown as Discipline[] })
 						}
 						createItem={() => ({ title: '', caption: '' })}
 						getItemLabel={(item, index) =>
-							String(
-								item.title ||
-									sprintf(__('Discipline %d', 'doclap'), index + 1),
-							)
+							truncateLabel(String(item.title ?? '')) ||
+							sprintf(__('Discipline %d', 'doclap'), index + 1)
 						}
 						addLabel={__('Add discipline', 'doclap')}
 						emptyLabel={__('No disciplines yet.', 'doclap')}
 					/>
 				</PanelBody>
+				<ColourControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
 			</InspectorControls>
-			<ServerSideRender
-				block="doclap/home-disciplines"
-				attributes={attributes as unknown as Record<string, unknown>}
-			/>
+			<BlockPreview block="doclap/home-disciplines" attributes={attributes} />
 		</>
 	);
 }

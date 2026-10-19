@@ -6,14 +6,16 @@
  * This bundle must never import `three` — the sculpture belongs to
  * `blocks/home-hero/view.ts`.
  *
- * Lifecycle contract:
- *   * one boot per root (`data-initialized`), so a duplicated block never
- *     double-binds its listeners;
+ * Lifecycle contract (booted through `resources/ts/runtime/blocks.ts`):
+ *   * one boot per root, so a duplicated block never double-binds its listeners;
  *   * exactly one scheduled animation frame per canvas;
  *   * a canvas inside a closed dialog is inactive and consumes no frames;
  *   * visibility and reduced-motion changes stop and restart every loop;
  *   * removing the root disconnects its observers and listeners.
  */
+
+import { bootBlocks } from "../../resources/ts/runtime/blocks";
+import { readString } from "../../resources/ts/runtime/strings";
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -33,31 +35,6 @@ interface LoopControl {
   stop: () => void;
   setActive: (value: boolean) => void;
   destroy: () => void;
-}
-
-const teardown = new Map<HTMLElement, () => void>();
-let removalObserver: MutationObserver | undefined;
-
-/**
- * Watch for roots that leave the document and release what they hold.
- */
-function watchRemoval(): void {
-  if (removalObserver) {
-    return;
-  }
-
-  removalObserver = new MutationObserver(() => {
-    teardown.forEach((destroy, root) => {
-      if (!root.isConnected) {
-        destroy();
-        teardown.delete(root);
-      }
-    });
-  });
-  removalObserver.observe(document.documentElement, {
-    childList: true,
-    subtree: true,
-  });
 }
 
 /**
@@ -224,13 +201,7 @@ function createLoop(canvas: HTMLCanvasElement, kind: string): LoopControl {
  *
  * @param root Work block root.
  */
-function init(root: HTMLElement): void {
-  if ("1" === root.dataset.initialized) {
-    return;
-  }
-
-  root.dataset.initialized = "1";
-
+function init(root: HTMLElement): () => void {
   const loops = new Map<HTMLCanvasElement, LoopControl>();
 
   root.querySelectorAll<HTMLCanvasElement>("[data-canvas]").forEach((canvas) => {
@@ -327,7 +298,14 @@ function init(root: HTMLElement): void {
 
       if (pause) {
         pause.setAttribute("aria-pressed", String(control.loop.paused));
-        pause.textContent = control.loop.paused ? "Resume" : "Pause";
+        const label = readString(
+          pause,
+          control.loop.paused ? "resume-label" : "pause-label",
+        );
+
+        if (label) {
+          pause.textContent = label;
+        }
       }
 
       if (control.loop.paused) {
@@ -379,26 +357,14 @@ function init(root: HTMLElement): void {
     });
   });
 
-  teardown.set(root, () => {
+  return () => {
     loops.forEach((control) => control.destroy());
     loops.clear();
     openers.forEach((off) => off());
     dialogs.forEach((off) => off());
     document.removeEventListener("visibilitychange", onVisibility);
     reduced.removeEventListener("change", onReducedMotion);
-  });
-  watchRemoval();
+  };
 }
 
-/**
- * Boot every work root in the document.
- */
-function boot(): void {
-  document.querySelectorAll<HTMLElement>(".doclap-home-work").forEach(init);
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", boot);
-} else {
-  boot();
-}
+bootBlocks<HTMLElement>(".doclap-home-work", init);

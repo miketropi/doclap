@@ -5,47 +5,40 @@
  * Doclap view bundle allowed to import `three`; the experiments canvas studies
  * live in `blocks/home-work/view.ts`.
  *
- * Lifecycle contract:
- *   * one boot per root (`data-initialized`), so a duplicated block never
- *     double-binds its listeners;
+ * The sculpture eases towards a target orientation instead of being written to
+ * directly: dragging, the passive pointer follow, the idle float and a view
+ * change all set targets, and the frame loop lerps the group towards them. The
+ * mesh keeps its own slow Y spin, so the sculpture is never snapped into place.
+ *
+ * View changes are handed to the shared motion runtime
+ * (`window.doclapMotion.changeHero`) so the panel swap can be interrupted and
+ * survives a mid-transition switch to reduced motion. Only the API *type* is
+ * imported from `resources/ts/runtime/motion`: the runtime itself is bundled
+ * once, into `assets/js/main.js`, and a value import would ship a second copy of
+ * GSAP inside this bundle.
+ *
+ * Lifecycle contract (booted through `resources/ts/runtime/blocks.ts`):
+ *   * one boot per root, so a duplicated block never double-binds its listeners;
  *   * exactly one scheduled animation frame for the sculpture;
  *   * the credited static poster stays visible when WebGL or the mesh fails, or
  *     when the visitor asks for reduced motion;
  *   * visibility, intersection and reduced-motion changes stop and restart the
  *     render loop without leaking it;
- *   * pointers always release their capture, including on `pointercancel`;
+ *   * one resize observer on the canvas drives the drawing buffer and the camera
+ *     aspect, and the frame loop never measures layout;
+ *   * pointers always release their capture, including on `pointercancel` and on
+ *     teardown;
  *   * removing the root disposes the renderer, geometry, material and listeners.
  */
 
 import * as THREE from "three";
 
+import { bootBlocks } from "../../resources/ts/runtime/blocks";
+import { formatTemplate, readString } from "../../resources/ts/runtime/strings";
+import type { DoclapMotionApi } from "../../resources/ts/runtime/motion";
+
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 const MESH_BYTES = 16248 * 3 * 4;
-
-const teardown = new Map<HTMLElement, () => void>();
-let removalObserver: MutationObserver | undefined;
-
-/**
- * Watch for roots that leave the document and release what they hold.
- */
-function watchRemoval(): void {
-  if (removalObserver) {
-    return;
-  }
-
-  removalObserver = new MutationObserver(() => {
-    teardown.forEach((destroy, root) => {
-      if (!root.isConnected) {
-        destroy();
-        teardown.delete(root);
-      }
-    });
-  });
-  removalObserver.observe(document.documentElement, {
-    childList: true,
-    subtree: true,
-  });
-}
 
 /**
  * Build and drive the WebGL sculpture viewer inside one hero root.
@@ -71,6 +64,9 @@ function initSculpture(root: HTMLElement): () => void {
   let renderer: THREE.WebGLRenderer;
   let scene: THREE.Scene;
   let camera: THREE.PerspectiveCamera;
+  // The group carries the eased rotations and the idle float; the mesh keeps its
+  // own slow Y spin, so the two never fight over one transform.
+  let group: THREE.Group;
 
   try {
     const context = canvas.getContext("webgl2", {
@@ -94,6 +90,8 @@ function initSculpture(root: HTMLElement): () => void {
     renderer.setClearColor(0, 0);
 
     scene = new THREE.Scene();
+    group = new THREE.Group();
+    scene.add(group);
     camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
     camera.position.set(0, 0.05, 9.5);
     camera.lookAt(0, 0, 0);
@@ -124,21 +122,20 @@ function initSculpture(root: HTMLElement): () => void {
   let running = false;
   let frame = 0;
   let drag = false;
-  let pointerX = 0;
-  let pointerY = 0;
   let disposed = false;
+  // The pointer only ever writes targets; the frame loop eases towards them.
+  let targetX = 0;
+  let targetY = 0.22;
+  let targetZ = 0;
+  let activePointer: number | null = null;
+  let observedWidth = 0;
+  let observedHeight = 0;
   const controller = new AbortController();
 
   const allowed = (): boolean =>
     active && !paused && !document.hidden && !reduced.matches;
 
-  const reset = (index = 0): void => {
-    if (mesh) {
-      mesh.rotation.set(index ? 0.12 : 0, index ? -0.72 : 1.1, 0);
-    }
-  };
-
-  const render = (): void => {
+  const render = (time: number): void => {
     frame = 0;
 
     if (!running) {
@@ -150,12 +147,18 @@ function initSculpture(root: HTMLElement): () => void {
       return;
     }
 
-    const rect = canvas.getBoundingClientRect();
-    const density = Math.min(devicePixelRatio, 2);
-    renderer.setSize(rect.width, rect.height, false);
-    renderer.setPixelRatio(density);
-    camera.aspect = rect.width / Math.max(1, rect.height);
-    camera.updateProjectionMatrix();
+    group.rotation.x += (targetX - group.rotation.x) * 0.045;
+    group.rotation.y += (targetY - group.rotation.y) * 0.045;
+    group.rotation.z += (targetZ - group.rotation.z) * 0.045;
+
+    if (!paused && !drag && !reduced.matches) {
+      // Idle float: the group breathes while the mesh keeps its own slow spin.
+      group.position.y = Math.sin(time * 0.00065) * 0.045;
+      mesh.rotation.y = 1.1 + Math.sin(time * 0.00022) * 0.09;
+    } else {
+      group.position.y = 0;
+    }
+
     renderer.render(scene, camera);
 
     if (running) {
@@ -180,6 +183,32 @@ function initSculpture(root: HTMLElement): () => void {
       frame = 0;
     }
   };
+
+  // One resize observer owns the drawing buffer and the camera aspect, so the
+  // frame loop never measures layout. Nothing is written while the box is
+  // unchanged, which keeps observer echoes from looping.
+  const resize = (): void => {
+    const rect = canvas.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) {
+      return;
+    }
+
+    if (rect.width === observedWidth && rect.height === observedHeight) {
+      return;
+    }
+
+    observedWidth = rect.width;
+    observedHeight = rect.height;
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setSize(rect.width, rect.height, false);
+    camera.aspect = rect.width / rect.height;
+    camera.updateProjectionMatrix();
+  };
+
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(canvas);
+  resize();
 
   fetch(hero.dataset.doclapMesh || "", { signal: controller.signal })
     .then((response) => {
@@ -215,7 +244,7 @@ function initSculpture(root: HTMLElement): () => void {
       });
       mesh = new THREE.Mesh(geometry, material);
       mesh.rotation.y = 1.1;
-      scene.add(mesh);
+      group.add(mesh);
       poster?.setAttribute("hidden", "");
       start();
     })
@@ -243,8 +272,7 @@ function initSculpture(root: HTMLElement): () => void {
 
   const onPointerDown = (event: PointerEvent): void => {
     drag = true;
-    pointerX = event.clientX;
-    pointerY = event.clientY;
+    activePointer = event.pointerId;
 
     if (typeof canvas.setPointerCapture === "function") {
       canvas.setPointerCapture(event.pointerId);
@@ -252,21 +280,31 @@ function initSculpture(root: HTMLElement): () => void {
   };
 
   const onPointerMove = (event: PointerEvent): void => {
-    if (!drag || !mesh) {
+    if (drag) {
+      targetY += event.movementX * 0.008;
+      targetX += event.movementY * 0.008;
+
       return;
     }
 
-    mesh.rotation.y += (event.clientX - pointerX) * 0.008;
-    mesh.rotation.x = Math.max(
-      -0.55,
-      Math.min(0.55, mesh.rotation.x + (event.clientY - pointerY) * 0.006),
-    );
-    pointerX = event.clientX;
-    pointerY = event.clientY;
+    // Passive follow: the sculpture leans towards the pointer.
+    if (reduced.matches || paused) {
+      return;
+    }
+
+    const rect = canvas.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) {
+      return;
+    }
+
+    targetY = ((event.clientX - rect.left) / rect.width) * 0.32 + 0.06;
+    targetX = ((event.clientY - rect.top) / rect.height) * 0.12 - 0.06;
   };
 
   const endDrag = (event: PointerEvent): void => {
     drag = false;
+    activePointer = null;
 
     if (canvas.hasPointerCapture(event.pointerId)) {
       canvas.releasePointerCapture(event.pointerId);
@@ -274,16 +312,18 @@ function initSculpture(root: HTMLElement): () => void {
   };
 
   const onKeyDown = (event: KeyboardEvent): void => {
-    if (!mesh) {
-      return;
-    }
-
+    // Keys only move the target: the sculpture is never snapped by hand.
     if (event.key === "Home") {
-      reset();
+      targetX = 0;
+      targetY = 0.22;
     } else if (event.key === "ArrowLeft") {
-      mesh.rotation.y -= 0.15;
+      targetY -= 0.18;
     } else if (event.key === "ArrowRight") {
-      mesh.rotation.y += 0.15;
+      targetY += 0.18;
+    } else if (event.key === "ArrowUp") {
+      targetX -= 0.18;
+    } else if (event.key === "ArrowDown") {
+      targetX += 0.18;
     } else {
       return;
     }
@@ -295,7 +335,11 @@ function initSculpture(root: HTMLElement): () => void {
     paused = !paused;
     const button = event.currentTarget as HTMLButtonElement;
     button.setAttribute("aria-pressed", String(paused));
-    button.setAttribute("aria-label", paused ? "Resume motion" : "Pause motion");
+    const label = readString(button, paused ? "resume-label" : "pause-label");
+
+    if (label) {
+      button.setAttribute("aria-label", label);
+    }
 
     if (paused) {
       stop();
@@ -305,7 +349,12 @@ function initSculpture(root: HTMLElement): () => void {
   };
 
   const onView = (event: Event): void => {
-    reset((event as CustomEvent<number>).detail);
+    const index = (event as CustomEvent<number>).detail ? 1 : 0;
+
+    // A view change re-aims the sculpture; the easing does the rest.
+    targetY = index ? -0.55 : 0.22;
+    targetX = index ? 0.05 : 0;
+    targetZ = index ? -0.08 : 0;
   };
 
   const onVisibility = (): void => {
@@ -339,6 +388,7 @@ function initSculpture(root: HTMLElement): () => void {
   return () => {
     stop();
     observer.disconnect();
+    resizeObserver.disconnect();
     controller.abort();
     canvas.removeEventListener("pointerdown", onPointerDown);
     canvas.removeEventListener("pointermove", onPointerMove);
@@ -350,10 +400,15 @@ function initSculpture(root: HTMLElement): () => void {
     document.removeEventListener("visibilitychange", onVisibility);
     reduced.removeEventListener("change", onReducedMotion);
 
-    if (mesh) {
-      scene.remove(mesh);
+    if (activePointer !== null && canvas.hasPointerCapture(activePointer)) {
+      canvas.releasePointerCapture(activePointer);
     }
 
+    if (mesh) {
+      group.remove(mesh);
+    }
+
+    scene.remove(group);
     geometry?.dispose();
     material?.dispose();
 
@@ -367,67 +422,152 @@ function initSculpture(root: HTMLElement): () => void {
 /**
  * Wire the slideshow views and the sculpture viewer of one hero root.
  *
+ * View changes are delegated to `window.doclapMotion.changeHero()` so the swap
+ * animates and stays interruptible; the synchronous path remains the fallback
+ * for reduced motion and for pages without the runtime.
+ *
  * @param root Hero block root.
  */
-function init(root: HTMLElement): void {
-  if ("1" === root.dataset.initialized) {
-    return;
-  }
-
-  root.dataset.initialized = "1";
-
+function init(root: HTMLElement): () => void {
   const panels = [...root.querySelectorAll<HTMLElement>(".gallery-panel")];
   const tabs = [...root.querySelectorAll<HTMLButtonElement>(".slide-tab")];
   const status = root.querySelector<HTMLElement>(".hero-status");
-  let current = 0;
+  const viewTemplate = readString(status, "view-template");
+  const prev = root.querySelector<HTMLButtonElement>(".hero-prev");
+  const next = root.querySelector<HTMLButtonElement>(".hero-next");
+  const listeners: Array<() => void> = [];
+  const hero = root.classList.contains("gallery-hero")
+    ? root
+    : root.querySelector<HTMLElement>(".gallery-hero") ?? root;
+  let current = Math.max(
+    0,
+    panels.findIndex((panel) => !panel.hidden),
+  );
+  let busy = false;
 
+  // Boot state: the view marker is set once and the polite live region is never
+  // empty on load, so it announces the rendered view instead of nothing.
+  hero.dataset.current = String(current);
+
+  if (panels.length && status && viewTemplate) {
+    status.textContent = formatTemplate(viewTemplate, current + 1, panels.length);
+  }
+
+  const apply = (index: number): void => {
+    current = index;
+    // The stylesheet keys the hero's resting poses on this marker, so the CSS
+    // owns them instead of a pinned inline transform.
+    hero.dataset.current = String(index);
+    panels.forEach((panel, position) => {
+      panel.hidden = position !== index;
+      (panel as HTMLElement & { inert: boolean }).inert = position !== index;
+    });
+    tabs.forEach((tab, position) => {
+      tab.classList.toggle("is-active", position === index);
+      tab.setAttribute("aria-pressed", String(position === index));
+    });
+
+    if (status && viewTemplate) {
+      status.textContent = formatTemplate(viewTemplate, index + 1, panels.length);
+    }
+
+    root.dispatchEvent(new CustomEvent<number>("doclap:view", { detail: index }));
+  };
+
+  /**
+   * Show another view.
+   *
+   * The shared motion runtime owns the swap and the busy lock while it animates;
+   * when it declines (reduced motion, or a page without the runtime) the swap
+   * happens here synchronously. A request arriving while busy is ignored, and
+   * the runtime calls `apply()` and `finish()` exactly once either way.
+   *
+   * @param index Index of the view to show.
+   */
   const show = (index: number): void => {
-    if (!panels.length) {
+    if (!panels.length || busy) {
       return;
     }
 
-    current = (index + panels.length) % panels.length;
-    panels.forEach((panel, position) => {
-      panel.hidden = position !== current;
-      (panel as HTMLElement & { inert: boolean }).inert = position !== current;
-    });
-    tabs.forEach((tab, position) => {
-      tab.classList.toggle("is-active", position === current);
-      tab.setAttribute("aria-pressed", String(position === current));
-    });
+    const target = (index + panels.length) % panels.length;
 
-    if (status) {
-      status.textContent = `View ${current + 1} of ${panels.length}`;
+    if (target === current) {
+      return;
     }
 
-    root.dispatchEvent(new CustomEvent<number>("doclap:view", { detail: current }));
+    const finish = (): void => {
+      busy = false;
+    };
+
+    // Read at call time: the runtime boots with `assets/js/main.js`, which may
+    // be enqueued after this block bundle.
+    const api: DoclapMotionApi | undefined = window.doclapMotion;
+
+    busy = true;
+
+    const accepted = api?.changeHero({
+      root: hero,
+      from: panels[current],
+      to: panels[target],
+      index: target,
+      apply: () => apply(target),
+      finish,
+    });
+
+    if (!accepted) {
+      apply(target);
+      finish();
+    }
   };
 
-  tabs.forEach((tab, index) => tab.addEventListener("click", () => show(index)));
-  root
-    .querySelector(".hero-prev")
-    ?.addEventListener("click", () => show(current - 1));
-  root
-    .querySelector(".hero-next")
-    ?.addEventListener("click", () => show(current + 1));
+  tabs.forEach((tab, index) => {
+    const onSelect = (): void => show(index);
+    tab.addEventListener("click", onSelect);
+    listeners.push(() => tab.removeEventListener("click", onSelect));
+  });
+
+  const onPrev = (): void => show(current - 1);
+  const onNext = (): void => show(current + 1);
+
+  prev?.addEventListener("click", onPrev);
+  next?.addEventListener("click", onNext);
+
+  /**
+   * Arrow keys on the hero change the view, except while the sculpture canvas
+   * or a link has focus: both own their own arrow keys.
+   *
+   * @param event Keydown event.
+   */
+  const onHeroKeyDown = (event: KeyboardEvent): void => {
+    const target = event.target;
+
+    if (
+      target instanceof Element &&
+      (target.classList.contains("doclap-sculpture") || target.closest("a"))
+    ) {
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      onNext();
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      onPrev();
+    }
+  };
+
+  hero.addEventListener("keydown", onHeroKeyDown);
+  listeners.push(() => hero.removeEventListener("keydown", onHeroKeyDown));
 
   const destroySculpture = initSculpture(root);
 
-  teardown.set(root, () => {
+  return () => {
+    listeners.forEach((remove) => remove());
+    prev?.removeEventListener("click", onPrev);
+    next?.removeEventListener("click", onNext);
     destroySculpture();
-  });
-  watchRemoval();
+  };
 }
 
-/**
- * Boot every hero root in the document.
- */
-function boot(): void {
-  document.querySelectorAll<HTMLElement>(".doclap-home-hero").forEach(init);
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", boot);
-} else {
-  boot();
-}
+bootBlocks<HTMLElement>(".doclap-home-hero", init);

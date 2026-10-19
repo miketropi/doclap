@@ -1,17 +1,30 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl } from '@wordpress/components';
+import { PanelBody, TextControl } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import ServerSideRender from '@wordpress/server-side-render';
 
-import Repeater, { type RepeaterItem } from '../../resources/ts/editor/repeater';
+import BlockPreview from '../../resources/ts/editor/block-preview';
+import Repeater, {
+	type RepeaterField,
+	type RepeaterItem,
+} from '../../resources/ts/editor/repeater';
+import RichTextOverlay, {
+	type RichTextTarget,
+} from '../../resources/ts/editor/rich-text-overlay';
+import { urlHelp } from '../../resources/ts/editor/url-help';
+import {
+	mergeAccent,
+	needsAccentMerge,
+} from '../../resources/ts/editor/accent-migration';
 import type { NotFoundAttributes, RecoveryLink } from './types';
 
 interface EditProps {
 	attributes: NotFoundAttributes;
 	setAttributes: (attributes: Partial<NotFoundAttributes>) => void;
+	isSelected: boolean;
 }
 
-const linkFields = [
+const linkFields: RepeaterField[] = [
 	{
 		key: 'label',
 		label: __('Label', 'doclap'),
@@ -19,12 +32,58 @@ const linkFields = [
 	{
 		key: 'url',
 		label: __('URL', 'doclap'),
-		help: __('Use #section, a site path, @notes, or @search.', 'doclap'),
+		help: urlHelp,
 	},
 ];
 
-export default function Edit({ attributes, setAttributes }: EditProps): JSX.Element {
+/** Rich values edited in place on the canvas (they render unconditionally). */
+const overlayTargets: RichTextTarget[] = [
+	{ path: 'heading', label: __('Heading', 'doclap'), multiline: true },
+	{ path: 'lead', label: __('Lead', 'doclap'), multiline: true },
+	{
+		path: 'asideHeading',
+		label: __('Section heading', 'doclap'),
+		multiline: true,
+	},
+	{ path: 'primaryLabel', label: __('Primary label', 'doclap') },
+	{ path: 'secondaryLabel', label: __('Secondary label', 'doclap') },
+];
+
+export default function Edit({
+	attributes,
+	setAttributes,
+	isSelected,
+}: EditProps): JSX.Element {
 	const links = attributes.links ?? [];
+
+	// One-shot legacy folds: saved content can still carry the split accents.
+	// `needsAccentMerge()` is false as soon as an accent is empty, so these run
+	// once per block and never on a keystroke.
+	useEffect(() => {
+		const legacyAccent = String(attributes.headingAccent ?? '');
+
+		if (needsAccentMerge(attributes.heading ?? '', legacyAccent)) {
+			setAttributes({
+				heading: mergeAccent(attributes.heading ?? '', legacyAccent, '<br><em>'),
+				headingAccent: '',
+			});
+		}
+	}, [attributes.headingAccent, setAttributes]);
+
+	useEffect(() => {
+		const legacyAccent = String(attributes.asideHeadingAccent ?? '');
+
+		if (needsAccentMerge(attributes.asideHeading ?? '', legacyAccent)) {
+			setAttributes({
+				asideHeading: mergeAccent(
+					attributes.asideHeading ?? '',
+					legacyAccent,
+					'<br>',
+				),
+				asideHeadingAccent: '',
+			});
+		}
+	}, [attributes.asideHeadingAccent, setAttributes]);
 
 	return (
 		<>
@@ -40,62 +99,31 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						value={attributes.eyebrow ?? ''}
 						onChange={(eyebrow) => setAttributes({ eyebrow })}
 					/>
-					<TextControl
-						label={__('Heading', 'doclap')}
-						value={attributes.heading ?? ''}
-						onChange={(heading) => setAttributes({ heading })}
-					/>
-					<TextControl
-						label={__('Heading accent', 'doclap')}
-						value={attributes.headingAccent ?? ''}
-						onChange={(headingAccent) => setAttributes({ headingAccent })}
-					/>
-					<TextareaControl
-						label={__('Lead', 'doclap')}
-						help={__('Line breaks are preserved.', 'doclap')}
-						value={attributes.lead ?? ''}
-						rows={3}
-						onChange={(lead) => setAttributes({ lead })}
-					/>
 				</PanelBody>
+
 				<PanelBody title={__('Actions', 'doclap')} initialOpen={false}>
 					<TextControl
-						label={__('Primary label', 'doclap')}
-						value={attributes.primaryLabel ?? ''}
-						onChange={(primaryLabel) => setAttributes({ primaryLabel })}
-					/>
-					<TextControl
 						label={__('Primary URL', 'doclap')}
-						help={__('Leave empty for the site home.', 'doclap')}
+						help={`${urlHelp} ${__(
+							'Leave empty to link to the site home.',
+							'doclap',
+						)}`}
 						value={attributes.primaryUrl ?? ''}
 						onChange={(primaryUrl) => setAttributes({ primaryUrl })}
 					/>
 					<TextControl
-						label={__('Secondary label', 'doclap')}
-						value={attributes.secondaryLabel ?? ''}
-						onChange={(secondaryLabel) => setAttributes({ secondaryLabel })}
-					/>
-					<TextControl
 						label={__('Secondary URL', 'doclap')}
+						help={urlHelp}
 						value={attributes.secondaryUrl ?? ''}
 						onChange={(secondaryUrl) => setAttributes({ secondaryUrl })}
 					/>
 				</PanelBody>
+
 				<PanelBody title={__('Other directions', 'doclap')} initialOpen={false}>
 					<TextControl
 						label={__('Section label', 'doclap')}
 						value={attributes.asideLabel ?? ''}
 						onChange={(asideLabel) => setAttributes({ asideLabel })}
-					/>
-					<TextControl
-						label={__('Section heading', 'doclap')}
-						value={attributes.asideHeading ?? ''}
-						onChange={(asideHeading) => setAttributes({ asideHeading })}
-					/>
-					<TextControl
-						label={__('Section heading second line', 'doclap')}
-						value={attributes.asideHeadingAccent ?? ''}
-						onChange={(asideHeadingAccent) => setAttributes({ asideHeadingAccent })}
 					/>
 					<Repeater
 						label={__('Recovery links', 'doclap')}
@@ -112,12 +140,18 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 							String(item.label || __('Destination', 'doclap'))
 						}
 						addLabel={__('Add destination', 'doclap')}
+						emptyLabel={__('No recovery links yet.', 'doclap')}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<ServerSideRender
-				block="doclap/not-found"
-				attributes={attributes as unknown as Record<string, unknown>}
+			<BlockPreview block="doclap/not-found" attributes={attributes} />
+			<RichTextOverlay
+				targets={overlayTargets}
+				attributes={attributes}
+				setAttributes={(next) =>
+					setAttributes(next as Partial<NotFoundAttributes>)
+				}
+				isSelected={isSelected}
 			/>
 		</>
 	);

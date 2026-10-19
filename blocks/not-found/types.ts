@@ -8,7 +8,6 @@ export interface NotFoundAttributes extends Record<string, unknown> {
 	errorCode: string;
 	eyebrow: string;
 	heading: string;
-	headingAccent: string;
 	lead: string;
 	primaryLabel: string;
 	primaryUrl: string;
@@ -16,6 +15,5 @@ export interface NotFoundAttributes extends Record<string, unknown> {
 	secondaryUrl: string;
 	asideLabel: string;
 	asideHeading: string;
-	asideHeadingAccent: string;
 	links: RecoveryLink[];
 }

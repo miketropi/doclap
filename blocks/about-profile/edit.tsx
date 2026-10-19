@@ -1,19 +1,21 @@
-import {
-	InspectorControls,
-	MediaPlaceholder,
-	MediaUpload,
-	MediaUploadCheck,
-} from '@wordpress/block-editor';
-import {
-	Button,
-	PanelBody,
-	TextControl,
-	TextareaControl,
-} from '@wordpress/components';
+import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, TextControl } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import ServerSideRender from '@wordpress/server-side-render';
 
+import BlockPreview from '../../resources/ts/editor/block-preview';
+import ImageControl from '../../resources/ts/editor/image-control';
 import Repeater, { type RepeaterItem } from '../../resources/ts/editor/repeater';
+import RichTextControl from '../../resources/ts/editor/rich-text-control';
+import RichTextOverlay, {
+	type RichTextTarget,
+} from '../../resources/ts/editor/rich-text-overlay';
+import { urlHelpWithStructuralNote } from '../../resources/ts/editor/url-help';
+import {
+	mergeAccent,
+	needsAccentMerge,
+	truncateLabel,
+} from '../../resources/ts/editor/accent-migration';
 import type {
 	AboutProfileAttributes,
 	AboutSection,
@@ -23,18 +25,85 @@ import type {
 interface EditProps {
 	attributes: AboutProfileAttributes;
 	setAttributes: (attributes: Partial<AboutProfileAttributes>) => void;
+	isSelected: boolean;
 }
 
-export default function Edit({ attributes, setAttributes }: EditProps): JSX.Element {
+/** Rich values edited in place on the canvas (they render unconditionally). */
+const overlayTargets: RichTextTarget[] = [
+	{ path: 'heading', label: __('Heading', 'doclap'), multiline: true },
+	{ path: 'lead', label: __('Lead', 'doclap'), multiline: true },
+	{
+		path: 'closingHeading',
+		label: __('Closing heading', 'doclap'),
+		multiline: true,
+	},
+	{ path: 'closingCtaLabel', label: __('Link label', 'doclap') },
+];
+
+export default function Edit({
+	attributes,
+	setAttributes,
+	isSelected,
+}: EditProps): JSX.Element {
 	const sections = attributes.sections ?? [];
 	const principles = attributes.principles ?? [];
-	const updateSection = (index: number, patch: Partial<AboutSection>): void => {
-		setAttributes({
-			sections: sections.map((item, position) =>
-				position === index ? { ...item, ...patch } : item,
-			),
+
+	// One-shot legacy fold. Every saved block that predates the merge still
+	// carries the split accents; `needsAccentMerge()` is false as soon as the
+	// accent is empty, so this runs once per block and never on a keystroke.
+	useEffect(() => {
+		const legacyAccent = String(attributes.headingAccent ?? '');
+
+		if (needsAccentMerge(attributes.heading ?? '', legacyAccent)) {
+			setAttributes({
+				heading: mergeAccent(
+					attributes.heading ?? '',
+					legacyAccent,
+					'<br><em>',
+				),
+				headingAccent: '',
+			});
+		}
+	}, [attributes.headingAccent, setAttributes]);
+
+	useEffect(() => {
+		const legacyAccent = String(attributes.closingHeadingAccent ?? '');
+
+		if (needsAccentMerge(attributes.closingHeading ?? '', legacyAccent)) {
+			setAttributes({
+				closingHeading: mergeAccent(
+					attributes.closingHeading ?? '',
+					legacyAccent,
+					'<br><em>',
+				),
+				closingHeadingAccent: '',
+			});
+		}
+	}, [attributes.closingHeadingAccent, setAttributes]);
+
+	useEffect(() => {
+		let folded = false;
+		const next = sections.map((section) => {
+			const legacyAccent = String(section.headingAccent ?? '');
+
+			if (!needsAccentMerge(section.heading ?? '', legacyAccent)) {
+				return section;
+			}
+
+			folded = true;
+			const merged: AboutSection = {
+				...section,
+				heading: mergeAccent(section.heading ?? '', legacyAccent, '<br>'),
+			};
+			delete merged.headingAccent;
+
+			return merged;
 		});
-	};
+
+		if (folded) {
+			setAttributes({ sections: next });
+		}
+	}, [attributes.sections, setAttributes]);
 
 	return (
 		<>
@@ -50,21 +119,6 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						value={attributes.breadcrumbLabel ?? ''}
 						onChange={(breadcrumbLabel) => setAttributes({ breadcrumbLabel })}
 					/>
-					<TextControl
-						label={__('Heading', 'doclap')}
-						value={attributes.heading ?? ''}
-						onChange={(heading) => setAttributes({ heading })}
-					/>
-					<TextControl
-						label={__('Heading accent', 'doclap')}
-						value={attributes.headingAccent ?? ''}
-						onChange={(headingAccent) => setAttributes({ headingAccent })}
-					/>
-					<TextareaControl
-						label={__('Lead', 'doclap')}
-						value={attributes.lead ?? ''}
-						onChange={(lead) => setAttributes({ lead })}
-					/>
 				</PanelBody>
 
 				<PanelBody title={__('Narrative sections', 'doclap')} initialOpen={false}>
@@ -73,10 +127,12 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						items={sections as unknown as RepeaterItem[]}
 						fields={[
 							{ key: 'label', label: __('Label', 'doclap') },
-							{ key: 'heading', label: __('Heading', 'doclap') },
 							{
-								key: 'headingAccent',
-								label: __('Heading second line', 'doclap'),
+								key: 'heading',
+								label: __('Heading', 'doclap'),
+								control: 'rich',
+								tagName: 'h2',
+								multiline: true,
 							},
 						]}
 						onChange={(items) =>
@@ -85,7 +141,6 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						createItem={() => ({
 							label: '',
 							heading: '',
-							headingAccent: '',
 							paragraphs: [],
 						})}
 						getItemLabel={(item, index) =>
@@ -93,105 +148,76 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 								item.label || sprintf(__('Section %d', 'doclap'), index + 1),
 							)
 						}
-					/>
-				</PanelBody>
-				{sections.map((section, index) => (
-					<PanelBody
-						key={`section-paragraphs-${index}`}
-						title={sprintf(
-							__('%s paragraphs', 'doclap'),
-							section.label || sprintf(__('Section %d', 'doclap'), index + 1),
-						)}
-						initialOpen={false}
-					>
-						<Repeater
-							label={__('Paragraphs', 'doclap')}
-							items={(section.paragraphs ?? []).map((text) => ({ text }))}
-							fields={[
-								{
-									key: 'text',
-									label: __('Paragraph', 'doclap'),
-									control: 'textarea',
-								},
-							]}
-							onChange={(items) =>
-								updateSection(index, {
-									paragraphs: items.map((item) => String(item.text ?? '')),
-								})
-							}
-							createItem={() => ({ text: '' })}
-							getItemLabel={(_item, paragraphIndex) =>
-								sprintf(__('Paragraph %d', 'doclap'), paragraphIndex + 1)
-							}
-						/>
-					</PanelBody>
-				))}
-
-				<PanelBody title={__('Studio image', 'doclap')} initialOpen={false}>
-					{attributes.studioImageUrl ? (
-						<MediaUploadCheck>
-							<MediaUpload
-								onSelect={(media: {
-									id?: number;
-									url?: string;
-									alt?: string;
-								}) =>
-									setAttributes({
-										studioImageId: media.id ?? 0,
-										studioImageUrl: media.url ?? '',
-										studioImageAlt:
-											media.alt || attributes.studioImageAlt,
+						// The paragraphs of a section belong to that section, so they
+						// are edited inside its own item editor: the nested repeater
+						// patches the parent draft through `update` and never writes
+						// to the attribute directly, which would desynchronise the
+						// draft from the stored value.
+						renderItemExtras={(draft, update) => (
+							<Repeater
+								label={__('Paragraphs', 'doclap')}
+								items={(Array.isArray(draft.paragraphs)
+									? (draft.paragraphs as unknown[])
+									: []
+								).map((text) => ({ text: String(text ?? '') }))}
+								fields={[
+									{
+										key: 'text',
+										label: __('Paragraph', 'doclap'),
+										control: 'rich',
+										tagName: 'p',
+										multiline: true,
+									},
+								]}
+								onChange={(items) =>
+									update({
+										paragraphs: items.map((item) =>
+											String(item.text ?? ''),
+										),
 									})
 								}
-								allowedTypes={['image']}
-								value={attributes.studioImageId || undefined}
-								render={({ open }) => (
-									<>
-										<Button variant="secondary" onClick={open}>
-											{__('Replace image', 'doclap')}
-										</Button>
-										<Button
-											variant="tertiary"
-											isDestructive
-											onClick={() =>
-												setAttributes({
-													studioImageId: 0,
-													studioImageUrl: '',
-												})
-											}
-										>
-											{__('Remove image', 'doclap')}
-										</Button>
-									</>
-								)}
+								createItem={() => ({ text: '' })}
+								getItemLabel={(_item, paragraphIndex) =>
+									sprintf(__('Paragraph %d', 'doclap'), paragraphIndex + 1)
+								}
 							/>
-						</MediaUploadCheck>
-					) : (
-						<MediaPlaceholder
-							allowedTypes={['image']}
-							labels={{ title: __('Studio image', 'doclap') }}
-							onSelect={(media: {
-								id?: number;
-								url?: string;
-								alt?: string;
-							}) =>
-								setAttributes({
-									studioImageId: media.id ?? 0,
-									studioImageUrl: media.url ?? '',
-									studioImageAlt: media.alt || attributes.studioImageAlt,
-								})
-							}
-						/>
-					)}
-					<TextControl
-						label={__('Alternative text', 'doclap')}
-						value={attributes.studioImageAlt ?? ''}
-						onChange={(studioImageAlt) => setAttributes({ studioImageAlt })}
+						)}
 					/>
-					<TextareaControl
-						label={__('Caption', 'doclap')}
-						value={attributes.studioImageCaption ?? ''}
-						onChange={(studioImageCaption) => setAttributes({ studioImageCaption })}
+				</PanelBody>
+
+				<PanelBody title={__('Studio image', 'doclap')} initialOpen={false}>
+					<ImageControl
+						value={{
+							id: attributes.studioImageId ?? 0,
+							url: attributes.studioImageUrl ?? '',
+							alt: attributes.studioImageAlt ?? '',
+						}}
+						labels={{
+							title: __('Studio image', 'doclap'),
+							select: __(
+								'Select an image from the media library or upload a new one.',
+								'doclap',
+							),
+							replace: __('Replace image', 'doclap'),
+							remove: __('Remove image', 'doclap'),
+							alt: __('Alternative text', 'doclap'),
+							caption: __('Caption', 'doclap'),
+						}}
+						onSelect={(media) =>
+							setAttributes({
+								studioImageId: media.id,
+								studioImageUrl: media.url,
+								studioImageAlt: media.alt,
+							})
+						}
+						onRemove={() =>
+							setAttributes({ studioImageId: 0, studioImageUrl: '' })
+						}
+						onChangeAlt={(studioImageAlt) => setAttributes({ studioImageAlt })}
+						caption={attributes.studioImageCaption ?? ''}
+						onChangeCaption={(studioImageCaption) =>
+							setAttributes({ studioImageCaption })
+						}
 					/>
 				</PanelBody>
 
@@ -201,11 +227,18 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						items={principles as unknown as RepeaterItem[]}
 						fields={[
 							{ key: 'label', label: __('Label', 'doclap') },
-							{ key: 'title', label: __('Title', 'doclap') },
+							{
+								key: 'title',
+								label: __('Title', 'doclap'),
+								control: 'rich',
+								tagName: 'h3',
+							},
 							{
 								key: 'copy',
 								label: __('Copy', 'doclap'),
-								control: 'textarea',
+								control: 'rich',
+								tagName: 'p',
+								multiline: true,
 							},
 						]}
 						onChange={(items) =>
@@ -213,49 +246,43 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						}
 						createItem={() => ({ label: '', title: '', copy: '' })}
 						getItemLabel={(item, index) =>
-							String(
-								item.title || sprintf(__('Principle %d', 'doclap'), index + 1),
-							)
+							truncateLabel(String(item.title ?? '')) ||
+							sprintf(__('Principle %d', 'doclap'), index + 1)
 						}
 					/>
-					<TextareaControl
+					<RichTextControl
 						label={__('Portfolio status note', 'doclap')}
 						value={attributes.statusNote ?? ''}
 						onChange={(statusNote) => setAttributes({ statusNote })}
+						multiline
 					/>
 				</PanelBody>
 
-				<PanelBody title={__('Closing call to action', 'doclap')} initialOpen={false}>
+				<PanelBody
+					title={__('Closing call to action', 'doclap')}
+					initialOpen={false}
+				>
 					<TextControl
 						label={__('Eyebrow', 'doclap')}
 						value={attributes.closingEyebrow ?? ''}
 						onChange={(closingEyebrow) => setAttributes({ closingEyebrow })}
 					/>
 					<TextControl
-						label={__('Heading', 'doclap')}
-						value={attributes.closingHeading ?? ''}
-						onChange={(closingHeading) => setAttributes({ closingHeading })}
-					/>
-					<TextControl
-						label={__('Heading accent', 'doclap')}
-						value={attributes.closingHeadingAccent ?? ''}
-						onChange={(closingHeadingAccent) => setAttributes({ closingHeadingAccent })}
-					/>
-					<TextControl
-						label={__('Link label', 'doclap')}
-						value={attributes.closingCtaLabel ?? ''}
-						onChange={(closingCtaLabel) => setAttributes({ closingCtaLabel })}
-					/>
-					<TextControl
 						label={__('Link URL', 'doclap')}
+						help={urlHelpWithStructuralNote}
 						value={attributes.closingCtaUrl ?? ''}
 						onChange={(closingCtaUrl) => setAttributes({ closingCtaUrl })}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<ServerSideRender
-				block="doclap/about-profile"
-				attributes={attributes as unknown as Record<string, unknown>}
+			<BlockPreview block="doclap/about-profile" attributes={attributes} />
+			<RichTextOverlay
+				targets={overlayTargets}
+				attributes={attributes}
+				setAttributes={(next) =>
+					setAttributes(next as Partial<AboutProfileAttributes>)
+				}
+				isSelected={isSelected}
 			/>
 		</>
 	);

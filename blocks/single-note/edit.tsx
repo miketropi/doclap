@@ -1,25 +1,71 @@
-import ServerSideRender from '@wordpress/server-side-render';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { InspectorControls } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	RangeControl,
 	SelectControl,
 	TextControl,
-	TextareaControl,
 } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+
+import BlockPreview from '../../resources/ts/editor/block-preview';
+import RichTextOverlay, {
+	type RichTextTarget,
+} from '../../resources/ts/editor/rich-text-overlay';
+import { urlHelpWithStructuralNote } from '../../resources/ts/editor/url-help';
+import {
+	mergeAccent,
+	needsAccentMerge,
+} from '../../resources/ts/editor/accent-migration';
 import type { SingleNoteAttributes } from './types';
 
 interface EditProps {
 	attributes: SingleNoteAttributes;
 	setAttributes: (attributes: Partial<SingleNoteAttributes>) => void;
+	isSelected: boolean;
 }
 
-export default function Edit({ attributes, setAttributes }: EditProps): JSX.Element {
-	const blockProps = useBlockProps();
+/** Rich values edited in place on the canvas (they render unconditionally). */
+const overlayTargets: RichTextTarget[] = [
+	{ path: 'disclaimer', label: __('Disclaimer', 'doclap'), multiline: true },
+	{
+		path: 'relatedHeading',
+		label: __('Related notes heading', 'doclap'),
+		multiline: true,
+	},
+	{
+		path: 'closingHeading',
+		label: __('Closing heading', 'doclap'),
+		multiline: true,
+	},
+	{ path: 'closingCtaLabel', label: __('Link label', 'doclap') },
+];
+
+export default function Edit({
+	attributes,
+	setAttributes,
+	isSelected,
+}: EditProps): JSX.Element {
+	// One-shot legacy fold: saved content can still carry
+	// `closingHeadingAccent`. `needsAccentMerge()` is false as soon as the accent
+	// is empty, so this runs once per block and never on a keystroke.
+	useEffect(() => {
+		const legacyAccent = String(attributes.closingHeadingAccent ?? '');
+
+		if (needsAccentMerge(attributes.closingHeading ?? '', legacyAccent)) {
+			setAttributes({
+				closingHeading: mergeAccent(
+					attributes.closingHeading ?? '',
+					legacyAccent,
+					'<br><em>',
+				),
+				closingHeadingAccent: '',
+			});
+		}
+	}, [attributes.closingHeadingAccent, setAttributes]);
 
 	return (
-		<div {...blockProps}>
+		<>
 			<InspectorControls>
 				<PanelBody title={__('Navigation and article', 'doclap')} initialOpen>
 					<TextControl
@@ -34,7 +80,7 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 					/>
 					<TextControl
 						label={__('Archive URL', 'doclap')}
-						help={__('Use @notes for the configured posts archive.', 'doclap')}
+						help={urlHelpWithStructuralNote}
 						value={attributes.archiveUrl}
 						onChange={(archiveUrl) => setAttributes({ archiveUrl })}
 					/>
@@ -55,12 +101,11 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 							{ label: __('Hide table of contents', 'doclap'), value: 'hide' },
 							{ label: __('Show an empty message', 'doclap'), value: 'message' },
 						]}
-						onChange={(tocEmptyBehaviour) => setAttributes({ tocEmptyBehaviour })}
-					/>
-					<TextareaControl
-						label={__('Disclaimer', 'doclap')}
-						value={attributes.disclaimer}
-						onChange={(disclaimer) => setAttributes({ disclaimer })}
+						onChange={(tocEmptyBehaviour) =>
+							setAttributes({
+								tocEmptyBehaviour: 'message' === tocEmptyBehaviour ? 'message' : 'hide',
+							})
+						}
 					/>
 					<TextControl
 						label={__('Back link label', 'doclap')}
@@ -68,12 +113,8 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						onChange={(backToArchiveLabel) => setAttributes({ backToArchiveLabel })}
 					/>
 				</PanelBody>
+
 				<PanelBody title={__('Related notes', 'doclap')} initialOpen={false}>
-					<TextControl
-						label={__('Heading', 'doclap')}
-						value={attributes.relatedHeading}
-						onChange={(relatedHeading) => setAttributes({ relatedHeading })}
-					/>
 					<RangeControl
 						label={__('Number of related notes', 'doclap')}
 						value={attributes.relatedCount}
@@ -82,44 +123,40 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						onChange={(relatedCount) => setAttributes({ relatedCount: relatedCount ?? 2 })}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Closing call to action', 'doclap')} initialOpen={false}>
+
+				<PanelBody
+					title={__('Closing call to action', 'doclap')}
+					initialOpen={false}
+				>
 					<TextControl
 						label={__('Eyebrow', 'doclap')}
 						value={attributes.closingEyebrow}
 						onChange={(closingEyebrow) => setAttributes({ closingEyebrow })}
 					/>
 					<TextControl
-						label={__('Heading', 'doclap')}
-						value={attributes.closingHeading}
-						onChange={(closingHeading) => setAttributes({ closingHeading })}
-					/>
-					<TextControl
-						label={__('Heading accent', 'doclap')}
-						value={attributes.closingHeadingAccent}
-						onChange={(closingHeadingAccent) => setAttributes({ closingHeadingAccent })}
-					/>
-					<TextControl
-						label={__('Link label', 'doclap')}
-						value={attributes.closingCtaLabel}
-						onChange={(closingCtaLabel) => setAttributes({ closingCtaLabel })}
-					/>
-					<TextControl
 						label={__('Link URL', 'doclap')}
+						help={urlHelpWithStructuralNote}
 						value={attributes.closingCtaUrl}
 						onChange={(closingCtaUrl) => setAttributes({ closingCtaUrl })}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<p className="doclap-single-note-editor__notice">
-				{__(
+			<BlockPreview
+				block="doclap/single-note"
+				attributes={attributes}
+				notice={__(
 					'Previewing the currently queried post. On non-post editor screens, deterministic sample copy is shown.',
 					'doclap',
 				)}
-			</p>
-			<ServerSideRender
-				block="doclap/single-note"
-				attributes={attributes as unknown as Record<string, unknown>}
 			/>
-		</div>
+			<RichTextOverlay
+				targets={overlayTargets}
+				attributes={attributes}
+				setAttributes={(next) =>
+					setAttributes(next as Partial<SingleNoteAttributes>)
+				}
+				isSelected={isSelected}
+			/>
+		</>
 	);
 }

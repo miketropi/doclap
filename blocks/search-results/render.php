@@ -48,7 +48,7 @@ if ( $doclap_has_search ) {
 				'post_type'      => doclap_search_query_types( $doclap_type ),
 				'post_status'    => 'publish',
 				'paged'          => max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) ),
-				'posts_per_page' => (int) get_option( 'posts_per_page', 10 ),
+				'posts_per_page' => max( 1, min( 24, (int) get_option( 'posts_per_page', 10 ) ) ),
 			),
 		);
 	}
@@ -59,6 +59,13 @@ $doclap_wrapper = get_block_wrapper_attributes(
 );
 $doclap_home    = home_url( '/' );
 $doclap_form_id = wp_unique_id( 'doclap-search-' );
+// Saved content can still carry `headingAccent`; the editor folds the pair into
+// the merged heading and clears the legacy key on the block's first save.
+$doclap_heading = doclap_rich_accent(
+	$doclap_value( 'heading' ),
+	$doclap_value( 'headingAccent' ),
+	'<br><em>',
+);
 $doclap_filters = array(
 	''     => $doclap_value( 'filterAllLabel' ),
 	'page' => $doclap_value( 'filterPageLabel' ),
@@ -84,13 +91,10 @@ if ( $doclap_has_work ) {
 					<?php echo esc_html( $doclap_value( 'breadcrumbLabel' ) ); ?>
 				</span>
 			</nav>
-			<h1>
-				<?php echo esc_html( $doclap_value( 'heading' ) ); ?><br>
-				<em><?php echo esc_html( $doclap_value( 'headingAccent' ) ); ?></em>
-			</h1>
+			<h1 data-doclap-rich="heading"><?php echo doclap_rich( $doclap_heading ); ?></h1>
 			<div class="hero-summary">
 				<span class="hero-mark" aria-hidden="true">✳</span>
-				<p class="lead"><?php echo nl2br( esc_html( $doclap_value( 'lead' ) ) ); ?></p>
+				<p class="lead" data-doclap-rich="lead"><?php echo doclap_rich( $doclap_value( 'lead' ) ); ?></p>
 			</div>
 		</div>
 	</section>
@@ -241,13 +245,13 @@ if ( $doclap_has_work ) {
 					?>
 				<?php else : ?>
 					<div class="empty-state">
-						<h2><?php echo esc_html( $doclap_value( 'noResultsHeading' ) ); ?></h2>
-						<p><?php echo nl2br( esc_html( $doclap_value( 'noResultsCopy' ) ) ); ?></p>
+						<h2><?php echo doclap_rich( $doclap_value( 'noResultsHeading' ) ); ?></h2>
+						<p><?php echo doclap_rich( $doclap_value( 'noResultsCopy' ) ); ?></p>
 						<a
 							class="text-link"
 							href="<?php echo esc_url( doclap_resolve_url( $doclap_value( 'noResultsLinkUrl' ) ) ); ?>"
 						>
-							<span><?php echo esc_html( $doclap_value( 'noResultsLinkLabel' ) ); ?></span>
+							<span data-doclap-rich="noResultsLinkLabel"><?php echo doclap_rich( $doclap_value( 'noResultsLinkLabel' ) ); ?></span>
 							<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme icon.?>
 							<?php echo doclap_icon( 'arrow-up-right' ); ?>
 						</a>
@@ -260,8 +264,8 @@ if ( $doclap_has_work ) {
 				<?php endif; ?>
 			<?php else : ?>
 				<div class="empty-state">
-					<h2><?php echo esc_html( $doclap_value( 'emptyHeading' ) ); ?></h2>
-					<p><?php echo nl2br( esc_html( $doclap_value( 'emptyCopy' ) ) ); ?></p>
+					<h2><?php echo doclap_rich( $doclap_value( 'emptyHeading' ) ); ?></h2>
+					<p><?php echo doclap_rich( $doclap_value( 'emptyCopy' ) ); ?></p>
 				</div>
 			<?php endif; ?>
 		</div>

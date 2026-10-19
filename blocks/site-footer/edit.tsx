@@ -1,35 +1,41 @@
 import { InspectorControls } from "@wordpress/block-editor";
-import {
-  Button,
-  PanelBody,
-  TextControl,
-  TextareaControl,
-} from "@wordpress/components";
+import { Button, PanelBody, TextControl } from "@wordpress/components";
 import { __, sprintf } from "@wordpress/i18n";
-import ServerSideRender from "@wordpress/server-side-render";
 
+import BlockPreview from "../../resources/ts/editor/block-preview";
+import ColourControls from "../../resources/ts/editor/colour-controls";
 import Repeater, {
+  type RepeaterField,
   type RepeaterItem,
 } from "../../resources/ts/editor/repeater";
+import RichTextOverlay, {
+  type RichTextTarget,
+} from "../../resources/ts/editor/rich-text-overlay";
+import { urlHelp } from "../../resources/ts/editor/url-help";
 import type { FooterNavGroup, SiteFooterAttributes } from "./types";
 
 interface EditProps {
   attributes: SiteFooterAttributes;
   setAttributes: (attributes: Partial<SiteFooterAttributes>) => void;
+  isSelected: boolean;
 }
 
-const linkFields = [
+const linkFields: RepeaterField[] = [
   { key: "label", label: __("Label", "doclap") },
-  {
-    key: "url",
-    label: __("URL", "doclap"),
-    help: __("Use #section, a site path, @notes, or @search.", "doclap"),
-  },
+  { key: "url", label: __("URL", "doclap"), help: urlHelp },
+];
+
+/** Rich values edited in place on the canvas (they render unconditionally). */
+const overlayTargets: RichTextTarget[] = [
+  { path: "heading", label: __("Heading", "doclap"), multiline: true },
+  { path: "intro", label: __("Introduction", "doclap"), multiline: true },
+  { path: "ctaLabel", label: __("Call to action label", "doclap") },
 ];
 
 export default function Edit({
   attributes,
   setAttributes,
+  isSelected,
 }: EditProps): JSX.Element {
   const navGroups = attributes.navGroups ?? [];
   const updateGroup = (index: number, patch: Partial<FooterNavGroup>): void => {
@@ -49,36 +55,15 @@ export default function Edit({
             value={attributes.kicker ?? ""}
             onChange={(kicker) => setAttributes({ kicker })}
           />
-          <TextareaControl
-            label={__("Heading", "doclap")}
-            help={__("Line breaks are preserved.", "doclap")}
-            value={attributes.heading ?? ""}
-            rows={2}
-            onChange={(heading) => setAttributes({ heading })}
-          />
-          <TextareaControl
-            label={__("Introduction", "doclap")}
-            help={__("Line breaks are preserved.", "doclap")}
-            value={attributes.intro ?? ""}
-            rows={2}
-            onChange={(intro) => setAttributes({ intro })}
-          />
-          <TextControl
-            label={__("Call to action label", "doclap")}
-            value={attributes.ctaLabel ?? ""}
-            onChange={(ctaLabel) => setAttributes({ ctaLabel })}
-          />
           <TextControl
             label={__("Call to action URL", "doclap")}
+            help={urlHelp}
             value={attributes.ctaUrl ?? ""}
             onChange={(ctaUrl) => setAttributes({ ctaUrl })}
           />
         </PanelBody>
 
-        <PanelBody
-          title={__("Navigation groups", "doclap")}
-          initialOpen={false}
-        >
+        <PanelBody title={__("Navigation groups", "doclap")} initialOpen={false}>
           <Button
             variant="secondary"
             onClick={() =>
@@ -96,6 +81,9 @@ export default function Edit({
           >
             {__("Add group", "doclap")}
           </Button>
+          <p className="doclap-repeater__empty">
+            {__("Each group below is edited in its own section.", "doclap")}
+          </p>
         </PanelBody>
 
         {navGroups.map((group, index) => (
@@ -130,6 +118,9 @@ export default function Edit({
               getItemLabel={(item) =>
                 String(item.label || __("Link", "doclap"))
               }
+              addLabel={__("Add link", "doclap")}
+              emptyLabel={__("No links yet.", "doclap")}
+              minimumItems={1}
             />
             <Button
               variant="tertiary"
@@ -163,7 +154,7 @@ export default function Edit({
           />
           <TextControl
             label={__("Brand URL", "doclap")}
-            help={__("Leave empty for the site home.", "doclap")}
+            help={`${urlHelp} ${__("Leave empty to link to the site home.", "doclap")}`}
             value={attributes.brandUrl ?? ""}
             onChange={(brandUrl) => setAttributes({ brandUrl })}
           />
@@ -189,7 +180,7 @@ export default function Edit({
           />
           <TextControl
             label={__("Privacy URL", "doclap")}
-            help={__("The privacy link is omitted when empty.", "doclap")}
+            help={`${urlHelp} ${__("The privacy link is omitted when empty.", "doclap")}`}
             value={attributes.privacyUrl ?? ""}
             onChange={(privacyUrl) => setAttributes({ privacyUrl })}
           />
@@ -204,10 +195,19 @@ export default function Edit({
             onChange={(footerAriaLabel) => setAttributes({ footerAriaLabel })}
           />
         </PanelBody>
+        <ColourControls
+          attributes={attributes}
+          setAttributes={setAttributes}
+        />
       </InspectorControls>
-      <ServerSideRender
-        block="doclap/site-footer"
-        attributes={attributes as unknown as Record<string, unknown>}
+      <BlockPreview block="doclap/site-footer" attributes={attributes} />
+      <RichTextOverlay
+        targets={overlayTargets}
+        attributes={attributes}
+        setAttributes={(next) =>
+          setAttributes(next as Partial<SiteFooterAttributes>)
+        }
+        isSelected={isSelected}
       />
     </>
   );

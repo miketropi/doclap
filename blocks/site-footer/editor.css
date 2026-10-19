@@ -1,7 +1,14 @@
+/**
+ * Editor canvas styles for doclap/site-footer.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet, which the editor also loads.
+ */
+
 .wp-block-doclap-site-footer .components-placeholder {
-  min-height: 180px;
+	min-height: 180px;
 }
 
 .editor-styles-wrapper .wp-block-doclap-site-footer {
-  max-width: none;
+	max-width: none;
 }

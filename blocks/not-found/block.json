@@ -3,24 +3,34 @@
   "apiVersion": 3,
   "name": "doclap/not-found",
   "version": "1.0.0",
-  "title": "Not Found",
+  "title": "Not found",
   "category": "doclap",
   "icon": "warning",
   "description": "Editable 404 recovery page.",
+  "keywords": [ "404", "error", "recovery", "search" ],
   "textdomain": "doclap",
   "attributes": {
     "errorCode": { "type": "string", "default": "404" },
     "eyebrow": { "type": "string", "default": "SLIGHTLY OFF COURSE" },
-    "heading": { "type": "string", "default": "A blank space." },
-    "headingAccent": { "type": "string", "default": "Not the end point." },
-    "lead": { "type": "string", "default": "This page does not exist or has moved.\nBut there is still much worth exploring." },
+    "heading": {
+      "type": "string",
+      "default": "A blank space.<br><em>Not the end point.</em>"
+    },
+    "headingAccent": { "type": "string", "default": "" },
+    "lead": {
+      "type": "string",
+      "default": "This page does not exist or has moved.<br>But there is still much worth exploring."
+    },
     "primaryLabel": { "type": "string", "default": "Back to home" },
     "primaryUrl": { "type": "string", "default": "" },
     "secondaryLabel": { "type": "string", "default": "Find another direction" },
     "secondaryUrl": { "type": "string", "default": "@search" },
     "asideLabel": { "type": "string", "default": "KEEP WANDERING" },
-    "asideHeading": { "type": "string", "default": "Change direction." },
-    "asideHeadingAccent": { "type": "string", "default": "Stay curious." },
+    "asideHeading": {
+      "type": "string",
+      "default": "Change direction.<br>Stay curious."
+    },
+    "asideHeadingAccent": { "type": "string", "default": "" },
     "links": {
       "type": "array",
       "default": [
@@ -31,10 +41,7 @@
       ]
     }
   },
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
+  "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "render": "file:./render.php"

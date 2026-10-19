@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "npm run build:css && npm run build:ts && npm run build:blocks",
 		"build:blocks": "node ./scripts/build-blocks.mjs",
-		"build:css": "postcss ./resources/css/app.css -o ./assets/css/app.css --verbose",
+		"build:css": "postcss ./resources/css/app.css -o ./assets/css/app.css --verbose && postcss ./resources/css/editor.css -o ./assets/css/editor.css --verbose",
 		"build:package": "node ./scripts/build-package.mjs",
 		"build:ts": "node ./scripts/build-ts.mjs",
 		"ci": "npm run typecheck && npm run lint:php:all && npm run build && composer test",
@@ -22,6 +22,7 @@
 		"watch:ts": "node ./scripts/build-ts.mjs --watch"
 	},
 	"dependencies": {
+		"gsap": "^3.12.5",
 		"three": "^0.185.1"
 	},
 	"devDependencies": {
@@ -32,6 +33,7 @@
 		"@wordpress/block-editor": "^15.16.0",
 		"@wordpress/blocks": "^15.16.0",
 		"@wordpress/components": "^32.5.0",
+		"@wordpress/data": "^10.57.0",
 		"@wordpress/element": "^6.43.0",
 		"@wordpress/i18n": "^6.16.0",
 		"@wordpress/server-side-render": "^6.19.0",

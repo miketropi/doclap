@@ -1,17 +1,34 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl } from '@wordpress/components';
+import { PanelBody, TextControl } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
-import ServerSideRender from '@wordpress/server-side-render';
 
+import BlockPreview from '../../resources/ts/editor/block-preview';
+import ColourControls from '../../resources/ts/editor/colour-controls';
 import Repeater, { type RepeaterItem } from '../../resources/ts/editor/repeater';
+import RichTextOverlay, {
+	type RichTextTarget,
+} from '../../resources/ts/editor/rich-text-overlay';
+import { truncateLabel } from '../../resources/ts/editor/accent-migration';
 import type { HomeAboutAttributes, Service } from './types';
 
 interface EditProps {
 	attributes: HomeAboutAttributes;
 	setAttributes: (attributes: Partial<HomeAboutAttributes>) => void;
+	isSelected: boolean;
 }
 
-export default function Edit({ attributes, setAttributes }: EditProps): JSX.Element {
+/** Rich values edited in place on the canvas (they render unconditionally). */
+const overlayTargets: RichTextTarget[] = [
+	{ path: 'aboutHeading', label: __('Heading', 'doclap'), multiline: true },
+	{ path: 'aboutPrinciple', label: __('Principle', 'doclap'), multiline: true },
+	{ path: 'aboutLead', label: __('Lead', 'doclap'), multiline: true },
+];
+
+export default function Edit({
+	attributes,
+	setAttributes,
+	isSelected,
+}: EditProps): JSX.Element {
 	const services = attributes.services ?? [];
 
 	return (
@@ -23,48 +40,46 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						value={attributes.aboutEyebrow ?? ''}
 						onChange={(aboutEyebrow) => setAttributes({ aboutEyebrow })}
 					/>
-					<TextareaControl
-						label={__('Heading', 'doclap')}
-						value={attributes.aboutHeading ?? ''}
-						onChange={(aboutHeading) => setAttributes({ aboutHeading })}
-					/>
-					<TextareaControl
-						label={__('Principle', 'doclap')}
-						value={attributes.aboutPrinciple ?? ''}
-						onChange={(aboutPrinciple) => setAttributes({ aboutPrinciple })}
-					/>
-					<TextareaControl
-						label={__('Lead', 'doclap')}
-						value={attributes.aboutLead ?? ''}
-						onChange={(aboutLead) => setAttributes({ aboutLead })}
-					/>
 				</PanelBody>
 
-				<PanelBody title={__('Items', 'doclap')} initialOpen={false}>
+				<PanelBody title={__('Services', 'doclap')} initialOpen={false}>
 					<Repeater
 						label={__('Services', 'doclap')}
 						items={services as unknown as RepeaterItem[]}
 						fields={[
-							{ key: 'title', label: __('Title', 'doclap') },
+							{
+								key: 'title',
+								label: __('Title', 'doclap'),
+								control: 'rich',
+								tagName: 'h3',
+							},
 							{ key: 'meta', label: __('Metadata', 'doclap') },
 						]}
 						onChange={(items) =>
 							setAttributes({ services: items as unknown as Service[] })
 						}
-						createItem={() => ({ title: 'New service', meta: '' })}
+						createItem={() => ({ title: __('New service', 'doclap'), meta: '' })}
 						getItemLabel={(item, index) =>
-							String(
-								item.title || sprintf(__('Service %d', 'doclap'), index + 1),
-							)
+							truncateLabel(String(item.title ?? '')) ||
+							sprintf(__('Service %d', 'doclap'), index + 1)
 						}
 						addLabel={__('Add service', 'doclap')}
 						emptyLabel={__('No services yet.', 'doclap')}
 					/>
 				</PanelBody>
+				<ColourControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
 			</InspectorControls>
-			<ServerSideRender
-				block="doclap/home-about"
-				attributes={attributes as unknown as Record<string, unknown>}
+			<BlockPreview block="doclap/home-about" attributes={attributes} />
+			<RichTextOverlay
+				targets={overlayTargets}
+				attributes={attributes}
+				setAttributes={(next) =>
+					setAttributes(next as Partial<HomeAboutAttributes>)
+				}
+				isSelected={isSelected}
 			/>
 		</>
 	);

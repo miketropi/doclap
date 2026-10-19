@@ -7,27 +7,14 @@
   "category": "doclap",
   "icon": "portfolio",
   "description": "Work heading, two self-initiated experiment cards and their motion dialogs.",
-  "keywords": [
-    "home",
-    "work",
-    "experiments",
-    "canvas",
-    "studies"
-  ],
+  "keywords": [ "home", "work", "experiments", "canvas", "studies" ],
   "textdomain": "doclap",
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
   "attributes": {
-    "worksHeading": {
-      "type": "string",
-      "default": "Ideas made real."
-    },
-    "worksMeta": {
-      "type": "string",
-      "default": "01 / EXPERIMENTS · 2026"
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "worksHeading": { "type": "string", "default": "Ideas made real." },
+    "worksMeta": { "type": "string", "default": "01 / EXPERIMENTS · 2026" },
     "experiments": {
       "type": "array",
       "default": [
@@ -37,7 +24,7 @@
           "editionSecondary": "001 / 2026",
           "title": "Currents",
           "metaLines": "GRAPHICS\nGENERATIVE",
-          "summary": "Between order and chance,\na rhythm slowly emerges.",
+          "summary": "Between order and chance,<br>a rhythm slowly emerges.",
           "detailLabel": "CREATIVE CODING · CANVAS 2D",
           "canvas": "flow"
         },
@@ -47,7 +34,7 @@
           "editionSecondary": "002 / 2026",
           "title": "Type Orbits",
           "metaLines": "TYPOGRAPHY\nMOTION",
-          "summary": "Type leaves the page.\nThe space begins to speak.",
+          "summary": "Type leaves the page.<br>The space begins to speak.",
           "detailLabel": "TYPOGRAPHY · MOTION STUDY",
           "canvas": "orbit"
         }
@@ -58,6 +45,7 @@
       "default": "Two self-initiated studies, programmed directly in the browser. Choose a piece to experience its motion and adjust the tempo."
     }
   },
+  "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "style": "file:./style.css",

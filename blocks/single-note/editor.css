@@ -1,9 +1,11 @@
+/**
+ * Editor canvas styles for doclap/single-note.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet, which the editor also loads. The contextual preview notice
+ * is rendered by the shared BlockPreview component.
+ */
+
 .wp-block-doclap-single-note .components-placeholder {
 	min-height: 180px;
-}
-
-.doclap-single-note-editor__notice {
-	margin: 0 0 16px;
-	color: #646970;
-	font-size: 13px;
 }

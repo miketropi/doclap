@@ -11,8 +11,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Section colours: the attribute values land as custom properties on the block
+// root, and an empty attribute emits nothing so the theme default keeps applying.
+$doclap_colour_style = '';
+
+foreach (
+	array(
+		'sectionBg'      => '--doclap-block-bg',
+		'sectionHeading' => '--doclap-block-heading',
+		'sectionText'    => '--doclap-block-text',
+	) as $doclap_attr => $doclap_var
+) {
+	$doclap_value = trim( (string) ( $attributes[ $doclap_attr ] ?? '' ) );
+
+	if ( '' !== $doclap_value ) {
+		$doclap_colour_style .= $doclap_var . ':' . $doclap_value . ';';
+	}
+}
+
 $doclap_wrapper = get_block_wrapper_attributes(
-	array( 'class' => doclap_scope_class( 'doclap-site-footer' ) ),
+	array( 'class' => doclap_scope_class( 'doclap-site-footer' ), 'style' => $doclap_colour_style ),
 );
 $nav_groups     = is_array( $attributes['navGroups'] ?? null )
 	? $attributes['navGroups']
@@ -35,16 +53,16 @@ $privacy_url    = trim( (string) ( $attributes['privacyUrl'] ?? '' ) );
 					<p class="sf-kicker">
 						<?php echo esc_html( (string) ( $attributes['kicker'] ?? '' ) ); ?>
 					</p>
-					<h2>
-						<?php echo nl2br( esc_html( (string) ( $attributes['heading'] ?? '' ) ) ); ?>
+					<h2 data-doclap-rich="heading">
+						<?php echo doclap_rich( (string) ( $attributes['heading'] ?? '' ) ); ?>
 					</h2>
-					<p>
-						<?php echo nl2br( esc_html( (string) ( $attributes['intro'] ?? '' ) ) ); ?>
+					<p data-doclap-rich="intro">
+						<?php echo doclap_rich( (string) ( $attributes['intro'] ?? '' ) ); ?>
 					</p>
 					<a
 						href="<?php echo esc_url( doclap_resolve_url( (string) ( $attributes['ctaUrl'] ?? '' ) ) ); ?>"
 					>
-						<span><?php echo esc_html( (string) ( $attributes['ctaLabel'] ?? '' ) ); ?></span>
+						<span data-doclap-rich="ctaLabel"><?php echo doclap_rich( (string) ( $attributes['ctaLabel'] ?? '' ) ); ?></span>
 						<?php
 						echo doclap_icon( 'arrow-up-right' );
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted local SVG.

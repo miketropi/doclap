@@ -17,10 +17,18 @@
  */
 
 /* ─── chrome: nav + footer ──────────────────────────────────────── */
+/* Vertical overflow stays visible so the sticky bar still drops its panels below
+   itself, but nothing inside the header may widen the document: a submenu parked
+   past the right edge would otherwise add a page-level horizontal scrollbar. */
+.doclap-scope.doclap-site-header { overflow-x: clip; }
 .doclap-scope .topnav { position: sticky; top: 0; z-index: 10; background: color-mix(in oklch, var(--doclap-bg) 92%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--doclap-border); }
 .doclap-scope .topnav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 14px; }
 .doclap-scope .topnav .logo { font-family: var(--doclap-font-display); font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
-.doclap-scope .topnav nav { display: flex; gap: var(--doclap-gap-lg); }
+.doclap-scope .topnav .logo--image { display: inline-flex; align-items: center; max-width: 40vw; }
+.doclap-scope .logo-image { display: block; width: auto; height: auto; max-height: 40px; max-width: 100%; object-fit: contain; }
+.doclap-scope .topnav nav { display: flex; }
+.doclap-scope .doclap-menu { display: flex; flex-wrap: wrap; align-items: center; gap: var(--doclap-gap-lg); margin: 0; padding: 0; list-style: none; }
+.doclap-scope .doclap-menu .sub-menu { margin: 0; padding: 0; list-style: none; }
 .doclap-scope .topnav nav a { font-size: 14px; color: var(--doclap-muted); }
 .doclap-scope .topnav nav a:hover { color: var(--doclap-fg); }
 .doclap-scope .pagefoot { padding-block: var(--doclap-gap-xl); color: var(--doclap-muted); font-size: 13px; border-top: 1px solid var(--doclap-border); }
@@ -47,18 +55,18 @@
 .doclap-scope .feature p { margin: 0; color: var(--doclap-muted); font-size: 15px; }
 /* ─── stat (big number + label) ─────────────────────────────────── */
 .doclap-scope .stat .stat-num { font-family: var(--doclap-font-display); font-size: clamp(56px, 8vw, 96px); line-height: 0.95; letter-spacing: -0.04em; color: var(--doclap-accent); font-weight: 600; }
-.doclap-scope .stat .stat-label { color: var(--doclap-muted); font-size: 14px; margin-top: 8px; max-width: 24ch; }
+.doclap-scope .stat .stat-label { color:var(--doclap-block-text,var(--doclap-muted)); font-size: 14px; margin-top: 8px; max-width: 24ch; }
 .doclap-scope .stat .stat-unit { font-size: 0.5em; opacity: 0.7; margin-left: 2px; }
 /* ─── quote / testimonial ───────────────────────────────────────── */
 .doclap-scope .quote { font-family: var(--doclap-font-display); font-size: clamp(24px, 2.6vw, 32px); line-height: 1.32; letter-spacing: -0.01em; max-width: 28ch; }
-.doclap-scope .quote-author { color: var(--doclap-muted); font-size: 14px; margin-top: var(--doclap-gap-md); }
+.doclap-scope .quote-author { color:var(--doclap-block-text,var(--doclap-muted)); font-size: 14px; margin-top: var(--doclap-gap-md); }
 .doclap-scope .quote-mark { font-family: var(--doclap-font-display); font-size: 140px; line-height: 0.7; color: var(--doclap-accent); opacity: 0.18; margin-bottom: -28px; }
 /* ─── pill / badge / tag ────────────────────────────────────────── */
 .doclap-scope .pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--doclap-accent-soft); color: var(--doclap-accent); border-radius: 999px; font-family: var(--doclap-font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
 .doclap-scope .tag { display: inline-flex; align-items: center; padding: 4px 10px; background: transparent; color: var(--doclap-muted); border: 1px solid var(--doclap-border); border-radius: 999px; font-size: 12px; }
 /* ─── form field ────────────────────────────────────────────────── */
 .doclap-scope .field { display: flex; flex-direction: column; gap: 6px; }
-.doclap-scope .field label { font-size: 13px; color: var(--doclap-muted); }
+.doclap-scope .field label { font-size: 13px; color:var(--doclap-block-text,var(--doclap-muted)); }
 .doclap-scope .input,
 .doclap-scope .textarea { width: 100%; padding: 11px 14px; border: 1px solid var(--doclap-border); border-radius: var(--doclap-radius); background: var(--doclap-surface); color: var(--doclap-fg); font: inherit; font-size: 15px; }
 .doclap-scope .input:focus,
@@ -93,6 +101,6 @@
 }
 /* ─── log row (newsletter, blog list, changelog) ────────────────── */
 .doclap-scope .log-row { display: grid; grid-template-columns: 120px 1fr 100px; gap: var(--doclap-gap-lg); padding: 22px 0; border-top: 1px solid var(--doclap-border); align-items: baseline; }
-.doclap-scope .log-row .meta { color: var(--doclap-muted); }
+.doclap-scope .log-row .meta { color:var(--doclap-block-text,var(--doclap-muted)); }
 .doclap-scope .log-row h3 { font-size: 19px; }
 .doclap-scope .log-row .pull { text-align: right; }

@@ -3,7 +3,6 @@ export interface NotesArchiveAttributes extends Record<string, unknown> {
 	breadcrumbHomeLabel: string;
 	breadcrumbLabel: string;
 	heading: string;
-	headingAccent: string;
 	lead: string;
 	showFeatured: boolean;
 	postsPerPage: number;
@@ -16,7 +15,6 @@ export interface NotesArchiveAttributes extends Record<string, unknown> {
 	disclaimer: string;
 	closingEyebrow: string;
 	closingHeading: string;
-	closingHeadingAccent: string;
 	closingCtaLabel: string;
 	closingCtaUrl: string;
 }

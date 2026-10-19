@@ -7,43 +7,26 @@
   "category": "doclap",
   "icon": "email",
   "description": "Closing contact band with heading, lead and call to action.",
-  "keywords": [
-    "home",
-    "contact",
-    "cta",
-    "invitation"
-  ],
+  "keywords": [ "home", "contact", "cta", "invitation" ],
   "textdomain": "doclap",
-  "supports": {
-    "html": false,
-    "anchor": true
-  },
   "attributes": {
-    "contactEyebrow": {
-      "type": "string",
-      "default": "03 / A NEW BEGINNING"
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "contactEyebrow": { "type": "string", "default": "03 / A NEW BEGINNING" },
     "contactHeading": {
       "type": "string",
-      "default": "Your idea."
+      "default": "Your idea.<br><em>Make it different.</em>"
     },
-    "contactHeadingAccent": {
-      "type": "string",
-      "default": "Make it different."
-    },
+    "contactHeadingAccent": { "type": "string", "default": "" },
     "contactLead": {
       "type": "string",
       "default": "A new website, a bold experience, or simply an interesting conversation."
     },
-    "contactCtaLabel": {
-      "type": "string",
-      "default": "Write a greeting"
-    },
-    "contactCtaUrl": {
-      "type": "string",
-      "default": "/contact/"
-    }
+    "contactCtaLabel": { "type": "string", "default": "Write a greeting" },
+    "contactCtaUrl": { "type": "string", "default": "/contact/" }
   },
+  "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
   "style": "file:./style.css",

@@ -12,32 +12,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/** @return string[] */
-function doclap_contact_form_service_allowlist(): array {
-	return array(
-		'Web design',
-		'Motion & interaction',
-		'Creative development',
-		'Explore together',
-	);
-}
-
 /**
- * Reduce submitted service values to the allowlist.
+ * Reduce submitted service values to a bounded, sanitised list.
+ *
+ * Only arrays are accepted. Every value is sanitised, truncated to 100
+ * multibyte-safe characters, empty values are dropped, duplicates collapse to
+ * their first occurrence and at most 10 values survive, in order of first
+ * appearance.
  *
  * @param mixed $value Raw checkbox value from the request.
  *
- * @return array<int, string> Allowed service values present in the input.
+ * @return array<int, string> Sanitised service values.
  */
 function doclap_contact_form_sanitize_services( $value ): array {
-	$values = is_array( $value ) ? $value : array();
+	if ( ! is_array( $value ) ) {
+		return array();
+	}
 
-	return array_values(
-		array_intersect(
-			doclap_contact_form_service_allowlist(),
-			array_map( 'sanitize_text_field', $values ),
-		),
-	);
+	$services = array();
+
+	foreach ( $value as $candidate ) {
+		if ( ! is_string( $candidate ) ) {
+			continue;
+		}
+
+		$service = mb_substr( sanitize_text_field( $candidate ), 0, 100 );
+
+		if ( '' === $service || in_array( $service, $services, true ) ) {
+			continue;
+		}
+
+		$services[] = $service;
+
+		if ( count( $services ) >= 10 ) {
+			break;
+		}
+	}
+
+	return $services;
 }
 
 /** @param mixed $value */
@@ -200,33 +212,31 @@ function doclap_handle_contact_form_submission( WP_REST_Request $request ) {
 		);
 	}
 
-	$config_key = sanitize_text_field( (string) $request->get_param( 'recaptcha_config' ) );
-	$config     = get_transient( 'doclap_contact_config_' . wp_hash( $config_key ) );
-	$config     = is_array( $config ) ? $config : array();
-	if ( ! empty( $config['recaptcha'] ) && ! empty( $config['secret_key'] ) ) {
+	$settings = doclap_contact_settings();
+	if ( doclap_contact_form_recaptcha_is_enabled( $settings ) ) {
 		$check = doclap_contact_form_verify_recaptcha(
 			sanitize_text_field( (string) $request->get_param( 'recaptcha_token' ) ),
-			(string) $config['secret_key'],
+			(string) $settings['recaptcha_secret_key'],
 		);
 		if ( is_wp_error( $check ) ) {
 			return $check;
 		}
 	}
 
-	$company    = sanitize_text_field( (string) $request->get_param( 'company' ) );
-	$services   = doclap_contact_form_sanitize_services( $request->get_param( 'services' ) );
-	$admin_email = sanitize_email( (string) ( $config['admin_email'] ?? '' ) );
+	$company     = sanitize_text_field( (string) $request->get_param( 'company' ) );
+	$services    = doclap_contact_form_sanitize_services( $request->get_param( 'services' ) );
+	$admin_email = sanitize_email( (string) $settings['admin_email'] );
 	if ( ! is_email( $admin_email ) ) {
 		$admin_email = sanitize_email( (string) get_option( 'admin_email' ) );
 	}
 	$admin_email = (string) apply_filters( 'doclap_contact_form_admin_email', $admin_email );
 	$admin_subject = (string) apply_filters(
 		'doclap_contact_form_admin_subject',
-		(string) ( $config['admin_subject'] ?? __( 'New contact form submission', 'doclap' ) ),
+		(string) $settings['admin_subject'],
 	);
 	$user_subject = (string) apply_filters(
 		'doclap_contact_form_user_subject',
-		(string) ( $config['user_subject'] ?? __( 'Thank you for contacting us', 'doclap' ) ),
+		(string) $settings['user_subject'],
 	);
 	$admin_body = sprintf(
 		'<h1>%s</h1><p><strong>%s:</strong> %s</p><p><strong>%s:</strong> %s</p>'

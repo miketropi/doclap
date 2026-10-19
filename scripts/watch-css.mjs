@@ -34,9 +34,9 @@ const ignores = [
 	...extraIgnore,
 ].map( ( value ) => `-i "${ value }"` ).join( ' ' );
 
-const command = `postcss ./resources/css/app.css -o ./assets/css/app.css`;
+const command = `postcss ./resources/css/app.css -o ./assets/css/app.css && postcss ./resources/css/editor.css -o ./assets/css/editor.css`;
 
-console.log( `Watching ${ paths.join( ', ' ) } → assets/css/app.css` );
+console.log( `Watching ${ paths.join( ', ' ) } → assets/css/app.css, assets/css/editor.css` );
 
 const child = spawn(
 	'node',

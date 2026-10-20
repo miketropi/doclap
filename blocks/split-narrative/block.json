@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/split-narrative",
+  "version": "1.0.0",
+  "title": "Split narrative",
+  "category": "doclap",
+  "icon": "text-page",
+  "description": "Aside label plus headline with a rich paragraph body, optional status note and text link.",
+  "keywords": [ "narrative", "aside", "story", "paragraphs" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "label": { "type": "string", "default": "01 / SECTION" },
+    "heading": { "type": "string", "default": "Cared for.<br>No compromise." },
+    "headingAccent": { "type": "string", "default": "" },
+    "paragraphs": {
+      "type": "array",
+      "default": [ "Describe this part of the story." ]
+    },
+    "statusNote": { "type": "string", "default": "" },
+    "linkLabel": { "type": "string", "default": "" },
+    "linkUrl": { "type": "string", "default": "" }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,10 @@
+/**
+ * Editor canvas styles for doclap/principles-grid.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet, which the editor also loads.
+ */
+
+.wp-block-doclap-principles-grid {
+	min-height: 240px;
+}

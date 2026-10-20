@@ -118,7 +118,7 @@ add_action( 'enqueue_block_editor_assets', 'doclap_enqueue_block_category_filter
  * Enqueue the shared block-editor stylesheet.
  *
  * Each doclap/* block keeps only canvas-preview rules in its own
- * blocks/<slug>/editor.css; the inspector affordances shared by all eighteen
+ * blocks/<slug>/editor.css; the inspector affordances shared by all twenty-five
  * blocks — the repeater list editor, the block preview shell, the image picker
  * and the identifier notice — live in the single compiled
  * assets/css/editor.css. The editor canvas already receives assets/css/app.css

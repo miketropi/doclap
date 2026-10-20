@@ -7,7 +7,7 @@
  * passed through as a fragment, a leading `?` is appended to the site root, and
  * anything else is resolved against the site. Every inspector control whose value
  * reaches that helper reuses this text, so the grammar is documented exactly
- * once and cannot drift between the eighteen blocks.
+ * once and cannot drift between the twenty-five blocks.
  */
 
 import { __ } from '@wordpress/i18n';

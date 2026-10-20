@@ -10,17 +10,9 @@
   "keywords": [ "faq", "questions", "answers", "filters" ],
   "textdomain": "doclap",
   "attributes": {
-    "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
-    "breadcrumbLabel": { "type": "string", "default": "FAQ" },
-    "heading": {
-      "type": "string",
-      "default": "Clarify first.<br><em>Go further together.</em>"
-    },
-    "headingAccent": { "type": "string", "default": "" },
-    "lead": {
-      "type": "string",
-      "default": "Things you may want to know before collaborating. If you have other questions, let us talk."
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
     "asideLabel": { "type": "string", "default": "WHAT YOU WANT TO KNOW" },
     "asideHeading": { "type": "string", "default": "Less ambiguous.<br>More trust." },
     "asideCopy": { "type": "string", "default": "Open each question to see the details." },
@@ -92,15 +84,7 @@
       ]
     },
     "countTemplate": { "type": "string", "default": "%d questions" },
-    "emptyLabel": { "type": "string", "default": "No questions in this group." },
-    "closingEyebrow": { "type": "string", "default": "EVERYTHING STARTS WITH A QUESTION" },
-    "closingHeading": {
-      "type": "string",
-      "default": "Your idea.<br><em>Make it different.</em>"
-    },
-    "closingHeadingAccent": { "type": "string", "default": "" },
-    "closingCtaLabel": { "type": "string", "default": "Tell us about your idea" },
-    "closingCtaUrl": { "type": "string", "default": "/contact/" }
+    "emptyLabel": { "type": "string", "default": "No questions in this group." }
   },
   "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",

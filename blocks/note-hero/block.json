@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/note-hero",
+  "version": "1.0.0",
+  "title": "Note hero",
+  "category": "doclap",
+  "icon": "admin-post",
+  "description": "Article breadcrumb, queried title, excerpt and the reading-progress marker.",
+  "keywords": [ "note", "article", "hero", "breadcrumb" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
+    "archiveLabel": { "type": "string", "default": "Archive" },
+    "archiveUrl": { "type": "string", "default": "@notes" },
+    "articleLabel": { "type": "string", "default": "Article" }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

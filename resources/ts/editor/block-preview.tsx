@@ -1,7 +1,7 @@
 /**
  * Shared editor preview for every doclap/* block.
  *
- * All eighteen Doclap blocks are dynamic: `block.json` points at a `render.php`
+ * All twenty-five Doclap blocks are dynamic: `block.json` points at a `render.php`
  * file and `save()` returns null, so PHP owns the only authoritative copy of the
  * front-end markup. The editor therefore previews that exact markup through
  * `ServerSideRender` instead of duplicating it in JSX — which is also why a

@@ -16,7 +16,7 @@
  *
  * Item keys stay positional indexes: items are plain attribute records with no
  * identity of their own, and adding an `id` field would change the persisted
- * attribute shape of eighteen shipped blocks. The open editor therefore keeps its
+ * attribute shape of twenty-five shipped blocks. The open editor therefore keeps its
  * own immutable draft and writes it back to the list exactly once, on `Done`.
  * Every `onChange` receives a brand-new array of brand-new item objects, so no
  * caller and no undo snapshot ever observes a stored record mutated in place.

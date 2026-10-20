@@ -147,7 +147,7 @@ $doclap_blocks     = array_values(
 sort( $doclap_blocks );
 
 $doclap_expected = array(
-	'doclap/about-profile',
+	'doclap/closing-cta',
 	'doclap/contact-form',
 	'doclap/faq-list',
 	'doclap/home-about',
@@ -159,12 +159,19 @@ $doclap_expected = array(
 	'doclap/home-team',
 	'doclap/home-testimonials',
 	'doclap/home-work',
+	'doclap/inner-hero',
+	'doclap/media-figure',
+	'doclap/note-content',
+	'doclap/note-cover',
+	'doclap/note-hero',
 	'doclap/not-found',
 	'doclap/notes-archive',
+	'doclap/principles-grid',
+	'doclap/related-notes',
 	'doclap/search-results',
-	'doclap/single-note',
 	'doclap/site-footer',
 	'doclap/site-header',
+	'doclap/split-narrative',
 );
 
 $doclap_missing = array_diff( $doclap_expected, $doclap_blocks );
@@ -437,7 +444,132 @@ if ( $doclap_expected_home !== $doclap_landing_names ) {
 	);
 }
 
-doclap_smoke_pass( 'patterns ' . count( $doclap_patterns ) );
+// Every pattern slug the theme ships, declared exactly once: the nine home
+// sections, the home landing composition, the reusable inner-page sections, the
+// three narrowed inner-page blocks, the four note-detail blocks, the five
+// full-page compositions and the chrome/utility surfaces.
+$doclap_expected_patterns = array(
+	'doclap/about-us-page',
+	'doclap/closing-cta',
+	'doclap/contact-form',
+	'doclap/contact-us-page',
+	'doclap/faq-list',
+	'doclap/faq-page',
+	'doclap/home-about',
+	'doclap/home-contact',
+	'doclap/home-disciplines',
+	'doclap/home-hero',
+	'doclap/home-journal',
+	'doclap/home-landing',
+	'doclap/home-process',
+	'doclap/home-team',
+	'doclap/home-testimonials',
+	'doclap/home-work',
+	'doclap/inner-hero',
+	'doclap/media-figure',
+	'doclap/note-content',
+	'doclap/note-cover',
+	'doclap/note-hero',
+	'doclap/not-found',
+	'doclap/notes-archive',
+	'doclap/notes-archive-page',
+	'doclap/post-detail-page',
+	'doclap/principles-grid',
+	'doclap/related-notes',
+	'doclap/search-results',
+	'doclap/site-footer',
+	'doclap/site-header',
+	'doclap/split-narrative',
+);
+$doclap_pattern_slugs = array();
+
+foreach ( $doclap_patterns as $doclap_pattern_file ) {
+	$doclap_headers      = get_file_data( $doclap_pattern_file, array( 'slug' => 'Slug' ) );
+	$doclap_slug         = (string) $doclap_headers['slug'];
+	$doclap_block_name   = 'doclap/' . basename( $doclap_pattern_file, '.php' );
+
+	if ( in_array( $doclap_slug, $doclap_pattern_slugs, true ) ) {
+		doclap_smoke_fail( 'duplicate pattern slug: ' . $doclap_slug );
+	}
+
+	// A pattern file is named after its slug, so a renamed slug cannot keep
+	// inserting the wrong block unnoticed.
+	if ( $doclap_block_name !== $doclap_slug ) {
+		doclap_smoke_fail(
+			basename( $doclap_pattern_file ) . ' declares the slug ' . $doclap_slug . ' instead of ' . $doclap_block_name,
+		);
+	}
+
+	$doclap_pattern_slugs[] = $doclap_slug;
+}
+
+sort( $doclap_pattern_slugs );
+$doclap_patterns_missing = array_diff( $doclap_expected_patterns, $doclap_pattern_slugs );
+$doclap_patterns_extra   = array_diff( $doclap_pattern_slugs, $doclap_expected_patterns );
+
+if ( array() !== $doclap_patterns_missing ) {
+	doclap_smoke_fail( 'patterns missing: ' . implode( ', ', $doclap_patterns_missing ) );
+}
+
+if ( array() !== $doclap_patterns_extra ) {
+	doclap_smoke_fail( 'unexpected patterns: ' . implode( ', ', $doclap_patterns_extra ) );
+}
+
+// Every requested template is composed directly from its canonical composition
+// pattern: same ordered sections, file templates, no core/pattern indirection.
+$doclap_template_patterns = array(
+	'templates/about-us.html'                 => 'patterns/about-us-page.php',
+	'templates/contact-us.html'               => 'patterns/contact-us-page.php',
+	'templates/frequently-asked-questions.html' => 'patterns/faq-page.php',
+	'templates/archive.html'                  => 'patterns/notes-archive-page.php',
+	'templates/home.html'                     => 'patterns/notes-archive-page.php',
+	'templates/single.html'                   => 'patterns/post-detail-page.php',
+);
+
+foreach ( $doclap_template_patterns as $doclap_template => $doclap_pattern ) {
+	$doclap_template_body = (string) file_get_contents( DOCLAP_DIR . '/' . $doclap_template );
+	$doclap_pattern_body  = (string) file_get_contents( DOCLAP_DIR . '/' . $doclap_pattern );
+	$doclap_template_list = doclap_smoke_pattern_blocks( $doclap_template_body );
+	$doclap_pattern_list  = doclap_smoke_pattern_blocks( $doclap_pattern_body );
+
+	if ( array() === $doclap_pattern_list ) {
+		doclap_smoke_fail( $doclap_pattern . ' composes no block' );
+	}
+
+	if ( $doclap_template_list !== $doclap_pattern_list ) {
+		doclap_smoke_fail(
+			$doclap_template . ' is not the ordered composition of ' . $doclap_pattern . ': '
+			. implode( ', ', $doclap_template_list ),
+		);
+	}
+
+	foreach ( array( 'doclap/about-profile', 'doclap/single-note' ) as $doclap_removed ) {
+		if ( in_array( $doclap_removed, $doclap_template_list, true ) ) {
+			doclap_smoke_fail( $doclap_template . ' still places the removed ' . $doclap_removed );
+		}
+	}
+
+	if ( str_contains( $doclap_template_body, 'wp:pattern' ) ) {
+		doclap_smoke_fail( $doclap_template . ' references a pattern instead of placing its blocks' );
+	}
+
+	foreach ( array( 'slug":"header', 'slug":"footer', 'class="wp-block-group doclap-scope doclap-page-content"' ) as $doclap_fragment ) {
+		if ( ! str_contains( $doclap_template_body, $doclap_fragment ) ) {
+			doclap_smoke_fail( $doclap_template . ' lost its shared shell fragment: ' . $doclap_fragment );
+		}
+	}
+}
+
+// The posts index and the generic archive render the same composition, so the
+// two templates cannot drift apart.
+if (
+	doclap_smoke_pattern_blocks( (string) file_get_contents( DOCLAP_DIR . '/templates/archive.html' ) )
+	!== doclap_smoke_pattern_blocks( (string) file_get_contents( DOCLAP_DIR . '/templates/home.html' ) )
+) {
+	doclap_smoke_fail( 'templates/archive.html and templates/home.html no longer share one composition' );
+}
+
+doclap_smoke_pass( 'patterns ' . count( $doclap_patterns ) . ' templates ' . count( $doclap_template_patterns ) );
 
 // 7. Per-block metadata and asset contract.
 /**
@@ -580,6 +712,145 @@ foreach ( $doclap_expected as $doclap_name ) {
 	}
 }
 
+// The hero and closing sections moved out of the narrowed blocks into their own
+// reusable sections, so those attributes must be gone from the three manifests
+// and the shared section blocks must declare exactly what they render.
+$doclap_migrated_attributes = array(
+	'doclap/contact-form'  => array( 'breadcrumbHomeLabel', 'breadcrumbLabel', 'heading', 'headingAccent', 'lead' ),
+	'doclap/faq-list'      => array(
+		'breadcrumbHomeLabel',
+		'breadcrumbLabel',
+		'heading',
+		'headingAccent',
+		'lead',
+		'closingEyebrow',
+		'closingHeading',
+		'closingHeadingAccent',
+		'closingCtaLabel',
+		'closingCtaUrl',
+	),
+	'doclap/notes-archive' => array(
+		'breadcrumbHomeLabel',
+		'breadcrumbLabel',
+		'heading',
+		'headingAccent',
+		'lead',
+		'closingEyebrow',
+		'closingHeading',
+		'closingHeadingAccent',
+		'closingCtaLabel',
+		'closingCtaUrl',
+	),
+);
+
+foreach ( $doclap_migrated_attributes as $doclap_name => $doclap_keys ) {
+	$doclap_declared = array_keys( (array) ( $doclap_manifests[ $doclap_name ]['attributes'] ?? array() ) );
+
+	foreach ( $doclap_keys as $doclap_key ) {
+		if ( in_array( $doclap_key, $doclap_declared, true ) ) {
+			doclap_smoke_fail( $doclap_name . ' still declares the migrated attribute ' . $doclap_key );
+		}
+	}
+}
+
+$doclap_section_contract = array(
+	'doclap/inner-hero'      => array( 'breadcrumbHomeLabel', 'breadcrumbLabel', 'heading', 'headingAccent', 'lead' ),
+	'doclap/closing-cta'     => array( 'eyebrow', 'heading', 'headingAccent', 'ctaLabel', 'ctaUrl' ),
+	'doclap/split-narrative' => array( 'label', 'heading', 'headingAccent', 'paragraphs', 'statusNote', 'linkLabel', 'linkUrl' ),
+	'doclap/media-figure'    => array( 'imageId', 'imageUrl', 'imageAlt', 'caption' ),
+	'doclap/principles-grid' => array( 'eyebrow', 'heading', 'principles' ),
+	'doclap/note-hero'       => array( 'breadcrumbHomeLabel', 'archiveLabel', 'archiveUrl', 'articleLabel' ),
+	'doclap/note-cover'      => array( 'articleMetaPrefix' ),
+	'doclap/note-content'    => array( 'archiveUrl', 'tocLabel', 'tocEmptyBehaviour', 'disclaimer', 'backToArchiveLabel' ),
+	'doclap/related-notes'   => array( 'heading', 'count' ),
+);
+
+foreach ( $doclap_section_contract as $doclap_name => $doclap_keys ) {
+	$doclap_attributes = (array) ( $doclap_manifests[ $doclap_name ]['attributes'] ?? array() );
+
+	foreach ( $doclap_keys as $doclap_key ) {
+		if ( ! is_array( $doclap_attributes[ $doclap_key ] ?? null ) ) {
+			doclap_smoke_fail( $doclap_name . ' does not declare the ' . $doclap_key . ' attribute' );
+		}
+	}
+
+	// A section block edits only its own section: no page title, breadcrumb or
+	// closing field may leak into a block that does not render one.
+	foreach ( array( 'closingEyebrow', 'closingHeading', 'closingCtaUrl' ) as $doclap_foreign ) {
+		if ( 'doclap/closing-cta' !== $doclap_name && array_key_exists( $doclap_foreign, $doclap_attributes ) ) {
+			doclap_smoke_fail( $doclap_name . ' declares the closing attribute ' . $doclap_foreign );
+		}
+	}
+
+	if ( 'doclap/inner-hero' !== $doclap_name && 'doclap/note-hero' !== $doclap_name && array_key_exists( 'breadcrumbLabel', $doclap_attributes ) ) {
+		doclap_smoke_fail( $doclap_name . ' declares the hero attribute breadcrumbLabel' );
+	}
+}
+
+$doclap_table_of_contents = (array) ( $doclap_manifests['doclap/note-content']['attributes']['tocEmptyBehaviour'] ?? array() );
+
+// Every block whose editor mounts the shared Colours panel must declare the three
+// optional colours it writes, as strings that default to "theme default".
+$doclap_colour_users = array();
+
+foreach ( (array) glob( DOCLAP_DIR . '/blocks/*/edit.tsx' ) as $doclap_editor ) {
+	if ( ! str_contains( (string) file_get_contents( $doclap_editor ), '<ColourControls' ) ) {
+		continue;
+	}
+
+	$doclap_colour_users[] = 'doclap/' . basename( dirname( $doclap_editor ) );
+}
+
+sort( $doclap_colour_users );
+
+if ( array() === $doclap_colour_users ) {
+	doclap_smoke_fail( 'no block mounts the shared Colours panel' );
+}
+
+foreach ( $doclap_colour_users as $doclap_name ) {
+	$doclap_attributes = (array) ( $doclap_manifests[ $doclap_name ]['attributes'] ?? array() );
+
+	foreach ( array( 'sectionBg', 'sectionHeading', 'sectionText' ) as $doclap_key ) {
+		$doclap_attribute = $doclap_attributes[ $doclap_key ] ?? null;
+
+		if (
+			! is_array( $doclap_attribute )
+			|| 'string' !== ( $doclap_attribute['type'] ?? null )
+			|| '' !== ( $doclap_attribute['default'] ?? null )
+		) {
+			doclap_smoke_fail( $doclap_name . ' mounts the Colours panel without declaring ' . $doclap_key );
+		}
+	}
+
+	// An unset colour must stay unset: the renderer only emits a property for a
+	// non-empty value, so the section keeps the designed colours.
+	if ( ! str_contains( (string) file_get_contents( DOCLAP_DIR . '/blocks/' . substr( $doclap_name, strlen( 'doclap/' ) ) . '/render.php' ), '$doclap_colour_style' ) ) {
+		doclap_smoke_fail( $doclap_name . ' declares colours its renderer never publishes' );
+	}
+}
+
+if ( ! in_array( 'doclap/inner-hero', $doclap_colour_users, true ) || ! in_array( 'doclap/principles-grid', $doclap_colour_users, true ) ) {
+	doclap_smoke_fail( 'the inner-page section blocks are not colour-aware' );
+}
+
+if (
+	'string' !== ( $doclap_table_of_contents['type'] ?? null )
+	|| 'hide' !== ( $doclap_table_of_contents['default'] ?? null )
+) {
+	doclap_smoke_fail( 'doclap/note-content does not default tocEmptyBehaviour to hide' );
+}
+
+$doclap_related_count = (array) ( $doclap_manifests['doclap/related-notes']['attributes']['count'] ?? array() );
+
+if (
+	'integer' !== ( $doclap_related_count['type'] ?? null )
+	|| 2 !== ( $doclap_related_count['default'] ?? null )
+) {
+	doclap_smoke_fail( 'doclap/related-notes does not default count to 2' );
+}
+
+doclap_smoke_pass( 'inner-page-schema ' . count( $doclap_section_contract ) . ' sections' );
+
 // The contact delivery schema is server-side only: the six 1.0.0 delivery
 // attributes are gone and nothing secret-like has been reintroduced.
 $doclap_contact_attributes = array_keys( (array) ( $doclap_manifests['doclap/contact-form']['attributes'] ?? array() ) );
@@ -690,3 +961,310 @@ if ( ! $doclap_option_found ) {
 doclap_smoke_pass( 'contact-settings' );
 
 doclap_smoke_pass( 'block-metadata ' . count( $doclap_manifests ) . ' js-assets=' . $doclap_js_assets );
+
+// 8. Rendered sections.
+/**
+ * Render one block comment through the front-end pipeline.
+ *
+ * @param string $comment Block comment.
+ *
+ * @return string Rendered markup.
+ */
+function doclap_smoke_render( string $comment ): string {
+	return (string) do_blocks( $comment );
+}
+
+/**
+ * Assert the single root section a section block must render.
+ *
+ * @param string   $label   Case label.
+ * @param string   $html    Rendered markup.
+ * @param string[] $classes Class names the root must carry.
+ */
+function doclap_smoke_render_root( string $label, string $html, array $classes ): void {
+	if ( 1 !== substr_count( $html, '<section' ) ) {
+		doclap_smoke_fail( $label . ' rendered ' . substr_count( $html, '<section' ) . ' sections instead of one' );
+	}
+
+	if ( ! preg_match( '#<section\s[^>]*class="([^"]*)"#', $html, $matches ) ) {
+		doclap_smoke_fail( $label . ' rendered no section with a class attribute' );
+	}
+
+	foreach ( $classes as $doclap_class ) {
+		if ( ! preg_match( '#(?:^|\s)' . preg_quote( $doclap_class, '#' ) . '(?:\s|$)#', $matches[1] ) ) {
+			doclap_smoke_fail( $label . ' root section is missing the ' . $doclap_class . ' class' );
+		}
+	}
+
+	foreach ( array( 'doclap-about-profile', 'doclap-single-note' ) as $doclap_removed ) {
+		if ( str_contains( $html, $doclap_removed ) ) {
+			doclap_smoke_fail( $label . ' rendered the removed aggregate ' . $doclap_removed );
+		}
+	}
+}
+
+/**
+ * Assert a rendered fragment is present.
+ *
+ * @param string $label  Case label.
+ * @param string $html   Rendered markup.
+ * @param string $needle Expected fragment.
+ */
+function doclap_smoke_render_has( string $label, string $html, string $needle ): void {
+	if ( ! str_contains( $html, $needle ) ) {
+		doclap_smoke_fail( $label . ' did not render: ' . $needle );
+	}
+}
+
+/**
+ * Assert a fragment is absent from rendered markup.
+ *
+ * @param string $label  Case label.
+ * @param string $html   Rendered markup.
+ * @param string $needle Fragment that must not appear.
+ */
+function doclap_smoke_render_lacks( string $label, string $html, string $needle ): void {
+	if ( str_contains( $html, $needle ) ) {
+		doclap_smoke_fail( $label . ' rendered an unexpected: ' . $needle );
+	}
+}
+
+$doclap_renders = array();
+
+// The hero: defaults render, rich values are escaped, scripts cannot survive.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/inner-hero /-->' );
+
+doclap_smoke_render_root( 'inner-hero defaults', $doclap_html, array( 'doclap-scope', 'doclap-inner-hero', 'section', 'inner-hero' ) );
+doclap_smoke_render_has( 'inner-hero defaults', $doclap_html, '<nav class="breadcrumb"' );
+doclap_smoke_render_has( 'inner-hero defaults', $doclap_html, 'href="' . esc_url( home_url( '/' ) ) . '"' );
+doclap_smoke_render_has( 'inner-hero defaults', $doclap_html, 'data-doclap-rich="heading"' );
+doclap_smoke_render_has( 'inner-hero defaults', $doclap_html, '<span class="hero-mark" aria-hidden="true">✳</span>' );
+doclap_smoke_render_has( 'inner-hero defaults', $doclap_html, '>Page</span>' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/inner-hero {"heading":"A \\u0026 B \\u003cem\\u003ex\\u003c/em\\u003e","breadcrumbLabel":"A \\u0026 B","lead":"\\u003cscript\\u003ealert(1)\\u003c/script\\u003eSafe"} /-->' );
+
+doclap_smoke_render_has( 'inner-hero rich values', $doclap_html, 'A &amp; B <em>x</em>' );
+doclap_smoke_render_has( 'inner-hero rich values', $doclap_html, '>A &amp; B</span>' );
+// `wp_kses_post()` drops the disallowed `<script>` element and leaves its text
+// as inert, escaped output: the tag is gone, the characters cannot execute.
+doclap_smoke_render_lacks( 'inner-hero rich values', $doclap_html, '<script' );
+doclap_smoke_render_has( 'inner-hero rich values', $doclap_html, 'alert(1)' );
+doclap_smoke_render_has( 'inner-hero rich values', $doclap_html, 'Safe' );
+$doclap_renders[] = $doclap_html;
+
+// The closing invitation: the rich heading keeps its emphasis, the link is
+// resolved against the site and an unescaped scheme cannot survive.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/closing-cta /-->' );
+
+doclap_smoke_render_root( 'closing-cta defaults', $doclap_html, array( 'doclap-scope', 'doclap-closing-cta', 'section', 'closing' ) );
+doclap_smoke_render_has( 'closing-cta defaults', $doclap_html, 'EVERYTHING STARTS WITH A QUESTION' );
+doclap_smoke_render_has( 'closing-cta defaults', $doclap_html, '<em>Make it different.</em>' );
+doclap_smoke_render_has( 'closing-cta defaults', $doclap_html, 'href="' . esc_url( home_url( '/contact/' ) ) . '"' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/closing-cta {"ctaUrl":"javascript:alert(1)","heading":"Plain heading","headingAccent":"one \\u0026 two"} /-->' );
+
+doclap_smoke_render_lacks( 'closing-cta escaping', $doclap_html, 'javascript:' );
+doclap_smoke_render_has( 'closing-cta escaping', $doclap_html, 'Plain heading<br><em>one &amp; two</em>' );
+$doclap_renders[] = $doclap_html;
+
+// The narrative section: optional status and link markup is omitted, never
+// rendered empty.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/split-narrative /-->' );
+
+doclap_smoke_render_root( 'split-narrative defaults', $doclap_html, array( 'doclap-scope', 'doclap-split-narrative', 'section' ) );
+doclap_smoke_render_has( 'split-narrative defaults', $doclap_html, 'class="container grid-1-2 body-grid"' );
+doclap_smoke_render_has( 'split-narrative defaults', $doclap_html, 'class="aside-title"' );
+doclap_smoke_render_has( 'split-narrative defaults', $doclap_html, 'class="prose"' );
+doclap_smoke_render_has( 'split-narrative defaults', $doclap_html, 'Cared for.<br>No compromise.' );
+doclap_smoke_render_lacks( 'split-narrative defaults', $doclap_html, 'class="text-link"' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/split-narrative {"paragraphs":[],"statusNote":"","linkLabel":"","linkUrl":""} /-->' );
+
+doclap_smoke_render_lacks( 'split-narrative empty optionals', $doclap_html, 'class="text-link"' );
+doclap_smoke_render_lacks( 'split-narrative empty optionals', $doclap_html, '<p>' );
+doclap_smoke_render_has( 'split-narrative empty optionals', $doclap_html, 'class="prose"' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/split-narrative {"statusNote":"A \\u0026 B status","linkLabel":"Read \\u003cem\\u003emore\\u003c/em\\u003e","linkUrl":"/faq/"} /-->' );
+
+doclap_smoke_render_has( 'split-narrative optionals', $doclap_html, 'A &amp; B status' );
+doclap_smoke_render_has( 'split-narrative optionals', $doclap_html, 'href="' . esc_url( home_url( '/faq/' ) ) . '"' );
+doclap_smoke_render_has( 'split-narrative optionals', $doclap_html, 'Read <em>more</em>' );
+$doclap_renders[] = $doclap_html;
+
+// The media section: the bundled artwork is the only fallback, and a blank
+// caption renders no figcaption.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/media-figure /-->' );
+
+doclap_smoke_render_root( 'media-figure defaults', $doclap_html, array( 'doclap-scope', 'doclap-media-figure', 'section' ) );
+doclap_smoke_render_has( 'media-figure defaults', $doclap_html, 'class="studio-figure"' );
+doclap_smoke_render_has( 'media-figure defaults', $doclap_html, '/assets/images/studio-workspace.jpg' );
+doclap_smoke_render_has( 'media-figure defaults', $doclap_html, 'loading="lazy"' );
+doclap_smoke_render_lacks( 'media-figure defaults', $doclap_html, '<figcaption>' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/media-figure {"imageId":999999,"imageAlt":"A \\u0026 B","caption":"Caption \\u0026 more"} /-->' );
+
+doclap_smoke_render_has( 'media-figure caption', $doclap_html, '<figcaption>Caption &amp; more</figcaption>' );
+doclap_smoke_render_has( 'media-figure caption', $doclap_html, 'alt="A &amp; B"' );
+doclap_smoke_render_has( 'media-figure caption', $doclap_html, '/assets/images/studio-workspace.jpg' );
+$doclap_renders[] = $doclap_html;
+
+// The principles panel: the three default cards render, and an empty list is a
+// valid configuration with no fabricated card.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/principles-grid /-->' );
+
+doclap_smoke_render_root( 'principles-grid defaults', $doclap_html, array( 'doclap-scope', 'doclap-principles-grid', 'section', 'dark-panel' ) );
+doclap_smoke_render_has( 'principles-grid defaults', $doclap_html, '02 / WHAT DOES NOT CHANGE' );
+doclap_smoke_render_has( 'principles-grid defaults', $doclap_html, 'Just enough motion.' );
+
+if ( 3 !== substr_count( $doclap_html, 'class="feature card-flat"' ) ) {
+	doclap_smoke_fail( 'the principles grid does not render its three default cards' );
+}
+
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/principles-grid {"principles":[]} /-->' );
+
+doclap_smoke_render_lacks( 'principles-grid empty', $doclap_html, 'class="feature card-flat"' );
+doclap_smoke_render_has( 'principles-grid empty', $doclap_html, 'class="grid-3"' );
+doclap_smoke_render_has( 'principles-grid empty', $doclap_html, 'Beautiful. And justified.' );
+$doclap_renders[] = $doclap_html;
+
+// The narrowed blocks: the shared hero and closing markup is gone while every
+// delivery, filter and query contract they still own is intact.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/contact-form /-->' );
+
+doclap_smoke_render_root( 'contact-form narrowed', $doclap_html, array( 'doclap-scope', 'doclap-contact-form', 'section' ) );
+doclap_smoke_render_lacks( 'contact-form narrowed', $doclap_html, 'class="breadcrumb"' );
+doclap_smoke_render_lacks( 'contact-form narrowed', $doclap_html, 'class="hero-summary"' );
+doclap_smoke_render_has( 'contact-form narrowed', $doclap_html, 'class="container grid-2 contact-grid"' );
+doclap_smoke_render_has( 'contact-form narrowed', $doclap_html, 'data-doclap-contact-form="1"' );
+doclap_smoke_render_has( 'contact-form narrowed', $doclap_html, 'data-rest-url="' . esc_url( rest_url( 'doclap/v1/contact' ) ) . '"' );
+doclap_smoke_render_has( 'contact-form narrowed', $doclap_html, 'doclap-honeypot' );
+doclap_smoke_render_has( 'contact-form narrowed', $doclap_html, 'name="services[]"' );
+doclap_smoke_render_has( 'contact-form narrowed', $doclap_html, 'role="status" aria-live="polite"' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/faq-list /-->' );
+
+doclap_smoke_render_root( 'faq-list narrowed', $doclap_html, array( 'doclap-scope', 'doclap-faq-list', 'section' ) );
+doclap_smoke_render_lacks( 'faq-list narrowed', $doclap_html, 'class="breadcrumb"' );
+doclap_smoke_render_lacks( 'faq-list narrowed', $doclap_html, 'class="circle-cta"' );
+doclap_smoke_render_has( 'faq-list narrowed', $doclap_html, 'data-faq-count' );
+doclap_smoke_render_has( 'faq-list narrowed', $doclap_html, 'data-faq-empty hidden' );
+doclap_smoke_render_has( 'faq-list narrowed', $doclap_html, 'class="filter-bar"' );
+doclap_smoke_render_has( 'faq-list narrowed', $doclap_html, 'aria-pressed="true"' );
+
+if ( 10 !== substr_count( $doclap_html, '<details' ) ) {
+	doclap_smoke_fail( 'the FAQ list does not render its ten default questions' );
+}
+
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/notes-archive /-->' );
+
+doclap_smoke_render_root( 'notes-archive narrowed', $doclap_html, array( 'doclap-scope', 'doclap-notes-archive', 'section' ) );
+doclap_smoke_render_lacks( 'notes-archive narrowed', $doclap_html, 'class="breadcrumb"' );
+doclap_smoke_render_lacks( 'notes-archive narrowed', $doclap_html, 'class="circle-cta"' );
+doclap_smoke_render_has( 'notes-archive narrowed', $doclap_html, 'class="container"' );
+doclap_smoke_render_has( 'notes-archive narrowed', $doclap_html, 'class="section-head"' );
+doclap_smoke_render_has( 'notes-archive narrowed', $doclap_html, 'data-doclap-rich="disclaimer"' );
+
+if (
+	! str_contains( $doclap_html, 'class="featured-post"' )
+	&& ! str_contains( $doclap_html, 'class="archive-rows"' )
+	&& ! str_contains( $doclap_html, 'class="empty-state"' )
+) {
+	doclap_smoke_fail( 'the narrowed notes archive rendered neither a featured note, rows, nor the empty state' );
+}
+
+$doclap_renders[] = $doclap_html;
+
+// The note blocks resolve the queried post. With no post in context they render
+// the deterministic fallback copy and never query or recurse into a host post.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/note-hero /-->' );
+
+doclap_smoke_render_root( 'note-hero fallback', $doclap_html, array( 'doclap-scope', 'doclap-note-hero', 'section', 'inner-hero', 'article-hero' ) );
+doclap_smoke_render_has( 'note-hero fallback', $doclap_html, 'data-doclap-progress' );
+doclap_smoke_render_has( 'note-hero fallback', $doclap_html, '>Editorial note</h1>' );
+doclap_smoke_render_has( 'note-hero fallback', $doclap_html, 'A perspective from the độc lập design practice.' );
+doclap_smoke_render_has( 'note-hero fallback', $doclap_html, 'aria-current="page">Article</span>' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/note-cover /-->' );
+
+doclap_smoke_render_root( 'note-cover fallback', $doclap_html, array( 'doclap-scope', 'doclap-note-cover', 'section' ) );
+doclap_smoke_render_has( 'note-cover fallback', $doclap_html, 'class="article-meta"' );
+doclap_smoke_render_has( 'note-cover fallback', $doclap_html, 'ĐỘC LẬP / EDITORIAL NOTES' );
+doclap_smoke_render_has( 'note-cover fallback', $doclap_html, 'Uncategorized' );
+doclap_smoke_render_has( 'note-cover fallback', $doclap_html, 'class="artwork motion-art"' );
+doclap_smoke_render_has( 'note-cover fallback', $doclap_html, 'class="art-word">Slow.</span>' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/note-content /-->' );
+
+doclap_smoke_render_root( 'note-content fallback', $doclap_html, array( 'doclap-scope', 'doclap-note-content', 'section' ) );
+doclap_smoke_render_has( 'note-content fallback', $doclap_html, 'class="container grid-1-2 article-layout"' );
+doclap_smoke_render_has( 'note-content fallback', $doclap_html, 'This note has no published content yet.' );
+doclap_smoke_render_has( 'note-content fallback', $doclap_html, 'data-doclap-save' );
+doclap_smoke_render_has( 'note-content fallback', $doclap_html, 'data-doclap-copy' );
+doclap_smoke_render_has( 'note-content fallback', $doclap_html, 'data-doclap-article-status' );
+doclap_smoke_render_has( 'note-content fallback', $doclap_html, 'data-doclap-rich="disclaimer"' );
+doclap_smoke_render_has( 'note-content fallback', $doclap_html, 'Back to all notes' );
+// The default is to hide a table of contents without headings.
+doclap_smoke_render_lacks( 'note-content fallback', $doclap_html, 'IN THIS ARTICLE' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/note-content {"tocEmptyBehaviour":"message"} /-->' );
+
+doclap_smoke_render_has( 'note-content empty table of contents', $doclap_html, 'IN THIS ARTICLE' );
+doclap_smoke_render_has( 'note-content empty table of contents', $doclap_html, 'No sections are listed for this article.' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/related-notes /-->' );
+
+doclap_smoke_render_root( 'related-notes fallback', $doclap_html, array( 'doclap-scope', 'doclap-related-notes', 'section' ) );
+doclap_smoke_render_has( 'related-notes fallback', $doclap_html, 'Read another perspective.' );
+doclap_smoke_render_has( 'related-notes fallback', $doclap_html, 'More perspectives will be published here soon.' );
+$doclap_renders[] = $doclap_html;
+
+// Section colours: an unset colour emits nothing, a set one publishes the custom
+// property the stylesheet reads. Core trims the trailing semicolon from the style
+// attribute, so the assertion stops at the last value.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/principles-grid /-->' );
+
+doclap_smoke_render_lacks( 'principles-grid default colours', $doclap_html, '--doclap-block-' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/principles-grid {"sectionBg":"#101010","sectionHeading":"var(--wp--preset--color--base)","sectionText":"#eeeeee"} /-->' );
+
+doclap_smoke_render_root( 'principles-grid colours', $doclap_html, array( 'doclap-scope', 'doclap-principles-grid', 'section', 'dark-panel' ) );
+doclap_smoke_render_has(
+	'principles-grid colours',
+	$doclap_html,
+	'--doclap-block-bg:#101010;--doclap-block-heading:var(--wp--preset--color--base);--doclap-block-text:#eeeeee',
+);
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/inner-hero {"sectionBg":"#ffffff","sectionHeading":"#111111","sectionText":"#444444"} /-->' );
+
+doclap_smoke_render_has(
+	'inner-hero colours',
+	$doclap_html,
+	'--doclap-block-bg:#ffffff;--doclap-block-heading:#111111;--doclap-block-text:#444444',
+);
+$doclap_renders[] = $doclap_html;
+
+// A block that renders one of the split sections can never re-enter itself
+// through the host post's own content.
+foreach ( $doclap_renders as $doclap_index => $doclap_rendered ) {
+	if ( str_contains( $doclap_rendered, 'wp:doclap/' ) ) {
+		doclap_smoke_fail( 'render case ' . $doclap_index . ' echoed unparsed block markup' );
+	}
+}
+
+doclap_smoke_pass( 'renders ' . count( $doclap_renders ) . ' cases' );

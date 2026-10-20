@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/principles-grid",
+  "version": "1.0.0",
+  "title": "Principles grid",
+  "category": "doclap",
+  "icon": "grid-view",
+  "description": "Dark panel with an eyebrow, heading and reusable principle cards.",
+  "keywords": [ "principles", "values", "dark panel", "cards" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "eyebrow": { "type": "string", "default": "02 / WHAT DOES NOT CHANGE" },
+    "heading": { "type": "string", "default": "Beautiful. And justified." },
+    "principles": {
+      "type": "array",
+      "default": [
+        {
+          "label": "01",
+          "title": "Clear first. Beautiful after.",
+          "copy": "Understand the audience, the goals and the context before the first stroke. Good structure is the foundation of a beautiful experience."
+        },
+        {
+          "label": "02",
+          "title": "Just enough motion.",
+          "copy": "Motion guides the eye, clarifies relationships and sets rhythm. When it no longer helps, it should stop."
+        },
+        {
+          "label": "03",
+          "title": "Detail is the whole.",
+          "copy": "A Vietnamese diacritic, a focus state, a small screen. Quality has no exceptions."
+        }
+      ]
+    }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

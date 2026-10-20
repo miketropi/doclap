@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/closing-cta",
+  "version": "1.0.0",
+  "title": "Closing call to action",
+  "category": "doclap",
+  "icon": "megaphone",
+  "description": "Dark closing invitation with an eyebrow, heading and circular link.",
+  "keywords": [ "closing", "cta", "contact", "invitation" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "eyebrow": { "type": "string", "default": "EVERYTHING STARTS WITH A QUESTION" },
+    "heading": {
+      "type": "string",
+      "default": "Your idea.<br><em>Make it different.</em>"
+    },
+    "headingAccent": { "type": "string", "default": "" },
+    "ctaLabel": { "type": "string", "default": "Tell us about your idea" },
+    "ctaUrl": { "type": "string", "default": "/contact/" }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

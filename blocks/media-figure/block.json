@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/media-figure",
+  "version": "1.0.0",
+  "title": "Media figure",
+  "category": "doclap",
+  "icon": "format-image",
+  "description": "Full-width figure with a media-library image, alternative text and caption.",
+  "keywords": [ "image", "figure", "media", "caption" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "imageId": { "type": "number", "default": 0 },
+    "imageUrl": { "type": "string", "default": "" },
+    "imageAlt": { "type": "string", "default": "Bright studio space with a desk and creative materials" },
+    "caption": { "type": "string", "default": "" }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

@@ -9,11 +9,18 @@
  * Cascade order inside these files matches the reference: design system, then the
  * page composition layer, then the refinement passes.
  *
- * Inner-page rules are additionally scoped to their owning block root
- * (``.doclap-about-profile``, ``.doclap-contact-form`` …) because every reference
- * page carried its own slightly drifted copy of the shared styles. Home keeps the
- * version the home page rendered, inner surfaces keep theirs, and the two can no
- * longer trample each other.
+ * Inner-page rules are additionally scoped to the block roots that emit them,
+ * because every reference page carried its own slightly drifted copy of the shared
+ * styles. Those roots — ``.doclap-inner-hero``, ``.doclap-closing-cta``,
+ * ``.doclap-split-narrative``, ``.doclap-media-figure``, ``.doclap-principles-grid``,
+ * ``.doclap-note-hero``, ``.doclap-note-cover``, ``.doclap-note-content``,
+ * ``.doclap-related-notes``, ``.doclap-contact-form``, ``.doclap-faq-list`` and
+ * ``.doclap-notes-archive`` — share one visual language, so the refinement passes
+ * below address them through a single ``:is( … )`` list and name the search and
+ * 404 roots beside it. A new section block that renders one of these sections
+ * belongs in that list. The list stays expanded rather than collapsing into one
+ * marker class because the rules it replaced carried exactly two class names, and
+ * the home layer and the inner layer are separated by that specificity.
  */
 
 /* David — a digital sculpture gallery. Other sections retain their layout. */
@@ -667,26 +674,34 @@ body {overflow-wrap:break-word}
    --doclap-block-text on its own root when the author picks a colour in the
    editor's Colours panel. The fallbacks are the design defaults, so a section
    stays readable with no options set: the dark bands (process, contact, the
-   editorial aside, the footer) paint their headings in their foreground colour,
-   which they previously did not — a dark heading on a dark band was invisible.
-   The dark rules come last so they win over the light defaults at equal
-   specificity. Two nesting shapes have to match: on the front end the page
-   supplies an outer `.doclap-scope` around the blocks, while the editor gives
-   every block its own `.doclap-scope` on the block root itself, so a band that
-   IS the root is `.doclap-scope.process` there and `.doclap-scope .process` on
-   the front end. */
+   editorial aside, the closing panels, the footer) paint their headings in their
+   foreground colour, which they previously did not — a dark heading on a dark
+   band was invisible. The dark rules come last so they win over the light
+   defaults at equal specificity. Two nesting shapes have to match: on the front
+   end the page supplies an outer `.doclap-scope` around the blocks, while the
+   editor gives every block its own `.doclap-scope` on the block root itself, so
+   a band that IS the root is `.doclap-scope.process` there and
+   `.doclap-scope .process` on the front end. */
 .doclap-scope {color:var(--doclap-block-text,inherit)}
 .doclap-scope :is(h1,h2,h3,h4) {color:var(--doclap-block-heading,var(--doclap-fg))}
 .doclap-scope.process,
 .doclap-scope.contact,
 .doclap-scope.pagefoot,
+.doclap-scope.dark-panel,
+.doclap-scope.closing,
 .doclap-scope .process,
 .doclap-scope .contact,
-.doclap-scope .pagefoot {background:var(--doclap-block-bg,var(--doclap-fg));color:var(--doclap-block-text,var(--doclap-bg))}
+.doclap-scope .pagefoot,
+.doclap-scope .dark-panel,
+.doclap-scope .closing {background:var(--doclap-block-bg,var(--doclap-fg));color:var(--doclap-block-text,var(--doclap-bg))}
 .doclap-scope.process :is(h1,h2,h3,h4),
 .doclap-scope.contact :is(h1,h2,h3,h4),
 .doclap-scope.pagefoot :is(h1,h2,h3,h4),
+.doclap-scope.dark-panel :is(h1,h2,h3,h4),
+.doclap-scope.closing :is(h1,h2,h3,h4),
 .doclap-scope .process :is(h1,h2,h3,h4),
 .doclap-scope .contact :is(h1,h2,h3,h4),
 .doclap-scope .pagefoot :is(h1,h2,h3,h4),
+.doclap-scope .dark-panel :is(h1,h2,h3,h4),
+.doclap-scope .closing :is(h1,h2,h3,h4),
 .doclap-scope .voice-editorial :is(h1,h2,h3,h4) {color:var(--doclap-block-heading,var(--doclap-bg))}

@@ -10,17 +10,9 @@
   "keywords": [ "notes", "archive", "journal" ],
   "textdomain": "doclap",
   "attributes": {
-    "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
-    "breadcrumbLabel": { "type": "string", "default": "Archive" },
-    "heading": {
-      "type": "string",
-      "default": "Think. Try.<br><em>Write it down.</em>"
-    },
-    "headingAccent": { "type": "string", "default": "" },
-    "lead": {
-      "type": "string",
-      "default": "Notes from the desk: on the small decisions that give a digital experience depth."
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
     "showFeatured": { "type": "boolean", "default": true },
     "postsPerPage": { "type": "integer", "default": 6 },
     "showCategories": { "type": "boolean", "default": true },
@@ -32,15 +24,7 @@
     "disclaimer": {
       "type": "string",
       "default": "The articles are editorial notes from the portfolio, not client case studies."
-    },
-    "closingEyebrow": { "type": "string", "default": "EVERYTHING STARTS WITH A QUESTION" },
-    "closingHeading": {
-      "type": "string",
-      "default": "Your idea.<br><em>Make it different.</em>"
-    },
-    "closingHeadingAccent": { "type": "string", "default": "" },
-    "closingCtaLabel": { "type": "string", "default": "Tell us about your idea" },
-    "closingCtaUrl": { "type": "string", "default": "/contact/" }
+    }
   },
   "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",

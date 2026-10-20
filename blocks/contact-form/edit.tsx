@@ -4,10 +4,10 @@ import {
   TextControl,
   TextareaControl,
 } from "@wordpress/components";
-import { useEffect } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 
 import BlockPreview from "../../resources/ts/editor/block-preview";
+import ColourControls from "../../resources/ts/editor/colour-controls";
 import Repeater, {
   type RepeaterItem,
 } from "../../resources/ts/editor/repeater";
@@ -15,10 +15,6 @@ import RichTextOverlay, {
   type RichTextTarget,
 } from "../../resources/ts/editor/rich-text-overlay";
 import { urlHelpWithStructuralNote } from "../../resources/ts/editor/url-help";
-import {
-  mergeAccent,
-  needsAccentMerge,
-} from "../../resources/ts/editor/accent-migration";
 import type { ContactFormAttributes, ServiceOption } from "./types";
 
 interface EditProps {
@@ -29,8 +25,6 @@ interface EditProps {
 
 /** Rich values edited in place on the canvas (they render unconditionally). */
 const overlayTargets: RichTextTarget[] = [
-  { path: "heading", label: __("Heading", "doclap"), multiline: true },
-  { path: "lead", label: __("Lead", "doclap"), multiline: true },
   {
     path: "asideHeading",
     label: __("Aside heading", "doclap"),
@@ -48,39 +42,10 @@ export default function Edit({
   const services = attributes.services ?? [];
   const steps = (attributes.asideSteps ?? []).map((value) => ({ value }));
 
-  // One-shot legacy fold: saved content can still carry `headingAccent`.
-  // `needsAccentMerge()` is false as soon as the accent is empty, so this runs
-  // once per block and never on a keystroke.
-  useEffect(() => {
-    const legacyAccent = String(attributes.headingAccent ?? "");
-
-    if (needsAccentMerge(attributes.heading ?? "", legacyAccent)) {
-      setAttributes({
-        heading: mergeAccent(attributes.heading ?? "", legacyAccent, "<br><em>"),
-        headingAccent: "",
-      });
-    }
-  }, [attributes.headingAccent, setAttributes]);
-
   return (
     <>
       <InspectorControls>
-        <PanelBody title={__("Hero", "doclap")} initialOpen>
-          <TextControl
-            label={__("Home breadcrumb", "doclap")}
-            value={attributes.breadcrumbHomeLabel ?? ""}
-            onChange={(breadcrumbHomeLabel) =>
-              setAttributes({ breadcrumbHomeLabel })
-            }
-          />
-          <TextControl
-            label={__("Page breadcrumb", "doclap")}
-            value={attributes.breadcrumbLabel ?? ""}
-            onChange={(breadcrumbLabel) => setAttributes({ breadcrumbLabel })}
-          />
-        </PanelBody>
-
-        <PanelBody title={__("Aside", "doclap")} initialOpen={false}>
+        <PanelBody title={__("Aside", "doclap")} initialOpen>
           <TextControl
             label={__("Meta", "doclap")}
             value={attributes.asideMeta ?? ""}
@@ -198,6 +163,10 @@ export default function Edit({
             minimumItems={1}
           />
         </PanelBody>
+        <ColourControls
+          attributes={attributes}
+          setAttributes={setAttributes}
+        />
       </InspectorControls>
       <BlockPreview block="doclap/contact-form" attributes={attributes} />
       <RichTextOverlay

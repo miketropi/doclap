@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/note-content",
+  "version": "1.0.0",
+  "title": "Note content",
+  "category": "doclap",
+  "icon": "editor-paragraph",
+  "description": "Table of contents, save and copy tools, the queried note body, disclaimer and archive link.",
+  "keywords": [ "note", "article", "content", "toc" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "archiveUrl": { "type": "string", "default": "@notes" },
+    "tocLabel": { "type": "string", "default": "IN THIS ARTICLE" },
+    "tocEmptyBehaviour": { "type": "string", "default": "hide" },
+    "disclaimer": {
+      "type": "string",
+      "default": "Perspectives from the độc lập design practice. The articles present no verified metrics or client results."
+    },
+    "backToArchiveLabel": { "type": "string", "default": "Back to all notes" }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

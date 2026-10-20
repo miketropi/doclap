@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/note-cover",
+  "version": "1.0.0",
+  "title": "Note cover",
+  "category": "doclap",
+  "icon": "format-image",
+  "description": "Article metadata plus the queried featured image or the accessible fallback artwork.",
+  "keywords": [ "note", "article", "cover", "image", "artwork" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "articleMetaPrefix": { "type": "string", "default": "ĐỘC LẬP / EDITORIAL NOTES" }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

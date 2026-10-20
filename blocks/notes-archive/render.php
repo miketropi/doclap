@@ -110,220 +110,180 @@ if ( ! $doclap_is_archive_query && $doclap_featured instanceof WP_Post ) {
 	++$doclap_found_posts;
 }
 
+// Section colours are optional: an empty attribute emits nothing, so an unset
+// colour keeps the theme's default for that property.
+$doclap_colour_style = '';
+
+foreach (
+	array(
+		'sectionBg'      => '--doclap-block-bg',
+		'sectionHeading' => '--doclap-block-heading',
+		'sectionText'    => '--doclap-block-text',
+	) as $doclap_colour_attr => $doclap_colour_var
+) {
+	$doclap_colour_value = trim( (string) ( $attributes[ $doclap_colour_attr ] ?? '' ) );
+
+	if ( '' !== $doclap_colour_value ) {
+		$doclap_colour_style .= $doclap_colour_var . ':' . $doclap_colour_value . ';';
+	}
+}
+
 $doclap_wrapper = get_block_wrapper_attributes(
-	array( 'class' => doclap_scope_class( 'doclap-notes-archive' ) ),
-);
-// Saved content can still carry the split accent attributes; the editor folds
-// them into the merged rich values and clears the legacy keys on first save.
-$doclap_heading         = doclap_rich_accent(
-	(string) $doclap_value( 'heading', __( 'Think. Try.<br><em>Write it down.</em>', 'doclap' ) ),
-	(string) $doclap_value( 'headingAccent', '' ),
-	'<br><em>',
-);
-$doclap_closing_heading = doclap_rich_accent(
-	(string) $doclap_value( 'closingHeading', '' ),
-	(string) $doclap_value( 'closingHeadingAccent', '' ),
-	'<br><em>',
+	array( 'class' => doclap_scope_class( 'doclap-notes-archive', array( 'section' ) ), 'style' => $doclap_colour_style ),
 );
 ?>
-<div <?php echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core escaped.?>>
-	<section class="section inner-hero">
-		<div class="container">
-			<nav class="breadcrumb" aria-label="<?php echo esc_attr__( 'Page path', 'doclap' ); ?>">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<?php echo esc_html( (string) $doclap_value( 'breadcrumbHomeLabel', __( 'Home', 'doclap' ) ) ); ?>
-				</a>
-				<span aria-hidden="true">/</span>
-				<span aria-current="page">
-					<?php echo esc_html( (string) $doclap_value( 'breadcrumbLabel', __( 'Archive', 'doclap' ) ) ); ?>
-				</span>
-			</nav>
-			<h1 data-doclap-rich="heading">
-				<?php echo doclap_rich( $doclap_heading ); ?>
-			</h1>
-			<div class="hero-summary">
-				<span class="hero-mark" aria-hidden="true">✳</span>
-				<p class="lead" data-doclap-rich="lead"><?php echo doclap_rich( (string) $doclap_value( 'lead', '' ) ); ?></p>
-			</div>
+<section <?php echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core escaped.?>>
+	<div class="container">
+		<?php if ( $doclap_featured instanceof WP_Post ) : ?>
+			<?php $doclap_featured_category = $doclap_category( $doclap_featured->ID ); ?>
+			<article class="featured-post">
+				<div
+					class="artwork motion-art"
+					aria-label="<?php echo esc_attr__( 'Typography graphic: Slow.', 'doclap' ); ?>"
+				>
+					<span class="art-label"><?php echo esc_html__( 'STUDY / MOTION', 'doclap' ); ?></span>
+					<span class="art-word"><?php echo esc_html__( 'Slow.', 'doclap' ); ?></span>
+				</div>
+				<div>
+					<span class="meta">
+						<?php echo esc_html__( 'FEATURED NOTES', 'doclap' ); ?><?php
+						echo $doclap_featured_category
+							? ' / ' . esc_html( strtoupper( $doclap_featured_category->name ) )
+							: '';
+						?>
+					</span>
+					<h2>
+						<a href="<?php echo esc_url( get_permalink( $doclap_featured ) ); ?>">
+							<?php echo esc_html( get_the_title( $doclap_featured ) ); ?>
+						</a>
+					</h2>
+					<p><?php echo esc_html( $doclap_excerpt( $doclap_featured ) ); ?></p>
+					<a class="text-link" href="<?php echo esc_url( get_permalink( $doclap_featured ) ); ?>">
+						<span><?php echo esc_html__( 'Read notes', 'doclap' ); ?></span>
+						<?php
+						echo doclap_icon( 'arrow-up-right' );
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted helper markup.
+						?>
+					</a>
+				</div>
+			</article>
+		<?php endif; ?>
+		<div class="section-head">
+			<h2 data-doclap-rich="headingSectionTitle"><?php echo doclap_rich( (string) $doclap_value( 'headingSectionTitle', __( 'From the desk.', 'doclap' ) ) ); ?></h2>
+			<span class="meta" role="status">
+				<?php
+				echo esc_html(
+					strtoupper(
+						$doclap_count_label(
+							$doclap_found_posts,
+							(string) $doclap_value( 'countSingular', __( '%d note', 'doclap' ) ),
+							(string) $doclap_value( 'countPlural', __( '%d notes', 'doclap' ) ),
+						),
+					),
+				);
+				?>
+			</span>
 		</div>
-	</section>
-	<section class="section">
-		<div class="container">
-			<?php if ( $doclap_featured instanceof WP_Post ) : ?>
-				<?php $doclap_featured_category = $doclap_category( $doclap_featured->ID ); ?>
-				<article class="featured-post">
-					<div
-						class="artwork motion-art"
-						aria-label="<?php echo esc_attr__( 'Typography graphic: Slow.', 'doclap' ); ?>"
+		<?php if ( (bool) $doclap_value( 'showCategories', true ) ) : ?>
+			<nav class="filter-bar" aria-label="<?php echo esc_attr__( 'Filter notes', 'doclap' ); ?>">
+				<a
+					href="<?php echo esc_url( doclap_resolve_url( '@notes' ) ); ?>"
+					<?php echo is_home() && ! is_category() ? ' aria-current="page"' : ''; ?>
+				>
+					<?php echo esc_html__( 'All', 'doclap' ); ?>
+				</a>
+				<?php foreach ( get_categories( array( 'hide_empty' => true ) ) as $doclap_term ) : ?>
+					<?php
+					$doclap_term_url = get_term_link( $doclap_term );
+					if ( is_wp_error( $doclap_term_url ) ) {
+						continue;
+					}
+					?>
+					<a
+						href="<?php echo esc_url( $doclap_term_url ); ?>"
+						<?php echo is_category( $doclap_term->term_id ) ? ' aria-current="page"' : ''; ?>
 					>
-						<span class="art-label"><?php echo esc_html__( 'STUDY / MOTION', 'doclap' ); ?></span>
-						<span class="art-word"><?php echo esc_html__( 'Slow.', 'doclap' ); ?></span>
-					</div>
-					<div>
+						<?php echo esc_html( $doclap_term->name ); ?>
+					</a>
+				<?php endforeach; ?>
+			</nav>
+		<?php endif; ?>
+		<?php if ( empty( $doclap_list_posts ) && ! ( $doclap_featured instanceof WP_Post ) ) : ?>
+			<div class="empty-state" role="status">
+				<h3><?php echo doclap_rich( (string) $doclap_value( 'emptyHeading', __( 'No notes yet.', 'doclap' ) ) ); ?></h3>
+				<p><?php echo doclap_rich( (string) $doclap_value( 'emptyCopy', '' ) ); ?></p>
+			</div>
+		<?php else : ?>
+			<div class="archive-rows">
+				<?php foreach ( $doclap_list_posts as $doclap_index => $doclap_post ) : ?>
+					<?php $doclap_post_category = $doclap_category( $doclap_post->ID ); ?>
+					<article class="log-row post-row">
 						<span class="meta">
-							<?php echo esc_html__( 'FEATURED NOTES', 'doclap' ); ?><?php
-							echo $doclap_featured_category
-								? ' / ' . esc_html( strtoupper( $doclap_featured_category->name ) )
-								: '';
+							<?php
+							echo esc_html(
+								doclap_ordinal( $doclap_index ) . ' / '
+								. ( $doclap_post_category ? $doclap_post_category->name : __( 'Note', 'doclap' ) ),
+							);
+							?><br><?php
+							$doclap_reading_time = doclap_reading_time( $doclap_post->post_content );
+							echo esc_html(
+								get_the_date( '', $doclap_post ) . ' · '
+								. sprintf(
+									_n( '%d min read', '%d mins read', $doclap_reading_time, 'doclap' ),
+									$doclap_reading_time,
+								),
+							);
 							?>
 						</span>
-						<h2>
-							<a href="<?php echo esc_url( get_permalink( $doclap_featured ) ); ?>">
-								<?php echo esc_html( get_the_title( $doclap_featured ) ); ?>
-							</a>
-						</h2>
-						<p><?php echo esc_html( $doclap_excerpt( $doclap_featured ) ); ?></p>
-						<a class="text-link" href="<?php echo esc_url( get_permalink( $doclap_featured ) ); ?>">
-							<span><?php echo esc_html__( 'Read notes', 'doclap' ); ?></span>
+						<div>
+							<h3>
+								<a href="<?php echo esc_url( get_permalink( $doclap_post ) ); ?>">
+									<?php echo esc_html( get_the_title( $doclap_post ) ); ?>
+								</a>
+							</h3>
+							<p><?php echo esc_html( $doclap_excerpt( $doclap_post ) ); ?></p>
+						</div>
+						<a
+							href="<?php echo esc_url( get_permalink( $doclap_post ) ); ?>"
+							class="icon-link"
+							aria-label="<?php
+							echo esc_attr(
+								sprintf( __( 'Read: %s', 'doclap' ), get_the_title( $doclap_post ) ),
+							);
+							?>"
+						>
 							<?php
 							echo doclap_icon( 'arrow-up-right' );
 							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted helper markup.
 							?>
 						</a>
-					</div>
-				</article>
-			<?php endif; ?>
-			<div class="section-head">
-				<h2 data-doclap-rich="headingSectionTitle"><?php echo doclap_rich( (string) $doclap_value( 'headingSectionTitle', __( 'From the desk.', 'doclap' ) ) ); ?></h2>
-				<span class="meta" role="status">
-					<?php
-					echo esc_html(
-						strtoupper(
-							$doclap_count_label(
-								$doclap_found_posts,
-								(string) $doclap_value( 'countSingular', __( '%d note', 'doclap' ) ),
-								(string) $doclap_value( 'countPlural', __( '%d notes', 'doclap' ) ),
-							),
-						),
-					);
-					?>
-				</span>
+					</article>
+				<?php endforeach; ?>
 			</div>
-			<?php if ( (bool) $doclap_value( 'showCategories', true ) ) : ?>
-				<nav class="filter-bar" aria-label="<?php echo esc_attr__( 'Filter notes', 'doclap' ); ?>">
-					<a
-						href="<?php echo esc_url( doclap_resolve_url( '@notes' ) ); ?>"
-						<?php echo is_home() && ! is_category() ? ' aria-current="page"' : ''; ?>
-					>
-						<?php echo esc_html__( 'All', 'doclap' ); ?>
-					</a>
-					<?php foreach ( get_categories( array( 'hide_empty' => true ) ) as $doclap_term ) : ?>
-						<?php
-						$doclap_term_url = get_term_link( $doclap_term );
-						if ( is_wp_error( $doclap_term_url ) ) {
-							continue;
-						}
-						?>
-						<a
-							href="<?php echo esc_url( $doclap_term_url ); ?>"
-							<?php echo is_category( $doclap_term->term_id ) ? ' aria-current="page"' : ''; ?>
-						>
-							<?php echo esc_html( $doclap_term->name ); ?>
-						</a>
-					<?php endforeach; ?>
-				</nav>
-			<?php endif; ?>
-			<?php if ( empty( $doclap_list_posts ) && ! ( $doclap_featured instanceof WP_Post ) ) : ?>
-				<div class="empty-state" role="status">
-					<h3><?php echo doclap_rich( (string) $doclap_value( 'emptyHeading', __( 'No notes yet.', 'doclap' ) ) ); ?></h3>
-					<p><?php echo doclap_rich( (string) $doclap_value( 'emptyCopy', '' ) ); ?></p>
-				</div>
-			<?php else : ?>
-				<div class="archive-rows">
-					<?php foreach ( $doclap_list_posts as $doclap_index => $doclap_post ) : ?>
-						<?php $doclap_post_category = $doclap_category( $doclap_post->ID ); ?>
-						<article class="log-row post-row">
-							<span class="meta">
-								<?php
-								echo esc_html(
-									doclap_ordinal( $doclap_index ) . ' / '
-									. ( $doclap_post_category ? $doclap_post_category->name : __( 'Note', 'doclap' ) ),
-								);
-								?><br><?php
-								$doclap_reading_time = doclap_reading_time( $doclap_post->post_content );
-								echo esc_html(
-									get_the_date( '', $doclap_post ) . ' · '
-									. sprintf(
-										_n( '%d min read', '%d mins read', $doclap_reading_time, 'doclap' ),
-										$doclap_reading_time,
-									),
-								);
-								?>
-							</span>
-							<div>
-								<h3>
-									<a href="<?php echo esc_url( get_permalink( $doclap_post ) ); ?>">
-										<?php echo esc_html( get_the_title( $doclap_post ) ); ?>
-									</a>
-								</h3>
-								<p><?php echo esc_html( $doclap_excerpt( $doclap_post ) ); ?></p>
-							</div>
-							<a
-								href="<?php echo esc_url( get_permalink( $doclap_post ) ); ?>"
-								class="icon-link"
-								aria-label="<?php
-								echo esc_attr(
-									sprintf( __( 'Read: %s', 'doclap' ), get_the_title( $doclap_post ) ),
-								);
-								?>"
-							>
-								<?php
-								echo doclap_icon( 'arrow-up-right' );
-								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted helper markup.
-								?>
-							</a>
-						</article>
-					<?php endforeach; ?>
-				</div>
-			<?php endif; ?>
-			<?php if ( $doclap_query->max_num_pages > 1 ) : ?>
-				<nav
-					class="navigation pagination index-grid"
-					aria-label="<?php echo esc_attr__( 'Notes pagination', 'doclap' ); ?>"
-				>
-					<?php
-					echo wp_kses_post(
-						paginate_links(
-							array(
-								'current'   => $doclap_paged,
-								'total'     => (int) $doclap_query->max_num_pages,
-								'type'      => 'list',
-								'prev_text' => __( 'Previous', 'doclap' ),
-								'next_text' => __( 'Next', 'doclap' ),
-							),
-						),
-					);
-					?>
-				</nav>
-			<?php endif; ?>
-			<p class="form-note" data-doclap-rich="disclaimer"><?php echo doclap_rich( (string) $doclap_value( 'disclaimer', '' ) ); ?></p>
-		</div>
-	</section>
-	<section class="section closing">
-		<div class="container row-between">
-			<div>
-				<p class="eyebrow"><?php echo esc_html( (string) $doclap_value( 'closingEyebrow', '' ) ); ?></p>
-				<h2 data-doclap-rich="closingHeading">
-					<?php echo doclap_rich( $doclap_closing_heading ); ?>
-				</h2>
-			</div>
-			<a
-				class="circle-cta"
-				href="<?php
-				echo esc_url(
-					doclap_resolve_url( (string) $doclap_value( 'closingCtaUrl', '/contact/' ) ),
-				);
-				?>"
+		<?php endif; ?>
+		<?php if ( $doclap_query->max_num_pages > 1 ) : ?>
+			<nav
+				class="navigation pagination index-grid"
+				aria-label="<?php echo esc_attr__( 'Notes pagination', 'doclap' ); ?>"
 			>
-				<span data-doclap-rich="closingCtaLabel"><?php echo doclap_rich( (string) $doclap_value( 'closingCtaLabel', '' ) ); ?></span>
 				<?php
-				echo doclap_icon( 'arrow-up-right' );
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted helper markup.
+				echo wp_kses_post(
+					paginate_links(
+						array(
+							'current'   => $doclap_paged,
+							'total'     => (int) $doclap_query->max_num_pages,
+							'type'      => 'list',
+							'prev_text' => __( 'Previous', 'doclap' ),
+							'next_text' => __( 'Next', 'doclap' ),
+						),
+					),
+				);
 				?>
-			</a>
-		</div>
-	</section>
-</div>
+			</nav>
+		<?php endif; ?>
+		<p class="form-note" data-doclap-rich="disclaimer"><?php echo doclap_rich( (string) $doclap_value( 'disclaimer', '' ) ); ?></p>
+	</div>
+</section>
 <?php
 if ( ! $doclap_is_archive_query ) {
 	wp_reset_postdata();

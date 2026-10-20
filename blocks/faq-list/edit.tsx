@@ -4,10 +4,10 @@ import {
 	PanelBody,
 	TextControl,
 } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import BlockPreview from '../../resources/ts/editor/block-preview';
+import ColourControls from '../../resources/ts/editor/colour-controls';
 import Repeater, { type RepeaterItem } from '../../resources/ts/editor/repeater';
 import RichTextOverlay, {
 	type RichTextTarget,
@@ -18,11 +18,7 @@ import {
 	slugHelp,
 } from '../../resources/ts/editor/slug-help';
 import { urlHelpWithStructuralNote } from '../../resources/ts/editor/url-help';
-import {
-	mergeAccent,
-	needsAccentMerge,
-	truncateLabel,
-} from '../../resources/ts/editor/accent-migration';
+import { truncateLabel } from '../../resources/ts/editor/accent-migration';
 import type { FaqFilter, FaqListAttributes, FaqQuestion } from './types';
 
 interface EditProps {
@@ -33,21 +29,13 @@ interface EditProps {
 
 /** Rich values edited in place on the canvas (they render unconditionally). */
 const overlayTargets: RichTextTarget[] = [
-	{ path: 'heading', label: __('Heading', 'doclap'), multiline: true },
-	{ path: 'lead', label: __('Lead', 'doclap'), multiline: true },
 	{
 		path: 'asideHeading',
 		label: __('Aside heading', 'doclap'),
 		multiline: true,
 	},
 	{ path: 'asideCopy', label: __('Aside copy', 'doclap'), multiline: true },
-	{
-		path: 'closingHeading',
-		label: __('Closing heading', 'doclap'),
-		multiline: true,
-	},
 	{ path: 'asideLinkLabel', label: __('Aside link label', 'doclap') },
-	{ path: 'closingCtaLabel', label: __('Closing link label', 'doclap') },
 ];
 
 export default function Edit({
@@ -64,52 +52,10 @@ export default function Edit({
 		{ knownValues: filterSlugs.filter((slug) => '' !== slug) },
 	);
 
-	// One-shot legacy folds: saved content can still carry the split accents.
-	// `needsAccentMerge()` is false as soon as the accent is empty, so these run
-	// once per block and never on a keystroke.
-	useEffect(() => {
-		const legacyAccent = String(attributes.headingAccent ?? '');
-
-		if (needsAccentMerge(attributes.heading ?? '', legacyAccent)) {
-			setAttributes({
-				heading: mergeAccent(attributes.heading ?? '', legacyAccent, '<br><em>'),
-				headingAccent: '',
-			});
-		}
-	}, [attributes.headingAccent, setAttributes]);
-
-	useEffect(() => {
-		const legacyAccent = String(attributes.closingHeadingAccent ?? '');
-
-		if (needsAccentMerge(attributes.closingHeading ?? '', legacyAccent)) {
-			setAttributes({
-				closingHeading: mergeAccent(
-					attributes.closingHeading ?? '',
-					legacyAccent,
-					'<br><em>',
-				),
-				closingHeadingAccent: '',
-			});
-		}
-	}, [attributes.closingHeadingAccent, setAttributes]);
-
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Hero', 'doclap')} initialOpen>
-					<TextControl
-						label={__('Home breadcrumb', 'doclap')}
-						value={attributes.breadcrumbHomeLabel ?? ''}
-						onChange={(breadcrumbHomeLabel) => setAttributes({ breadcrumbHomeLabel })}
-					/>
-					<TextControl
-						label={__('Current breadcrumb', 'doclap')}
-						value={attributes.breadcrumbLabel ?? ''}
-						onChange={(breadcrumbLabel) => setAttributes({ breadcrumbLabel })}
-					/>
-				</PanelBody>
-
-				<PanelBody title={__('Aside', 'doclap')} initialOpen={false}>
+				<PanelBody title={__('Aside', 'doclap')} initialOpen>
 					<TextControl
 						label={__('Label', 'doclap')}
 						value={attributes.asideLabel ?? ''}
@@ -229,23 +175,10 @@ export default function Edit({
 						onChange={(emptyLabel) => setAttributes({ emptyLabel })}
 					/>
 				</PanelBody>
-
-				<PanelBody
-					title={__('Closing call to action', 'doclap')}
-					initialOpen={false}
-				>
-					<TextControl
-						label={__('Eyebrow', 'doclap')}
-						value={attributes.closingEyebrow ?? ''}
-						onChange={(closingEyebrow) => setAttributes({ closingEyebrow })}
-					/>
-					<TextControl
-						label={__('Link URL', 'doclap')}
-						help={urlHelpWithStructuralNote}
-						value={attributes.closingCtaUrl ?? ''}
-						onChange={(closingCtaUrl) => setAttributes({ closingCtaUrl })}
-					/>
-				</PanelBody>
+				<ColourControls
+					attributes={attributes}
+					setAttributes={setAttributes}
+				/>
 			</InspectorControls>
 			<BlockPreview block="doclap/faq-list" attributes={attributes} />
 			<RichTextOverlay

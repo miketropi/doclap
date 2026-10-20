@@ -1,0 +1,10 @@
+/**
+ * Editor canvas styles for doclap/related-notes.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet, which the editor also loads.
+ */
+
+.wp-block-doclap-related-notes {
+	min-height: 240px;
+}

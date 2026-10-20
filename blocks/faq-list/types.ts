@@ -10,10 +10,15 @@ export interface FaqQuestion extends Record<string, unknown> {
 }
 
 export interface FaqListAttributes extends Record<string, unknown> {
-	breadcrumbHomeLabel: string;
-	breadcrumbLabel: string;
-	heading: string;
-	lead: string;
+	/**
+	 * Optional section colours. Each is stored as the custom property the theme
+	 * reads (`--doclap-block-bg`, `--doclap-block-heading`, `--doclap-block-text`);
+	 * an empty string means "theme default" and emits nothing, so a section keeps
+	 * the design unless an author picks a colour.
+	 */
+	sectionBg: string;
+	sectionHeading: string;
+	sectionText: string;
 	asideLabel: string;
 	asideHeading: string;
 	asideCopy: string;
@@ -24,8 +29,4 @@ export interface FaqListAttributes extends Record<string, unknown> {
 	questions: FaqQuestion[];
 	countTemplate: string;
 	emptyLabel: string;
-	closingEyebrow: string;
-	closingHeading: string;
-	closingCtaLabel: string;
-	closingCtaUrl: string;
 }

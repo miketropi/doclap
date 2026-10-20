@@ -5,8 +5,9 @@
 # The assertions live in tests/smoke/assertions.php and check the contract the
 # theme depends on: the child-theme relationship with Nextora, registration of
 # every doclap/* block, theme.json parsing (and its merge with the parent), the
-# declared font faces and compiled assets, the contact REST route, and the
-# insertion patterns.
+# declared font faces and compiled assets, the contact REST route, the insertion
+# patterns, the inner-page section schemas, the template compositions, and a
+# front-end render of every section block with its defaults.
 #
 # Two ways to run them:
 #
@@ -72,7 +73,9 @@ for marker in \
 	'DOCLAP-OK theme-json' \
 	'DOCLAP-OK fonts' \
 	'DOCLAP-OK rest-route' \
-	'DOCLAP-OK patterns'; do
+	'DOCLAP-OK patterns' \
+	'DOCLAP-OK inner-page-schema' \
+	'DOCLAP-OK renders'; do
 	if grep -q "$marker" "$OUTPUT"; then
 		echo "  ✓ $marker"
 	else

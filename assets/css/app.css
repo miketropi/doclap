@@ -1720,7 +1720,7 @@ body {
     display: none;
   }
 }
-.doclap-about-profile .nav-contact, .doclap-faq-list .nav-contact, .doclap-notes-archive .nav-contact, .doclap-single-note .nav-contact, .doclap-search-results .nav-contact, .doclap-not-found .nav-contact, .doclap-contact-form .nav-contact, .doclap-about-profile .text-link, .doclap-faq-list .text-link, .doclap-notes-archive .text-link, .doclap-single-note .text-link, .doclap-search-results .text-link, .doclap-not-found .text-link, .doclap-contact-form .text-link {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .nav-contact, .doclap-search-results .nav-contact, .doclap-not-found .nav-contact, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .text-link, .doclap-search-results .text-link, .doclap-not-found .text-link {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -1728,137 +1728,143 @@ body {
   border-bottom: 1px solid var(--doclap-fg);
   font-size: 14px;
 }
-.doclap-about-profile .text-link:hover, .doclap-faq-list .text-link:hover, .doclap-notes-archive .text-link:hover, .doclap-single-note .text-link:hover, .doclap-search-results .text-link:hover, .doclap-not-found .text-link:hover, .doclap-contact-form .text-link:hover, .doclap-about-profile .nav-contact:hover, .doclap-faq-list .nav-contact:hover, .doclap-notes-archive .nav-contact:hover, .doclap-single-note .nav-contact:hover, .doclap-search-results .nav-contact:hover, .doclap-not-found .nav-contact:hover, .doclap-contact-form .nav-contact:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .text-link:hover, .doclap-search-results .text-link:hover, .doclap-not-found .text-link:hover, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .nav-contact:hover, .doclap-search-results .nav-contact:hover, .doclap-not-found .nav-contact:hover {
   background: var(--doclap-fg-soft);
 }
-.doclap-about-profile .text-link:hover .lucide, .doclap-faq-list .text-link:hover .lucide, .doclap-notes-archive .text-link:hover .lucide, .doclap-single-note .text-link:hover .lucide, .doclap-search-results .text-link:hover .lucide, .doclap-not-found .text-link:hover .lucide, .doclap-contact-form .text-link:hover .lucide, .doclap-about-profile .nav-contact:hover .lucide, .doclap-faq-list .nav-contact:hover .lucide, .doclap-notes-archive .nav-contact:hover .lucide, .doclap-single-note .nav-contact:hover .lucide, .doclap-search-results .nav-contact:hover .lucide, .doclap-not-found .nav-contact:hover .lucide, .doclap-contact-form .nav-contact:hover .lucide {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .text-link:hover .lucide, .doclap-search-results .text-link:hover .lucide, .doclap-not-found .text-link:hover .lucide, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .nav-contact:hover .lucide, .doclap-search-results .nav-contact:hover .lucide, .doclap-not-found .nav-contact:hover .lucide {
   transform: translate(3px,-3px);
 }
-.doclap-about-profile .inner-hero, .doclap-faq-list .inner-hero, .doclap-notes-archive .inner-hero, .doclap-single-note .inner-hero, .doclap-search-results .inner-hero, .doclap-not-found .inner-hero, .doclap-contact-form .inner-hero {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).inner-hero, .doclap-search-results .inner-hero, .doclap-not-found .inner-hero {
   padding: 32px 0 66px;
 }
-.doclap-about-profile .breadcrumb, .doclap-faq-list .breadcrumb, .doclap-notes-archive .breadcrumb, .doclap-single-note .breadcrumb, .doclap-search-results .breadcrumb, .doclap-not-found .breadcrumb, .doclap-contact-form .breadcrumb {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .breadcrumb, .doclap-search-results .breadcrumb, .doclap-not-found .breadcrumb {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 13px;
   font: 12px/1.6 var(--doclap-font-mono);
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   align-items: center;
   margin-bottom: clamp(32px,5vw,64px);
 }
-.doclap-about-profile .breadcrumb a, .doclap-faq-list .breadcrumb a, .doclap-notes-archive .breadcrumb a, .doclap-single-note .breadcrumb a, .doclap-search-results .breadcrumb a, .doclap-not-found .breadcrumb a, .doclap-contact-form .breadcrumb a {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .breadcrumb a, .doclap-search-results .breadcrumb a, .doclap-not-found .breadcrumb a {
   display: flex;
   align-items: center;
 }
-.doclap-about-profile .eyebrow, .doclap-faq-list .eyebrow, .doclap-notes-archive .eyebrow, .doclap-single-note .eyebrow, .doclap-search-results .eyebrow, .doclap-not-found .eyebrow, .doclap-contact-form .eyebrow {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .eyebrow, .doclap-search-results .eyebrow, .doclap-not-found .eyebrow {
   font-size: 12px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   letter-spacing: .07em;
   margin: 0;
 }
-.doclap-about-profile .inner-hero h1, .doclap-faq-list .inner-hero h1, .doclap-notes-archive .inner-hero h1, .doclap-single-note .inner-hero h1, .doclap-search-results .inner-hero h1, .doclap-not-found .inner-hero h1, .doclap-contact-form .inner-hero h1 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).inner-hero h1, .doclap-search-results .inner-hero h1, .doclap-not-found .inner-hero h1 {
   font-size: clamp(60px,9vw,142px);
   line-height: 1.15;
   letter-spacing: -.055em;
   max-width: 14ch;
 }
-.doclap-about-profile .inner-hero h1 em, .doclap-faq-list .inner-hero h1 em, .doclap-notes-archive .inner-hero h1 em, .doclap-single-note .inner-hero h1 em, .doclap-search-results .inner-hero h1 em, .doclap-not-found .inner-hero h1 em, .doclap-contact-form .inner-hero h1 em {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).inner-hero h1 em, .doclap-search-results .inner-hero h1 em, .doclap-not-found .inner-hero h1 em {
   font-weight: 400;
 }
-.doclap-about-profile .hero-summary, .doclap-faq-list .hero-summary, .doclap-notes-archive .hero-summary, .doclap-single-note .hero-summary, .doclap-search-results .hero-summary, .doclap-not-found .hero-summary, .doclap-contact-form .hero-summary {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary, .doclap-search-results .hero-summary, .doclap-not-found .hero-summary {
   display: flex;
   align-items: center;
   gap: 30px;
   margin-top: 42px;
 }
-.doclap-about-profile .hero-summary .lead, .doclap-faq-list .hero-summary .lead, .doclap-notes-archive .hero-summary .lead, .doclap-single-note .hero-summary .lead, .doclap-search-results .hero-summary .lead, .doclap-not-found .hero-summary .lead, .doclap-contact-form .hero-summary .lead {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary .lead, .doclap-search-results .hero-summary .lead, .doclap-not-found .hero-summary .lead {
   font-size: 18px;
   line-height: 1.8;
   max-width: 51ch;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
-.doclap-about-profile .hero-mark, .doclap-faq-list .hero-mark, .doclap-notes-archive .hero-mark, .doclap-single-note .hero-mark, .doclap-search-results .hero-mark, .doclap-not-found .hero-mark, .doclap-contact-form .hero-mark {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-mark, .doclap-search-results .hero-mark, .doclap-not-found .hero-mark {
   width: 60px;
   flex-shrink: 0;
   font-size: 52px;
   line-height: 1;
   color: var(--doclap-accent);
 }
-.doclap-about-profile .hero-summary .text-link, .doclap-faq-list .hero-summary .text-link, .doclap-notes-archive .hero-summary .text-link, .doclap-single-note .hero-summary .text-link, .doclap-search-results .hero-summary .text-link, .doclap-not-found .hero-summary .text-link, .doclap-contact-form .hero-summary .text-link {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary .text-link, .doclap-search-results .hero-summary .text-link, .doclap-not-found .hero-summary .text-link {
   margin-left: auto;
 }
-.doclap-about-profile .section, .doclap-faq-list .section, .doclap-notes-archive .section, .doclap-single-note .section, .doclap-search-results .section, .doclap-not-found .section, .doclap-contact-form .section {
+.doclap-page-content > :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) + :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) {
+  margin-block-start: 0;
+}
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section {
+  background: var(--doclap-block-bg,transparent);
+}
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section, .doclap-search-results .section, .doclap-not-found .section {
   padding-block: 90px;
 }
-.doclap-about-profile .section+.section, .doclap-faq-list .section+.section, .doclap-notes-archive .section+.section, .doclap-single-note .section+.section, .doclap-search-results .section+.section, .doclap-not-found .section+.section, .doclap-contact-form .section+.section {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section + :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section, .doclap-search-results .section+.section, .doclap-not-found .section+.section {
   border-color: var(--doclap-fg);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in oklch,var(--doclap-fg) 18%,transparent);
   }
 }
-.doclap-about-profile .body-grid, .doclap-faq-list .body-grid, .doclap-notes-archive .body-grid, .doclap-single-note .body-grid, .doclap-search-results .body-grid, .doclap-not-found .body-grid, .doclap-contact-form .body-grid {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .body-grid, .doclap-search-results .body-grid, .doclap-not-found .body-grid {
   gap: 8vw;
 }
-.doclap-about-profile .aside-title, .doclap-faq-list .aside-title, .doclap-notes-archive .aside-title, .doclap-single-note .aside-title, .doclap-search-results .aside-title, .doclap-not-found .aside-title, .doclap-contact-form .aside-title {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .aside-title, .doclap-search-results .aside-title, .doclap-not-found .aside-title {
   font: 13px/1.8 var(--doclap-font-mono);
   max-width: 23ch;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
-.doclap-about-profile .aside-title span, .doclap-faq-list .aside-title span, .doclap-notes-archive .aside-title span, .doclap-single-note .aside-title span, .doclap-search-results .aside-title span, .doclap-not-found .aside-title span, .doclap-contact-form .aside-title span {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .aside-title span, .doclap-search-results .aside-title span, .doclap-not-found .aside-title span {
   display: block;
   margin-bottom: 22px;
 }
-.doclap-about-profile .aside-title h2, .doclap-faq-list .aside-title h2, .doclap-notes-archive .aside-title h2, .doclap-single-note .aside-title h2, .doclap-search-results .aside-title h2, .doclap-not-found .aside-title h2, .doclap-contact-form .aside-title h2 {
-  color: var(--doclap-fg);
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .aside-title h2, .doclap-search-results .aside-title h2, .doclap-not-found .aside-title h2 {
+  color: var(--doclap-block-heading,var(--doclap-fg));
   font-size: clamp(32px,3vw,48px);
   letter-spacing: -.025em;
 }
-.doclap-about-profile .prose, .doclap-faq-list .prose, .doclap-notes-archive .prose, .doclap-single-note .prose, .doclap-search-results .prose, .doclap-not-found .prose, .doclap-contact-form .prose {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose, .doclap-search-results .prose, .doclap-not-found .prose {
   font-size: 19px;
   line-height: 1.9;
   max-width: 65ch;
 }
-.doclap-about-profile .prose p, .doclap-faq-list .prose p, .doclap-notes-archive .prose p, .doclap-single-note .prose p, .doclap-search-results .prose p, .doclap-not-found .prose p, .doclap-contact-form .prose p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose p, .doclap-search-results .prose p, .doclap-not-found .prose p {
   margin: 0 0 28px;
 }
-.doclap-about-profile .prose h2, .doclap-faq-list .prose h2, .doclap-notes-archive .prose h2, .doclap-single-note .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2, .doclap-contact-form .prose h2 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2 {
   font-size: 44px;
   margin: 65px 0 28px;
 }
-.doclap-about-profile .prose h3, .doclap-faq-list .prose h3, .doclap-notes-archive .prose h3, .doclap-single-note .prose h3, .doclap-search-results .prose h3, .doclap-not-found .prose h3, .doclap-contact-form .prose h3 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h3, .doclap-search-results .prose h3, .doclap-not-found .prose h3 {
   font-size: 30px;
   margin: 28px 0 18px;
 }
-.doclap-about-profile .dark-panel, .doclap-faq-list .dark-panel, .doclap-notes-archive .dark-panel, .doclap-single-note .dark-panel, .doclap-search-results .dark-panel, .doclap-not-found .dark-panel, .doclap-contact-form .dark-panel, .doclap-about-profile .closing, .doclap-faq-list .closing, .doclap-notes-archive .closing, .doclap-single-note .closing, .doclap-search-results .closing, .doclap-not-found .closing, .doclap-contact-form .closing {
-  background: var(--doclap-fg);
-  color: var(--doclap-bg);
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).dark-panel, .doclap-search-results .dark-panel, .doclap-not-found .dark-panel, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing, .doclap-search-results .closing, .doclap-not-found .closing {
+  background: var(--doclap-block-bg,var(--doclap-fg));
+  color: var(--doclap-block-text,var(--doclap-bg));
 }
-.doclap-about-profile .dark-panel .eyebrow, .doclap-faq-list .dark-panel .eyebrow, .doclap-notes-archive .dark-panel .eyebrow, .doclap-single-note .dark-panel .eyebrow, .doclap-search-results .dark-panel .eyebrow, .doclap-not-found .dark-panel .eyebrow, .doclap-contact-form .dark-panel .eyebrow, .doclap-about-profile .closing .eyebrow, .doclap-faq-list .closing .eyebrow, .doclap-notes-archive .closing .eyebrow, .doclap-single-note .closing .eyebrow, .doclap-search-results .closing .eyebrow, .doclap-not-found .closing .eyebrow, .doclap-contact-form .closing .eyebrow, .doclap-about-profile .dark-panel .meta, .doclap-faq-list .dark-panel .meta, .doclap-notes-archive .dark-panel .meta, .doclap-single-note .dark-panel .meta, .doclap-search-results .dark-panel .meta, .doclap-not-found .dark-panel .meta, .doclap-contact-form .dark-panel .meta {
-  color: var(--doclap-bg);
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).dark-panel .eyebrow, .doclap-search-results .dark-panel .eyebrow, .doclap-not-found .dark-panel .eyebrow, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing .eyebrow, .doclap-search-results .closing .eyebrow, .doclap-not-found .closing .eyebrow, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).dark-panel .meta, .doclap-search-results .dark-panel .meta, .doclap-not-found .dark-panel .meta {
+  color: var(--doclap-block-text,var(--doclap-bg));
   @supports (color: color-mix(in lab, red, red)) {
-    color: color-mix(in oklch,var(--doclap-bg) 78%,var(--doclap-fg));
+    color: var(--doclap-block-text,color-mix(in oklch,var(--doclap-bg) 78%,var(--doclap-fg)));
   }
 }
-.doclap-about-profile .section-head, .doclap-faq-list .section-head, .doclap-notes-archive .section-head, .doclap-single-note .section-head, .doclap-search-results .section-head, .doclap-not-found .section-head, .doclap-contact-form .section-head {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .section-head, .doclap-search-results .section-head, .doclap-not-found .section-head {
   display: flex;
   justify-content: space-between;
   align-items: end;
   gap: 30px;
   margin-bottom: 50px;
 }
-.doclap-about-profile .section-head h2, .doclap-faq-list .section-head h2, .doclap-notes-archive .section-head h2, .doclap-single-note .section-head h2, .doclap-search-results .section-head h2, .doclap-not-found .section-head h2, .doclap-contact-form .section-head h2 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .section-head h2, .doclap-search-results .section-head h2, .doclap-not-found .section-head h2 {
   font-size: var(--doclap-fs-h2);
   letter-spacing: -.04em;
 }
-.doclap-about-profile .section-head p, .doclap-faq-list .section-head p, .doclap-notes-archive .section-head p, .doclap-single-note .section-head p, .doclap-search-results .section-head p, .doclap-not-found .section-head p, .doclap-contact-form .section-head p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .section-head p, .doclap-search-results .section-head p, .doclap-not-found .section-head p {
   margin-bottom: 18px;
 }
-.doclap-about-profile .closing h2, .doclap-faq-list .closing h2, .doclap-notes-archive .closing h2, .doclap-single-note .closing h2, .doclap-search-results .closing h2, .doclap-not-found .closing h2, .doclap-contact-form .closing h2 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing h2, .doclap-search-results .closing h2, .doclap-not-found .closing h2 {
   font-size: clamp(43px,6vw,90px);
   letter-spacing: -.04em;
   margin-top: 24px;
 }
-.doclap-about-profile .closing .circle-cta, .doclap-faq-list .closing .circle-cta, .doclap-notes-archive .closing .circle-cta, .doclap-single-note .closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta, .doclap-contact-form .closing .circle-cta {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta {
   width: 160px;
   height: 160px;
   flex-shrink: 0;
@@ -1873,32 +1879,32 @@ body {
   font-size: 14px;
   line-height: 1.7;
 }
-.doclap-about-profile .circle-cta:hover, .doclap-faq-list .circle-cta:hover, .doclap-notes-archive .circle-cta:hover, .doclap-single-note .circle-cta:hover, .doclap-search-results .circle-cta:hover, .doclap-not-found .circle-cta:hover, .doclap-contact-form .circle-cta:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .circle-cta:hover, .doclap-search-results .circle-cta:hover, .doclap-not-found .circle-cta:hover {
   background: var(--doclap-bg);
   color: var(--doclap-fg);
   transform: rotate(-5deg);
 }
-.doclap-about-profile .footer-main, .doclap-faq-list .footer-main, .doclap-notes-archive .footer-main, .doclap-single-note .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main, .doclap-contact-form .footer-main {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 36px;
   padding: 15px 0 50px;
 }
-.doclap-about-profile .footer-main p, .doclap-faq-list .footer-main p, .doclap-notes-archive .footer-main p, .doclap-single-note .footer-main p, .doclap-search-results .footer-main p, .doclap-not-found .footer-main p, .doclap-contact-form .footer-main p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main p, .doclap-search-results .footer-main p, .doclap-not-found .footer-main p {
   font-size: 18px;
   line-height: 1.8;
   color: var(--doclap-fg);
   margin: 0;
 }
-.doclap-about-profile .footer-main>div, .doclap-faq-list .footer-main>div, .doclap-notes-archive .footer-main>div, .doclap-single-note .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div, .doclap-contact-form .footer-main>div {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div {
   display: flex;
   flex-direction: column;
   align-items: start;
 }
-.doclap-about-profile .footer-main .text-link, .doclap-faq-list .footer-main .text-link, .doclap-notes-archive .footer-main .text-link, .doclap-single-note .footer-main .text-link, .doclap-search-results .footer-main .text-link, .doclap-not-found .footer-main .text-link, .doclap-contact-form .footer-main .text-link {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main .text-link, .doclap-search-results .footer-main .text-link, .doclap-not-found .footer-main .text-link {
   border: 0;
 }
-.doclap-about-profile .footer-bottom, .doclap-faq-list .footer-bottom, .doclap-notes-archive .footer-bottom, .doclap-single-note .footer-bottom, .doclap-search-results .footer-bottom, .doclap-not-found .footer-bottom, .doclap-contact-form .footer-bottom {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-bottom, .doclap-search-results .footer-bottom, .doclap-not-found .footer-bottom {
   border-top: 1px solid var(--doclap-fg);
   @supports (color: color-mix(in lab, red, red)) {
     border-top: 1px solid color-mix(in oklch,var(--doclap-fg) 18%,transparent);
@@ -1906,15 +1912,15 @@ body {
   padding-top: 25px;
   font-size: 12px;
 }
-.doclap-about-profile .contact-grid, .doclap-faq-list .contact-grid, .doclap-notes-archive .contact-grid, .doclap-single-note .contact-grid, .doclap-search-results .contact-grid, .doclap-not-found .contact-grid, .doclap-contact-form .contact-grid {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-grid, .doclap-search-results .contact-grid, .doclap-not-found .contact-grid {
   grid-template-columns: .85fr 1.5fr;
   gap: 10vw;
 }
-.doclap-about-profile .field label, .doclap-faq-list .field label, .doclap-notes-archive .field label, .doclap-single-note .field label, .doclap-search-results .field label, .doclap-not-found .field label, .doclap-contact-form .field label {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .field label, .doclap-search-results .field label, .doclap-not-found .field label {
   font-size: 14px;
-  color: var(--doclap-fg);
+  color: var(--doclap-block-text,inherit);
 }
-.doclap-about-profile .input, .doclap-faq-list .input, .doclap-notes-archive .input, .doclap-single-note .input, .doclap-search-results .input, .doclap-not-found .input, .doclap-contact-form .input, .doclap-about-profile .textarea, .doclap-faq-list .textarea, .doclap-notes-archive .textarea, .doclap-single-note .textarea, .doclap-search-results .textarea, .doclap-not-found .textarea, .doclap-contact-form .textarea {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .input, .doclap-search-results .input, .doclap-not-found .input, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .textarea, .doclap-search-results .textarea, .doclap-not-found .textarea {
   font-size: 17px;
   padding: 15px 0;
   background: transparent;
@@ -1925,29 +1931,29 @@ body {
   }
   border-radius: 0;
 }
-.doclap-about-profile .textarea, .doclap-faq-list .textarea, .doclap-notes-archive .textarea, .doclap-single-note .textarea, .doclap-search-results .textarea, .doclap-not-found .textarea, .doclap-contact-form .textarea {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .textarea, .doclap-search-results .textarea, .doclap-not-found .textarea {
   min-height: 130px;
 }
-.doclap-about-profile .field, .doclap-faq-list .field, .doclap-notes-archive .field, .doclap-single-note .field, .doclap-search-results .field, .doclap-not-found .field, .doclap-contact-form .field {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .field, .doclap-search-results .field, .doclap-not-found .field {
   gap: 10px;
 }
-.doclap-about-profile .contact-form, .doclap-faq-list .contact-form, .doclap-notes-archive .contact-form, .doclap-single-note .contact-form, .doclap-search-results .contact-form, .doclap-not-found .contact-form, .doclap-contact-form .contact-form {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-form, .doclap-search-results .contact-form, .doclap-not-found .contact-form {
   display: grid;
   gap: 32px;
 }
-.doclap-about-profile .contact-form .grid-2, .doclap-faq-list .contact-form .grid-2, .doclap-notes-archive .contact-form .grid-2, .doclap-single-note .contact-form .grid-2, .doclap-search-results .contact-form .grid-2, .doclap-not-found .contact-form .grid-2, .doclap-contact-form .contact-form .grid-2 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-form .grid-2, .doclap-search-results .contact-form .grid-2, .doclap-not-found .contact-form .grid-2 {
   gap: 32px;
 }
-.doclap-about-profile .choice-label, .doclap-faq-list .choice-label, .doclap-notes-archive .choice-label, .doclap-single-note .choice-label, .doclap-search-results .choice-label, .doclap-not-found .choice-label, .doclap-contact-form .choice-label {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .choice-label, .doclap-search-results .choice-label, .doclap-not-found .choice-label {
   font-size: 14px;
   margin-bottom: 14px;
 }
-.doclap-about-profile .choice-group, .doclap-faq-list .choice-group, .doclap-notes-archive .choice-group, .doclap-single-note .choice-group, .doclap-search-results .choice-group, .doclap-not-found .choice-group, .doclap-contact-form .choice-group {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .choice-group, .doclap-search-results .choice-group, .doclap-not-found .choice-group {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
-.doclap-about-profile .choice, .doclap-faq-list .choice, .doclap-notes-archive .choice, .doclap-single-note .choice, .doclap-search-results .choice, .doclap-not-found .choice, .doclap-contact-form .choice {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .choice, .doclap-search-results .choice, .doclap-not-found .choice {
   display: flex;
   gap: 9px;
   align-items: center;
@@ -1960,106 +1966,106 @@ body {
   cursor: pointer;
   min-height: 44px;
 }
-.doclap-about-profile .choice:has(input:checked), .doclap-faq-list .choice:has(input:checked), .doclap-notes-archive .choice:has(input:checked), .doclap-single-note .choice:has(input:checked), .doclap-search-results .choice:has(input:checked), .doclap-not-found .choice:has(input:checked), .doclap-contact-form .choice:has(input:checked) {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .choice:has(input:checked), .doclap-search-results .choice:has(input:checked), .doclap-not-found .choice:has(input:checked) {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
 }
-.doclap-about-profile input[type=checkbox], .doclap-faq-list input[type=checkbox], .doclap-notes-archive input[type=checkbox], .doclap-single-note input[type=checkbox], .doclap-search-results input[type=checkbox], .doclap-not-found input[type=checkbox], .doclap-contact-form input[type=checkbox], .doclap-about-profile input[type=radio], .doclap-faq-list input[type=radio], .doclap-notes-archive input[type=radio], .doclap-single-note input[type=radio], .doclap-search-results input[type=radio], .doclap-not-found input[type=radio], .doclap-contact-form input[type=radio] {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) input[type=checkbox], .doclap-search-results input[type=checkbox], .doclap-not-found input[type=checkbox], :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) input[type=radio], .doclap-search-results input[type=radio], .doclap-not-found input[type=radio] {
   accent-color: var(--doclap-fg);
   width: 16px;
   height: 16px;
 }
-.doclap-about-profile .consent, .doclap-faq-list .consent, .doclap-notes-archive .consent, .doclap-single-note .consent, .doclap-search-results .consent, .doclap-not-found .consent, .doclap-contact-form .consent {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .consent, .doclap-search-results .consent, .doclap-not-found .consent {
   display: flex;
   align-items: start;
   gap: 12px;
   font-size: 13px;
   line-height: 1.8;
 }
-.doclap-about-profile .btn, .doclap-faq-list .btn, .doclap-notes-archive .btn, .doclap-single-note .btn, .doclap-search-results .btn, .doclap-not-found .btn, .doclap-contact-form .btn {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .btn, .doclap-search-results .btn, .doclap-not-found .btn {
   border-radius: 0;
   min-height: 52px;
 }
-.doclap-about-profile .btn-primary, .doclap-faq-list .btn-primary, .doclap-notes-archive .btn-primary, .doclap-single-note .btn-primary, .doclap-search-results .btn-primary, .doclap-not-found .btn-primary, .doclap-contact-form .btn-primary {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .btn-primary, .doclap-search-results .btn-primary, .doclap-not-found .btn-primary {
   background: var(--doclap-accent);
   color: var(--doclap-fg);
   border-color: var(--doclap-accent);
   font-size: 15px;
   padding: 15px 25px;
 }
-.doclap-about-profile .btn-primary:hover, .doclap-faq-list .btn-primary:hover, .doclap-notes-archive .btn-primary:hover, .doclap-single-note .btn-primary:hover, .doclap-search-results .btn-primary:hover, .doclap-not-found .btn-primary:hover, .doclap-contact-form .btn-primary:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .btn-primary:hover, .doclap-search-results .btn-primary:hover, .doclap-not-found .btn-primary:hover {
   background: oklch(from var(--doclap-accent) calc(l + .07) c h);
   color: var(--doclap-fg);
 }
-.doclap-about-profile .btn-ghost:hover, .doclap-faq-list .btn-ghost:hover, .doclap-notes-archive .btn-ghost:hover, .doclap-single-note .btn-ghost:hover, .doclap-search-results .btn-ghost:hover, .doclap-not-found .btn-ghost:hover, .doclap-contact-form .btn-ghost:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .btn-ghost:hover, .doclap-search-results .btn-ghost:hover, .doclap-not-found .btn-ghost:hover {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
 }
-.doclap-about-profile .btn-secondary:hover, .doclap-faq-list .btn-secondary:hover, .doclap-notes-archive .btn-secondary:hover, .doclap-single-note .btn-secondary:hover, .doclap-search-results .btn-secondary:hover, .doclap-not-found .btn-secondary:hover, .doclap-contact-form .btn-secondary:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .btn-secondary:hover, .doclap-search-results .btn-secondary:hover, .doclap-not-found .btn-secondary:hover {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
 }
-.doclap-about-profile .form-note, .doclap-faq-list .form-note, .doclap-notes-archive .form-note, .doclap-single-note .form-note, .doclap-search-results .form-note, .doclap-not-found .form-note, .doclap-contact-form .form-note {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .form-note, .doclap-search-results .form-note, .doclap-not-found .form-note {
   font-size: 13px;
   line-height: 1.8;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
-.doclap-about-profile .status, .doclap-faq-list .status, .doclap-notes-archive .status, .doclap-single-note .status, .doclap-search-results .status, .doclap-not-found .status, .doclap-contact-form .status {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .status, .doclap-search-results .status, .doclap-not-found .status {
   font-size: 14px;
   line-height: 1.8;
 }
-.doclap-about-profile .contact-aside p, .doclap-faq-list .contact-aside p, .doclap-notes-archive .contact-aside p, .doclap-single-note .contact-aside p, .doclap-search-results .contact-aside p, .doclap-not-found .contact-aside p, .doclap-contact-form .contact-aside p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-aside p, .doclap-search-results .contact-aside p, .doclap-not-found .contact-aside p {
   font-size: 16px;
   line-height: 1.9;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
-.doclap-about-profile .contact-aside h2, .doclap-faq-list .contact-aside h2, .doclap-notes-archive .contact-aside h2, .doclap-single-note .contact-aside h2, .doclap-search-results .contact-aside h2, .doclap-not-found .contact-aside h2, .doclap-contact-form .contact-aside h2 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-aside h2, .doclap-search-results .contact-aside h2, .doclap-not-found .contact-aside h2 {
   font-size: 40px;
   margin: 25px 0;
 }
-.doclap-about-profile .contact-aside .meta, .doclap-faq-list .contact-aside .meta, .doclap-notes-archive .contact-aside .meta, .doclap-single-note .contact-aside .meta, .doclap-search-results .contact-aside .meta, .doclap-not-found .contact-aside .meta, .doclap-contact-form .contact-aside .meta {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-aside .meta, .doclap-search-results .contact-aside .meta, .doclap-not-found .contact-aside .meta {
   display: block;
   margin-top: 35px;
 }
-.doclap-about-profile .studio-figure, .doclap-faq-list .studio-figure, .doclap-notes-archive .studio-figure, .doclap-single-note .studio-figure, .doclap-search-results .studio-figure, .doclap-not-found .studio-figure, .doclap-contact-form .studio-figure {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .studio-figure, .doclap-search-results .studio-figure, .doclap-not-found .studio-figure {
   margin: 0;
 }
-.doclap-about-profile .studio-figure img, .doclap-faq-list .studio-figure img, .doclap-notes-archive .studio-figure img, .doclap-single-note .studio-figure img, .doclap-search-results .studio-figure img, .doclap-not-found .studio-figure img, .doclap-contact-form .studio-figure img {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .studio-figure img, .doclap-search-results .studio-figure img, .doclap-not-found .studio-figure img {
   display: block;
   width: 100%;
   height: auto;
   max-height: none;
   filter: grayscale(1);
 }
-.doclap-about-profile .studio-figure figcaption, .doclap-faq-list .studio-figure figcaption, .doclap-notes-archive .studio-figure figcaption, .doclap-single-note .studio-figure figcaption, .doclap-search-results .studio-figure figcaption, .doclap-not-found .studio-figure figcaption, .doclap-contact-form .studio-figure figcaption {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .studio-figure figcaption, .doclap-search-results .studio-figure figcaption, .doclap-not-found .studio-figure figcaption {
   font-size: 12px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   margin-top: 16px;
 }
-.doclap-about-profile .feature, .doclap-faq-list .feature, .doclap-notes-archive .feature, .doclap-single-note .feature, .doclap-search-results .feature, .doclap-not-found .feature, .doclap-contact-form .feature {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .feature, .doclap-search-results .feature, .doclap-not-found .feature {
   border-top: 1px solid var(--doclap-bg);
   @supports (color: color-mix(in lab, red, red)) {
     border-top: 1px solid color-mix(in oklch,var(--doclap-bg) 30%,transparent);
   }
   padding-top: 25px;
 }
-.doclap-about-profile .feature h3, .doclap-faq-list .feature h3, .doclap-notes-archive .feature h3, .doclap-single-note .feature h3, .doclap-search-results .feature h3, .doclap-not-found .feature h3, .doclap-contact-form .feature h3 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .feature h3, .doclap-search-results .feature h3, .doclap-not-found .feature h3 {
   font-size: 35px;
   margin: 35px 0 18px;
 }
-.doclap-about-profile .feature p, .doclap-faq-list .feature p, .doclap-notes-archive .feature p, .doclap-single-note .feature p, .doclap-search-results .feature p, .doclap-not-found .feature p, .doclap-contact-form .feature p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .feature p, .doclap-search-results .feature p, .doclap-not-found .feature p {
   font-size: 16px;
   line-height: 1.9;
   color: inherit;
   opacity: .85;
 }
-.doclap-about-profile .filter-bar, .doclap-faq-list .filter-bar, .doclap-notes-archive .filter-bar, .doclap-single-note .filter-bar, .doclap-search-results .filter-bar, .doclap-not-found .filter-bar, .doclap-contact-form .filter-bar {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .filter-bar, .doclap-search-results .filter-bar, .doclap-not-found .filter-bar {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 36px;
 }
-.doclap-about-profile .filter-bar button, .doclap-faq-list .filter-bar button, .doclap-notes-archive .filter-bar button, .doclap-single-note .filter-bar button, .doclap-search-results .filter-bar button, .doclap-not-found .filter-bar button, .doclap-contact-form .filter-bar button {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .filter-bar button, .doclap-search-results .filter-bar button, .doclap-not-found .filter-bar button {
   padding: 10px 18px;
   border: 1px solid var(--doclap-fg);
   @supports (color: color-mix(in lab, red, red)) {
@@ -2068,18 +2074,18 @@ body {
   background: transparent;
   font-size: 14px;
 }
-.doclap-about-profile .filter-bar button:hover, .doclap-faq-list .filter-bar button:hover, .doclap-notes-archive .filter-bar button:hover, .doclap-single-note .filter-bar button:hover, .doclap-search-results .filter-bar button:hover, .doclap-not-found .filter-bar button:hover, .doclap-contact-form .filter-bar button:hover, .doclap-about-profile .filter-bar button[aria-pressed=true], .doclap-faq-list .filter-bar button[aria-pressed=true], .doclap-notes-archive .filter-bar button[aria-pressed=true], .doclap-single-note .filter-bar button[aria-pressed=true], .doclap-search-results .filter-bar button[aria-pressed=true], .doclap-not-found .filter-bar button[aria-pressed=true], .doclap-contact-form .filter-bar button[aria-pressed=true] {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .filter-bar button:hover, .doclap-search-results .filter-bar button:hover, .doclap-not-found .filter-bar button:hover, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .filter-bar button[aria-pressed=true], .doclap-search-results .filter-bar button[aria-pressed=true], .doclap-not-found .filter-bar button[aria-pressed=true] {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
 }
-.doclap-about-profile .faq-list details, .doclap-faq-list .faq-list details, .doclap-notes-archive .faq-list details, .doclap-single-note .faq-list details, .doclap-search-results .faq-list details, .doclap-not-found .faq-list details, .doclap-contact-form .faq-list details {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .faq-list details, .doclap-search-results .faq-list details, .doclap-not-found .faq-list details {
   border-top: 1px solid var(--doclap-fg);
   @supports (color: color-mix(in lab, red, red)) {
     border-top: 1px solid color-mix(in oklch,var(--doclap-fg) 22%,transparent);
   }
   padding: 10px 0;
 }
-.doclap-about-profile .faq-list summary, .doclap-faq-list .faq-list summary, .doclap-notes-archive .faq-list summary, .doclap-single-note .faq-list summary, .doclap-search-results .faq-list summary, .doclap-not-found .faq-list summary, .doclap-contact-form .faq-list summary {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .faq-list summary, .doclap-search-results .faq-list summary, .doclap-not-found .faq-list summary {
   list-style: none;
   cursor: pointer;
   display: flex;
@@ -2089,26 +2095,26 @@ body {
   padding: 20px 0;
   font: clamp(24px,2.6vw,34px)/1.45 var(--doclap-font-display);
 }
-.doclap-about-profile .faq-list summary::-webkit-details-marker, .doclap-faq-list .faq-list summary::-webkit-details-marker, .doclap-notes-archive .faq-list summary::-webkit-details-marker, .doclap-single-note .faq-list summary::-webkit-details-marker, .doclap-search-results .faq-list summary::-webkit-details-marker, .doclap-not-found .faq-list summary::-webkit-details-marker, .doclap-contact-form .faq-list summary::-webkit-details-marker {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .faq-list summary::-webkit-details-marker, .doclap-search-results .faq-list summary::-webkit-details-marker, .doclap-not-found .faq-list summary::-webkit-details-marker {
   display: none;
 }
-.doclap-about-profile .faq-list summary .lucide, .doclap-faq-list .faq-list summary .lucide, .doclap-notes-archive .faq-list summary .lucide, .doclap-single-note .faq-list summary .lucide, .doclap-search-results .faq-list summary .lucide, .doclap-not-found .faq-list summary .lucide, .doclap-contact-form .faq-list summary .lucide {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .faq-list summary .lucide, .doclap-search-results .faq-list summary .lucide, .doclap-not-found .faq-list summary .lucide {
   transition: transform .4s;
 }
-.doclap-about-profile .faq-list details[open] summary .lucide, .doclap-faq-list .faq-list details[open] summary .lucide, .doclap-notes-archive .faq-list details[open] summary .lucide, .doclap-single-note .faq-list details[open] summary .lucide, .doclap-search-results .faq-list details[open] summary .lucide, .doclap-not-found .faq-list details[open] summary .lucide, .doclap-contact-form .faq-list details[open] summary .lucide {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .faq-list details[open] summary .lucide, .doclap-search-results .faq-list details[open] summary .lucide, .doclap-not-found .faq-list details[open] summary .lucide {
   transform: rotate(45deg);
 }
-.doclap-about-profile .faq-list details p, .doclap-faq-list .faq-list details p, .doclap-notes-archive .faq-list details p, .doclap-single-note .faq-list details p, .doclap-search-results .faq-list details p, .doclap-not-found .faq-list details p, .doclap-contact-form .faq-list details p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .faq-list details p, .doclap-search-results .faq-list details p, .doclap-not-found .faq-list details p {
   font-size: 17px;
   line-height: 1.9;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   margin: 0 50px 28px 0;
   max-width: 63ch;
 }
-.doclap-about-profile .faq-list summary:hover, .doclap-faq-list .faq-list summary:hover, .doclap-notes-archive .faq-list summary:hover, .doclap-single-note .faq-list summary:hover, .doclap-search-results .faq-list summary:hover, .doclap-not-found .faq-list summary:hover, .doclap-contact-form .faq-list summary:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .faq-list summary:hover, .doclap-search-results .faq-list summary:hover, .doclap-not-found .faq-list summary:hover {
   background: var(--doclap-fg-soft);
 }
-.doclap-about-profile .post-row, .doclap-faq-list .post-row, .doclap-notes-archive .post-row, .doclap-single-note .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row, .doclap-contact-form .post-row {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row {
   grid-template-columns: 180px 1fr 48px;
   align-items: center;
   padding: 34px 0;
@@ -2117,20 +2123,20 @@ body {
     border-color: color-mix(in oklch,var(--doclap-fg) 25%,transparent);
   }
 }
-.doclap-about-profile .post-row h3, .doclap-faq-list .post-row h3, .doclap-notes-archive .post-row h3, .doclap-single-note .post-row h3, .doclap-search-results .post-row h3, .doclap-not-found .post-row h3, .doclap-contact-form .post-row h3 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row h3, .doclap-search-results .post-row h3, .doclap-not-found .post-row h3 {
   font-size: clamp(26px,2.8vw,40px);
   line-height: 1.35;
 }
-.doclap-about-profile .post-row p, .doclap-faq-list .post-row p, .doclap-notes-archive .post-row p, .doclap-single-note .post-row p, .doclap-search-results .post-row p, .doclap-not-found .post-row p, .doclap-contact-form .post-row p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row p, .doclap-search-results .post-row p, .doclap-not-found .post-row p {
   font-size: 15px;
   line-height: 1.8;
   margin-bottom: 0;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
-.doclap-about-profile .post-row:hover, .doclap-faq-list .post-row:hover, .doclap-notes-archive .post-row:hover, .doclap-single-note .post-row:hover, .doclap-search-results .post-row:hover, .doclap-not-found .post-row:hover, .doclap-contact-form .post-row:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row:hover, .doclap-search-results .post-row:hover, .doclap-not-found .post-row:hover {
   background: var(--doclap-fg-soft);
 }
-.doclap-about-profile .icon-link, .doclap-faq-list .icon-link, .doclap-notes-archive .icon-link, .doclap-single-note .icon-link, .doclap-search-results .icon-link, .doclap-not-found .icon-link, .doclap-contact-form .icon-link {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .icon-link, .doclap-search-results .icon-link, .doclap-not-found .icon-link {
   width: 48px;
   height: 48px;
   border: 1px solid var(--doclap-fg);
@@ -2138,29 +2144,29 @@ body {
   display: grid;
   place-items: center;
 }
-.doclap-about-profile .icon-link:hover, .doclap-faq-list .icon-link:hover, .doclap-notes-archive .icon-link:hover, .doclap-single-note .icon-link:hover, .doclap-search-results .icon-link:hover, .doclap-not-found .icon-link:hover, .doclap-contact-form .icon-link:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .icon-link:hover, .doclap-search-results .icon-link:hover, .doclap-not-found .icon-link:hover {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
   transform: rotate(45deg);
 }
-.doclap-about-profile .featured-post, .doclap-faq-list .featured-post, .doclap-notes-archive .featured-post, .doclap-single-note .featured-post, .doclap-search-results .featured-post, .doclap-not-found .featured-post, .doclap-contact-form .featured-post {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post, .doclap-search-results .featured-post, .doclap-not-found .featured-post {
   display: grid;
   grid-template-columns: 1.25fr 1fr;
   gap: 70px;
   align-items: center;
   margin-bottom: 70px;
 }
-.doclap-about-profile .featured-post h2, .doclap-faq-list .featured-post h2, .doclap-notes-archive .featured-post h2, .doclap-single-note .featured-post h2, .doclap-search-results .featured-post h2, .doclap-not-found .featured-post h2, .doclap-contact-form .featured-post h2 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post h2, .doclap-search-results .featured-post h2, .doclap-not-found .featured-post h2 {
   font-size: clamp(36px,4.6vw,66px);
   letter-spacing: -.03em;
   margin: 20px 0;
 }
-.doclap-about-profile .featured-post p, .doclap-faq-list .featured-post p, .doclap-notes-archive .featured-post p, .doclap-single-note .featured-post p, .doclap-search-results .featured-post p, .doclap-not-found .featured-post p, .doclap-contact-form .featured-post p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post p, .doclap-search-results .featured-post p, .doclap-not-found .featured-post p {
   font-size: 17px;
   line-height: 1.8;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
-.doclap-about-profile .artwork, .doclap-faq-list .artwork, .doclap-notes-archive .artwork, .doclap-single-note .artwork, .doclap-search-results .artwork, .doclap-not-found .artwork, .doclap-contact-form .artwork {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .artwork, .doclap-search-results .artwork, .doclap-not-found .artwork {
   min-height: 380px;
   display: flex;
   align-items: center;
@@ -2170,20 +2176,20 @@ body {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
 }
-.doclap-about-profile .artwork .art-word, .doclap-faq-list .artwork .art-word, .doclap-notes-archive .artwork .art-word, .doclap-single-note .artwork .art-word, .doclap-search-results .artwork .art-word, .doclap-not-found .artwork .art-word, .doclap-contact-form .artwork .art-word {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .artwork .art-word, .doclap-search-results .artwork .art-word, .doclap-not-found .artwork .art-word {
   font: italic 500 clamp(60px,8vw,120px)/1.3 var(--doclap-font-display);
   letter-spacing: -.055em;
   position: relative;
   z-index: 1;
 }
-.doclap-about-profile .art-label, .doclap-faq-list .art-label, .doclap-notes-archive .art-label, .doclap-single-note .art-label, .doclap-search-results .art-label, .doclap-not-found .art-label, .doclap-contact-form .art-label {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .art-label, .doclap-search-results .art-label, .doclap-not-found .art-label {
   position: absolute;
   top: 24px;
   left: 28px;
   font: 11px var(--doclap-font-mono);
   letter-spacing: .1em;
 }
-.doclap-about-profile .artwork:after, .doclap-faq-list .artwork:after, .doclap-notes-archive .artwork:after, .doclap-single-note .artwork:after, .doclap-search-results .artwork:after, .doclap-not-found .artwork:after, .doclap-contact-form .artwork:after {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .artwork:after, .doclap-search-results .artwork:after, .doclap-not-found .artwork:after {
   content: '';
   position: absolute;
   width: 60%;
@@ -2194,19 +2200,19 @@ body {
   transform: rotate(-15deg);
   opacity: .3;
 }
-.doclap-about-profile .type-art, .doclap-faq-list .type-art, .doclap-notes-archive .type-art, .doclap-single-note .type-art, .doclap-search-results .type-art, .doclap-not-found .type-art, .doclap-contact-form .type-art {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .type-art, .doclap-search-results .type-art, .doclap-not-found .type-art {
   background: var(--doclap-surface);
   color: var(--doclap-fg);
   border: 1px solid var(--doclap-fg-soft);
 }
-.doclap-about-profile .webgl-art, .doclap-faq-list .webgl-art, .doclap-notes-archive .webgl-art, .doclap-single-note .webgl-art, .doclap-search-results .webgl-art, .doclap-not-found .webgl-art, .doclap-contact-form .webgl-art {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .webgl-art, .doclap-search-results .webgl-art, .doclap-not-found .webgl-art {
   background: var(--doclap-fg);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in oklch,var(--doclap-fg) 92%,var(--doclap-bg));
   }
   color: var(--doclap-bg);
 }
-.doclap-about-profile .webgl-art:before, .doclap-faq-list .webgl-art:before, .doclap-notes-archive .webgl-art:before, .doclap-single-note .webgl-art:before, .doclap-search-results .webgl-art:before, .doclap-not-found .webgl-art:before, .doclap-contact-form .webgl-art:before {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .webgl-art:before, .doclap-search-results .webgl-art:before, .doclap-not-found .webgl-art:before {
   content: '';
   position: absolute;
   width: 200px;
@@ -2218,53 +2224,53 @@ body {
     box-shadow: 0 0 0 40px color-mix(in oklch,var(--doclap-bg) 5%,transparent),0 0 0 80px color-mix(in oklch,var(--doclap-bg) 3%,transparent);
   }
 }
-.doclap-about-profile .article-hero h1, .doclap-faq-list .article-hero h1, .doclap-notes-archive .article-hero h1, .doclap-single-note .article-hero h1, .doclap-search-results .article-hero h1, .doclap-not-found .article-hero h1, .doclap-contact-form .article-hero h1 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).article-hero h1, .doclap-search-results .article-hero h1, .doclap-not-found .article-hero h1 {
   font-size: clamp(49px,6.9vw,104px);
   max-width: 18ch;
 }
-.doclap-about-profile .article-meta, .doclap-faq-list .article-meta, .doclap-notes-archive .article-meta, .doclap-single-note .article-meta, .doclap-search-results .article-meta, .doclap-not-found .article-meta, .doclap-contact-form .article-meta {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-meta, .doclap-search-results .article-meta, .doclap-not-found .article-meta {
   display: flex;
   gap: 24px;
   align-items: center;
   flex-wrap: wrap;
   margin-top: 30px;
   font: 12px var(--doclap-font-mono);
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
-.doclap-about-profile .article-cover, .doclap-faq-list .article-cover, .doclap-notes-archive .article-cover, .doclap-single-note .article-cover, .doclap-search-results .article-cover, .doclap-not-found .article-cover, .doclap-contact-form .article-cover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover, .doclap-search-results .article-cover, .doclap-not-found .article-cover {
   min-height: 460px;
   margin-top: 45px;
 }
-.doclap-about-profile .article-cover .art-word, .doclap-faq-list .article-cover .art-word, .doclap-notes-archive .article-cover .art-word, .doclap-single-note .article-cover .art-word, .doclap-search-results .article-cover .art-word, .doclap-not-found .article-cover .art-word, .doclap-contact-form .article-cover .art-word {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover .art-word, .doclap-search-results .article-cover .art-word, .doclap-not-found .article-cover .art-word {
   font-size: clamp(70px,12vw,180px);
 }
-.doclap-about-profile .article-layout, .doclap-faq-list .article-layout, .doclap-notes-archive .article-layout, .doclap-single-note .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout, .doclap-contact-form .article-layout {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
   grid-template-columns: 240px minmax(0,780px);
   justify-content: space-between;
   gap: 70px;
 }
-.doclap-about-profile .toc, .doclap-faq-list .toc, .doclap-notes-archive .toc, .doclap-single-note .toc, .doclap-search-results .toc, .doclap-not-found .toc, .doclap-contact-form .toc {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc, .doclap-search-results .toc, .doclap-not-found .toc {
   position: sticky;
   top: 125px;
 }
-.doclap-about-profile .toc a, .doclap-faq-list .toc a, .doclap-notes-archive .toc a, .doclap-single-note .toc a, .doclap-search-results .toc a, .doclap-not-found .toc a, .doclap-contact-form .toc a {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc a, .doclap-search-results .toc a, .doclap-not-found .toc a {
   display: block;
   padding: 12px 0;
   font-size: 13px;
   line-height: 1.7;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
 }
-.doclap-about-profile .toc a:hover, .doclap-faq-list .toc a:hover, .doclap-notes-archive .toc a:hover, .doclap-single-note .toc a:hover, .doclap-search-results .toc a:hover, .doclap-not-found .toc a:hover, .doclap-contact-form .toc a:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc a:hover, .doclap-search-results .toc a:hover, .doclap-not-found .toc a:hover {
   color: var(--doclap-fg);
   text-decoration: underline;
 }
-.doclap-about-profile .article-tools, .doclap-faq-list .article-tools, .doclap-notes-archive .article-tools, .doclap-single-note .article-tools, .doclap-search-results .article-tools, .doclap-not-found .article-tools, .doclap-contact-form .article-tools {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-tools, .doclap-search-results .article-tools, .doclap-not-found .article-tools {
   display: flex;
   gap: 12px;
   margin-top: 28px;
   flex-wrap: wrap;
 }
-.doclap-about-profile .article-tools button, .doclap-faq-list .article-tools button, .doclap-notes-archive .article-tools button, .doclap-single-note .article-tools button, .doclap-search-results .article-tools button, .doclap-not-found .article-tools button, .doclap-contact-form .article-tools button {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-tools button, .doclap-search-results .article-tools button, .doclap-not-found .article-tools button {
   font-size: 13px;
   display: flex;
   gap: 10px;
@@ -2273,11 +2279,11 @@ body {
   border: 1px solid var(--doclap-border);
   background: none;
 }
-.doclap-about-profile .article-tools button:hover, .doclap-faq-list .article-tools button:hover, .doclap-notes-archive .article-tools button:hover, .doclap-single-note .article-tools button:hover, .doclap-search-results .article-tools button:hover, .doclap-not-found .article-tools button:hover, .doclap-contact-form .article-tools button:hover, .doclap-about-profile .article-tools button[aria-pressed=true], .doclap-faq-list .article-tools button[aria-pressed=true], .doclap-notes-archive .article-tools button[aria-pressed=true], .doclap-single-note .article-tools button[aria-pressed=true], .doclap-search-results .article-tools button[aria-pressed=true], .doclap-not-found .article-tools button[aria-pressed=true], .doclap-contact-form .article-tools button[aria-pressed=true] {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-tools button:hover, .doclap-search-results .article-tools button:hover, .doclap-not-found .article-tools button:hover, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-tools button[aria-pressed=true], .doclap-search-results .article-tools button[aria-pressed=true], .doclap-not-found .article-tools button[aria-pressed=true] {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
 }
-.doclap-about-profile .reading-progress, .doclap-faq-list .reading-progress, .doclap-notes-archive .reading-progress, .doclap-single-note .reading-progress, .doclap-search-results .reading-progress, .doclap-not-found .reading-progress, .doclap-contact-form .reading-progress {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .reading-progress, .doclap-search-results .reading-progress, .doclap-not-found .reading-progress {
   position: fixed;
   left: 0;
   top: 0;
@@ -2288,7 +2294,7 @@ body {
   background: var(--doclap-fg);
   z-index: 50;
 }
-.doclap-about-profile .prose blockquote, .doclap-faq-list .prose blockquote, .doclap-notes-archive .prose blockquote, .doclap-single-note .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote, .doclap-contact-form .prose blockquote {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote {
   font: italic 36px/1.5 var(--doclap-font-display);
   margin: 45px 0;
   padding: 32px 0;
@@ -2297,7 +2303,7 @@ body {
     border-block: 1px solid color-mix(in oklch,var(--doclap-fg) 25%,transparent);
   }
 }
-.doclap-about-profile .search-form, .doclap-faq-list .search-form, .doclap-notes-archive .search-form, .doclap-single-note .search-form, .doclap-search-results .search-form, .doclap-not-found .search-form, .doclap-contact-form .search-form {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form, .doclap-search-results .search-form, .doclap-not-found .search-form {
   display: flex;
   gap: 20px;
   align-items: center;
@@ -2305,7 +2311,7 @@ body {
   margin-top: 45px;
   padding-bottom: 12px;
 }
-.doclap-about-profile .search-form input, .doclap-faq-list .search-form input, .doclap-notes-archive .search-form input, .doclap-single-note .search-form input, .doclap-search-results .search-form input, .doclap-not-found .search-form input, .doclap-contact-form .search-form input {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form input, .doclap-search-results .search-form input, .doclap-not-found .search-form input {
   border: 0;
   background: transparent;
   font: clamp(24px,4vw,48px) var(--doclap-font-display);
@@ -2314,7 +2320,7 @@ body {
   padding: 14px 0;
   color: var(--doclap-fg);
 }
-.doclap-about-profile .search-form button, .doclap-faq-list .search-form button, .doclap-notes-archive .search-form button, .doclap-single-note .search-form button, .doclap-search-results .search-form button, .doclap-not-found .search-form button, .doclap-contact-form .search-form button {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form button, .doclap-search-results .search-form button, .doclap-not-found .search-form button {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
   border: 0;
@@ -2323,34 +2329,34 @@ body {
   display: grid;
   place-items: center;
 }
-.doclap-about-profile .search-form button:hover, .doclap-faq-list .search-form button:hover, .doclap-notes-archive .search-form button:hover, .doclap-single-note .search-form button:hover, .doclap-search-results .search-form button:hover, .doclap-not-found .search-form button:hover, .doclap-contact-form .search-form button:hover {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form button:hover, .doclap-search-results .search-form button:hover, .doclap-not-found .search-form button:hover {
   background: oklch(from var(--doclap-fg) calc(l + .1) c h);
   color: var(--doclap-surface);
 }
-.doclap-about-profile .result-summary, .doclap-faq-list .result-summary, .doclap-notes-archive .result-summary, .doclap-single-note .result-summary, .doclap-search-results .result-summary, .doclap-not-found .result-summary, .doclap-contact-form .result-summary {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .result-summary, .doclap-search-results .result-summary, .doclap-not-found .result-summary {
   font: 13px var(--doclap-font-mono);
   color: var(--doclap-muted);
   margin-bottom: 25px;
 }
-.doclap-about-profile .empty-state, .doclap-faq-list .empty-state, .doclap-notes-archive .empty-state, .doclap-single-note .empty-state, .doclap-search-results .empty-state, .doclap-not-found .empty-state, .doclap-contact-form .empty-state {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .empty-state, .doclap-search-results .empty-state, .doclap-not-found .empty-state {
   padding: 55px 0;
 }
-.doclap-about-profile .empty-state h2, .doclap-faq-list .empty-state h2, .doclap-notes-archive .empty-state h2, .doclap-single-note .empty-state h2, .doclap-search-results .empty-state h2, .doclap-not-found .empty-state h2, .doclap-contact-form .empty-state h2 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .empty-state h2, .doclap-search-results .empty-state h2, .doclap-not-found .empty-state h2 {
   font-size: 40px;
 }
-.doclap-about-profile .empty-state p, .doclap-faq-list .empty-state p, .doclap-notes-archive .empty-state p, .doclap-single-note .empty-state p, .doclap-search-results .empty-state p, .doclap-not-found .empty-state p, .doclap-contact-form .empty-state p {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .empty-state p, .doclap-search-results .empty-state p, .doclap-not-found .empty-state p {
   font-size: 17px;
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   line-height: 1.8;
 }
-.doclap-about-profile .error-hero, .doclap-faq-list .error-hero, .doclap-notes-archive .error-hero, .doclap-single-note .error-hero, .doclap-search-results .error-hero, .doclap-not-found .error-hero, .doclap-contact-form .error-hero {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-hero, .doclap-search-results .error-hero, .doclap-not-found .error-hero {
   text-align: center;
   padding-top: 40px;
 }
-.doclap-about-profile .error-hero .breadcrumb, .doclap-faq-list .error-hero .breadcrumb, .doclap-notes-archive .error-hero .breadcrumb, .doclap-single-note .error-hero .breadcrumb, .doclap-search-results .error-hero .breadcrumb, .doclap-not-found .error-hero .breadcrumb, .doclap-contact-form .error-hero .breadcrumb {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-hero .breadcrumb, .doclap-search-results .error-hero .breadcrumb, .doclap-not-found .error-hero .breadcrumb {
   justify-content: center;
 }
-.doclap-about-profile .error-number, .doclap-faq-list .error-number, .doclap-notes-archive .error-number, .doclap-single-note .error-number, .doclap-search-results .error-number, .doclap-not-found .error-number, .doclap-contact-form .error-number {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-number, .doclap-search-results .error-number, .doclap-not-found .error-number {
   position: relative;
   font: 500 clamp(140px,28vw,420px)/1.2 var(--doclap-font-display);
   letter-spacing: -.09em;
@@ -2358,7 +2364,7 @@ body {
   margin: 12px 0;
   color: var(--doclap-fg);
 }
-.doclap-about-profile .error-number:after, .doclap-faq-list .error-number:after, .doclap-notes-archive .error-number:after, .doclap-single-note .error-number:after, .doclap-search-results .error-number:after, .doclap-not-found .error-number:after, .doclap-contact-form .error-number:after {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-number:after, .doclap-search-results .error-number:after, .doclap-not-found .error-number:after {
   content: '';
   position: absolute;
   left: 50%;
@@ -2371,108 +2377,108 @@ body {
   mix-blend-mode: multiply;
   pointer-events: none;
 }
-.doclap-about-profile .error-hero h1, .doclap-faq-list .error-hero h1, .doclap-notes-archive .error-hero h1, .doclap-single-note .error-hero h1, .doclap-search-results .error-hero h1, .doclap-not-found .error-hero h1, .doclap-contact-form .error-hero h1 {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-hero h1, .doclap-search-results .error-hero h1, .doclap-not-found .error-hero h1 {
   font-size: clamp(36px,4.6vw,68px);
   max-width: none;
   letter-spacing: -.035em;
 }
-.doclap-about-profile .error-hero .lead, .doclap-faq-list .error-hero .lead, .doclap-notes-archive .error-hero .lead, .doclap-single-note .error-hero .lead, .doclap-search-results .error-hero .lead, .doclap-not-found .error-hero .lead, .doclap-contact-form .error-hero .lead {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-hero .lead, .doclap-search-results .error-hero .lead, .doclap-not-found .error-hero .lead {
   margin: 25px auto 30px;
   font-size: 18px;
 }
-.doclap-about-profile .error-actions, .doclap-faq-list .error-actions, .doclap-notes-archive .error-actions, .doclap-single-note .error-actions, .doclap-search-results .error-actions, .doclap-not-found .error-actions, .doclap-contact-form .error-actions {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-actions, .doclap-search-results .error-actions, .doclap-not-found .error-actions {
   display: flex;
   justify-content: center;
   gap: 25px;
   flex-wrap: wrap;
 }
-.doclap-about-profile .index-grid, .doclap-faq-list .index-grid, .doclap-notes-archive .index-grid, .doclap-single-note .index-grid, .doclap-search-results .index-grid, .doclap-not-found .index-grid, .doclap-contact-form .index-grid {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .index-grid, .doclap-search-results .index-grid, .doclap-not-found .index-grid {
   display: grid;
   grid-template-columns: repeat(2,1fr);
   gap: 0 50px;
 }
-.doclap-about-profile .index-grid a, .doclap-faq-list .index-grid a, .doclap-notes-archive .index-grid a, .doclap-single-note .index-grid a, .doclap-search-results .index-grid a, .doclap-not-found .index-grid a, .doclap-contact-form .index-grid a {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .index-grid a, .doclap-search-results .index-grid a, .doclap-not-found .index-grid a {
   font: 34px var(--doclap-font-display);
   padding: 24px 0;
   border-top: 1px solid var(--doclap-fg-soft);
 }
 @media (max-width:1150px) {
-  .doclap-about-profile .article-layout, .doclap-faq-list .article-layout, .doclap-notes-archive .article-layout, .doclap-single-note .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout, .doclap-contact-form .article-layout {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
     grid-template-columns: 180px minmax(0,1fr);
     gap: 45px;
   }
 }
 @media (max-width:920px) {
-  .doclap-about-profile .body-grid, .doclap-faq-list .body-grid, .doclap-notes-archive .body-grid, .doclap-single-note .body-grid, .doclap-search-results .body-grid, .doclap-not-found .body-grid, .doclap-contact-form .body-grid, .doclap-about-profile .contact-grid, .doclap-faq-list .contact-grid, .doclap-notes-archive .contact-grid, .doclap-single-note .contact-grid, .doclap-search-results .contact-grid, .doclap-not-found .contact-grid, .doclap-contact-form .contact-grid, .doclap-about-profile .featured-post, .doclap-faq-list .featured-post, .doclap-notes-archive .featured-post, .doclap-single-note .featured-post, .doclap-search-results .featured-post, .doclap-not-found .featured-post, .doclap-contact-form .featured-post, .doclap-about-profile .article-layout, .doclap-faq-list .article-layout, .doclap-notes-archive .article-layout, .doclap-single-note .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout, .doclap-contact-form .article-layout {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .body-grid, .doclap-search-results .body-grid, .doclap-not-found .body-grid, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-grid, .doclap-search-results .contact-grid, .doclap-not-found .contact-grid, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post, .doclap-search-results .featured-post, .doclap-not-found .featured-post, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
     grid-template-columns: 1fr;
     gap: 45px;
   }
-  .doclap-about-profile .toc, .doclap-faq-list .toc, .doclap-notes-archive .toc, .doclap-single-note .toc, .doclap-search-results .toc, .doclap-not-found .toc, .doclap-contact-form .toc {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc, .doclap-search-results .toc, .doclap-not-found .toc {
     position: static;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
   }
-  .doclap-about-profile .toc>.meta, .doclap-faq-list .toc>.meta, .doclap-notes-archive .toc>.meta, .doclap-single-note .toc>.meta, .doclap-search-results .toc>.meta, .doclap-not-found .toc>.meta, .doclap-contact-form .toc>.meta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc>.meta, .doclap-search-results .toc>.meta, .doclap-not-found .toc>.meta {
     width: 100%;
   }
-  .doclap-about-profile .featured-post .artwork, .doclap-faq-list .featured-post .artwork, .doclap-notes-archive .featured-post .artwork, .doclap-single-note .featured-post .artwork, .doclap-search-results .featured-post .artwork, .doclap-not-found .featured-post .artwork, .doclap-contact-form .featured-post .artwork {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post .artwork, .doclap-search-results .featured-post .artwork, .doclap-not-found .featured-post .artwork {
     min-height: 360px;
   }
-  .doclap-about-profile .hero-summary .text-link, .doclap-faq-list .hero-summary .text-link, .doclap-notes-archive .hero-summary .text-link, .doclap-single-note .hero-summary .text-link, .doclap-search-results .hero-summary .text-link, .doclap-not-found .hero-summary .text-link, .doclap-contact-form .hero-summary .text-link {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary .text-link, .doclap-search-results .hero-summary .text-link, .doclap-not-found .hero-summary .text-link {
     display: none;
   }
-  .doclap-about-profile .footer-main, .doclap-faq-list .footer-main, .doclap-notes-archive .footer-main, .doclap-single-note .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main, .doclap-contact-form .footer-main {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main {
     grid-template-columns: 1fr 1fr;
   }
-  .doclap-about-profile .footer-main>div, .doclap-faq-list .footer-main>div, .doclap-notes-archive .footer-main>div, .doclap-single-note .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div, .doclap-contact-form .footer-main>div {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div {
     grid-column: 2;
   }
-  .doclap-about-profile .post-row, .doclap-faq-list .post-row, .doclap-notes-archive .post-row, .doclap-single-note .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row, .doclap-contact-form .post-row {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row {
     grid-template-columns: 140px 1fr 48px;
   }
-  .doclap-about-profile .closing .circle-cta, .doclap-faq-list .closing .circle-cta, .doclap-notes-archive .closing .circle-cta, .doclap-single-note .closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta, .doclap-contact-form .closing .circle-cta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta {
     width: 140px;
     height: 140px;
   }
 }
 @media (max-width:700px) {
-  .doclap-about-profile .inner-hero, .doclap-faq-list .inner-hero, .doclap-notes-archive .inner-hero, .doclap-single-note .inner-hero, .doclap-search-results .inner-hero, .doclap-not-found .inner-hero, .doclap-contact-form .inner-hero {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).inner-hero, .doclap-search-results .inner-hero, .doclap-not-found .inner-hero {
     padding-top: 20px;
   }
-  .doclap-about-profile .inner-hero h1, .doclap-faq-list .inner-hero h1, .doclap-notes-archive .inner-hero h1, .doclap-single-note .inner-hero h1, .doclap-search-results .inner-hero h1, .doclap-not-found .inner-hero h1, .doclap-contact-form .inner-hero h1 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).inner-hero h1, .doclap-search-results .inner-hero h1, .doclap-not-found .inner-hero h1 {
     font-size: clamp(48px,11vw,76px);
     line-height: 1.22;
     letter-spacing: -.045em;
   }
-  .doclap-about-profile .hero-summary, .doclap-faq-list .hero-summary, .doclap-notes-archive .hero-summary, .doclap-single-note .hero-summary, .doclap-search-results .hero-summary, .doclap-not-found .hero-summary, .doclap-contact-form .hero-summary {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary, .doclap-search-results .hero-summary, .doclap-not-found .hero-summary {
     align-items: start;
     gap: 18px;
     margin-top: 28px;
   }
-  .doclap-about-profile .hero-mark, .doclap-faq-list .hero-mark, .doclap-notes-archive .hero-mark, .doclap-single-note .hero-mark, .doclap-search-results .hero-mark, .doclap-not-found .hero-mark, .doclap-contact-form .hero-mark {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-mark, .doclap-search-results .hero-mark, .doclap-not-found .hero-mark {
     width: 36px;
     font-size: 36px;
   }
-  .doclap-about-profile .hero-summary .lead, .doclap-faq-list .hero-summary .lead, .doclap-notes-archive .hero-summary .lead, .doclap-single-note .hero-summary .lead, .doclap-search-results .hero-summary .lead, .doclap-not-found .hero-summary .lead, .doclap-contact-form .hero-summary .lead {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary .lead, .doclap-search-results .hero-summary .lead, .doclap-not-found .hero-summary .lead {
     font-size: 16px;
     line-height: 1.85;
   }
-  .doclap-about-profile .section, .doclap-faq-list .section, .doclap-notes-archive .section, .doclap-single-note .section, .doclap-search-results .section, .doclap-not-found .section, .doclap-contact-form .section {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section, .doclap-search-results .section, .doclap-not-found .section {
     padding-block: 60px;
   }
-  .doclap-about-profile .breadcrumb, .doclap-faq-list .breadcrumb, .doclap-notes-archive .breadcrumb, .doclap-single-note .breadcrumb, .doclap-search-results .breadcrumb, .doclap-not-found .breadcrumb, .doclap-contact-form .breadcrumb {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .breadcrumb, .doclap-search-results .breadcrumb, .doclap-not-found .breadcrumb {
     font-size: 11px;
   }
-  .doclap-about-profile .closing .row-between, .doclap-faq-list .closing .row-between, .doclap-notes-archive .closing .row-between, .doclap-single-note .closing .row-between, .doclap-search-results .closing .row-between, .doclap-not-found .closing .row-between, .doclap-contact-form .closing .row-between {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing .row-between, .doclap-search-results .closing .row-between, .doclap-not-found .closing .row-between {
     align-items: start;
     flex-direction: column;
     gap: 36px;
   }
-  .doclap-about-profile .closing h2, .doclap-faq-list .closing h2, .doclap-notes-archive .closing h2, .doclap-single-note .closing h2, .doclap-search-results .closing h2, .doclap-not-found .closing h2, .doclap-contact-form .closing h2 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing h2, .doclap-search-results .closing h2, .doclap-not-found .closing h2 {
     font-size: 44px;
   }
-  .doclap-about-profile .closing .circle-cta, .doclap-faq-list .closing .circle-cta, .doclap-notes-archive .closing .circle-cta, .doclap-single-note .closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta, .doclap-contact-form .closing .circle-cta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta {
     width: auto;
     height: auto;
     border-radius: 0;
@@ -2482,91 +2488,91 @@ body {
     border: 0;
     border-bottom: 1px solid var(--doclap-bg);
   }
-  .doclap-about-profile .footer-main, .doclap-faq-list .footer-main, .doclap-notes-archive .footer-main, .doclap-single-note .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main, .doclap-contact-form .footer-main {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main {
     grid-template-columns: 1fr;
     gap: 28px;
   }
-  .doclap-about-profile .footer-main>div, .doclap-faq-list .footer-main>div, .doclap-notes-archive .footer-main>div, .doclap-single-note .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div, .doclap-contact-form .footer-main>div {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div {
     grid-column: auto;
   }
-  .doclap-about-profile .footer-bottom, .doclap-faq-list .footer-bottom, .doclap-notes-archive .footer-bottom, .doclap-single-note .footer-bottom, .doclap-search-results .footer-bottom, .doclap-not-found .footer-bottom, .doclap-contact-form .footer-bottom {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-bottom, .doclap-search-results .footer-bottom, .doclap-not-found .footer-bottom {
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: 16px;
   }
-  .doclap-about-profile .contact-form .grid-2, .doclap-faq-list .contact-form .grid-2, .doclap-notes-archive .contact-form .grid-2, .doclap-single-note .contact-form .grid-2, .doclap-search-results .contact-form .grid-2, .doclap-not-found .contact-form .grid-2, .doclap-contact-form .contact-form .grid-2 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-form .grid-2, .doclap-search-results .contact-form .grid-2, .doclap-not-found .contact-form .grid-2 {
     grid-template-columns: 1fr;
   }
-  .doclap-about-profile .prose, .doclap-faq-list .prose, .doclap-notes-archive .prose, .doclap-single-note .prose, .doclap-search-results .prose, .doclap-not-found .prose, .doclap-contact-form .prose {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose, .doclap-search-results .prose, .doclap-not-found .prose {
     font-size: 17px;
   }
-  .doclap-about-profile .prose h2, .doclap-faq-list .prose h2, .doclap-notes-archive .prose h2, .doclap-single-note .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2, .doclap-contact-form .prose h2 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2 {
     font-size: 34px;
   }
-  .doclap-about-profile .prose blockquote, .doclap-faq-list .prose blockquote, .doclap-notes-archive .prose blockquote, .doclap-single-note .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote, .doclap-contact-form .prose blockquote {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote {
     font-size: 29px;
   }
-  .doclap-about-profile .post-row, .doclap-faq-list .post-row, .doclap-notes-archive .post-row, .doclap-single-note .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row, .doclap-contact-form .post-row {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row {
     grid-template-columns: 1fr 44px;
     gap: 15px;
   }
-  .doclap-about-profile .post-row>.meta, .doclap-faq-list .post-row>.meta, .doclap-notes-archive .post-row>.meta, .doclap-single-note .post-row>.meta, .doclap-search-results .post-row>.meta, .doclap-not-found .post-row>.meta, .doclap-contact-form .post-row>.meta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row>.meta, .doclap-search-results .post-row>.meta, .doclap-not-found .post-row>.meta {
     grid-column: 1/-1;
   }
-  .doclap-about-profile .post-row h3, .doclap-faq-list .post-row h3, .doclap-notes-archive .post-row h3, .doclap-single-note .post-row h3, .doclap-search-results .post-row h3, .doclap-not-found .post-row h3, .doclap-contact-form .post-row h3 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row h3, .doclap-search-results .post-row h3, .doclap-not-found .post-row h3 {
     font-size: 29px;
   }
-  .doclap-about-profile .post-row p, .doclap-faq-list .post-row p, .doclap-notes-archive .post-row p, .doclap-single-note .post-row p, .doclap-search-results .post-row p, .doclap-not-found .post-row p, .doclap-contact-form .post-row p {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row p, .doclap-search-results .post-row p, .doclap-not-found .post-row p {
     font-size: 14px;
   }
-  .doclap-about-profile .post-row .icon-link, .doclap-faq-list .post-row .icon-link, .doclap-notes-archive .post-row .icon-link, .doclap-single-note .post-row .icon-link, .doclap-search-results .post-row .icon-link, .doclap-not-found .post-row .icon-link, .doclap-contact-form .post-row .icon-link {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row .icon-link, .doclap-search-results .post-row .icon-link, .doclap-not-found .post-row .icon-link {
     width: 44px;
     height: 44px;
   }
-  .doclap-about-profile .section-head, .doclap-faq-list .section-head, .doclap-notes-archive .section-head, .doclap-single-note .section-head, .doclap-search-results .section-head, .doclap-not-found .section-head, .doclap-contact-form .section-head {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .section-head, .doclap-search-results .section-head, .doclap-not-found .section-head {
     display: block;
   }
-  .doclap-about-profile .filter-bar, .doclap-faq-list .filter-bar, .doclap-notes-archive .filter-bar, .doclap-single-note .filter-bar, .doclap-search-results .filter-bar, .doclap-not-found .filter-bar, .doclap-contact-form .filter-bar {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .filter-bar, .doclap-search-results .filter-bar, .doclap-not-found .filter-bar {
     gap: 8px;
   }
-  .doclap-about-profile .filter-bar button, .doclap-faq-list .filter-bar button, .doclap-notes-archive .filter-bar button, .doclap-single-note .filter-bar button, .doclap-search-results .filter-bar button, .doclap-not-found .filter-bar button, .doclap-contact-form .filter-bar button {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .filter-bar button, .doclap-search-results .filter-bar button, .doclap-not-found .filter-bar button {
     padding: 10px 12px;
     font-size: 13px;
   }
-  .doclap-about-profile .artwork, .doclap-faq-list .artwork, .doclap-notes-archive .artwork, .doclap-single-note .artwork, .doclap-search-results .artwork, .doclap-not-found .artwork, .doclap-contact-form .artwork, .doclap-about-profile .featured-post .artwork, .doclap-faq-list .featured-post .artwork, .doclap-notes-archive .featured-post .artwork, .doclap-single-note .featured-post .artwork, .doclap-search-results .featured-post .artwork, .doclap-not-found .featured-post .artwork, .doclap-contact-form .featured-post .artwork {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .artwork, .doclap-search-results .artwork, .doclap-not-found .artwork, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post .artwork, .doclap-search-results .featured-post .artwork, .doclap-not-found .featured-post .artwork {
     min-height: 280px;
   }
-  .doclap-about-profile .article-cover, .doclap-faq-list .article-cover, .doclap-notes-archive .article-cover, .doclap-single-note .article-cover, .doclap-search-results .article-cover, .doclap-not-found .article-cover, .doclap-contact-form .article-cover {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover, .doclap-search-results .article-cover, .doclap-not-found .article-cover {
     min-height: 300px;
   }
-  .doclap-about-profile .article-hero h1, .doclap-faq-list .article-hero h1, .doclap-notes-archive .article-hero h1, .doclap-single-note .article-hero h1, .doclap-search-results .article-hero h1, .doclap-not-found .article-hero h1, .doclap-contact-form .article-hero h1 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).article-hero h1, .doclap-search-results .article-hero h1, .doclap-not-found .article-hero h1 {
     font-size: 47px;
   }
-  .doclap-about-profile .article-meta, .doclap-faq-list .article-meta, .doclap-notes-archive .article-meta, .doclap-single-note .article-meta, .doclap-search-results .article-meta, .doclap-not-found .article-meta, .doclap-contact-form .article-meta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-meta, .doclap-search-results .article-meta, .doclap-not-found .article-meta {
     gap: 12px;
     font-size: 11px;
   }
-  .doclap-about-profile .search-form, .doclap-faq-list .search-form, .doclap-notes-archive .search-form, .doclap-single-note .search-form, .doclap-search-results .search-form, .doclap-not-found .search-form, .doclap-contact-form .search-form {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form, .doclap-search-results .search-form, .doclap-not-found .search-form {
     gap: 12px;
   }
-  .doclap-about-profile .search-form button, .doclap-faq-list .search-form button, .doclap-notes-archive .search-form button, .doclap-single-note .search-form button, .doclap-search-results .search-form button, .doclap-not-found .search-form button, .doclap-contact-form .search-form button {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form button, .doclap-search-results .search-form button, .doclap-not-found .search-form button {
     width: 48px;
     height: 48px;
   }
-  .doclap-about-profile .search-form input, .doclap-faq-list .search-form input, .doclap-notes-archive .search-form input, .doclap-single-note .search-form input, .doclap-search-results .search-form input, .doclap-not-found .search-form input, .doclap-contact-form .search-form input {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form input, .doclap-search-results .search-form input, .doclap-not-found .search-form input {
     font-size: 29px;
   }
-  .doclap-about-profile .index-grid, .doclap-faq-list .index-grid, .doclap-notes-archive .index-grid, .doclap-single-note .index-grid, .doclap-search-results .index-grid, .doclap-not-found .index-grid, .doclap-contact-form .index-grid {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .index-grid, .doclap-search-results .index-grid, .doclap-not-found .index-grid {
     grid-template-columns: 1fr;
   }
-  .doclap-about-profile .error-hero h1, .doclap-faq-list .error-hero h1, .doclap-notes-archive .error-hero h1, .doclap-single-note .error-hero h1, .doclap-search-results .error-hero h1, .doclap-not-found .error-hero h1, .doclap-contact-form .error-hero h1 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-hero h1, .doclap-search-results .error-hero h1, .doclap-not-found .error-hero h1 {
     font-size: 38px;
   }
-  .doclap-about-profile .error-hero .lead, .doclap-faq-list .error-hero .lead, .doclap-notes-archive .error-hero .lead, .doclap-single-note .error-hero .lead, .doclap-search-results .error-hero .lead, .doclap-not-found .error-hero .lead, .doclap-contact-form .error-hero .lead {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-hero .lead, .doclap-search-results .error-hero .lead, .doclap-not-found .error-hero .lead {
     font-size: 16px;
   }
-  .doclap-about-profile .feature h3, .doclap-faq-list .feature h3, .doclap-notes-archive .feature h3, .doclap-single-note .feature h3, .doclap-search-results .feature h3, .doclap-not-found .feature h3, .doclap-contact-form .feature h3 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .feature h3, .doclap-search-results .feature h3, .doclap-not-found .feature h3 {
     font-size: 32px;
   }
 }
@@ -2575,106 +2581,106 @@ body {
     animation: none !important;
     transition: none !important;
   }
-  .doclap-about-profile .reveal, .doclap-faq-list .reveal, .doclap-notes-archive .reveal, .doclap-single-note .reveal, .doclap-search-results .reveal, .doclap-not-found .reveal, .doclap-contact-form .reveal {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .reveal, .doclap-search-results .reveal, .doclap-not-found .reveal {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
   }
 }
-.doclap-about-profile .breadcrumb, .doclap-faq-list .breadcrumb, .doclap-notes-archive .breadcrumb, .doclap-single-note .breadcrumb, .doclap-search-results .breadcrumb, .doclap-not-found .breadcrumb, .doclap-contact-form .breadcrumb {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .breadcrumb, .doclap-search-results .breadcrumb, .doclap-not-found .breadcrumb {
   display: flex;
   gap: 13px;
   font: 12px var(--doclap-font-mono);
-  color: var(--doclap-muted);
+  color: var(--doclap-block-text,var(--doclap-muted));
   align-items: center;
 }
-.doclap-about-profile .hero-header, .doclap-faq-list .hero-header, .doclap-notes-archive .hero-header, .doclap-single-note .hero-header, .doclap-search-results .hero-header, .doclap-not-found .hero-header, .doclap-contact-form .hero-header {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-header, .doclap-search-results .hero-header, .doclap-not-found .hero-header {
   display: flex;
   justify-content: space-between;
   gap: 24px;
   margin: 52px 0 28px;
 }
-.doclap-about-profile .hero-header .meta, .doclap-faq-list .hero-header .meta, .doclap-notes-archive .hero-header .meta, .doclap-single-note .hero-header .meta, .doclap-search-results .hero-header .meta, .doclap-not-found .hero-header .meta, .doclap-contact-form .hero-header .meta {
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-header .meta, .doclap-search-results .hero-header .meta, .doclap-not-found .hero-header .meta {
   font-size: 11px;
 }
 @media (max-width:920px) {
-  .doclap-about-profile .body-grid, .doclap-faq-list .body-grid, .doclap-notes-archive .body-grid, .doclap-single-note .body-grid, .doclap-search-results .body-grid, .doclap-not-found .body-grid, .doclap-contact-form .body-grid, .doclap-about-profile .contact-grid, .doclap-faq-list .contact-grid, .doclap-notes-archive .contact-grid, .doclap-single-note .contact-grid, .doclap-search-results .contact-grid, .doclap-not-found .contact-grid, .doclap-contact-form .contact-grid, .doclap-about-profile .featured-post, .doclap-faq-list .featured-post, .doclap-notes-archive .featured-post, .doclap-single-note .featured-post, .doclap-search-results .featured-post, .doclap-not-found .featured-post, .doclap-contact-form .featured-post, .doclap-about-profile .article-layout, .doclap-faq-list .article-layout, .doclap-notes-archive .article-layout, .doclap-single-note .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout, .doclap-contact-form .article-layout {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .body-grid, .doclap-search-results .body-grid, .doclap-not-found .body-grid, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-grid, .doclap-search-results .contact-grid, .doclap-not-found .contact-grid, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post, .doclap-search-results .featured-post, .doclap-not-found .featured-post, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
     grid-template-columns: 1fr;
     gap: 45px;
   }
-  .doclap-about-profile .toc, .doclap-faq-list .toc, .doclap-notes-archive .toc, .doclap-single-note .toc, .doclap-search-results .toc, .doclap-not-found .toc, .doclap-contact-form .toc {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc, .doclap-search-results .toc, .doclap-not-found .toc {
     position: static;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
   }
-  .doclap-about-profile .toc>.meta, .doclap-faq-list .toc>.meta, .doclap-notes-archive .toc>.meta, .doclap-single-note .toc>.meta, .doclap-search-results .toc>.meta, .doclap-not-found .toc>.meta, .doclap-contact-form .toc>.meta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc>.meta, .doclap-search-results .toc>.meta, .doclap-not-found .toc>.meta {
     width: 100%;
   }
-  .doclap-about-profile .featured-post .artwork, .doclap-faq-list .featured-post .artwork, .doclap-notes-archive .featured-post .artwork, .doclap-single-note .featured-post .artwork, .doclap-search-results .featured-post .artwork, .doclap-not-found .featured-post .artwork, .doclap-contact-form .featured-post .artwork {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post .artwork, .doclap-search-results .featured-post .artwork, .doclap-not-found .featured-post .artwork {
     min-height: 360px;
   }
-  .doclap-about-profile .hero-header .meta, .doclap-faq-list .hero-header .meta, .doclap-notes-archive .hero-header .meta, .doclap-single-note .hero-header .meta, .doclap-search-results .hero-header .meta, .doclap-not-found .hero-header .meta, .doclap-contact-form .hero-header .meta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-header .meta, .doclap-search-results .hero-header .meta, .doclap-not-found .hero-header .meta {
     display: none;
   }
-  .doclap-about-profile .hero-summary .text-link, .doclap-faq-list .hero-summary .text-link, .doclap-notes-archive .hero-summary .text-link, .doclap-single-note .hero-summary .text-link, .doclap-search-results .hero-summary .text-link, .doclap-not-found .hero-summary .text-link, .doclap-contact-form .hero-summary .text-link {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary .text-link, .doclap-search-results .hero-summary .text-link, .doclap-not-found .hero-summary .text-link {
     display: none;
   }
-  .doclap-about-profile .footer-main, .doclap-faq-list .footer-main, .doclap-notes-archive .footer-main, .doclap-single-note .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main, .doclap-contact-form .footer-main {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main {
     grid-template-columns: 1fr 1fr;
   }
-  .doclap-about-profile .footer-main>div, .doclap-faq-list .footer-main>div, .doclap-notes-archive .footer-main>div, .doclap-single-note .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div, .doclap-contact-form .footer-main>div {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div {
     grid-column: 2;
   }
-  .doclap-about-profile .post-row, .doclap-faq-list .post-row, .doclap-notes-archive .post-row, .doclap-single-note .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row, .doclap-contact-form .post-row {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row {
     grid-template-columns: 140px 1fr 48px;
   }
-  .doclap-about-profile .closing .circle-cta, .doclap-faq-list .closing .circle-cta, .doclap-notes-archive .closing .circle-cta, .doclap-single-note .closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta, .doclap-contact-form .closing .circle-cta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta {
     width: 140px;
     height: 140px;
   }
 }
 @media (max-width:700px) {
-  .doclap-about-profile .inner-hero, .doclap-faq-list .inner-hero, .doclap-notes-archive .inner-hero, .doclap-single-note .inner-hero, .doclap-search-results .inner-hero, .doclap-not-found .inner-hero, .doclap-contact-form .inner-hero {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).inner-hero, .doclap-search-results .inner-hero, .doclap-not-found .inner-hero {
     padding-top: 20px;
   }
-  .doclap-about-profile .hero-header, .doclap-faq-list .hero-header, .doclap-notes-archive .hero-header, .doclap-single-note .hero-header, .doclap-search-results .hero-header, .doclap-not-found .hero-header, .doclap-contact-form .hero-header {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-header, .doclap-search-results .hero-header, .doclap-not-found .hero-header {
     margin-top: 32px;
     margin-bottom: 20px;
   }
-  .doclap-about-profile .inner-hero h1, .doclap-faq-list .inner-hero h1, .doclap-notes-archive .inner-hero h1, .doclap-single-note .inner-hero h1, .doclap-search-results .inner-hero h1, .doclap-not-found .inner-hero h1, .doclap-contact-form .inner-hero h1 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).inner-hero h1, .doclap-search-results .inner-hero h1, .doclap-not-found .inner-hero h1 {
     font-size: clamp(48px,11vw,76px);
     line-height: 1.22;
     letter-spacing: -.045em;
   }
-  .doclap-about-profile .hero-summary, .doclap-faq-list .hero-summary, .doclap-notes-archive .hero-summary, .doclap-single-note .hero-summary, .doclap-search-results .hero-summary, .doclap-not-found .hero-summary, .doclap-contact-form .hero-summary {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary, .doclap-search-results .hero-summary, .doclap-not-found .hero-summary {
     align-items: start;
     gap: 18px;
     margin-top: 28px;
   }
-  .doclap-about-profile .hero-mark, .doclap-faq-list .hero-mark, .doclap-notes-archive .hero-mark, .doclap-single-note .hero-mark, .doclap-search-results .hero-mark, .doclap-not-found .hero-mark, .doclap-contact-form .hero-mark {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-mark, .doclap-search-results .hero-mark, .doclap-not-found .hero-mark {
     width: 36px;
     font-size: 36px;
   }
-  .doclap-about-profile .hero-summary .lead, .doclap-faq-list .hero-summary .lead, .doclap-notes-archive .hero-summary .lead, .doclap-single-note .hero-summary .lead, .doclap-search-results .hero-summary .lead, .doclap-not-found .hero-summary .lead, .doclap-contact-form .hero-summary .lead {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .hero-summary .lead, .doclap-search-results .hero-summary .lead, .doclap-not-found .hero-summary .lead {
     font-size: 16px;
     line-height: 1.85;
   }
-  .doclap-about-profile .section, .doclap-faq-list .section, .doclap-notes-archive .section, .doclap-single-note .section, .doclap-search-results .section, .doclap-not-found .section, .doclap-contact-form .section {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section, .doclap-search-results .section, .doclap-not-found .section {
     padding-block: 60px;
   }
-  .doclap-about-profile .breadcrumb, .doclap-faq-list .breadcrumb, .doclap-notes-archive .breadcrumb, .doclap-single-note .breadcrumb, .doclap-search-results .breadcrumb, .doclap-not-found .breadcrumb, .doclap-contact-form .breadcrumb {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .breadcrumb, .doclap-search-results .breadcrumb, .doclap-not-found .breadcrumb {
     font-size: 11px;
   }
-  .doclap-about-profile .closing .row-between, .doclap-faq-list .closing .row-between, .doclap-notes-archive .closing .row-between, .doclap-single-note .closing .row-between, .doclap-search-results .closing .row-between, .doclap-not-found .closing .row-between, .doclap-contact-form .closing .row-between {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing .row-between, .doclap-search-results .closing .row-between, .doclap-not-found .closing .row-between {
     align-items: start;
     flex-direction: column;
     gap: 36px;
   }
-  .doclap-about-profile .closing h2, .doclap-faq-list .closing h2, .doclap-notes-archive .closing h2, .doclap-single-note .closing h2, .doclap-search-results .closing h2, .doclap-not-found .closing h2, .doclap-contact-form .closing h2 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing h2, .doclap-search-results .closing h2, .doclap-not-found .closing h2 {
     font-size: 44px;
   }
-  .doclap-about-profile .closing .circle-cta, .doclap-faq-list .closing .circle-cta, .doclap-notes-archive .closing .circle-cta, .doclap-single-note .closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta, .doclap-contact-form .closing .circle-cta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing .circle-cta, .doclap-search-results .closing .circle-cta, .doclap-not-found .closing .circle-cta {
     width: auto;
     height: auto;
     border-radius: 0;
@@ -2684,91 +2690,91 @@ body {
     border: 0;
     border-bottom: 1px solid var(--doclap-bg);
   }
-  .doclap-about-profile .footer-main, .doclap-faq-list .footer-main, .doclap-notes-archive .footer-main, .doclap-single-note .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main, .doclap-contact-form .footer-main {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main, .doclap-search-results .footer-main, .doclap-not-found .footer-main {
     grid-template-columns: 1fr;
     gap: 28px;
   }
-  .doclap-about-profile .footer-main>div, .doclap-faq-list .footer-main>div, .doclap-notes-archive .footer-main>div, .doclap-single-note .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div, .doclap-contact-form .footer-main>div {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-main>div, .doclap-search-results .footer-main>div, .doclap-not-found .footer-main>div {
     grid-column: auto;
   }
-  .doclap-about-profile .footer-bottom, .doclap-faq-list .footer-bottom, .doclap-notes-archive .footer-bottom, .doclap-single-note .footer-bottom, .doclap-search-results .footer-bottom, .doclap-not-found .footer-bottom, .doclap-contact-form .footer-bottom {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .footer-bottom, .doclap-search-results .footer-bottom, .doclap-not-found .footer-bottom {
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: 16px;
   }
-  .doclap-about-profile .contact-form .grid-2, .doclap-faq-list .contact-form .grid-2, .doclap-notes-archive .contact-form .grid-2, .doclap-single-note .contact-form .grid-2, .doclap-search-results .contact-form .grid-2, .doclap-not-found .contact-form .grid-2, .doclap-contact-form .contact-form .grid-2 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-form .grid-2, .doclap-search-results .contact-form .grid-2, .doclap-not-found .contact-form .grid-2 {
     grid-template-columns: 1fr;
   }
-  .doclap-about-profile .prose, .doclap-faq-list .prose, .doclap-notes-archive .prose, .doclap-single-note .prose, .doclap-search-results .prose, .doclap-not-found .prose, .doclap-contact-form .prose {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose, .doclap-search-results .prose, .doclap-not-found .prose {
     font-size: 17px;
   }
-  .doclap-about-profile .prose h2, .doclap-faq-list .prose h2, .doclap-notes-archive .prose h2, .doclap-single-note .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2, .doclap-contact-form .prose h2 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2 {
     font-size: 34px;
   }
-  .doclap-about-profile .prose blockquote, .doclap-faq-list .prose blockquote, .doclap-notes-archive .prose blockquote, .doclap-single-note .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote, .doclap-contact-form .prose blockquote {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote {
     font-size: 29px;
   }
-  .doclap-about-profile .post-row, .doclap-faq-list .post-row, .doclap-notes-archive .post-row, .doclap-single-note .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row, .doclap-contact-form .post-row {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row {
     grid-template-columns: 1fr 44px;
     gap: 15px;
   }
-  .doclap-about-profile .post-row>.meta, .doclap-faq-list .post-row>.meta, .doclap-notes-archive .post-row>.meta, .doclap-single-note .post-row>.meta, .doclap-search-results .post-row>.meta, .doclap-not-found .post-row>.meta, .doclap-contact-form .post-row>.meta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row>.meta, .doclap-search-results .post-row>.meta, .doclap-not-found .post-row>.meta {
     grid-column: 1/-1;
   }
-  .doclap-about-profile .post-row h3, .doclap-faq-list .post-row h3, .doclap-notes-archive .post-row h3, .doclap-single-note .post-row h3, .doclap-search-results .post-row h3, .doclap-not-found .post-row h3, .doclap-contact-form .post-row h3 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row h3, .doclap-search-results .post-row h3, .doclap-not-found .post-row h3 {
     font-size: 29px;
   }
-  .doclap-about-profile .post-row p, .doclap-faq-list .post-row p, .doclap-notes-archive .post-row p, .doclap-single-note .post-row p, .doclap-search-results .post-row p, .doclap-not-found .post-row p, .doclap-contact-form .post-row p {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row p, .doclap-search-results .post-row p, .doclap-not-found .post-row p {
     font-size: 14px;
   }
-  .doclap-about-profile .post-row .icon-link, .doclap-faq-list .post-row .icon-link, .doclap-notes-archive .post-row .icon-link, .doclap-single-note .post-row .icon-link, .doclap-search-results .post-row .icon-link, .doclap-not-found .post-row .icon-link, .doclap-contact-form .post-row .icon-link {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row .icon-link, .doclap-search-results .post-row .icon-link, .doclap-not-found .post-row .icon-link {
     width: 44px;
     height: 44px;
   }
-  .doclap-about-profile .section-head, .doclap-faq-list .section-head, .doclap-notes-archive .section-head, .doclap-single-note .section-head, .doclap-search-results .section-head, .doclap-not-found .section-head, .doclap-contact-form .section-head {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .section-head, .doclap-search-results .section-head, .doclap-not-found .section-head {
     display: block;
   }
-  .doclap-about-profile .filter-bar, .doclap-faq-list .filter-bar, .doclap-notes-archive .filter-bar, .doclap-single-note .filter-bar, .doclap-search-results .filter-bar, .doclap-not-found .filter-bar, .doclap-contact-form .filter-bar {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .filter-bar, .doclap-search-results .filter-bar, .doclap-not-found .filter-bar {
     gap: 8px;
   }
-  .doclap-about-profile .filter-bar button, .doclap-faq-list .filter-bar button, .doclap-notes-archive .filter-bar button, .doclap-single-note .filter-bar button, .doclap-search-results .filter-bar button, .doclap-not-found .filter-bar button, .doclap-contact-form .filter-bar button {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .filter-bar button, .doclap-search-results .filter-bar button, .doclap-not-found .filter-bar button {
     padding: 10px 12px;
     font-size: 13px;
   }
-  .doclap-about-profile .artwork, .doclap-faq-list .artwork, .doclap-notes-archive .artwork, .doclap-single-note .artwork, .doclap-search-results .artwork, .doclap-not-found .artwork, .doclap-contact-form .artwork, .doclap-about-profile .featured-post .artwork, .doclap-faq-list .featured-post .artwork, .doclap-notes-archive .featured-post .artwork, .doclap-single-note .featured-post .artwork, .doclap-search-results .featured-post .artwork, .doclap-not-found .featured-post .artwork, .doclap-contact-form .featured-post .artwork {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .artwork, .doclap-search-results .artwork, .doclap-not-found .artwork, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post .artwork, .doclap-search-results .featured-post .artwork, .doclap-not-found .featured-post .artwork {
     min-height: 280px;
   }
-  .doclap-about-profile .article-cover, .doclap-faq-list .article-cover, .doclap-notes-archive .article-cover, .doclap-single-note .article-cover, .doclap-search-results .article-cover, .doclap-not-found .article-cover, .doclap-contact-form .article-cover {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover, .doclap-search-results .article-cover, .doclap-not-found .article-cover {
     min-height: 300px;
   }
-  .doclap-about-profile .article-hero h1, .doclap-faq-list .article-hero h1, .doclap-notes-archive .article-hero h1, .doclap-single-note .article-hero h1, .doclap-search-results .article-hero h1, .doclap-not-found .article-hero h1, .doclap-contact-form .article-hero h1 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).article-hero h1, .doclap-search-results .article-hero h1, .doclap-not-found .article-hero h1 {
     font-size: 47px;
   }
-  .doclap-about-profile .article-meta, .doclap-faq-list .article-meta, .doclap-notes-archive .article-meta, .doclap-single-note .article-meta, .doclap-search-results .article-meta, .doclap-not-found .article-meta, .doclap-contact-form .article-meta {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-meta, .doclap-search-results .article-meta, .doclap-not-found .article-meta {
     gap: 12px;
     font-size: 11px;
   }
-  .doclap-about-profile .search-form, .doclap-faq-list .search-form, .doclap-notes-archive .search-form, .doclap-single-note .search-form, .doclap-search-results .search-form, .doclap-not-found .search-form, .doclap-contact-form .search-form {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form, .doclap-search-results .search-form, .doclap-not-found .search-form {
     gap: 12px;
   }
-  .doclap-about-profile .search-form button, .doclap-faq-list .search-form button, .doclap-notes-archive .search-form button, .doclap-single-note .search-form button, .doclap-search-results .search-form button, .doclap-not-found .search-form button, .doclap-contact-form .search-form button {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form button, .doclap-search-results .search-form button, .doclap-not-found .search-form button {
     width: 48px;
     height: 48px;
   }
-  .doclap-about-profile .search-form input, .doclap-faq-list .search-form input, .doclap-notes-archive .search-form input, .doclap-single-note .search-form input, .doclap-search-results .search-form input, .doclap-not-found .search-form input, .doclap-contact-form .search-form input {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form input, .doclap-search-results .search-form input, .doclap-not-found .search-form input {
     font-size: 29px;
   }
-  .doclap-about-profile .index-grid, .doclap-faq-list .index-grid, .doclap-notes-archive .index-grid, .doclap-single-note .index-grid, .doclap-search-results .index-grid, .doclap-not-found .index-grid, .doclap-contact-form .index-grid {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .index-grid, .doclap-search-results .index-grid, .doclap-not-found .index-grid {
     grid-template-columns: 1fr;
   }
-  .doclap-about-profile .error-hero h1, .doclap-faq-list .error-hero h1, .doclap-notes-archive .error-hero h1, .doclap-single-note .error-hero h1, .doclap-search-results .error-hero h1, .doclap-not-found .error-hero h1, .doclap-contact-form .error-hero h1 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-hero h1, .doclap-search-results .error-hero h1, .doclap-not-found .error-hero h1 {
     font-size: 38px;
   }
-  .doclap-about-profile .error-hero .lead, .doclap-faq-list .error-hero .lead, .doclap-notes-archive .error-hero .lead, .doclap-single-note .error-hero .lead, .doclap-search-results .error-hero .lead, .doclap-not-found .error-hero .lead, .doclap-contact-form .error-hero .lead {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .error-hero .lead, .doclap-search-results .error-hero .lead, .doclap-not-found .error-hero .lead {
     font-size: 16px;
   }
-  .doclap-about-profile .feature h3, .doclap-faq-list .feature h3, .doclap-notes-archive .feature h3, .doclap-single-note .feature h3, .doclap-search-results .feature h3, .doclap-not-found .feature h3, .doclap-contact-form .feature h3 {
+  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .feature h3, .doclap-search-results .feature h3, .doclap-not-found .feature h3 {
     font-size: 32px;
   }
 }
@@ -4821,25 +4827,29 @@ body {
   position: relative;
 }
 .doclap-scope .voices-viewport {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   padding: 4px 0 30px;
-  touch-action: pan-y;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.doclap-scope .voices-viewport::-webkit-scrollbar {
+  display: none;
+}
+.doclap-scope .voices-viewport:focus-visible {
+  outline: 2px solid var(--doclap-fg);
+  outline-offset: 2px;
 }
 .doclap-scope .voices-track {
   display: flex;
   gap: var(--doclap-vgap);
-  transition: transform .8s cubic-bezier(.22,1,.36,1);
-  will-change: transform;
-  touch-action: pan-y;
 }
 .doclap-scope .voices-carousel .voice-slide {
   flex: 0 0 calc((100% - (var(--doclap-vper) - 1) * var(--doclap-vgap)) / var(--doclap-vper));
   padding: clamp(26px,2.4vw,38px);
-  cursor: grab;
+  scroll-snap-align: start;
   transition: border-color .4s,box-shadow .5s;
-}
-.doclap-scope .voices-carousel.is-dragging .voice-slide {
-  cursor: grabbing;
 }
 .doclap-scope .voices-carousel .voice-rating {
   margin-top: 26px;
@@ -4878,41 +4888,17 @@ body {
   justify-content: space-between;
   gap: 24px;
   margin-top: 0;
+  flex-wrap: wrap;
+  row-gap: 8px;
 }
-.doclap-scope .voices-dots {
-  display: flex;
-  align-items: center;
+.doclap-scope .voices-bar[hidden] {
+  display: none;
 }
-.doclap-scope .voices-dot {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-}
-.doclap-scope .voices-dot:after {
-  content: "";
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--doclap-fg);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in oklch,var(--doclap-fg) 24%,transparent);
-  }
-  transition: background .3s,transform .3s;
-}
-.doclap-scope .voices-dot:hover:after {
-  background: var(--doclap-fg);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in oklch,var(--doclap-fg) 55%,transparent);
-  }
-}
-.doclap-scope .voices-dot[aria-current="true"]:after {
-  background: var(--doclap-fg);
-  transform: scale(1.35);
+.doclap-scope .voices-count {
+  font: 11px/1.8 var(--doclap-font-mono);
+  letter-spacing: .06em;
+  color: var(--doclap-block-text,var(--doclap-muted));
+  margin: 0;
 }
 .doclap-scope .voices-controls {
   display: flex;
@@ -4973,21 +4959,9 @@ body {
     --doclap-vper: 1;
   }
 }
-@media (max-width:600px) {
-  .doclap-scope .voices-bar {
-    flex-wrap: wrap;
-    row-gap: 8px;
-  }
-  .doclap-scope .voices-dots {
-    width: 100%;
-  }
-}
 @media (prefers-reduced-motion:reduce) {
-  .doclap-scope .voices-track {
-    transition: none;
-  }
-  .doclap-scope .voices-carousel .voice-slide {
-    cursor: auto;
+  .doclap-scope .voices-viewport {
+    scroll-behavior: auto;
   }
 }
 .doclap-scope .doclap-discipline {
@@ -5190,10 +5164,10 @@ body {
 .doclap-scope :is(h1,h2,h3,h4) {
   color: var(--doclap-block-heading,var(--doclap-fg));
 }
-.doclap-scope.process, .doclap-scope.contact, .doclap-scope.pagefoot, .doclap-scope .process, .doclap-scope .contact, .doclap-scope .pagefoot {
+.doclap-scope.process, .doclap-scope.contact, .doclap-scope.pagefoot, .doclap-scope.dark-panel, .doclap-scope.closing, .doclap-scope .process, .doclap-scope .contact, .doclap-scope .pagefoot, .doclap-scope .dark-panel, .doclap-scope .closing {
   background: var(--doclap-block-bg,var(--doclap-fg));
   color: var(--doclap-block-text,var(--doclap-bg));
 }
-.doclap-scope.process :is(h1,h2,h3,h4), .doclap-scope.contact :is(h1,h2,h3,h4), .doclap-scope.pagefoot :is(h1,h2,h3,h4), .doclap-scope .process :is(h1,h2,h3,h4), .doclap-scope .contact :is(h1,h2,h3,h4), .doclap-scope .pagefoot :is(h1,h2,h3,h4), .doclap-scope .voice-editorial :is(h1,h2,h3,h4) {
+.doclap-scope.process :is(h1,h2,h3,h4), .doclap-scope.contact :is(h1,h2,h3,h4), .doclap-scope.pagefoot :is(h1,h2,h3,h4), .doclap-scope.dark-panel :is(h1,h2,h3,h4), .doclap-scope.closing :is(h1,h2,h3,h4), .doclap-scope .process :is(h1,h2,h3,h4), .doclap-scope .contact :is(h1,h2,h3,h4), .doclap-scope .pagefoot :is(h1,h2,h3,h4), .doclap-scope .dark-panel :is(h1,h2,h3,h4), .doclap-scope .closing :is(h1,h2,h3,h4), .doclap-scope .voice-editorial :is(h1,h2,h3,h4) {
   color: var(--doclap-block-heading,var(--doclap-bg));
 }

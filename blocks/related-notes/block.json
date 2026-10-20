@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/related-notes",
+  "version": "1.0.0",
+  "title": "Related notes",
+  "category": "doclap",
+  "icon": "excerpt-view",
+  "description": "Same-category-first related notes with a configurable count.",
+  "keywords": [ "note", "article", "related", "list" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "heading": { "type": "string", "default": "Read another perspective." },
+    "count": { "type": "integer", "default": 2 }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

@@ -9,11 +9,18 @@
  * Cascade order inside these files matches the reference: design system, then the
  * page composition layer, then the refinement passes.
  *
- * Inner-page rules are additionally scoped to their owning block root
- * (``.doclap-about-profile``, ``.doclap-contact-form`` …) because every reference
- * page carried its own slightly drifted copy of the shared styles. Home keeps the
- * version the home page rendered, inner surfaces keep theirs, and the two can no
- * longer trample each other.
+ * Inner-page rules are additionally scoped to the block roots that emit them,
+ * because every reference page carried its own slightly drifted copy of the shared
+ * styles. Those roots — ``.doclap-inner-hero``, ``.doclap-closing-cta``,
+ * ``.doclap-split-narrative``, ``.doclap-media-figure``, ``.doclap-principles-grid``,
+ * ``.doclap-note-hero``, ``.doclap-note-cover``, ``.doclap-note-content``,
+ * ``.doclap-related-notes``, ``.doclap-contact-form``, ``.doclap-faq-list`` and
+ * ``.doclap-notes-archive`` — share one visual language, so the refinement passes
+ * below address them through a single ``:is( … )`` list and name the search and
+ * 404 roots beside it. A new section block that renders one of these sections
+ * belongs in that list. The list stays expanded rather than collapsing into one
+ * marker class because the rules it replaced carried exactly two class names, and
+ * the home layer and the inner layer are separated by that specificity.
  */
 
 /* ─── reset & base ──────────────────────────────────────────────── */

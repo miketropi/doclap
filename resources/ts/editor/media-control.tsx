@@ -2,9 +2,9 @@
  * Shared media picker for the Doclap blocks that persist a media id, its URL and
  * the alternative text.
  *
- * about-profile (`studioImage*`), home-hero (`poster*`), home-team
- * (`teamImage*`), site-header (`brandMedia*`) and home-work (`projects[].media*`)
- * all need the same thing, and the persistence contract is identical, so it lives
+ * media-figure (`image*`), home-hero (`poster*`), home-team (`teamImage*`),
+ * site-header (`brandMedia*`) and home-work (`projects[].media*`) all need the
+ * same thing, and the persistence contract is identical, so it lives
  * here once. The component deliberately owns no block attributes: the caller
  * passes the current values and receives callbacks, which keeps every block's
  * attribute names in its own `edit.tsx`.

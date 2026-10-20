@@ -35,11 +35,37 @@ Surfaces and their blocks:
   | `doclap/home-journal` | Journal heading and note links |
   | `doclap/home-contact` | Closing contact band |
 
-* About — `doclap/about-profile`.
-* Contact — `doclap/contact-form` (real email delivery, no local-only drafts).
-* FAQ — `doclap/faq-list` (category filters, native disclosures, live count).
-* Notes archive and blog index — `doclap/notes-archive` (query-driven).
-* Note detail — `doclap/single-note` (metadata, table of contents, related notes).
+* Inner pages — every section is its own block, placed by its template in this
+  order:
+
+  | Template | Sections |
+  | --- | --- |
+  | About Us | `doclap/inner-hero`, two `doclap/split-narrative`, `doclap/media-figure`, `doclap/principles-grid`, `doclap/closing-cta` |
+  | Contact Us | `doclap/inner-hero`, `doclap/contact-form` |
+  | Frequently Asked Questions | `doclap/inner-hero`, `doclap/faq-list`, `doclap/closing-cta` |
+  | Archive and Blog Home | `doclap/inner-hero`, `doclap/notes-archive`, `doclap/closing-cta` |
+  | Single (note detail) | `doclap/note-hero`, `doclap/note-cover`, `doclap/note-content`, `doclap/related-notes`, `doclap/closing-cta` |
+
+* Shared sections — `doclap/inner-hero` (breadcrumb, page title and lead) and
+  `doclap/closing-cta` (eyebrow, heading and circular link). Both are reusable on
+  any page; the page patterns carry the page-specific copy.
+* About sections — `doclap/split-narrative` (aside label and heading with a rich
+  paragraph body, an optional status note and text link), `doclap/media-figure`
+  (media-library image with alternative text and caption, falling back to the
+  bundled studio artwork) and `doclap/principles-grid` (dark panel with reusable
+  principle cards).
+* Contact — `doclap/contact-form` (the contact aside and the secure message form,
+  with real email delivery and no local-only drafts).
+* FAQ — `doclap/faq-list` (aside, category filter groups, native `<details>`
+  disclosures, live count and empty state).
+* Notes archive and blog index — `doclap/notes-archive` (query-driven featured
+  note, section heading and count, category links, reading time, pagination and
+  the editorial disclaimer).
+* Note detail — `doclap/note-hero` (breadcrumb, queried title and excerpt, reading
+  progress), `doclap/note-cover` (metadata plus the featured image or the
+  accessible fallback artwork), `doclap/note-content` (table of contents,
+  save/copy tools, the filtered note body, disclaimer and archive link) and
+  `doclap/related-notes` (same-category-first related notes).
 * Search — `doclap/search-results` (native WordPress search query).
 * 404 — `doclap/not-found`.
 * Shared header — `doclap/site-header` (sticky bar, WordPress menu with hover or
@@ -51,6 +77,22 @@ can be inserted, reordered, duplicated or removed on its own. The
 `Doclap — Home landing` pattern inserts all nine in the canonical order when a
 whole landing page is wanted, and each block also ships its own one-block pattern
 (`doclap/home-hero` … `doclap/home-contact`).
+
+Five further compositions do the same for the inner pages: **Doclap — About page**,
+**Doclap — Contact page**, **Doclap — FAQ page**, **Doclap — Notes archive page**
+and **Doclap — Note detail page**. Each inserts its template's sections in order
+with that page's copy, and every section they compose is also insertable on its
+own: `doclap/inner-hero`, `doclap/closing-cta`, `doclap/split-narrative`,
+`doclap/media-figure`, `doclap/principles-grid`, `doclap/note-hero`,
+`doclap/note-cover`, `doclap/note-content` and `doclap/related-notes`.
+
+* **Upgrading from the single-block inner pages.** The 1.0.0 release replaced the
+  `doclap/about-profile` and `doclap/single-note` aggregates with the section
+  blocks above and ships no alias for either. The About Us, Contact Us, FAQ,
+  Archive, Blog Home and Single templates are file templates that place the new
+  sections directly, so resetting a customised copy of any of them in the Site
+  Editor restores the composed page. Both aggregates were only ever used by this
+  theme's own templates, and the release ships no alias for either.
 
 == Requirements ==
 
@@ -118,14 +160,28 @@ matching header, footer and call-to-action links have to be updated with it.
 == Editor guidance ==
 
 Every surface is a dynamic block: the editor canvas renders the same `render.php`
-output as the front end, and the content is edited in the block sidebar. Six
-conventions apply across all eighteen blocks.
+output as the front end, and the content is edited in the block sidebar. Seven
+conventions apply across all twenty-five blocks.
 
-* **Contextual previews.** `doclap/notes-archive`, `doclap/single-note` and
-  `doclap/search-results` read the query of the page they render on. In the editor
-  they preview the currently queried post when there is one and deterministic
-  sample copy when there is not, so a block is never edited against an empty
-  canvas; the real result set is only visible on the front end.
+* **Section colours.** Every section block — the nine inner-page sections, the three
+  narrowed ones (`doclap/contact-form`, `doclap/faq-list`, `doclap/notes-archive`)
+  and the ten home colour-aware blocks — ends its sidebar with a **Colours** panel:
+  **Background**, **Heading text** and **Body text**. Each is optional and starts
+  empty, which means "theme default": the block then emits nothing and the section
+  keeps the designed colours. Picking a colour writes it to the block's own CSS
+  custom property (`--doclap-block-bg`, `--doclap-block-heading`,
+  `--doclap-block-text`), so the section background, its headings and every other
+  piece of text in it — eyebrow, lead, metadata, body copy, note text — follow the
+  choice without touching the shared stylesheet. The dark bands
+  (`doclap/principles-grid`, `doclap/closing-cta`) default their headings to the
+  band's foreground, so a heading is never invisible on its own band; if you give a
+  light section a dark background, set **Heading text** and **Body text** with it.
+* **Contextual previews.** `doclap/notes-archive`, `doclap/search-results` and the
+  four note-detail blocks (`doclap/note-hero`, `doclap/note-cover`,
+  `doclap/note-content`, `doclap/related-notes`) read the query of the page they
+  render on. In the editor they preview the currently queried post when there is
+  one and deterministic sample copy when there is not, so a block is never edited
+  against an empty canvas; the real result set is only visible on the front end.
 * **URL fields.** Any URL control accepts an absolute URL, a path such as
   `/about-us/`, a `#anchor` fragment, or the tokens `@notes` (the configured posts
   archive) and `@search` (the search endpoint). Changing a structural `#anchor`
@@ -293,8 +349,12 @@ npm run build:package  # doclap-v1.0.0.zip
   supports, and every declared `render`, `editorScript`, `editorStyle`, `style` and
   `viewScript` file plus the generated `.asset.php` beside each declared script),
   `theme.json` parsing and its merge with the parent, the declared font faces and
-  compiled assets, the contact REST route and the insertion patterns. Pass
-  `-- --wp-cli` to
+  compiled assets, the contact REST route, the insertion patterns (each slug
+  declared exactly once), the inner-page section schemas (the narrowed blocks no
+  longer declare the hero, closing or migrated fields), the ordered composition of
+  every requested template against its full-page pattern, and a front-end render of
+  every section block with its defaults, its empty optionals and the
+  no-queried-post fallbacks. Pass `-- --wp-cli` to
   run the identical assertions against an existing install through WP-CLI
   (`WP_CLI_CMD` may supply a wrapper command, `WP_PATH` the install path).
 
@@ -328,8 +388,8 @@ Assets:
 == Changelog ==
 
 = 1.0.0 =
-* First release: eighteen Doclap blocks — the home landing page split into nine
-  section blocks (`doclap/home-hero` … `doclap/home-contact`) plus the eight
+* First release: twenty-five Doclap blocks — the home landing page split into nine
+  section blocks (`doclap/home-hero` … `doclap/home-contact`) plus the sixteen
   remaining surfaces — self-hosted editorial fonts, Doclap colour and font
   presets, colour-scheme switcher preset, and the design-specific contact
   transport.
@@ -354,3 +414,23 @@ Assets:
   `Doclap — Home landing` pattern inserts the same composition into any page. The
   monolithic `doclap/portfolio-home` landing block is gone; see *Front page
   template and Site Editor overrides* for the upgrade path.
+* Every inner page is composed the same way. `doclap/about-profile` is replaced by
+  `doclap/inner-hero`, `doclap/split-narrative`, `doclap/media-figure`,
+  `doclap/principles-grid` and `doclap/closing-cta`, and `doclap/single-note` by the
+  query-aware `doclap/note-hero`, `doclap/note-cover`, `doclap/note-content` (which
+  now owns the article save/copy tools and their front-end script) and
+  `doclap/related-notes`. `doclap/contact-form`, `doclap/faq-list` and
+  `doclap/notes-archive` lost their hero and closing sections, so each renders only
+  the section it owns. Five page patterns (`Doclap — About page`, `Doclap — Contact
+  page`, `Doclap — FAQ page`, `Doclap — Notes archive page`, `Doclap — Note detail
+  page`) carry the previous copy, and the templates place the same sections
+  directly, so every section of every page is independently selectable in List
+  View.
+* Every section block gained the optional **Colours** panel — background, heading
+  text and body text — stored as `--doclap-block-bg`, `--doclap-block-heading` and
+  `--doclap-block-text` on the block root, so a section's palette can be changed
+  without editing the stylesheet; an unset colour keeps the theme default and emits
+  nothing. The dark bands (`doclap/principles-grid`, `doclap/closing-cta`) now paint
+  their headings in the band's foreground colour, which fixes a dark heading on a
+  dark band, and every other piece of text in a section follows the body-text
+  colour.

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/inner-hero",
+  "version": "1.0.0",
+  "title": "Inner hero",
+  "category": "doclap",
+  "icon": "heading",
+  "description": "Breadcrumb, page title and lead paragraph for an inner page.",
+  "keywords": [ "hero", "breadcrumb", "title", "lead" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
+    "breadcrumbLabel": { "type": "string", "default": "Page" },
+    "heading": { "type": "string", "default": "A clear page heading." },
+    "headingAccent": { "type": "string", "default": "" },
+    "lead": { "type": "string", "default": "A short introduction for this page." }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

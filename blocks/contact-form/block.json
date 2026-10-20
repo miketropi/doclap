@@ -10,17 +10,9 @@
   "keywords": [ "contact", "form", "email", "message", "recaptcha" ],
   "textdomain": "doclap",
   "attributes": {
-    "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
-    "breadcrumbLabel": { "type": "string", "default": "Contact" },
-    "heading": {
-      "type": "string",
-      "default": "Start with<br><em>a greeting.</em>"
-    },
-    "headingAccent": { "type": "string", "default": "" },
-    "lead": {
-      "type": "string",
-      "default": "An unfinished idea. A problem that needs another perspective. I want to hear your story."
-    },
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
     "asideMeta": { "type": "string", "default": "A CONVERSATION, NO PRESSURE." },
     "asideHeading": { "type": "string", "default": "Not yet<br>the perfect brief." },
     "asideCopy": {

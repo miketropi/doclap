@@ -1,5 +1,5 @@
 /**
- * Section colour controls shared by the ten colour-aware Doclap blocks.
+ * Section colour controls shared by the twenty-two colour-aware Doclap blocks.
  *
  * A Doclap section is styled by the theme, so its colours are not attributes the
  * author should have to guess at in CSS: each block stores three optional colours
@@ -7,7 +7,9 @@
  * `--doclap-block-bg`, `--doclap-block-heading` and `--doclap-block-text` on the
  * block root. An empty string means "theme default", and the renderer emits nothing
  * for it — this component keeps that contract by writing `''` when a colour is
- * cleared.
+ * cleared. The stylesheet reads the three properties for the section background,
+ * its headings (`--doclap-block-heading`) and every other piece of text in the
+ * section: eyebrow, lead, meta, body copy and notes (`--doclap-block-text`).
  *
  * The UI is Gutenberg's own: a `ColorPalette` fed by the theme palette, a
  * `Dropdown` + `ColorPicker` for anything else, and a `Clear` action per row. It

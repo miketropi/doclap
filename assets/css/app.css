@@ -1824,15 +1824,15 @@ body {
   max-width: 65ch;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose p, .doclap-search-results .prose p, .doclap-not-found .prose p {
-  margin: 0 0 28px;
+  margin: 0 0 24px;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2 {
   font-size: 44px;
-  margin: 65px 0 28px;
+  margin: 56px 0 24px;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h3, .doclap-search-results .prose h3, .doclap-not-found .prose h3 {
   font-size: 30px;
-  margin: 28px 0 18px;
+  margin: 32px 0 16px;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).dark-panel, .doclap-search-results .dark-panel, .doclap-not-found .dark-panel, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).closing, .doclap-search-results .closing, .doclap-not-found .closing {
   background: var(--doclap-block-bg,var(--doclap-fg));
@@ -2116,7 +2116,7 @@ body {
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row {
   grid-template-columns: 180px 1fr 48px;
   align-items: center;
-  padding: 34px 0;
+  padding: 32px 0;
   border-color: var(--doclap-fg);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in oklch,var(--doclap-fg) 25%,transparent);
@@ -2232,13 +2232,13 @@ body {
   gap: 24px;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 30px;
+  margin-top: 0;
   font: 12px var(--doclap-font-mono);
   color: var(--doclap-block-text,var(--doclap-muted));
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover, .doclap-search-results .article-cover, .doclap-not-found .article-cover {
   min-height: 460px;
-  margin-top: 45px;
+  margin-top: 32px;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover .art-word, .doclap-search-results .article-cover .art-word, .doclap-not-found .article-cover .art-word {
   font-size: clamp(70px,12vw,180px);
@@ -2246,11 +2246,11 @@ body {
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
   grid-template-columns: 240px minmax(0,780px);
   justify-content: space-between;
-  gap: 70px;
+  gap: 56px;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc, .doclap-search-results .toc, .doclap-not-found .toc {
   position: sticky;
-  top: 125px;
+  top: 128px;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc a, .doclap-search-results .toc a, .doclap-not-found .toc a {
   display: block;
@@ -2295,7 +2295,7 @@ body {
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote {
   font: italic 36px/1.5 var(--doclap-font-display);
-  margin: 45px 0;
+  margin: 40px 0;
   padding: 32px 0;
   border-block: 1px solid var(--doclap-fg);
   @supports (color: color-mix(in lab, red, red)) {
@@ -2404,13 +2404,13 @@ body {
 @media (max-width:1150px) {
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
     grid-template-columns: 180px minmax(0,1fr);
-    gap: 45px;
+    gap: 48px;
   }
 }
 @media (max-width:920px) {
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .body-grid, .doclap-search-results .body-grid, .doclap-not-found .body-grid, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-grid, .doclap-search-results .contact-grid, .doclap-not-found .contact-grid, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post, .doclap-search-results .featured-post, .doclap-not-found .featured-post, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
     grid-template-columns: 1fr;
-    gap: 45px;
+    gap: 48px;
   }
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc, .doclap-search-results .toc, .doclap-not-found .toc {
     position: static;
@@ -2605,7 +2605,7 @@ body {
 @media (max-width:920px) {
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .body-grid, .doclap-search-results .body-grid, .doclap-not-found .body-grid, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-grid, .doclap-search-results .contact-grid, .doclap-not-found .contact-grid, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .featured-post, .doclap-search-results .featured-post, .doclap-not-found .featured-post, :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
     grid-template-columns: 1fr;
-    gap: 45px;
+    gap: 48px;
   }
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc, .doclap-search-results .toc, .doclap-not-found .toc {
     position: static;
@@ -2776,6 +2776,304 @@ body {
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .feature h3, .doclap-search-results .feature h3, .doclap-not-found .feature h3 {
     font-size: 32px;
   }
+}
+:is(.doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes).section {
+  padding-block: 64px;
+}
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose :is(ul, ol), .doclap-search-results .prose :is(ul, ol), .doclap-not-found .prose :is(ul, ol) {
+  margin: 0 0 24px;
+  padding-inline-start: 1.2em;
+}
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose li + li, .doclap-search-results .prose li + li, .doclap-not-found .prose li + li {
+  margin-top: 8px;
+}
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose .wp-block-separator, .doclap-search-results .prose .wp-block-separator, .doclap-not-found .prose .wp-block-separator {
+  margin: 48px 0;
+}
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose :is(figure, .wp-block-image, .wp-block-table), .doclap-search-results .prose :is(figure, .wp-block-image, .wp-block-table), .doclap-not-found .prose :is(figure, .wp-block-image, .wp-block-table) {
+  margin: 0 0 32px;
+}
+.doclap-scope .prose .wp-block-table {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.doclap-scope .prose .wp-block-table table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.doclap-scope .prose .wp-block-table :is(th, td) {
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  border: 0;
+  border-bottom: 1px solid var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-bottom: 1px solid color-mix(in oklch,var(--doclap-fg) 15%,transparent);
+  }
+}
+.doclap-scope .prose .wp-block-table thead th {
+  font: 11px/1.5 var(--doclap-font-mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--doclap-block-text,var(--doclap-muted));
+  border-bottom: 1px solid var(--doclap-fg);
+  white-space: nowrap;
+}
+.doclap-scope .prose .wp-block-table tbody th {
+  font-weight: 600;
+  color: var(--doclap-block-text,var(--doclap-fg));
+}
+.doclap-scope .prose .wp-block-table tbody tr:hover {
+  background: var(--doclap-fg-soft);
+}
+.doclap-scope .prose .wp-block-table tbody tr:last-child :is(th, td) {
+  border-bottom-color: var(--doclap-fg);
+}
+.doclap-scope .prose .wp-block-table figcaption {
+  font-size: 12px;
+  color: var(--doclap-block-text,var(--doclap-muted));
+  margin-top: 12px;
+}
+.doclap-comments.section {
+  padding-block: 64px;
+}
+.doclap-comments > .wp-block-comments {
+  max-width: var(--doclap-container);
+  margin-inline: auto;
+  padding-inline: var(--doclap-gutter);
+}
+.doclap-page-content > :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section + .doclap-comments, .doclap-page-content > .doclap-comments + :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section {
+  margin-block-start: 0;
+  border-top-color: var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-top-color: color-mix(in oklch,var(--doclap-fg) 18%,transparent);
+  }
+}
+.doclap-comments .wp-block-comments-title {
+  font-family: var(--doclap-font-display);
+  font-size: var(--doclap-fs-h2);
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  color: var(--doclap-block-heading,var(--doclap-fg));
+  margin: 0 0 32px;
+}
+.doclap-comments .wp-block-comment-template {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.doclap-comments .wp-block-comment-template > li {
+  margin: 0;
+  padding: 28px 0;
+  border-top: 1px solid var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-top: 1px solid color-mix(in oklch,var(--doclap-fg) 15%,transparent);
+  }
+}
+.doclap-comments .wp-block-comment-template > li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.doclap-comments .wp-block-comment-template ol {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0 0 0 28px;
+  border-inline-start: 1px solid var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-inline-start: 1px solid color-mix(in oklch,var(--doclap-fg) 12%,transparent);
+  }
+}
+.doclap-comments .wp-block-comment-template ol > li {
+  border-top: 0;
+  padding: 20px 0 0;
+}
+.doclap-comments .wp-block-columns {
+  display: grid;
+  grid-template-columns: 56px minmax(0,1fr);
+  gap: 20px;
+  align-items: start;
+  margin: 0;
+}
+.doclap-comments .wp-block-column {
+  flex-basis: auto;
+  min-width: 0;
+}
+.doclap-comments .wp-block-avatar img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: grayscale(1);
+  transition: filter .5s;
+}
+.doclap-comments li:hover > .wp-block-columns .wp-block-avatar img {
+  filter: grayscale(0);
+}
+.doclap-comments .wp-block-comment-author-name {
+  font-family: var(--doclap-font-display);
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+  color: var(--doclap-block-heading,var(--doclap-fg));
+}
+.doclap-comments .wp-block-comment-author-name a {
+  color: inherit;
+  text-decoration: none;
+}
+.doclap-comments .wp-block-comment-date {
+  margin-top: 6px;
+  font: 11px/1.6 var(--doclap-font-mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--doclap-block-text,var(--doclap-muted));
+}
+.doclap-comments .wp-block-comment-date a {
+  color: inherit;
+  text-decoration: none;
+}
+.doclap-comments .wp-block-comment-date a:hover {
+  text-decoration: underline;
+}
+.doclap-comments .wp-block-comment-content {
+  margin-top: 14px;
+  max-width: 68ch;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--doclap-block-text,var(--doclap-fg));
+}
+.doclap-comments .wp-block-comment-content p {
+  margin: 0 0 16px;
+}
+.doclap-comments .wp-block-comment-content p:last-child {
+  margin-bottom: 0;
+}
+.doclap-comments .comment-reply-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  padding-bottom: 2px;
+  min-height: 0;
+  font: 11px/1.6 var(--doclap-font-mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--doclap-fg);
+  color: var(--doclap-fg);
+}
+.doclap-comments .comment-reply-link:hover {
+  background: var(--doclap-fg-soft);
+}
+.doclap-comments .comment-awaiting-moderation {
+  display: inline-block;
+  margin-top: 10px;
+  font: 11px/1.6 var(--doclap-font-mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--doclap-accent);
+}
+.doclap-comments .comment-edit-link {
+  font: 11px/1.6 var(--doclap-font-mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.doclap-comments .comment-respond {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-top: 1px solid color-mix(in oklch,var(--doclap-fg) 15%,transparent);
+  }
+}
+.doclap-comments .comment-reply-title {
+  font-family: var(--doclap-font-display);
+  font-size: clamp(24px,2.6vw,34px);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--doclap-block-heading,var(--doclap-fg));
+}
+.doclap-comments .comment-reply-title small a {
+  font: 11px/1.6 var(--doclap-font-mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--doclap-fg);
+}
+.doclap-comments .comment-notes {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--doclap-block-text,var(--doclap-muted));
+}
+.doclap-comments .comment-form label {
+  font: 11px/1.6 var(--doclap-font-mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--doclap-block-text,var(--doclap-muted));
+}
+.doclap-comments .comment-form :is(input:not([type=submit]):not([type=checkbox]), textarea) {
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-bottom: 1px solid color-mix(in oklch,var(--doclap-fg) 40%,transparent);
+  }
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  max-width: none;
+  font: 16px/1.6 var(--doclap-font-body);
+  color: var(--doclap-fg);
+}
+.doclap-comments .comment-form :is(input:not([type=submit]):not([type=checkbox]), textarea):focus {
+  border-bottom-color: var(--doclap-fg);
+  outline: none;
+  box-shadow: none;
+}
+.doclap-comments .comment-form .comment-form-cookies-consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.doclap-comments .comment-form .comment-form-cookies-consent label {
+  font: 13px/1.7 var(--doclap-font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--doclap-block-text,var(--doclap-muted));
+}
+.doclap-comments .comment-form input[type=submit] {
+  min-height: 48px;
+  padding: 16px 26px;
+  border: 1px solid var(--doclap-accent);
+  border-radius: 0;
+  background: var(--doclap-accent);
+  color: var(--doclap-fg);
+  font: 12px/1 var(--doclap-font-mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .25s,color .25s,border-color .25s;
+}
+.doclap-comments .comment-form input[type=submit]:hover {
+  background: var(--doclap-fg);
+  border-color: var(--doclap-fg);
+  color: var(--doclap-bg);
+}
+.doclap-comments .nextora-tiptap-shell {
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-bottom: 1px solid color-mix(in oklch,var(--doclap-fg) 40%,transparent);
+  }
+  background: transparent;
+  box-shadow: none;
+}
+.doclap-comments .nextora-tiptap-shell:focus-within {
+  border-bottom-color: var(--doclap-fg);
+  box-shadow: none;
+  outline: none;
 }
 .doclap-scope .hero {
   padding: 28px 0 24px;

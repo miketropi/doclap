@@ -44,7 +44,7 @@ Surfaces and their blocks:
   | Contact Us | `doclap/inner-hero`, `doclap/contact-form` |
   | Frequently Asked Questions | `doclap/inner-hero`, `doclap/faq-list`, `doclap/closing-cta` |
   | Archive and Blog Home | `doclap/inner-hero`, `doclap/notes-archive`, `doclap/closing-cta` |
-  | Single (note detail) | `doclap/note-hero`, `doclap/note-cover`, `doclap/note-content`, `doclap/related-notes`, `doclap/closing-cta` |
+  | Single (note detail) | `doclap/note-hero`, `doclap/note-cover`, `doclap/note-content`, `doclap/related-notes`, the comment thread, `doclap/closing-cta` |
 
 * Shared sections — `doclap/inner-hero` (breadcrumb, page title and lead) and
   `doclap/closing-cta` (eyebrow, heading and circular link). Both are reusable on
@@ -65,7 +65,10 @@ Surfaces and their blocks:
   progress), `doclap/note-cover` (metadata plus the featured image or the
   accessible fallback artwork), `doclap/note-content` (table of contents,
   save/copy tools, the filtered note body, disclaimer and archive link) and
-  `doclap/related-notes` (same-category-first related notes).
+  `doclap/related-notes` (same-category-first related notes). The discussion that
+  closes the article is WordPress' own Comments block — title, thread with nested
+  replies and the comment form — inside a `.doclap-comments` section, so it stays
+  editable with core controls and is styled by the theme.
 * Search — `doclap/search-results` (native WordPress search query).
 * 404 — `doclap/not-found`.
 * Shared header — `doclap/site-header` (sticky bar, WordPress menu with hover or
@@ -426,6 +429,23 @@ Assets:
   page`) carry the previous copy, and the templates place the same sections
   directly, so every section of every page is independently selectable in List
   View.
+* The note-detail surface was retightened against the 8-point scale in
+  `00-tokens.css` (the inner-page layer had drifted to 30 / 45 / 65 / 70 / 90):
+  the four article bands run on 64px padding, the metadata sits under the band
+  padding instead of on its own 30px, the cover is one step below it, the table of
+  contents column is 56px from the body, and the article's own rhythm is now
+  16 / 24 / 32 / 40 / 48 / 56 instead of 18 / 28 / 32 / 45 / 65. Lists, separators
+  and figures that arrive with a post's content are styled on the same scale.
+* A post's own tables — which previously fell through to the browser defaults —
+  follow the data-table treatment `ds-table` already used: compact 8×10px cells,
+  a mono uppercase header row on a full-strength rule, hairline body rows, a
+  stronger first column and a row state on hover, with horizontal scrolling when
+  the table is wider than the prose column.
+* The single-post template now closes the article with the discussion — the
+  Comments block (title, thread with nested replies and the form) in a
+  `.doclap-comments` section that shares the article rhythm and the page
+  container, with the theme's own type, hairlines, avatars, reply link and field
+  and button treatment. `doclap/post-detail-page` composes it the same way.
 * Every section block gained the optional **Colours** panel — background, heading
   text and body text — stored as `--doclap-block-bg`, `--doclap-block-heading` and
   `--doclap-block-text` on the block root, so a section's palette can be changed

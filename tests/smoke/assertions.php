@@ -560,6 +560,21 @@ foreach ( $doclap_template_patterns as $doclap_template => $doclap_pattern ) {
 	}
 }
 
+// The post template closes the article with the discussion — the comment list,
+// its title, the form and the pagination the stylesheet dresses — placed before
+// the closing invitation.
+$doclap_single = (string) file_get_contents( DOCLAP_DIR . '/templates/single.html' );
+
+foreach ( array( 'wp:comments', 'wp:comments-title', 'wp:comment-template', 'wp:post-comments-form', 'doclap-comments' ) as $doclap_fragment ) {
+	if ( ! str_contains( $doclap_single, $doclap_fragment ) ) {
+		doclap_smoke_fail( 'templates/single.html lost its discussion section: ' . $doclap_fragment );
+	}
+}
+
+if ( strpos( $doclap_single, 'doclap-comments' ) > strpos( $doclap_single, 'doclap/closing-cta' ) ) {
+	doclap_smoke_fail( 'templates/single.html places the discussion after the closing invitation' );
+}
+
 // The posts index and the generic archive render the same composition, so the
 // two templates cannot drift apart.
 if (

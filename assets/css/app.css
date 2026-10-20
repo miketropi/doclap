@@ -4508,6 +4508,11 @@ body {
   background: var(--doclap-fg-soft);
   color: var(--doclap-fg);
 }
+@media (min-width:1024px) {
+  .doclap-scope .doclap-menu>.nav-group-mega>.doclap-submenu-indicator {
+    display: inline-flex;
+  }
+}
 @media (min-width:1024px) and (hover:hover) and (pointer:fine) {
   .doclap-scope .doclap-menu .doclap-submenu-toggle {
     display: none;

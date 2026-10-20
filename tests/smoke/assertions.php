@@ -1544,6 +1544,32 @@ try {
 		doclap_smoke_fail( 'the enabled item without panel content was marked as a mega item: ' . $doclap_notes_tag );
 	}
 
+	/*
+	 * Every item that owns children carries exactly one decorative indicator,
+	 * wherever the item came from: an ordinary parent gets it with its submenu, a
+	 * mega item gets it from the item itself because the plugin replaces that
+	 * submenu with a panel. Without it a mega item has no affordance at all on the
+	 * desktop row, where the plugin hides its own control.
+	 */
+	$doclap_indicators = substr_count( $doclap_html, 'doclap-submenu-indicator' );
+
+	if ( 3 !== $doclap_indicators ) {
+		doclap_smoke_fail( 'the header rendered ' . $doclap_indicators . ' decorative indicators instead of 3' );
+	}
+
+	$doclap_mega_at      = strpos( $doclap_html, 'has-mega-menu' );
+	$doclap_panel_at     = strpos( $doclap_html, 'beplus-vmn-mega-panel' );
+	$doclap_indicator_at = false === $doclap_mega_at ? false : strpos( $doclap_html, 'doclap-submenu-indicator', $doclap_mega_at );
+
+	if (
+		false === $doclap_mega_at
+		|| false === $doclap_panel_at
+		|| false === $doclap_indicator_at
+		|| $doclap_indicator_at > $doclap_panel_at
+	) {
+		doclap_smoke_fail( 'the mega item renders no decorative indicator ahead of its panel' );
+	}
+
 	if ( doclap_smoke_mega_plugin_active() ) {
 		$doclap_work_tag = doclap_smoke_item_tag( $doclap_html, 'Work' );
 

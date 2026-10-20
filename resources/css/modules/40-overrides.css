@@ -371,6 +371,16 @@
 .doclap-scope .topnav nav .sub-menu .doclap-submenu-toggle {padding:0 4px;min-height:44px}
 .doclap-scope .topnav nav .sub-menu a:is(:hover,
 :focus-visible) {background:var(--doclap-fg-soft);color:var(--doclap-fg)}
+@media(min-width:1024px){
+/*
+ * The decorative chevron on a mega item's row: the plugin hides its own control at
+ * this width, so this is the row's only affordance for the panel. It is shown for
+ * every pointer type, unlike the ordinary one below, because a mega panel opens on
+ * hover, focus or a click on a `#` link rather than through a compact-width
+ * control.
+ */
+.doclap-scope .doclap-menu>.nav-group-mega>.doclap-submenu-indicator {display:inline-flex}
+}
 /*
  * Hover-capable pointers get a hover/focus submenu, so the chevron is a
  * decorative indicator and the disclosure control is not rendered. The `::after`

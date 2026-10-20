@@ -47,7 +47,10 @@ final class Doclap_Site_Header_Menu_Walker extends Walker_Nav_Menu {
 	/**
 	 * Item that owns the submenu `start_lvl()` is about to open.
 	 *
-	 * @var array{id: int, title: string}|null
+	 * `mega` says the plugin replaced this item's submenu with a panel, which is
+	 * why its indicator is already written by `start_el()`.
+	 *
+	 * @var array{id: int, title: string, mega: bool}|null
 	 */
 	private ?array $submenu_owner = null;
 
@@ -110,8 +113,12 @@ final class Doclap_Site_Header_Menu_Walker extends Walker_Nav_Menu {
 		$id     = $this->submenu_id( $owner['id'] );
 
 		$output .= $indent;
-		$output .= '<span class="doclap-submenu-indicator" aria-hidden="true">' . doclap_icon( 'chevron-down' ) . '</span>';
-		$output .= $indent;
+
+		if ( empty( $owner['mega'] ) ) {
+			$output .= '<span class="doclap-submenu-indicator" aria-hidden="true">' . doclap_icon( 'chevron-down' ) . '</span>';
+			$output .= $indent;
+		}
+
 		$output .= '<button type="button" class="doclap-submenu-toggle" aria-expanded="false"';
 		$output .= ' aria-controls="' . esc_attr( $id ) . '"';
 		$output .= ' aria-label="' . esc_attr( $label ) . '">';
@@ -211,9 +218,23 @@ final class Doclap_Site_Header_Menu_Walker extends Walker_Nav_Menu {
 
 		$title = (string) apply_filters( 'nav_menu_item_title', $raw_title, $item, $args, $depth );
 
+		/*
+		 * A mega item never reaches {@see self::start_lvl()}: the panel plugin
+		 * suppresses the ordinary submenu and streams the panel instead, so the
+		 * decorative indicator has to be written here or the item has no affordance
+		 * at all on a desktop row, where the plugin's own control is hidden.
+		 * `start_lvl()` skips the indicator for the same item, so the two paths can
+		 * never both write one.
+		 */
+		$is_mega = 0 === $depth && (
+			in_array( 'has-mega-menu', $classes, true )
+			|| in_array( 'nav-group-mega', $classes, true )
+		);
+
 		$this->submenu_owner = array(
 			'id'    => (int) $item->ID,
 			'title' => wp_strip_all_tags( $title ),
+			'mega'  => $is_mega,
 		);
 
 		$atts = array(
@@ -246,6 +267,11 @@ final class Doclap_Site_Header_Menu_Walker extends Walker_Nav_Menu {
 		$after       = isset( $args->after ) ? (string) $args->after : '';
 
 		$output .= $before . '<a' . $attributes . '>' . $link_before . $title . $link_after . '</a>' . $after;
+
+		if ( $is_mega ) {
+			$output .= "\n" . str_repeat( "\t", $depth + 1 );
+			$output .= '<span class="doclap-submenu-indicator" aria-hidden="true">' . doclap_icon( 'chevron-down' ) . '</span>';
+		}
 	}
 
 	/**

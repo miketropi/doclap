@@ -2,4 +2,4 @@
 
 declare( strict_types=1 );
 
-return array( 'dependencies' => array(), 'version' => '1792488910812' );
+return array( 'dependencies' => array(), 'version' => '1792489935056' );

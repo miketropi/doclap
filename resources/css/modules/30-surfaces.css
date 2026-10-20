@@ -605,10 +605,16 @@ html {scroll-behavior:auto}
 .doclap-not-found .article-meta{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-top:0;font:12px var(--doclap-font-mono);color:var(--doclap-block-text,var(--doclap-muted))}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover,
 .doclap-search-results .article-cover,
-.doclap-not-found .article-cover{min-height:460px;margin-top:32px}
+.doclap-not-found .article-cover{display:flex;align-items:center;justify-content:center;background:black;min-height:460px;margin-top:32px}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover .art-word,
 .doclap-search-results .article-cover .art-word,
 .doclap-not-found .article-cover .art-word{font-size:clamp(70px,12vw,180px)}
+/* The cover centres its content, so an image keeps its own size against the black
+   mat while the fallback artwork — which is a full-bleed typographic panel, not a
+   picture — stretches back over the whole cover. */
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover .artwork,
+.doclap-search-results .article-cover .artwork,
+.doclap-not-found .article-cover .artwork{width:100%;align-self:stretch}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout,
 .doclap-search-results .article-layout,
 .doclap-not-found .article-layout{grid-template-columns:240px minmax(0,900px);width:1400px;max-width:100%;margin-inline:auto;justify-content:space-between;gap:56px}

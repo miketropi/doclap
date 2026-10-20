@@ -2237,11 +2237,19 @@ body {
   color: var(--doclap-block-text,var(--doclap-muted));
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover, .doclap-search-results .article-cover, .doclap-not-found .article-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
   min-height: 460px;
   margin-top: 32px;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover .art-word, .doclap-search-results .article-cover .art-word, .doclap-not-found .article-cover .art-word {
   font-size: clamp(70px,12vw,180px);
+}
+:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-cover .artwork, .doclap-search-results .article-cover .artwork, .doclap-not-found .article-cover .artwork {
+  width: 100%;
+  align-self: stretch;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
   grid-template-columns: 240px minmax(0,900px);

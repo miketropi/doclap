@@ -77,11 +77,14 @@ body {overflow-x:clip}
 .doclap-scope .eyebrow {font-size:13px;color:var(--doclap-block-text,var(--doclap-muted))}
 .doclap-scope .section-head .meta {font-size:12px}
 .doclap-scope .works {gap:40px}
-.doclap-scope .work-card {display:block;width:100%;min-width:0;text-align:left;background:none;border:none;padding:0;cursor:pointer}
+.doclap-scope .work-card {display:block;width:100%;min-width:0;text-align:left;background:none;border:none;padding:0;color:inherit}
+/* Only a card that has media to open is a control; the rest is a plain article. */
+.doclap-scope .work-card[data-dialog] {cursor:pointer}
 .doclap-scope .work-card:nth-child(2) {margin-top:100px}
 .doclap-scope .work-image {aspect-ratio:1.15;background:var(--doclap-surface);position:relative;overflow:hidden;border:1px solid color-mix(in oklch,var(--doclap-fg) 12%,transparent)}
-.doclap-scope .work-image canvas {display:block;width:100%;height:100%;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-.doclap-scope .work-card:hover canvas {transform:scale(1.07) rotate(-2deg)}
+.doclap-scope .work-image :is(img, video) {display:block;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.doclap-scope .work-card:is(:hover,
+:focus-visible) :is(img, video) {transform:scale(1.07) rotate(-2deg)}
 .doclap-scope .project-open {position:absolute;right:24px;bottom:24px;background:var(--doclap-bg);border:1px solid var(--doclap-fg);border-radius:50%;width:56px;height:56px;display:grid;place-items:center;transition:transform .5s,background .3s,color .3s}
 .doclap-scope .work-card:hover .project-open {background:var(--doclap-fg);color:var(--doclap-bg);transform:rotate(45deg)}
 .doclap-scope .work-info {display:flex;justify-content:space-between;gap:20px;padding-top:24px;align-items:baseline}
@@ -164,7 +167,6 @@ body {overflow-x:clip}
 .doclap-scope .dialog-head h2 {font-size:40px}
 .doclap-scope .close {display:grid;place-items:center;width:44px;height:44px;background:transparent;border:1px solid var(--doclap-border)}
 .doclap-scope .close:hover {background:var(--doclap-fg);color:var(--doclap-bg)}
-.doclap-scope .dialog-preview {width:100%;height:350px;background:var(--doclap-surface)}
 .doclap-scope .dialog-copy,
 .doclap-scope .article-body {font-size:17px;line-height:1.9}
 .doclap-scope .control-row {display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:24px;font-size:14px}
@@ -266,7 +268,6 @@ body {overflow-x:clip}
 .doclap-scope .pagefoot .row-between {display:grid;gap:22px}
 .doclap-scope .dialog-inner {padding:24px}
 .doclap-scope .dialog-head h2 {font-size:31px}
-.doclap-scope .dialog-preview {height:260px}
 .doclap-scope .dialog-copy,
 .doclap-scope .article-body {font-size:16px}
 .doclap-scope .control-row {gap:12px}

@@ -27,7 +27,7 @@ Surfaces and their blocks:
   | --- | --- |
   | `doclap/home-hero` | Hero sculpture, two views, credit line |
   | `doclap/home-disciplines` | Discrete design, motion and technology band |
-  | `doclap/home-work` | Two self-initiated canvas studies and their dialogs |
+  | `doclap/home-work` | Project cards showing an image or a video, and their media dialogs |
   | `doclap/home-about` | Craft introduction and service list |
   | `doclap/home-process` | Numbered process steps |
   | `doclap/home-team` | Collaboration heading, studio image, role cards |
@@ -132,11 +132,13 @@ conventions apply across all eighteen blocks.
   means updating the matching header, footer and call-to-action links with it.
 * **Repeater controls.** List fields — hero views, cards, process steps, note
   links, filter groups, questions and navigation links — are edited as a compact
-  ordered list showing each item's position and label, with **Move up**,
-  **Move down**, **Duplicate**, **Edit** and **Remove** actions. **Add**,
-  **Edit** and **Duplicate** open the item in a modal editor: **Done** commits the
-  draft once, while **Cancel**, Escape and the modal close button discard it and
-  change nothing. Closing the editor returns focus to the control that opened it.
+  ordered list showing each item's position and label. The row itself opens the
+  item editor, and the four list mutations — **Move up**, **Move down**,
+  **Duplicate** and **Remove** — sit in that row's more-options menu, so the label
+  keeps the row's width and every action stays a 44px target. **Add**, the row and
+  **Duplicate** open the item in a modal editor: **Done** commits the draft once,
+  while **Cancel**, Escape and the modal close button discard it and change
+  nothing. Closing the editor returns focus to the row that opened it.
   Removing an item asks for no second confirmation — the list action is explicit
   and the block editor's history provides undo. Lists whose layout depends on a
   fixed count declare a minimum number of items, and remove is disabled at that
@@ -337,9 +339,9 @@ Assets:
   entrances for sections, cards and rows, per-grapheme soft-blur replay on links,
   buttons and headings for both pointer hover and keyboard focus, and magnetic
   round controls. `prefers-reduced-motion: reduce` is a complete static mode.
-* Repeater list fields are edited as a compact ordered list with a modal item
-  editor — **Add**, **Edit** and **Duplicate** open it, **Done** commits once, and
-  **Cancel** or Escape discards the draft.
+* Repeater list fields are edited as a bordered ordered list whose rows open a
+  modal item editor — **Add**, the row itself and **Duplicate** open it, **Done**
+  commits once, and **Cancel** or Escape discards the draft.
 * Headings, leads, narrative paragraphs, statements, answers, summaries and
   call-to-action labels are visual rich-text fields (bold, italic, link) sanitized
   with `wp_kses_post()` on output, edited in place where a value maps to one

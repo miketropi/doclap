@@ -1,318 +1,102 @@
 /**
  * Home — Work view script.
  *
- * Owns the two Canvas 2D experiment studies: the card previews, the modal
- * dialogs, tempo, pause/resume, the focus trap and opener focus restoration.
- * This bundle must never import `three` — the sculpture belongs to
- * `blocks/home-hero/view.ts`.
+ * Ambient playback for the project videos, plus the media dialog: openers, close
+ * and cancel handling, the focus trap, focus restoration, and keeping the card
+ * and the dialog on the same frame so a piece never plays twice at once.
+ *
+ * Autoplay is script-owned on purpose. A `<video autoplay>` tag cannot be skipped
+ * for `prefers-reduced-motion`, and when this bundle never runs the card keeps its
+ * poster and its native controls stay usable instead of a card that blanks out.
  *
  * Lifecycle contract (booted through `resources/ts/runtime/blocks.ts`):
  *   * one boot per root, so a duplicated block never double-binds its listeners;
- *   * exactly one scheduled animation frame per canvas;
- *   * a canvas inside a closed dialog is inactive and consumes no frames;
- *   * visibility and reduced-motion changes stop and restart every loop;
- *   * removing the root disconnects its observers and listeners.
+ *   * reduced motion stops every player and leaves the poster in place;
+ *   * a hidden tab, and an open dialog, pause the ambient card videos;
+ *   * removing the root pauses every player and removes every listener.
  */
 
 import { bootBlocks } from "../../resources/ts/runtime/blocks";
-import { readString } from "../../resources/ts/runtime/strings";
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-interface Loop {
-  canvas: HTMLCanvasElement;
-  kind: string;
-  active: boolean;
-  paused: boolean;
-  tempo: number;
-  frame: number;
-  running: boolean;
-}
-
-interface LoopControl {
-  loop: Loop;
-  start: () => void;
-  stop: () => void;
-  setActive: (value: boolean) => void;
-  destroy: () => void;
-}
-
 /**
- * Paint one frame of an experiment study.
- *
- * @param context 2D context of the target canvas.
- * @param loop    Loop state, for size, tempo and kind.
- * @param time    High resolution timestamp from requestAnimationFrame.
- */
-function paint(context: CanvasRenderingContext2D, loop: Loop, time: number): void {
-  const rect = loop.canvas.getBoundingClientRect();
-  const density = Math.min(devicePixelRatio, 2);
-  const width = Math.max(1, Math.round(rect.width * density));
-  const height = Math.max(1, Math.round(rect.height * density));
-
-  if (loop.canvas.width !== width || loop.canvas.height !== height) {
-    loop.canvas.width = width;
-    loop.canvas.height = height;
-  }
-
-  context.clearRect(0, 0, width, height);
-
-  const seconds = time * 0.001 * loop.tempo;
-
-  if ("orbit" === loop.kind) {
-    context.fillStyle = "#17191d";
-    context.fillRect(0, 0, width, height);
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-    context.font = `${Math.max(18, width / 15)}px serif`;
-
-    for (let index = 0; index < 8; index++) {
-      const angle = seconds * (0.18 + index * 0.025) + (index * Math.PI) / 4;
-      const radius = Math.min(width, height) * (0.16 + index * 0.025);
-      context.save();
-      context.translate(
-        width / 2 + Math.cos(angle) * radius,
-        height / 2 + Math.sin(angle) * radius,
-      );
-      context.rotate(angle + Math.PI / 2);
-      context.fillStyle = `rgba(242,238,227,${0.25 + index * 0.08})`;
-      context.fillText("TYPE · ORBIT", 0, 0);
-      context.restore();
-    }
-
-    return;
-  }
-
-  context.fillStyle = "#ecebe6";
-  context.fillRect(0, 0, width, height);
-  context.lineWidth = Math.max(1, density);
-
-  for (let row = 0; row < 22; row++) {
-    context.beginPath();
-
-    for (let x = 0; x <= width; x += 8 * density) {
-      const y =
-        (height * (row + 1)) / 23 +
-        Math.sin((x / width) * 10 + seconds * 1.4 + row * 0.42) * height * 0.025 +
-        Math.cos((x / width) * 4 - seconds + row) * height * 0.012;
-
-      if (0 === x) {
-        context.moveTo(x, y);
-      } else {
-        context.lineTo(x, y);
-      }
-    }
-
-    context.strokeStyle = `rgba(20,22,25,${0.25 + row * 0.025})`;
-    context.stroke();
-  }
-}
-
-/**
- * Build the animation loop for one experiment canvas.
- *
- * @param canvas Target canvas.
- * @param kind   Study kind, `flow` or `orbit`.
- *
- * @return Loop controller.
- */
-function createLoop(canvas: HTMLCanvasElement, kind: string): LoopControl {
-  const context = canvas.getContext("2d");
-  const loop: Loop = {
-    canvas,
-    kind,
-    active: false,
-    paused: false,
-    tempo: 1,
-    frame: 0,
-    running: false,
-  };
-
-  const allowed = (): boolean =>
-    loop.active && !loop.paused && !document.hidden && !reduced.matches;
-
-  const draw = (time: number): void => {
-    loop.frame = 0;
-
-    if (!loop.running) {
-      return;
-    }
-
-    if (!context || !allowed()) {
-      loop.running = false;
-      return;
-    }
-
-    paint(context, loop, time);
-
-    if (loop.running) {
-      loop.frame = requestAnimationFrame(draw);
-    }
-  };
-
-  const start = (): void => {
-    if (loop.running || loop.frame || !allowed()) {
-      return;
-    }
-
-    loop.running = true;
-    loop.frame = requestAnimationFrame(draw);
-  };
-
-  const stop = (): void => {
-    loop.running = false;
-
-    if (loop.frame) {
-      cancelAnimationFrame(loop.frame);
-      loop.frame = 0;
-    }
-  };
-
-  const setActive = (value: boolean): void => {
-    loop.active = value;
-
-    if (value) {
-      start();
-    } else {
-      stop();
-    }
-  };
-
-  const observer = new IntersectionObserver(
-    ([entry]) => setActive(entry.isIntersecting),
-    { threshold: 0.01 },
-  );
-  observer.observe(canvas);
-
-  return {
-    loop,
-    start,
-    stop,
-    setActive,
-    destroy: () => {
-      stop();
-      observer.disconnect();
-    },
-  };
-}
-
-/**
- * Wire the cards, dialogs and canvas studies of one work root.
+ * Wire the cards and their media dialogs.
  *
  * @param root Work block root.
  */
 function init(root: HTMLElement): () => void {
-  const loops = new Map<HTMLCanvasElement, LoopControl>();
+  const cards = Array.from(
+    root.querySelectorAll<HTMLButtonElement>("[data-dialog]"),
+  );
+  const dialogs = Array.from(
+    root.querySelectorAll<HTMLDialogElement>("dialog[id]"),
+  );
 
-  root.querySelectorAll<HTMLCanvasElement>("[data-canvas]").forEach((canvas) => {
-    loops.set(canvas, createLoop(canvas, canvas.dataset.canvas || "flow"));
-  });
+  const videoIn = (element: Element | null): HTMLVideoElement | null =>
+    element instanceof HTMLElement
+      ? element.querySelector<HTMLVideoElement>("video")
+      : null;
 
-  const onVisibility = (): void => {
-    loops.forEach((control) => {
-      if (document.hidden) {
-        control.stop();
+  const play = (video: HTMLVideoElement): void => {
+    void video.play().catch(() => {
+      // Refused (data saver, power saving): the poster stays up.
+    });
+  };
+
+  /*
+   * The ambient cards play only while nothing else is showing: an open dialog or
+   * a hidden tab pauses them, and `prefers-reduced-motion` leaves the poster.
+   */
+  let openDialogs = 0;
+
+  const canPlayAmbient = (): boolean =>
+    0 === openDialogs && !reduced.matches && !document.hidden;
+
+  const syncAmbient = (): void => {
+    cards.forEach((card) => {
+      const video = videoIn(card);
+
+      if (!video) {
+        return;
+      }
+
+      if (canPlayAmbient()) {
+        play(video);
       } else {
-        control.start();
+        video.pause();
       }
     });
   };
 
-  const onReducedMotion = (): void => {
-    loops.forEach((control) => {
-      if (reduced.matches) {
-        control.stop();
-      } else {
-        control.start();
-      }
-    });
-  };
+  const onVisibility = (): void => syncAmbient();
+  const onReducedMotion = (): void => syncAmbient();
 
   document.addEventListener("visibilitychange", onVisibility);
   reduced.addEventListener("change", onReducedMotion);
 
-  const openers: Array<() => void> = [];
+  const listeners: Array<() => void> = [];
 
-  root.querySelectorAll<HTMLButtonElement>(".work-card").forEach((card) => {
-    const open = (): void => {
-      const dialog = root.querySelector<HTMLDialogElement>(`#${card.dataset.dialog}`);
-
-      if (!dialog) {
-        return;
-      }
-
-      dialog.showModal();
-      const canvas = dialog.querySelector<HTMLCanvasElement>("[data-canvas]");
-      canvas && loops.get(canvas)?.setActive(true);
-      dialog.querySelector<HTMLButtonElement>(".close")?.focus();
-    };
-
-    card.addEventListener("click", open);
-    openers.push(() => card.removeEventListener("click", open));
-  });
-
-  const dialogs: Array<() => void> = [];
-
-  root.querySelectorAll<HTMLDialogElement>(".experiment-dialog").forEach((dialog) => {
-    const canvas = dialog.querySelector<HTMLCanvasElement>("[data-canvas]");
-    const control = canvas ? loops.get(canvas) : undefined;
-    const tempo = dialog.querySelector<HTMLInputElement>(".tempo");
-    const output = dialog.querySelector<HTMLOutputElement>(".tempo-value");
-    const pause = dialog.querySelector<HTMLButtonElement>(".experiment-pause");
+  dialogs.forEach((dialog) => {
+    const opener = root.querySelector<HTMLButtonElement>(
+      `[data-dialog="${CSS.escape(dialog.id)}"]`,
+    );
+    const player = videoIn(dialog);
 
     const close = (): void => {
-      const opener = root.querySelector<HTMLButtonElement>(
-        `[data-dialog="${dialog.id}"]`,
-      );
       dialog.close();
       opener?.focus();
     };
 
-    const onClose = (): void => close();
+    const onCloseButton = (): void => close();
     const onCancel = (event: Event): void => {
       event.preventDefault();
       close();
     };
-    const onDialogClose = (): void => control?.setActive(false);
-
-    const onTempo = (): void => {
-      if (!tempo) {
-        return;
-      }
-
-      if (control) {
-        control.loop.tempo = Number(tempo.value);
-      }
-
-      if (output) {
-        output.value = `${Number(tempo.value).toFixed(1)}×`;
-      }
-    };
-
-    const onPause = (): void => {
-      if (!control) {
-        return;
-      }
-
-      control.loop.paused = !control.loop.paused;
-
-      if (pause) {
-        pause.setAttribute("aria-pressed", String(control.loop.paused));
-        const label = readString(
-          pause,
-          control.loop.paused ? "resume-label" : "pause-label",
-        );
-
-        if (label) {
-          pause.textContent = label;
-        }
-      }
-
-      if (control.loop.paused) {
-        control.stop();
-      } else {
-        control.start();
-      }
+    const onDialogClose = (): void => {
+      openDialogs = Math.max(0, openDialogs - 1);
+      player?.pause();
+      syncAmbient();
     };
 
     const onKeyDown = (event: KeyboardEvent): void => {
@@ -320,8 +104,9 @@ function init(root: HTMLElement): () => void {
         return;
       }
 
+      // `video` is included because a `<video controls>` is a focus stop of its own.
       const focusable = [
-        ...dialog.querySelectorAll<HTMLElement>("button,input,[href]"),
+        ...dialog.querySelectorAll<HTMLElement>("button,input,[href],video"),
       ].filter((element) => !element.hasAttribute("disabled"));
 
       if (!focusable.length) {
@@ -340,30 +125,66 @@ function init(root: HTMLElement): () => void {
       }
     };
 
-    dialog.querySelector(".close")?.addEventListener("click", onClose);
+    dialog.querySelector(".close")?.addEventListener("click", onCloseButton);
     dialog.addEventListener("cancel", onCancel);
     dialog.addEventListener("close", onDialogClose);
-    tempo?.addEventListener("input", onTempo);
-    pause?.addEventListener("click", onPause);
     dialog.addEventListener("keydown", onKeyDown);
 
-    dialogs.push(() => {
-      dialog.querySelector(".close")?.removeEventListener("click", onClose);
+    listeners.push(() => {
+      dialog.querySelector(".close")?.removeEventListener("click", onCloseButton);
       dialog.removeEventListener("cancel", onCancel);
       dialog.removeEventListener("close", onDialogClose);
-      tempo?.removeEventListener("input", onTempo);
-      pause?.removeEventListener("click", onPause);
       dialog.removeEventListener("keydown", onKeyDown);
     });
   });
 
+  cards.forEach((card) => {
+    const onOpen = (): void => {
+      const id = card.dataset.dialog ?? "";
+      const dialog = id ? root.querySelector<HTMLDialogElement>(`#${CSS.escape(id)}`) : null;
+
+      if (!dialog) {
+        return;
+      }
+
+      const cardVideo = videoIn(card);
+      const dialogVideo = videoIn(dialog);
+
+      openDialogs += 1;
+      syncAmbient();
+
+      if (cardVideo && dialogVideo) {
+        // Continue from where the card was, so the dialog is not a restart.
+        try {
+          if (cardVideo.readyState >= 1) {
+            dialogVideo.currentTime = cardVideo.currentTime;
+          }
+        } catch {
+          // Not seekable yet; the dialog simply starts at the beginning.
+        }
+      }
+
+      dialog.showModal();
+      dialog.querySelector<HTMLButtonElement>(".close")?.focus();
+
+      if (dialogVideo) {
+        play(dialogVideo);
+      }
+    };
+
+    card.addEventListener("click", onOpen);
+    listeners.push(() => card.removeEventListener("click", onOpen));
+  });
+
+  syncAmbient();
+
   return () => {
-    loops.forEach((control) => control.destroy());
-    loops.clear();
-    openers.forEach((off) => off());
-    dialogs.forEach((off) => off());
+    listeners.forEach((off) => off());
     document.removeEventListener("visibilitychange", onVisibility);
     reduced.removeEventListener("change", onReducedMotion);
+
+    cards.forEach((card) => videoIn(card)?.pause());
+    dialogs.forEach((dialog) => videoIn(dialog)?.pause());
   };
 }
 

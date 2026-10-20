@@ -637,6 +637,35 @@ foreach ( array( 'navItems', 'quickLinks', 'closePanelLabel' ) as $doclap_key ) 
 	}
 }
 
+// The work block shows the owner's own media, not the retired canvas studies:
+// every default project carries its media source and no canvas selector survives.
+$doclap_work_defaults = (array) ( $doclap_manifests['doclap/home-work']['attributes']['projects']['default'] ?? array() );
+
+if ( array() === $doclap_work_defaults ) {
+	doclap_smoke_fail( 'the home work block declares no default project' );
+}
+
+foreach ( $doclap_work_defaults as $doclap_project ) {
+	if ( ! is_array( $doclap_project ) ) {
+		doclap_smoke_fail( 'a default home work project is not an array' );
+		continue;
+	}
+
+	foreach ( array( 'mediaType', 'mediaId', 'mediaUrl', 'mediaAlt' ) as $doclap_key ) {
+		if ( ! array_key_exists( $doclap_key, $doclap_project ) ) {
+			doclap_smoke_fail( 'a default home work project declares no ' . $doclap_key );
+		}
+	}
+
+	if ( ! in_array( $doclap_project['mediaType'] ?? '', array( 'image', 'video' ), true ) ) {
+		doclap_smoke_fail( 'a default home work project declares an unknown media type' );
+	}
+}
+
+if ( str_contains( (string) file_get_contents( DOCLAP_DIR . '/blocks/home-work/block.json' ), '"canvas"' ) ) {
+	doclap_smoke_fail( 'the home work manifest still declares a canvas attribute' );
+}
+
 // Delivery configuration has exactly one home: the doclap_contact_settings option.
 $doclap_option_sources = array_merge(
 	(array) glob( DOCLAP_DIR . '/inc/*.php' ),

@@ -888,6 +888,9 @@ body {
   background: none;
   border: none;
   padding: 0;
+  color: inherit;
+}
+.doclap-scope .work-card[data-dialog] {
   cursor: pointer;
 }
 .doclap-scope .work-card:nth-child(2) {
@@ -903,13 +906,14 @@ body {
     border: 1px solid color-mix(in oklch,var(--doclap-fg) 12%,transparent);
   }
 }
-.doclap-scope .work-image canvas {
+.doclap-scope .work-image :is(img, video) {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
   transition: transform .9s cubic-bezier(.2,.7,.2,1);
 }
-.doclap-scope .work-card:hover canvas {
+.doclap-scope .work-card:is(:hover, :focus-visible) :is(img, video) {
   transform: scale(1.07) rotate(-2deg);
 }
 .doclap-scope .project-open {
@@ -1326,11 +1330,6 @@ body {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
 }
-.doclap-scope .dialog-preview {
-  width: 100%;
-  height: 350px;
-  background: var(--doclap-surface);
-}
 .doclap-scope .dialog-copy, .doclap-scope .article-body {
   font-size: 17px;
   line-height: 1.9;
@@ -1694,9 +1693,6 @@ body {
   }
   .doclap-scope .dialog-head h2 {
     font-size: 31px;
-  }
-  .doclap-scope .dialog-preview {
-    height: 260px;
   }
   .doclap-scope .dialog-copy, .doclap-scope .article-body {
     font-size: 16px;
@@ -3904,10 +3900,10 @@ body {
   background: var(--doclap-fg);
   color: var(--doclap-bg);
 }
-.doclap-scope #work .work-image canvas {
+.doclap-scope #work .work-image :is(img, video) {
   transition: transform 1.3s cubic-bezier(.22,1,.36,1);
 }
-.doclap-scope #work .work-card:is(:hover, :focus-visible) canvas {
+.doclap-scope #work .work-card:is(:hover, :focus-visible) :is(img, video) {
   transform: scale(1.035);
 }
 .doclap-scope #work .work-card:is(:hover, :focus-visible) .work-image {

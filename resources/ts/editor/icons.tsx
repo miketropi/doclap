@@ -1,11 +1,11 @@
 /**
  * Inline editor icons for the Doclap inspector controls.
  *
- * The five glyphs the repeater needs, drawn with Lucide's own geometry: an
+ * The six glyphs the repeater needs, drawn with Lucide's own geometry: an
  * outline set on a 24×24 viewBox, stroked with `currentColor` at 1.5 so the
  * icons inherit the button's colour in every state (idle, hover, focus,
  * disabled, destructive) instead of hard-coding a fill. Inlining them keeps the
- * block editor bundles free of an icon dependency — the whole set is five paths.
+ * block editor bundles free of an icon dependency — the whole set is six paths.
  *
  * `aria-hidden` and `focusable="false"` because every icon sits inside a
  * `Button` that carries its own accessible name (`label`); the icon must never
@@ -15,6 +15,23 @@
 const ICONS = {
 	chevronUp: <path d="m18 15-6-6-6 6" />,
 	chevronDown: <path d="m6 9 6 6 6-6" />,
+	plus: (
+		<>
+			<path d="M5 12h14" />
+			<path d="M12 5v14" />
+		</>
+	),
+	/*
+	 * Three dots: a zero-length path with a round cap renders as a dot, which
+	 * keeps the glyph stroke-only like the rest of the set.
+	 */
+	more: (
+		<>
+			<path d="M5 12h.01" />
+			<path d="M12 12h.01" />
+			<path d="M19 12h.01" />
+		</>
+	),
 	copy: (
 		<>
 			<rect width="14" height="14" x="8" y="8" rx="2" ry="2" />

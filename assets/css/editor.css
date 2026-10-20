@@ -10,53 +10,117 @@
  * blocks/<slug>/editor.css files only carry canvas-preview rules.
  */
 
+/*
+ * Shared inspector tokens, pinned to the WordPress admin grey scale
+ * ($gray-100/200/600) and the admin theme colour, so the list sits in the
+ * editor chrome instead of carrying a palette of its own.
+ */
 .doclap-repeater {
-	border-top: 1px solid #e0e0e0;
+	--doclap-editor-border: #e0e0e0;
+	--doclap-editor-surface: #fff;
+	--doclap-editor-hover: #f0f0f0;
+	--doclap-editor-muted: #757575;
+	--doclap-editor-focus: var(--wp-admin-theme-color, #3858e9);
+	border-top: 1px solid var(--doclap-editor-border);
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 	margin-top: 16px;
 	padding-top: 12px;
 }
 
+/* Only rendered for a nested list; a panel-level repeater is named by its panel. */
 .doclap-repeater__title {
 	font-weight: 600;
-	margin: 0 0 8px;
+	margin: 0;
+}
+
+/*
+ * The live region is mounted from the first render — assistive technology has to
+ * be observing it before the text changes — and collapses while it is empty, so
+ * an idle repeater shows no stray line.
+ */
+.doclap-repeater__status {
+	color: var(--doclap-editor-muted);
+	font-size: 12px;
+	margin: 0;
 }
 
 .doclap-repeater__empty {
-	color: #757575;
+	color: var(--doclap-editor-muted);
 	font-style: italic;
-	margin: 0 0 8px;
+	margin: 0;
 }
 
-/**
- * Compact item list: one row per item on a single line — sequence number, label,
- * five icon actions flushed right. The actions keep a 44px hit target each and
- * the label ellipsizes instead of widening the row, so a 320px inspector still
- * shows the whole row without horizontal scrolling. An item's fields live in the
- * item modal, or expand in place when the repeater is nested in another editor.
+/*
+ * One list control, the way core draws its item groups: a single bordered
+ * surface with hairline separators between rows instead of a stack of boxes.
  */
 .doclap-repeater__list {
+	border: 1px solid var(--doclap-editor-border);
+	border-radius: 2px;
+	display: flex;
+	flex-direction: column;
 	list-style: none;
-	margin: 0 0 8px;
+	margin: 0;
+	overflow: hidden;
 	padding: 0;
 }
 
 .doclap-repeater__row {
 	align-items: center;
-	background: #f8f8f8;
-	border: 1px solid #e0e0e0;
-	border-radius: 2px;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 4px;
+	gap: 2px;
 	list-style: none;
-	margin: 0 0 4px;
-	padding: 4px 8px;
+	min-height: 44px;
+	padding-inline: 8px;
+}
+
+.doclap-repeater__row + .doclap-repeater__row {
+	border-top: 1px solid var(--doclap-editor-border);
+}
+
+.doclap-repeater__row:is(:hover, :focus-within) {
+	background: var(--doclap-editor-hover);
+}
+
+/*
+ * The row body is the edit affordance, so it is a plain button: it takes the
+ * width the actions leave, keeps the 44px target and truncates the label rather
+ * than widening the row at a 320px inspector.
+ */
+.doclap-repeater__row-main {
+	align-items: center;
+	background: none;
+	border: 0;
+	border-radius: 2px;
+	color: inherit;
+	cursor: pointer;
+	display: flex;
+	/* A zero basis means the action cluster never wraps to a second line: the
+	   label truncates instead of pushing the row taller. */
+	flex: 1 1 0;
+	font: inherit;
+	gap: 8px;
+	min-height: 44px;
+	min-width: 0;
+	padding: 0;
+	text-align: left;
+}
+
+.doclap-repeater__row-main:focus-visible {
+	outline: 2px solid var(--doclap-editor-focus);
+	outline-offset: -2px;
 }
 
 .doclap-repeater__row-index {
-	color: #646970;
+	color: var(--doclap-editor-muted);
 	flex: 0 0 auto;
+	font-size: 12px;
 	font-variant-numeric: tabular-nums;
+	min-width: 1.5em;
+	text-align: right;
 }
 
 .doclap-repeater__row-label {
@@ -70,19 +134,22 @@
 .doclap-repeater__row-actions {
 	display: flex;
 	flex: 0 0 auto;
-	flex-wrap: wrap;
-	gap: 0;
 	justify-content: flex-end;
 	margin-left: auto;
 }
 
+/* The row whose in-place editor is open keeps a marker while it is expanded. */
+.doclap-repeater__row.is-open {
+	box-shadow: inset 2px 0 0 var(--doclap-editor-focus);
+}
+
 /*
- * Every row action keeps a 44x44 minimum hit target at any panel width. The
- * second selector is deliberately as specific as WordPress' own
+ * The row's more-options toggle keeps a 44x44 hit target. The second selector is
+ * deliberately as specific as WordPress' own
  * `.components-button.is-small.has-icon:not(.has-text)` rule (which otherwise
- * shrinks an icon-only small button to a 24px min-width), so the target can
- * never collapse; this stylesheet is enqueued after the component styles, so it
- * wins the tie.
+ * shrinks an icon-only button to a 24px min-width), so the target can never
+ * collapse; this stylesheet is enqueued after the component styles, so it wins
+ * the tie.
  */
 .doclap-repeater__row-actions .components-button.has-icon,
 .doclap-repeater__row-actions .components-button.is-small.has-icon {
@@ -90,6 +157,21 @@
 	min-height: 44px;
 	min-width: 44px;
 	padding: 0;
+}
+
+/*
+ * The row menu keeps the same 44px target as the toggle that opens it. Core sizes
+ * its menu rows at `min-height: 32px` with `height: auto`, so raising the minimum
+ * is enough; the class scopes the change to this repeater's own menu.
+ */
+.doclap-repeater__menu .components-dropdown-menu__menu-item {
+	min-height: 44px;
+}
+
+/* Add action: a full-width secondary button, the way core ends an item list. */
+.doclap-repeater__add {
+	justify-content: center;
+	width: 100%;
 }
 
 /* Item editor fields, shared by the item modal and the in-place nested editor. */
@@ -102,15 +184,36 @@
 }
 
 /*
- * Modal action row. This version of the Modal has no footer slot (its API is
- * `title`/`headerActions`/`isDismissible`/`isFullScreen`/`size`), so the row is
- * the body's last child and stands in as the frame's footer: hairline top border,
- * flush right, pinned to the bottom of the modal's scroll area while the fields
- * scroll behind it.
+ * Cancel/Done live in the modal header, next to the close button, so the whole
+ * body belongs to the fields. The header is a 72px flex row: the cluster keeps
+ * its size while the title gives way, and the heading truncates instead of
+ * wrapping out of the header when an item label is long.
  */
-.doclap-repeater__modal-actions {
-	background: #fff;
-	border-top: 1px solid #e0e0e0;
+.doclap-repeater__modal-header-actions {
+	align-items: center;
+	display: flex;
+	flex: 0 0 auto;
+	gap: 8px;
+}
+
+.doclap-repeater-modal .components-modal__header-heading-container {
+	min-width: 0;
+}
+
+.doclap-repeater-modal .components-modal__header-heading {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/*
+ * Action row of the in-place nested editor, which has no dialog header to host
+ * the buttons. It sits at the end of the expanded row and stays pinned to the
+ * bottom of the modal's scroll area while the nested fields scroll behind it.
+ */
+.doclap-repeater__actions {
+	background: var(--doclap-editor-surface);
+	border-top: 1px solid var(--doclap-editor-border);
 	bottom: 0;
 	display: flex;
 	flex-wrap: wrap;
@@ -124,36 +227,18 @@
 }
 
 /*
- * Nested repeater inside an item editor: one grouped inner surface, so it reads
- * as part of the open modal rather than as a second dialog.
- */
-.doclap-repeater__modal-fields > .doclap-repeater {
-	background: #fff;
-	border: 1px solid #e0e0e0;
-	border-radius: 2px;
-	margin-top: 0;
-	padding: 12px;
-}
-
-/*
  * In-place item editor of a nested repeater: a clear inner surface under the row
  * that opened it, inside the same scroll area and never a second dialog.
  */
 .doclap-repeater__nested {
-	background: #fff;
-	border-top: 1px solid #e0e0e0;
+	background: var(--doclap-editor-surface);
+	border-top: 1px solid var(--doclap-editor-border);
 	flex: 0 0 100%;
 	margin-top: 8px;
 	max-width: 100%;
 	min-width: 0;
+	padding-bottom: 4px;
 	padding-top: 12px;
-}
-
-.doclap-repeater__status {
-	color: #646970;
-	font-size: 12px;
-	margin: 0 0 8px;
-	min-height: 18px;
 }
 
 /**
@@ -179,15 +264,15 @@
 }
 
 /**
- * Shared image picker (resources/ts/editor/image-control.tsx).
+ * Shared media picker (resources/ts/editor/media-control.tsx).
  */
-.doclap-image-control {
+.doclap-media-control {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 }
 
-.doclap-image-control__preview {
+.doclap-media-control__preview {
 	background: #f0f0f0;
 	display: block;
 	height: auto;

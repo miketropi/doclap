@@ -4,7 +4,7 @@
  * Shared, cross-surface behaviour only: the global motion runtime (section
  * entrances, soft text, the hero choreography and the magnetic controls, all
  * owned by `runtime/motion.ts`), the reading-progress bar and the smooth-scroll
- * controls. Everything surface-specific (navigation panels, canvas studies, the
+ * controls. Everything surface-specific (navigation panels, media lightboxes, the
  * sculpture viewer, filtering) lives in the owning block's view script.
  *
  * Accessibility contract: markup is never hidden by CSS waiting for JavaScript.

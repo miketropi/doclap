@@ -4,7 +4,7 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import BlockPreview from '../../resources/ts/editor/block-preview';
 import ColourControls from '../../resources/ts/editor/colour-controls';
-import ImageControl from '../../resources/ts/editor/image-control';
+import MediaControl from '../../resources/ts/editor/media-control';
 import Repeater, { type RepeaterItem } from '../../resources/ts/editor/repeater';
 import RichTextOverlay, {
 	type RichTextTarget,
@@ -44,7 +44,7 @@ export default function Edit({
 				</PanelBody>
 
 				<PanelBody title={__('Image', 'doclap')} initialOpen={false}>
-					<ImageControl
+					<MediaControl
 						value={{
 							id: attributes.teamImageId ?? 0,
 							url: attributes.teamImageUrl ?? '',

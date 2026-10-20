@@ -30,6 +30,7 @@
 
 import {
 	Button,
+	DropdownMenu,
 	Modal,
 	SelectControl,
 	TextControl,
@@ -186,7 +187,7 @@ export function Repeater({
 	const [insideModal, setInsideModal] = useState<boolean>(false);
 	const nested = useContext(ItemEditorContext);
 	const rootRef = useRef<HTMLDivElement | null>(null);
-	const triggerRef = useRef<HTMLElement | null>(null);
+	const openIndexRef = useRef<number | null>(null);
 
 	/**
 	 * Fallback detection for a repeater dropped into somebody else's modal: the
@@ -228,29 +229,31 @@ export function Repeater({
 	};
 
 	/**
-	 * Focus goes back to the exact control that opened the editor. `Modal`
-	 * returns focus on its own as well; doing it here keeps the target explicit
-	 * and gives the in-place editor the same behaviour.
+	 * Focus goes back to the row that opened the editor — the one control that
+	 * always exists, whether the editor was opened from the row body, by
+	 * duplicating an item or by adding one. `Modal` returns focus on its own as
+	 * well; doing it here keeps the target explicit and gives the in-place nested
+	 * editor the same behaviour.
 	 */
 	useEffect(() => {
 		if (openIndex !== null) {
 			return;
 		}
 
-		const trigger = triggerRef.current;
-		triggerRef.current = null;
+		const index = openIndexRef.current;
+		openIndexRef.current = null;
 
-		if (trigger && trigger.isConnected) {
-			trigger.focus();
+		if (index === null) {
+			return;
 		}
+
+		rootRef.current
+			?.querySelectorAll<HTMLElement>('.doclap-repeater__row-main')
+			[index]?.focus();
 	}, [openIndex]);
 
-	const openEditor = (
-		index: number,
-		item: RepeaterItem,
-		trigger: HTMLElement | null,
-	): void => {
-		triggerRef.current = trigger;
+	const openEditor = (index: number, item: RepeaterItem): void => {
+		openIndexRef.current = index;
 		setDraft({ ...item });
 		setOpenIndex(index);
 	};
@@ -289,7 +292,7 @@ export function Repeater({
 		setStatus(actionMessage(offset < 0 ? 'movedUp' : 'movedDown', label));
 	};
 
-	const duplicate = (index: number, trigger: HTMLElement | null): void => {
+	const duplicate = (index: number): void => {
 		const copy = { ...items[index] };
 		const next = items.map((entry) => ({ ...entry }));
 
@@ -297,7 +300,7 @@ export function Repeater({
 
 		onChange(next);
 		setStatus(actionMessage('duplicated', label));
-		openEditor(index + 1, copy, trigger);
+		openEditor(index + 1, copy);
 	};
 
 	const remove = (index: number): void => {
@@ -309,13 +312,13 @@ export function Repeater({
 		setStatus(actionMessage('removed', label));
 	};
 
-	const add = (trigger: HTMLElement | null): void => {
+	const add = (): void => {
 		const item = createItem();
 		const next = [...items.map((entry) => ({ ...entry })), item];
 
 		onChange(next);
 		setStatus(actionMessage('added', label));
-		openEditor(next.length - 1, item, trigger);
+		openEditor(next.length - 1, item);
 	};
 
 	/**
@@ -327,7 +330,11 @@ export function Repeater({
 	 * @param item  Live draft item.
 	 * @return Fields and the editor's actions.
 	 */
-	const renderItemEditor = (index: number, item: RepeaterItem): JSX.Element => (
+	const renderItemEditor = (
+		index: number,
+		item: RepeaterItem,
+		withActions: boolean,
+	): JSX.Element => (
 		<>
 			<div className="doclap-repeater__modal-fields">
 				{fields.map((field) => {
@@ -406,26 +413,35 @@ export function Repeater({
 				) : null}
 			</div>
 
-			{/*
-			 * Gutenberg's modal action row: `Cancel` first, the primary action
-			 * last and flush right. `Button` always renders `type="button"`, and the
-			 * item editor lives in a modal portalled to `document.body`, so no
-			 * surrounding form can be submitted by these actions.
-			 */}
-			<div className="doclap-repeater__modal-actions">
-				<Button variant="secondary" onClick={closeEditor}>
-					{__('Cancel', 'doclap')}
-				</Button>
-				<Button variant="primary" onClick={commitDraft}>
-					{__('Done', 'doclap')}
-				</Button>
-			</div>
+			{withActions ? (
+				/*
+				 * Only the in-place nested editor carries its own action row: it has
+				 * no dialog header to host Cancel/Done. In the item modal the same
+				 * two actions live in the header, next to the close button.
+				 */
+				<div className="doclap-repeater__actions">
+					<Button variant="secondary" onClick={closeEditor}>
+						{__('Cancel', 'doclap')}
+					</Button>
+					<Button variant="primary" onClick={commitDraft}>
+						{__('Done', 'doclap')}
+					</Button>
+				</div>
+			) : null}
 		</>
 	);
 
 	return (
 		<div className="doclap-repeater" ref={rootRef}>
-			<p className="doclap-repeater__title">{label}</p>
+			{/*
+			 * A panel-level repeater is already named by its `PanelBody`, so the
+			 * visible title is only rendered for a nested list (an item editor's
+			 * in-place sublist), where nothing above it carries the label. `label`
+			 * still names the list and prefixes every status message.
+			 */}
+			{inlineEditor ? (
+				<p className="doclap-repeater__title">{label}</p>
+			) : null}
 
 			<p className="doclap-repeater__status" role="status" aria-live="polite">
 				{atMinimum ? limitMessage : status}
@@ -436,91 +452,92 @@ export function Repeater({
 			) : null}
 
 			{items.length > 0 ? (
-				<ul className="doclap-repeater__list">
+				<ul className="doclap-repeater__list" aria-label={label}>
 					{items.map((item, index) => {
 						const open = inlineEditor && openIndex === index;
 						const rowLabel = itemLabel(item, index, getItemLabel);
 
 						return (
-							<li className="doclap-repeater__row" key={index}>
-								<span className="doclap-repeater__row-index">
-									{sprintf(
-										/* translators: %d: 1-based position of the item in the list. */
-										__('%d.', 'doclap'),
-										index + 1,
-									)}
-								</span>
-								<strong className="doclap-repeater__row-label" title={rowLabel}>
-									{rowLabel}
-								</strong>
+							<li
+								className={`doclap-repeater__row${open ? ' is-open' : ''}`}
+								key={index}
+							>
+								{/*
+								 * The row itself is the edit affordance, the way a
+								 * Gutenberg list row is: one full-width control that opens
+								 * the item, with the secondary actions beside it. Keeping
+								 * them as siblings (never nested inside the row button)
+								 * keeps the markup valid and the tab order flat.
+								 */}
+								<button
+									type="button"
+									className="doclap-repeater__row-main"
+									aria-expanded={inlineEditor ? open : undefined}
+									onClick={() => openEditor(index, item)}
+								>
+									<span className="doclap-repeater__row-index">
+										{index + 1}
+									</span>
+									<span className="doclap-repeater__row-label" title={rowLabel}>
+										{rowLabel}
+									</span>
+								</button>
 								{/*
 								 * Action order is fixed: move up, move down, duplicate,
-								 * edit, remove. Every action is icon-only, so `label` is
-								 * both the accessible name and the tooltip text, and the
-								 * icon stays `aria-hidden`.
+								 * remove. Every action is icon-only, so `label` is both the
+								 * accessible name and the tooltip text, and the icon stays
+								 * `aria-hidden`. The cluster fades in on hover/focus, the way
+								 * core's list rows do, but stays permanently visible where
+								 * there is no hover to discover it.
+								 */}
+								{/*
+								 * One more-options menu per row, the way core ends an
+								 * item row: the four mutations stay one click away
+								 * without eating the label's width, and every menu row is
+								 * a full-width 44px target instead of a 44px square.
+								 * Order is fixed: move up, move down, duplicate, remove.
 								 */}
 								<span className="doclap-repeater__row-actions">
-									<Button
-										size="small"
-										variant="tertiary"
-										icon={<Icon name="chevronUp" />}
-										disabled={listLocked || index === 0}
-										accessibleWhenDisabled
-										onClick={() => move(index, -1)}
-										label={__('Move up', 'doclap')}
-										showTooltip
-									/>
-									<Button
-										size="small"
-										variant="tertiary"
-										icon={<Icon name="chevronDown" />}
-										disabled={listLocked || index === items.length - 1}
-										accessibleWhenDisabled
-										onClick={() => move(index, 1)}
-										label={__('Move down', 'doclap')}
-										showTooltip
-									/>
-									<Button
-										size="small"
-										variant="tertiary"
-										icon={<Icon name="copy" />}
-										disabled={listLocked}
-										accessibleWhenDisabled
-										onClick={(event: React.MouseEvent<HTMLElement>) =>
-											duplicate(index, event.currentTarget)
-										}
-										label={__('Duplicate', 'doclap')}
-										showTooltip
-									/>
-									<Button
-										size="small"
-										variant="tertiary"
-										icon={<Icon name="pencil" />}
-										disabled={listLocked}
-										accessibleWhenDisabled
-										aria-expanded={inlineEditor ? open : undefined}
-										onClick={(event: React.MouseEvent<HTMLElement>) =>
-											openEditor(index, item, event.currentTarget)
-										}
-										label={__('Edit', 'doclap')}
-										showTooltip
-									/>
-									<Button
-										isDestructive
-										size="small"
-										variant="tertiary"
-										icon={<Icon name="trash" />}
-										disabled={listLocked || atMinimum}
-										accessibleWhenDisabled
-										onClick={() => remove(index)}
-										label={__('Remove', 'doclap')}
-										showTooltip
+									<DropdownMenu
+										icon={<Icon name="more" />}
+										menuProps={{ className: 'doclap-repeater__menu' }}
+										label={sprintf(
+											/* translators: %s: label of the item the menu belongs to. */
+											__('Actions for %s', 'doclap'),
+											rowLabel,
+										)}
+										controls={[
+											{
+												title: __('Move up', 'doclap'),
+												icon: <Icon name="chevronUp" />,
+												isDisabled: listLocked || index === 0,
+												onClick: () => move(index, -1),
+											},
+											{
+												title: __('Move down', 'doclap'),
+												icon: <Icon name="chevronDown" />,
+												isDisabled: listLocked || index === items.length - 1,
+												onClick: () => move(index, 1),
+											},
+											{
+												title: __('Duplicate', 'doclap'),
+												icon: <Icon name="copy" />,
+												isDisabled: listLocked,
+												onClick: () => duplicate(index),
+											},
+											{
+												title: __('Remove', 'doclap'),
+												icon: <Icon name="trash" />,
+												isDisabled: listLocked || atMinimum,
+												onClick: () => remove(index),
+											},
+										]}
 									/>
 								</span>
 
 								{open && draft !== null ? (
 									<div className="doclap-repeater__nested">
-										{renderItemEditor(index, draft)}
+										{renderItemEditor(index, draft, true)}
 									</div>
 								) : null}
 							</li>
@@ -531,7 +548,9 @@ export function Repeater({
 
 			<Button
 				variant="secondary"
-				onClick={(event: React.MouseEvent<HTMLElement>) => add(event.currentTarget)}
+				className="doclap-repeater__add"
+				icon={<Icon name="plus" />}
+				onClick={add}
 				disabled={listLocked}
 			>
 				{addLabel ?? sprintf(__('Add %s', 'doclap'), label.toLowerCase())}
@@ -539,25 +558,35 @@ export function Repeater({
 
 			{!inlineEditor && openIndex !== null && draft !== null ? (
 				/*
-				 * The native header (title + close button) comes from `title`.
-				 * `@wordpress/components@32.6.0` has no `footer` slot — its modal
-				 * types list only `title`, `headerActions`, `isDismissible`,
-				 * `isFullScreen` and `size` — so the action row above is rendered as
-				 * the modal body's last child and styled as the frame's footer in
-				 * resources/css/editor.css. `size="medium"` caps the editor at 560px
-				 * on desktop and lets WordPress' own modal CSS take it edge-to-edge
-				 * on small screens.
+				 * `size="medium"` caps the editor at 560px on desktop and lets
+				 * WordPress' own modal CSS take it edge-to-edge on small screens.
+				 * The actions sit in `headerActions` — the slot this Modal version
+				 * does provide — so the fields get the whole body and nothing has to
+				 * fake a footer. `focusOnMount` points at the first field rather
+				 * than the first tabbable, which is now a header action.
 				 */
 				<Modal
+					className="doclap-repeater-modal"
 					title={sprintf(
 						/* translators: %s: the label of the item being edited. */
 						__('Edit %s', 'doclap'),
 						itemLabel(items[openIndex] ?? {}, openIndex, getItemLabel),
 					)}
 					size="medium"
+					focusOnMount="firstContentElement"
+					headerActions={
+						<div className="doclap-repeater__modal-header-actions">
+							<Button variant="secondary" onClick={closeEditor}>
+								{__('Cancel', 'doclap')}
+							</Button>
+							<Button variant="primary" onClick={commitDraft}>
+								{__('Done', 'doclap')}
+							</Button>
+						</div>
+					}
 					onRequestClose={closeEditor}
 				>
-					{renderItemEditor(openIndex, draft)}
+					{renderItemEditor(openIndex, draft, false)}
 				</Modal>
 			) : null}
 		</div>

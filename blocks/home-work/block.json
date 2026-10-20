@@ -6,43 +6,50 @@
   "title": "Home — Work",
   "category": "doclap",
   "icon": "portfolio",
-  "description": "Work heading, two self-initiated experiment cards and their motion dialogs.",
-  "keywords": [ "home", "work", "experiments", "canvas", "studies" ],
+  "description": "Work heading, project cards that show an image or a video, and their media dialogs.",
+  "keywords": [ "home", "work", "projects", "portfolio", "gallery", "media" ],
   "textdomain": "doclap",
   "attributes": {
     "sectionBg": { "type": "string", "default": "" },
     "sectionHeading": { "type": "string", "default": "" },
     "sectionText": { "type": "string", "default": "" },
     "worksHeading": { "type": "string", "default": "Ideas made real." },
-    "worksMeta": { "type": "string", "default": "01 / EXPERIMENTS · 2026" },
-    "experiments": {
+    "worksMeta": { "type": "string", "default": "01 / SELECTED WORK · 2026" },
+    "viewLabel": { "type": "string", "default": "View work" },
+    "projects": {
       "type": "array",
       "default": [
         {
           "anchor": "experiment-flow",
-          "editionPrimary": "A STUDY IN FORM",
+          "editionPrimary": "SELECTED WORK",
           "editionSecondary": "001 / 2026",
           "title": "Currents",
           "metaLines": "GRAPHICS\nGENERATIVE",
           "summary": "Between order and chance,<br>a rhythm slowly emerges.",
-          "detailLabel": "CREATIVE CODING · CANVAS 2D",
-          "canvas": "flow"
+          "detailLabel": "DESIGN · BUILD",
+          "mediaType": "image",
+          "mediaId": 0,
+          "mediaUrl": "",
+          "mediaAlt": ""
         },
         {
           "anchor": "experiment-orbit",
-          "editionPrimary": "A STUDY IN SPACE",
+          "editionPrimary": "SELECTED WORK",
           "editionSecondary": "002 / 2026",
           "title": "Type Orbits",
           "metaLines": "TYPOGRAPHY\nMOTION",
           "summary": "Type leaves the page.<br>The space begins to speak.",
-          "detailLabel": "TYPOGRAPHY · MOTION STUDY",
-          "canvas": "orbit"
+          "detailLabel": "TYPOGRAPHY · MOTION",
+          "mediaType": "video",
+          "mediaId": 0,
+          "mediaUrl": "",
+          "mediaAlt": ""
         }
       ]
     },
     "worksCaption": {
       "type": "string",
-      "default": "Two self-initiated studies, programmed directly in the browser. Choose a piece to experience its motion and adjust the tempo."
+      "default": "Selected pieces, as stills or motion. Choose one to see it larger."
     }
   },
   "supports": { "html": false, "anchor": true },

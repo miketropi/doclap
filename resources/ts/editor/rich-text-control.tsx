@@ -29,6 +29,7 @@
  */
 
 import { RichText } from '@wordpress/block-editor';
+import { BaseControl } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
 
 export interface RichTextControlProps {
@@ -90,45 +91,47 @@ export function RichTextControl({
 	placeholder,
 }: RichTextControlProps): JSX.Element {
 	const identifier = useInstanceId(RichTextControl, 'doclap-rich-text');
-	const labelId = `${identifier}-label`;
-	const helpId = `${identifier}-help`;
 	const formats = (allowedFormats ?? RICH_TEXT_FORMATS).filter((format) =>
 		RICH_TEXT_FORMATS.includes(format),
 	);
 
+	/*
+	 * `BaseControl` renders the label and the help text with the same styled
+	 * components every `TextControl` uses, so a rich field lines up with the plain
+	 * ones beside it in an item editor. Its label is a `<label for>` and the
+	 * editable element is not a form control, so the accessible name is carried
+	 * explicitly by `aria-label` (same text) and the description by the help id
+	 * `BaseControl` generates from the control id.
+	 */
 	return (
-		<div className="components-base-control doclap-rich-text">
-			<div className="components-base-control__field">
-				<div className="components-base-control__label" id={labelId}>
-					{label}
-				</div>
-				<RichText
-					identifier={identifier}
-					tagName={tagName}
-					value={normaliseRichValue(value, multiline)}
-					onChange={(next) => onChange(normaliseRichValue(next, multiline))}
-					allowedFormats={formats}
-					disableLineBreaks={!multiline}
-					inlineToolbar
-					aria-labelledby={labelId}
-					aria-describedby={help ? helpId : undefined}
-					placeholder={placeholder}
-					style={{
-						background: '#fff',
-						border: '1px solid #949494',
-						borderRadius: '2px',
-						boxSizing: 'border-box',
-						minHeight: '40px',
-						padding: '6px 8px',
-					}}
-				/>
-				{help ? (
-					<p className="components-base-control__help" id={helpId}>
-						{help}
-					</p>
-				) : null}
-			</div>
-		</div>
+		<BaseControl
+			className="doclap-rich-text"
+			id={identifier}
+			label={label}
+			help={help}
+		>
+			<RichText
+				identifier={identifier}
+				id={identifier}
+				tagName={tagName}
+				value={normaliseRichValue(value, multiline)}
+				onChange={(next) => onChange(normaliseRichValue(next, multiline))}
+				allowedFormats={formats}
+				disableLineBreaks={!multiline}
+				inlineToolbar
+				aria-label={label}
+				aria-describedby={help ? `${identifier}__help` : undefined}
+				placeholder={placeholder}
+				style={{
+					background: '#fff',
+					border: '1px solid #949494',
+					borderRadius: '2px',
+					boxSizing: 'border-box',
+					minHeight: '40px',
+					padding: '6px 8px',
+				}}
+			/>
+		</BaseControl>
 	);
 }
 

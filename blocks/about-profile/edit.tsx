@@ -4,7 +4,7 @@ import { useEffect } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 import BlockPreview from '../../resources/ts/editor/block-preview';
-import ImageControl from '../../resources/ts/editor/image-control';
+import MediaControl from '../../resources/ts/editor/media-control';
 import Repeater, { type RepeaterItem } from '../../resources/ts/editor/repeater';
 import RichTextControl from '../../resources/ts/editor/rich-text-control';
 import RichTextOverlay, {
@@ -186,7 +186,7 @@ export default function Edit({
 				</PanelBody>
 
 				<PanelBody title={__('Studio image', 'doclap')} initialOpen={false}>
-					<ImageControl
+					<MediaControl
 						value={{
 							id: attributes.studioImageId ?? 0,
 							url: attributes.studioImageUrl ?? '',

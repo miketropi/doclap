@@ -322,9 +322,9 @@
 .doclap-scope #work .work-card:nth-child(2) {margin-top:120px}
 .doclap-scope #work .work-image {aspect-ratio:1.08;border:0;background:var(--doclap-surface);isolation:isolate;transition:box-shadow .8s}
 .doclap-scope #work .work-card:nth-child(2) .work-image {aspect-ratio:.94;background:var(--doclap-fg);color:var(--doclap-bg)}
-.doclap-scope #work .work-image canvas {transition:transform 1.3s cubic-bezier(.22,1,.36,1)}
+.doclap-scope #work .work-image :is(img, video) {transition:transform 1.3s cubic-bezier(.22,1,.36,1)}
 .doclap-scope #work .work-card:is(:hover,
-:focus-visible) canvas {transform:scale(1.035)}
+:focus-visible) :is(img, video) {transform:scale(1.035)}
 .doclap-scope #work .work-card:is(:hover,
 :focus-visible) .work-image {box-shadow:0 24px 48px -32px color-mix(in oklch,var(--doclap-fg) 35%,transparent)}
 .doclap-scope .work-edition {position:absolute;top:26px;left:28px;right:28px;display:flex;justify-content:space-between;gap:16px;font:11px/1.7 var(--doclap-font-mono);letter-spacing:.04em;pointer-events:none}

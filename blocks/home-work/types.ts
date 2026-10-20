@@ -1,4 +1,7 @@
-export interface Experiment extends Record<string, unknown> {
+/** Which media element a project card renders. */
+export type MediaType = 'image' | 'video';
+
+export interface Project extends Record<string, unknown> {
 	anchor: string;
 	editionPrimary: string;
 	editionSecondary: string;
@@ -6,7 +9,13 @@ export interface Experiment extends Record<string, unknown> {
 	metaLines: string;
 	summary: string;
 	detailLabel: string;
-	canvas: 'flow' | 'orbit';
+	mediaType: MediaType;
+	/** Attachment id; the renderer prefers it over `mediaUrl`. */
+	mediaId: number;
+	/** Stored URL, used when the attachment is gone and as the URL-only path. */
+	mediaUrl: string;
+	/** Text alternative: `alt` on an image, `aria-label` on the dialog video. */
+	mediaAlt: string;
 }
 
 export interface HomeWorkAttributes extends Record<string, unknown> {
@@ -16,6 +25,8 @@ export interface HomeWorkAttributes extends Record<string, unknown> {
 	sectionText?: string;
 	worksHeading: string;
 	worksMeta: string;
-	experiments: Experiment[];
+	/** Media hint printed on a card that has something to open. */
+	viewLabel: string;
+	projects: Project[];
 	worksCaption: string;
 }

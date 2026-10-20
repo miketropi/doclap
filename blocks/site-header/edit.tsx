@@ -20,7 +20,7 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 import BlockPreview from '../../resources/ts/editor/block-preview';
-import ImageControl from '../../resources/ts/editor/image-control';
+import MediaControl from '../../resources/ts/editor/media-control';
 import { urlHelp } from '../../resources/ts/editor/url-help';
 import type { SiteHeaderAttributes } from './types';
 
@@ -95,7 +95,7 @@ export default function Edit({ attributes, setAttributes }: EditProps): JSX.Elem
 						}
 					/>
 					{'image' === brandMode ? (
-						<ImageControl
+						<MediaControl
 							value={{
 								id: attributes.brandMediaId ?? 0,
 								url: attributes.brandMediaUrl ?? '',

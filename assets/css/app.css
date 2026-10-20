@@ -2802,11 +2802,11 @@ body {
   width: 100%;
   margin: 0;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.55;
 }
 .doclap-scope .prose .wp-block-table :is(th, td) {
-  padding: 8px 10px;
+  padding: 5px 10px;
   text-align: left;
   vertical-align: top;
   border: 0;
@@ -2816,19 +2816,39 @@ body {
   }
 }
 .doclap-scope .prose .wp-block-table thead th {
-  font: 11px/1.5 var(--doclap-font-mono);
-  letter-spacing: .06em;
+  padding-block: 7px;
+  background: var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    background: color-mix(in oklch,var(--doclap-fg) 8%,transparent);
+  }
+  font: 10px/1.5 var(--doclap-font-mono);
+  letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--doclap-block-text,var(--doclap-muted));
   border-bottom: 1px solid var(--doclap-fg);
   white-space: nowrap;
+}
+.doclap-scope .prose .wp-block-table tbody :is(th, td):first-child {
+  border-right: 1px solid var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-right: 1px solid color-mix(in oklch,var(--doclap-fg) 12%,transparent);
+  }
 }
 .doclap-scope .prose .wp-block-table tbody th {
   font-weight: 600;
   color: var(--doclap-block-text,var(--doclap-fg));
 }
 .doclap-scope .prose .wp-block-table tbody tr:hover {
-  background: var(--doclap-fg-soft);
+  background: var(--doclap-accent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background: color-mix(in oklch,var(--doclap-accent) 14%,transparent);
+  }
+}
+.doclap-scope .prose .wp-block-table tbody tr:hover :is(th, td):first-child {
+  border-right-color: var(--doclap-accent);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-right-color: color-mix(in oklch,var(--doclap-accent) 55%,transparent);
+  }
 }
 .doclap-scope .prose .wp-block-table tbody tr:last-child :is(th, td) {
   border-bottom-color: var(--doclap-fg);

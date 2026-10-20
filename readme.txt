@@ -429,6 +429,10 @@ Assets:
   page`) carry the previous copy, and the templates place the same sections
   directly, so every section of every page is independently selectable in List
   View.
+* The article grid is now `240px minmax(0,900px)` inside a 1400px frame
+  (`max-width: 100%`, centred), and the reading measure grew from 65ch to 75ch so
+  the wider body column and the tables in it are actually used instead of being
+  capped at 781px.
 * The note-detail surface was retightened against the 8-point scale in
   `00-tokens.css` (the inner-page layer had drifted to 30 / 45 / 65 / 70 / 90):
   the four article bands run on 64px padding, the metadata sits under the band
@@ -437,10 +441,13 @@ Assets:
   16 / 24 / 32 / 40 / 48 / 56 instead of 18 / 28 / 32 / 45 / 65. Lists, separators
   and figures that arrive with a post's content are styled on the same scale.
 * A post's own tables — which previously fell through to the browser defaults —
-  follow the data-table treatment `ds-table` already used: compact 8×10px cells,
-  a mono uppercase header row on a full-strength rule, hairline body rows, a
-  stronger first column and a row state on hover, with horizontal scrolling when
-  the table is wider than the prose column.
+  follow the data-table treatment `ds-table` already used: compact 5×10px cells on
+  13px copy, a mono uppercase header band on a full-strength rule, hairline body
+  rows, a hairline label column and an accent row state on hover, with horizontal
+  scrolling when the table is wider than the prose column. Cells carry the full
+  heading range — a plan name in `h4`, a price in `h2` — on a compact 20/17/15/13px
+  scale with no prose margins, and cell copy keeps the table's own rhythm instead
+  of the paragraph gap.
 * The single-post template now closes the article with the discussion — the
   Comments block (title, thread with nested replies and the form) in a
   `.doclap-comments` section that shares the article rhythm and the page

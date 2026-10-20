@@ -1821,7 +1821,7 @@ body {
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose, .doclap-search-results .prose, .doclap-not-found .prose {
   font-size: 19px;
   line-height: 1.9;
-  max-width: 65ch;
+  max-width: 75ch;
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose p, .doclap-search-results .prose p, .doclap-not-found .prose p {
   margin: 0 0 24px;
@@ -2244,7 +2244,10 @@ body {
   font-size: clamp(70px,12vw,180px);
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout, .doclap-search-results .article-layout, .doclap-not-found .article-layout {
-  grid-template-columns: 240px minmax(0,780px);
+  grid-template-columns: 240px minmax(0,900px);
+  width: 1400px;
+  max-width: 100%;
+  margin-inline: auto;
   justify-content: space-between;
   gap: 56px;
 }
@@ -2857,6 +2860,34 @@ body {
   font-size: 12px;
   color: var(--doclap-block-text,var(--doclap-muted));
   margin-top: 12px;
+}
+.doclap-scope .prose .wp-block-table :is(th, td) :is(h1, h2, h3, h4) {
+  margin: 0;
+  font-family: var(--doclap-font-display);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  color: var(--doclap-block-heading,var(--doclap-fg));
+}
+.doclap-scope .prose .wp-block-table :is(th, td) h1 {
+  font-size: 20px;
+}
+.doclap-scope .prose .wp-block-table :is(th, td) h2 {
+  font-size: 17px;
+}
+.doclap-scope .prose .wp-block-table :is(th, td) h3 {
+  font-size: 15px;
+}
+.doclap-scope .prose .wp-block-table :is(th, td) h4 {
+  font-size: 13px;
+  letter-spacing: .02em;
+}
+.doclap-scope .prose .wp-block-table :is(th, td) :is(p, ul, ol) {
+  margin: 0;
+  line-height: inherit;
+}
+.doclap-scope .prose .wp-block-table :is(th, td) :is(p, ul, ol, h1, h2, h3, h4) + :is(p, ul, ol) {
+  margin-top: 6px;
 }
 .doclap-comments.section {
   padding-block: 64px;

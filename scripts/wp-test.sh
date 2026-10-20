@@ -75,6 +75,7 @@ for marker in \
 	'DOCLAP-OK rest-route' \
 	'DOCLAP-OK patterns' \
 	'DOCLAP-OK inner-page-schema' \
+	'DOCLAP-OK header-nav' \
 	'DOCLAP-OK renders'; do
 	if grep -q "$marker" "$OUTPUT"; then
 		echo "  ✓ $marker"

@@ -376,11 +376,28 @@
  * decorative indicator and the disclosure control is not rendered. The `::after`
  * strips bridge the gaps between a parent and its panel, so the pointer can
  * travel into the submenu without a hover-intent timer.
+ *
+ * Mega items are excluded from the top-level strip: Visual Mega Navigation keeps
+ * `.has-mega-menu` static, which turns a strip anchored to the item into a
+ * full-header invisible hover band. The plugin draws its own panel bridge.
  */
-@media(min-width:921px) and (hover:hover) and (pointer:fine){
+@media(min-width:1024px) and (hover:hover) and (pointer:fine){
 .doclap-scope .doclap-menu .doclap-submenu-toggle {display:none}
 .doclap-scope .doclap-menu .doclap-submenu-indicator {display:inline-flex}
-.doclap-scope .doclap-menu>.menu-item::after {content:'';position:absolute;left:0;right:0;top:100%;height:14px}
+.doclap-scope .doclap-menu>.menu-item:not(.nav-group-mega)::after {content:'';position:absolute;left:0;right:0;top:100%;height:14px}
+/*
+ * A mega item needs its own bridge, and it has to hang off the link. The plugin
+ * pins `.has-mega-menu` to `position: static`, so a strip on the item resolves
+ * against the header row and spans the whole header — the invisible hover band
+ * this rule excludes above. The plugin's own `.beplus-vmn-mega-panel::before`
+ * bridge cannot cover this placement either: the panel here scrolls, which clips
+ * that bridge, and the plugin disables it while the item is not hovered, which is
+ * exactly the moment the pointer is in the gap. Measured on the live header, the
+ * panel closed mid-crossing without this rule. The link is `position: relative`,
+ * so the strip is item width and reaches from the link's baseline row down into
+ * the panel.
+ */
+.doclap-scope .doclap-menu>.nav-group-mega>a::before {content:'';position:absolute;left:0;right:0;top:100%;height:32px}
 .doclap-scope .sub-menu.nav-submenu .menu-item::after {content:'';position:absolute;top:0;bottom:0;left:100%;width:12px}
 .doclap-scope .doclap-menu .menu-item:is(:hover,
 :focus-within)>.sub-menu.nav-submenu {visibility:visible;opacity:1;transform:none;transition:opacity .2s ease,transform .2s ease,visibility 0s}
@@ -388,11 +405,21 @@
 :focus-within)>.doclap-submenu-indicator {color:var(--doclap-fg)}
 }
 /*
+ * A touch-capable laptop matches the fine-pointer query above and the coarse one
+ * here. Hover still opens the submenu, but a tap on the parent link navigates
+ * away from it, so the disclosure control has to stay rendered as the only tap
+ * path into the children. The plugin's mega toggle is unaffected: it is always
+ * rendered below 1024px and never rendered above it.
+ */
+@media(min-width:1024px) and (hover:hover) and (pointer:fine) and (any-pointer:coarse){
+.doclap-scope .doclap-menu .doclap-submenu-toggle {display:flex}
+}
+/*
  * Below the compact shell the row shares its width with the brand, so a 320px
  * panel anchored to a trailing item would hang past the right edge. Flip those
  * panels to the item's right corner for the band where it matters.
  */
-@media(min-width:921px) and (max-width:1180px) and (hover:hover) and (pointer:fine){
+@media(min-width:1024px) and (max-width:1180px) and (hover:hover) and (pointer:fine){
 .doclap-scope .doclap-menu>.menu-item:nth-last-child(-n+3)>.sub-menu.nav-submenu {left:auto;right:0}
 }
 @media(max-width:920px){
@@ -411,18 +438,18 @@
 .doclap-scope .work-view {left:20px;bottom:29px;font-size:11px}
 .doclap-scope #work .project-open {right:18px;bottom:18px;width:44px;height:44px}
 .doclap-scope .work-detail {font-size:10px}
-.doclap-scope .topnav nav {max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
-.doclap-scope .doclap-menu {flex-direction:column;align-items:stretch;gap:0;width:100%}
-.doclap-scope .doclap-menu>.menu-item {display:flex;flex-wrap:wrap;align-items:center;gap:0;width:100%}
-.doclap-scope .doclap-menu>.menu-item>a {flex:1;display:flex;align-items:center;min-height:52px;font-size:16px}
-.doclap-scope .doclap-submenu-toggle {flex:0 0 48px;justify-content:center;min-height:48px;font-size:16px}
-.doclap-scope .sub-menu.nav-submenu,
-.doclap-scope .sub-menu.nav-submenu .sub-menu.nav-submenu {position:static;left:auto;top:auto;flex:1 0 100%;width:100%;margin:0;padding:8px 0 14px 16px;box-shadow:none;transform:none}
 }
 .doclap-scope .topnav-inner {position:relative}
 .doclap-scope .doclap-menu>.nav-group-mega {position:static}
-/* The panel is plugin-owned; only its placement inside the header chrome is set here. */
+/*
+ * The panel is plugin-owned; only its placement inside the header chrome is set
+ * here, and only above the shared 1024px boundary. Below it the plugin's own
+ * compact rules own the panel's height and overflow, whether the panel is an
+ * inline accordion in this drawer or an off-canvas drawer of its own.
+ */
+@media(min-width:1024px){
 .doclap-scope .topnav .has-mega-menu>.beplus-vmn-mega-panel {top:calc(100% - 1px);max-height:calc(100dvh - 120px);overflow-y:auto;overscroll-behavior:contain}
+}
 /* Shared chrome v2 — same navigation on every live page. */
 .doclap-scope.doclap-site-header .topnav {position:sticky;top:0;z-index:40;background:color-mix(in oklch,var(--doclap-bg) 94%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid color-mix(in oklch,var(--doclap-fg) 15%,transparent);color:var(--doclap-fg)}
 .doclap-scope.doclap-site-header .topnav .topnav-inner {position:relative;display:flex;align-items:center;justify-content:space-between;gap:26px;min-height:98px;padding-block:14px}
@@ -455,15 +482,27 @@
 .doclap-scope.doclap-site-header .topnav nav .sub-menu .doclap-submenu-toggle {padding:0 4px;min-height:44px}
 .doclap-scope.doclap-site-header .topnav nav .sub-menu a:is(:hover,
 :focus-visible) {background:var(--doclap-fg-soft);color:var(--doclap-fg)}
-/* The mega panel is plugin-owned; only its placement inside the header chrome is set here. */
+/*
+ * The mega panel is plugin-owned; only its placement inside the header chrome is
+ * set here, and only at desktop width. Above 1024px the panel is a flyout that
+ * has to hang under the header row with a viewport-height cap; below it the
+ * plugin's compact rules own the panel's height and scrolling.
+ */
+@media(min-width:1024px){
 .doclap-scope.doclap-site-header .topnav .has-mega-menu>.beplus-vmn-mega-panel {top:calc(100% - 1px);max-height:calc(100dvh - 120px);overflow-y:auto;overscroll-behavior:contain}
+}
 .doclap-scope.doclap-site-header .topnav [aria-current=page] {text-decoration:underline!important;text-underline-offset:5px}
 .doclap-scope.doclap-site-header .topnav :focus-visible {outline:2px solid var(--doclap-fg);outline-offset:4px}
 @media(max-width:1150px){
 .doclap-scope.doclap-site-header .topnav .nav-contact {display:none}
 .doclap-scope.doclap-site-header .topnav .doclap-menu {gap:24px}
 }
-@media(max-width:920px){
+/*
+ * The compact shell owns one band: 0–1023px. That is the shared breakpoint with
+ * Visual Mega Navigation, which keeps its panels inline inside this drawer below
+ * 1024px, so pointer affordances above and the drawer below never overlap.
+ */
+@media(max-width:1023px){
 .doclap-scope.doclap-site-header .topnav .topnav-inner {min-height:80px}
 .doclap-scope.doclap-site-header .topnav .logo--image {max-width:52vw}
 .doclap-scope.doclap-site-header .topnav .logo-image {max-height:38px}
@@ -471,11 +510,23 @@
 .doclap-scope.doclap-site-header .topnav nav {display:none;position:absolute;left:0;right:0;top:100%;background:var(--doclap-bg);border-bottom:1px solid var(--doclap-fg);padding:8px var(--doclap-gutter) 20px;flex-direction:column;align-items:stretch;gap:0;max-height:calc(100dvh - 80px);overflow-y:auto;overscroll-behavior:contain}
 .doclap-scope.doclap-site-header .topnav nav.open {display:flex}
 .doclap-scope.doclap-site-header .topnav .doclap-menu {flex-direction:column;align-items:stretch;gap:0;width:100%}
-/* Row: the link fills the row, the tap target keeps its own 48px column. */
+/* Row: the link fills the row, each tap target keeps its own 48px column. */
 .doclap-scope.doclap-site-header .topnav .menu-item {flex-wrap:wrap}
 .doclap-scope.doclap-site-header .topnav .doclap-menu>.menu-item {width:100%;gap:0;border-bottom:1px solid var(--doclap-fg-soft)}
 .doclap-scope.doclap-site-header .topnav .doclap-menu>.menu-item>a {flex:1;min-height:52px;font-size:16px}
-.doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle {flex:0 0 48px;min-height:48px;padding:0;border:1px solid color-mix(in oklch,var(--doclap-fg) 22%,transparent)}
+.doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle,
+.doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle {flex:0 0 48px;min-height:48px;padding:0;border:1px solid color-mix(in oklch,var(--doclap-fg) 22%,transparent)}
+/*
+ * The plugin's panel toggle has to read as the same control as this theme's own
+ * disclosure button: one 48px square column, one border, one 14px chevron. Only
+ * its box is set here — its ARIA state, click handling and expanded rotation stay
+ * plugin-owned.
+ */
+.doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle {min-width:48px;width:auto;height:auto;border-radius:0;background:transparent;color:var(--doclap-fg)}
+.doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle:is(:hover,
+:focus-visible),
+.doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle[aria-expanded=true] {background:var(--doclap-fg-soft);color:var(--doclap-fg)}
+.doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle__icon {width:14px;height:14px}
 /* The panel wraps onto its own full-width line and indents by depth. */
 .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu,
 .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .sub-menu.nav-submenu {position:static;left:auto;top:auto;flex:1 0 100%;width:100%;max-height:none;overflow:visible;margin:0;padding:6px 0 12px 14px;box-shadow:none;transform:none;border-inline-start:1px solid var(--doclap-fg-soft)}
@@ -483,6 +534,17 @@
 .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu>.menu-item:last-child {border-bottom:0}
 .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .doclap-submenu-toggle {flex:0 0 48px;min-height:48px;padding:0}
 .doclap-scope.doclap-site-header .topnav nav .sub-menu a {min-height:48px;font-size:15px}
+}
+/*
+ * Page scroll is locked while the compact shell covers the page. A body class,
+ * not an inline style: Visual Mega Navigation writes `document.body.style.overflow`
+ * whenever it closes its own panels, so whichever script wrote last would clear
+ * the other's lock — and a class leaves any inline overflow the page itself set
+ * untouched. The class is only ever set while this shell is open, so the rule is
+ * scoped to the same band as the shell.
+ */
+@media(max-width:1023px){
+body.doclap-nav-locked {overflow:hidden}
 }
 /* Footer v2 — editorial colophon, scoped to protect page content. */
 .doclap-scope .pagefoot.studio-footer {padding:0;background:var(--doclap-block-bg,var(--doclap-fg));color:var(--doclap-block-text,var(--doclap-bg));border-top:1px solid color-mix(in oklch,var(--doclap-bg) 20%,var(--doclap-fg));font:15px/1.8 var(--doclap-font-body)}

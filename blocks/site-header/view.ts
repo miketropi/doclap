@@ -4,13 +4,22 @@
  * Submenus open on hover and focus through CSS alone; this script only owns the
  * touch/keyboard path (`aria-expanded` on `.doclap-submenu-toggle`), the compact
  * menu shell, focus return, focus containment while that shell covers the page,
- * and body-scroll restoration. A pointer device therefore keeps working when this
+ * and the page-scroll lock. A pointer device therefore keeps working when this
  * script never runs.
  *
- * Mega panels are owned by Visual Mega Navigation: its `.has-mega-menu`,
- * `.beplus-vmn-toggle` and `.beplus-vmn-mega-panel` state is never touched here.
- * The only bridge is closing an expanded plugin toggle when the compact menu
- * closes, which is delegated to the plugin by re-dispatching its own click.
+ * The shell and the one it hands over to — Visual Mega Navigation — share one
+ * breakpoint: `data-beplus-vmn-compact-mode="accordion"` on the nav asks the
+ * plugin to keep its mega panels inline inside this drawer below 1024px, so there
+ * is exactly one compact surface at every width. Mega panel state
+ * (`.has-mega-menu`, `.beplus-vmn-toggle`, `.beplus-vmn-mega-panel`, `.is-open`,
+ * `.beplus-vmn--open`, panel ARIA) is never touched here: the only bridge is
+ * closing an expanded plugin toggle when the compact menu closes, which is
+ * delegated to the plugin by re-dispatching its own click.
+ *
+ * Page scroll is locked with a body class rather than an inline style: the plugin
+ * assigns `document.body.style.overflow` when it opens its own off-canvas drawer,
+ * so a class is the one lock neither script can clear for the other — and the
+ * page's own inline overflow is left exactly as it was.
  *
  * All lookups are scoped to the root: the ids the renderer emits are prefixed per
  * instance, so no selector may depend on a document-wide id.
@@ -18,7 +27,15 @@
 
 import { bootBlocks } from "../../resources/ts/runtime/blocks";
 
-const MOBILE_QUERY = "(max-width: 920px)";
+const MOBILE_QUERY = "(max-width: 1023px)";
+
+/**
+ * Body class that locks page scroll while a compact menu covers the page.
+ *
+ * The `max-width:1023px` rule that turns it into `overflow: hidden` lives in
+ * `resources/css/modules/40-overrides.css`.
+ */
+const LOCK_CLASS = "doclap-nav-locked";
 
 const FOCUSABLE =
 	'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -85,15 +102,20 @@ function initHeader(root: HTMLElement): () => void {
 	 */
 	const closePluginPanels = (): void => {
 		root.querySelectorAll<HTMLButtonElement>(
-			`${PLUGIN_TOGGLE_SELECTOR}[aria-expanded="true"]`,
+			`.has-mega-menu > ${PLUGIN_TOGGLE_SELECTOR}[aria-expanded="true"]`,
 		).forEach((pluginToggle) => pluginToggle.click());
 	};
 
 	const isMenuOpen = (): boolean =>
 		menuToggle?.getAttribute("aria-expanded") === "true";
 
-	let restoreOverflow = "";
-	let overflowStored = false;
+	/*
+	 * Whether this instance holds the scroll lock. Only the instance that took it
+	 * may release it: every header on the page closes its own compact menu from the
+	 * shared document click handler, so an instance that never opened would
+	 * otherwise unlock the page behind a menu another instance is still showing.
+	 */
+	let lockOwned = false;
 
 	const setMenu = (open: boolean): void => {
 		if (!menuToggle || !nav) {
@@ -124,45 +146,19 @@ function initHeader(root: HTMLElement): () => void {
 			// A deep menu left scrolled from the previous visit must start at the top.
 			nav.scrollTop = 0;
 
-			if (!overflowStored) {
-				restoreOverflow = document.body.style.overflow;
-				overflowStored = true;
-			}
-
-			document.body.style.overflow = "hidden";
+			document.body.classList.add(LOCK_CLASS);
+			lockOwned = true;
 
 			return;
 		}
 
-		/*
-		 * Only the instance that locked the body may unlock it. Every header on the
-		 * page closes its own compact menu from the shared document click handler,
-		 * so an instance that never opened would otherwise reset the lock another
-		 * instance is still holding and unlock scrolling behind an open menu.
-		 */
-		if (overflowStored) {
-			document.body.style.overflow = restoreOverflow;
-			overflowStored = false;
-		}
-	};
-
-	/**
-	 * Re-assert this instance's page-scroll lock.
-	 *
-	 * Visual Mega Navigation clears `document.body.style.overflow` whenever it
-	 * closes its own panels — on every Escape and on every click outside a mega
-	 * item — so a compact menu that is still open has to reclaim a lock it
-	 * already owns. A closed menu owns no lock, so this is a no-op then.
-	 */
-	const assertBodyLock = (): void => {
-		if (overflowStored && "hidden" !== document.body.style.overflow) {
-			document.body.style.overflow = "hidden";
+		if (lockOwned) {
+			document.body.classList.remove(LOCK_CLASS);
+			lockOwned = false;
 		}
 	};
 
 	const onDocumentClick = (event: Event): void => {
-		assertBodyLock();
-
 		const target = event.target as Node;
 
 		if (!root.contains(target)) {
@@ -178,8 +174,6 @@ function initHeader(root: HTMLElement): () => void {
 	};
 
 	const onDocumentKeyDown = (event: KeyboardEvent): void => {
-		assertBodyLock();
-
 		if (event.key === "Escape") {
 			const open = submenus.find(
 				(submenu) => submenu.button.getAttribute("aria-expanded") === "true",
@@ -367,9 +361,9 @@ function initHeader(root: HTMLElement): () => void {
 		document.removeEventListener("keydown", onDocumentKeyDown);
 		mobileQuery.removeEventListener("change", onBreakpointChange);
 
-		if (overflowStored) {
-			document.body.style.overflow = restoreOverflow;
-			overflowStored = false;
+		if (lockOwned) {
+			document.body.classList.remove(LOCK_CLASS);
+			lockOwned = false;
 		}
 	};
 }

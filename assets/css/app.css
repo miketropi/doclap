@@ -633,19 +633,6 @@ body {
   transform-origin: left;
   z-index: 30;
 }
-.doclap-scope .topnav {
-  border-color: var(--doclap-fg);
-  @supports (color: color-mix(in lab, red, red)) {
-    border-color: color-mix(in oklch,var(--doclap-fg) 15%,transparent);
-  }
-  background: var(--doclap-bg);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in oklch,var(--doclap-bg) 92%,transparent);
-  }
-}
-.doclap-scope .topnav-inner {
-  min-height: 98px;
-}
 .doclap-scope .topnav .logo, .doclap-scope .logo {
   font-family: var(--doclap-font-body);
   font-size: 32px;
@@ -679,26 +666,11 @@ body {
 .doclap-scope .topnav nav a:hover:after {
   transform: scaleX(1);
 }
-.doclap-scope .nav-contact {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  font-size: 13px;
-  border-bottom: 1px solid var(--doclap-fg);
-}
 .doclap-scope svg.lucide {
   width: 21px;
   height: 21px;
   stroke-width: 1.5;
   flex-shrink: 0;
-}
-.doclap-scope .menu-toggle {
-  display: none;
-  background: transparent;
-  border: 1px solid var(--doclap-border);
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
 }
 .doclap-scope .hero {
   padding: 34px 0 38px;
@@ -1469,64 +1441,10 @@ body {
   .doclap-scope .process-row p {
     grid-column: 2;
   }
-  .doclap-scope .doclap-menu {
-    gap: 24px;
-  }
 }
 @media (max-width:640px) {
-  .doclap-scope .topnav-inner {
-    min-height: 80px;
-  }
   .doclap-scope .topnav .logo {
     font-size: 28px;
-  }
-  .doclap-scope .menu-toggle {
-    display: flex;
-  }
-  .doclap-scope .topnav nav {
-    display: none;
-    position: absolute;
-    top: 79px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    padding: 24px;
-    background: var(--doclap-bg);
-    border-bottom: 1px solid var(--doclap-fg);
-    gap: 8px;
-  }
-  .doclap-scope .topnav nav.open {
-    display: flex;
-  }
-  .doclap-scope .topnav nav .doclap-menu {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-    width: 100%;
-  }
-  .doclap-scope .topnav nav .doclap-menu>.menu-item {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-  }
-  .doclap-scope .topnav nav .doclap-menu>.menu-item>a {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    min-height: 52px;
-    font-size: 16px;
-  }
-  .doclap-scope .topnav nav .doclap-menu .sub-menu {
-    position: static;
-    flex: 1 0 100%;
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    transform: none;
-    box-shadow: none;
   }
   .doclap-scope .hero {
     padding-top: 24px;
@@ -4590,20 +4508,28 @@ body {
   background: var(--doclap-fg-soft);
   color: var(--doclap-fg);
 }
-@media (min-width:921px) and (hover:hover) and (pointer:fine) {
+@media (min-width:1024px) and (hover:hover) and (pointer:fine) {
   .doclap-scope .doclap-menu .doclap-submenu-toggle {
     display: none;
   }
   .doclap-scope .doclap-menu .doclap-submenu-indicator {
     display: inline-flex;
   }
-  .doclap-scope .doclap-menu>.menu-item::after {
+  .doclap-scope .doclap-menu>.menu-item:not(.nav-group-mega)::after {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
     top: 100%;
     height: 14px;
+  }
+  .doclap-scope .doclap-menu>.nav-group-mega>a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 32px;
   }
   .doclap-scope .sub-menu.nav-submenu .menu-item::after {
     content: '';
@@ -4623,7 +4549,12 @@ body {
     color: var(--doclap-fg);
   }
 }
-@media (min-width:921px) and (max-width:1180px) and (hover:hover) and (pointer:fine) {
+@media (min-width:1024px) and (hover:hover) and (pointer:fine) and (any-pointer:coarse) {
+  .doclap-scope .doclap-menu .doclap-submenu-toggle {
+    display: flex;
+  }
+}
+@media (min-width:1024px) and (max-width:1180px) and (hover:hover) and (pointer:fine) {
   .doclap-scope .doclap-menu>.menu-item:nth-last-child(-n+3)>.sub-menu.nav-submenu {
     left: auto;
     right: 0;
@@ -4678,48 +4609,6 @@ body {
   .doclap-scope .work-detail {
     font-size: 10px;
   }
-  .doclap-scope .topnav nav {
-    max-height: calc(100dvh - 80px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-  .doclap-scope .doclap-menu {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    width: 100%;
-  }
-  .doclap-scope .doclap-menu>.menu-item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-  }
-  .doclap-scope .doclap-menu>.menu-item>a {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    min-height: 52px;
-    font-size: 16px;
-  }
-  .doclap-scope .doclap-submenu-toggle {
-    flex: 0 0 48px;
-    justify-content: center;
-    min-height: 48px;
-    font-size: 16px;
-  }
-  .doclap-scope .sub-menu.nav-submenu, .doclap-scope .sub-menu.nav-submenu .sub-menu.nav-submenu {
-    position: static;
-    left: auto;
-    top: auto;
-    flex: 1 0 100%;
-    width: 100%;
-    margin: 0;
-    padding: 8px 0 14px 16px;
-    box-shadow: none;
-    transform: none;
-  }
 }
 .doclap-scope .topnav-inner {
   position: relative;
@@ -4727,11 +4616,13 @@ body {
 .doclap-scope .doclap-menu>.nav-group-mega {
   position: static;
 }
-.doclap-scope .topnav .has-mega-menu>.beplus-vmn-mega-panel {
-  top: calc(100% - 1px);
-  max-height: calc(100dvh - 120px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
+@media (min-width:1024px) {
+  .doclap-scope .topnav .has-mega-menu>.beplus-vmn-mega-panel {
+    top: calc(100% - 1px);
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }
 .doclap-scope.doclap-site-header .topnav {
   position: sticky;
@@ -4929,11 +4820,13 @@ body {
   background: var(--doclap-fg-soft);
   color: var(--doclap-fg);
 }
-.doclap-scope.doclap-site-header .topnav .has-mega-menu>.beplus-vmn-mega-panel {
-  top: calc(100% - 1px);
-  max-height: calc(100dvh - 120px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
+@media (min-width:1024px) {
+  .doclap-scope.doclap-site-header .topnav .has-mega-menu>.beplus-vmn-mega-panel {
+    top: calc(100% - 1px);
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }
 .doclap-scope.doclap-site-header .topnav [aria-current=page] {
   text-decoration: underline !important;
@@ -4951,7 +4844,7 @@ body {
     gap: 24px;
   }
 }
-@media (max-width:920px) {
+@media (max-width:1023px) {
   .doclap-scope.doclap-site-header .topnav .topnav-inner {
     min-height: 80px;
   }
@@ -5003,7 +4896,7 @@ body {
     min-height: 52px;
     font-size: 16px;
   }
-  .doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle {
+  .doclap-scope.doclap-site-header .topnav .doclap-submenu-toggle, .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle {
     flex: 0 0 48px;
     min-height: 48px;
     padding: 0;
@@ -5011,6 +4904,22 @@ body {
     @supports (color: color-mix(in lab, red, red)) {
       border: 1px solid color-mix(in oklch,var(--doclap-fg) 22%,transparent);
     }
+  }
+  .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle {
+    min-width: 48px;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: transparent;
+    color: var(--doclap-fg);
+  }
+  .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle:is(:hover, :focus-visible), .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle[aria-expanded=true] {
+    background: var(--doclap-fg-soft);
+    color: var(--doclap-fg);
+  }
+  .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle__icon {
+    width: 14px;
+    height: 14px;
   }
   .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu, .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .sub-menu.nav-submenu {
     position: static;
@@ -5041,6 +4950,9 @@ body {
   .doclap-scope.doclap-site-header .topnav nav .sub-menu a {
     min-height: 48px;
     font-size: 15px;
+  }
+  body.doclap-nav-locked {
+    overflow: hidden;
   }
 }
 .doclap-scope .pagefoot.studio-footer {

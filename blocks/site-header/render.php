@@ -151,7 +151,16 @@ $doclap_nav_id    = $doclap_uid . '-navigation-links';
 
 				$doclap_menu_html = wp_nav_menu( $doclap_menu_args );
 				?>
-				<nav id="<?php echo esc_attr( $doclap_nav_id ); ?>" aria-label="<?php echo esc_attr( $doclap_nav_label ); ?>" data-doclap-nav>
+				<?php
+				/*
+				 * `data-beplus-vmn-compact-mode` is the host contract for Visual Mega
+				 * Navigation: below 1024px this drawer is the only compact surface, so
+				 * the plugin keeps its mega panels inline inside it instead of opening a
+				 * second, off-canvas one. The attribute is inert when the plugin is not
+				 * active.
+				 */
+				?>
+				<nav id="<?php echo esc_attr( $doclap_nav_id ); ?>" aria-label="<?php echo esc_attr( $doclap_nav_label ); ?>" data-doclap-nav data-beplus-vmn-compact-mode="accordion">
 					<?php echo $doclap_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- `wp_nav_menu()` output.?>
 				</nav>
 			<?php endif; ?>

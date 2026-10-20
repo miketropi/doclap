@@ -41,17 +41,13 @@ body {overflow-x:clip}
 .doclap-scope input {transition:background .25s,color .25s,border-color .25s,transform .4s}
 :focus-visible {outline:2px solid var(--doclap-fg);outline-offset:6px}
 .doclap-scope .scroll-progress {position:fixed;left:0;top:0;width:100%;height:3px;background:var(--doclap-fg);transform:scaleX(0);transform-origin:left;z-index:30}
-.doclap-scope .topnav {border-color:color-mix(in oklch,var(--doclap-fg) 15%,transparent);background:color-mix(in oklch,var(--doclap-bg) 92%,transparent)}
-.doclap-scope .topnav-inner {min-height:98px}
 .doclap-scope .topnav .logo,
 .doclap-scope .logo {font-family:var(--doclap-font-body);font-size:32px;font-weight:600;letter-spacing:-1.7px}
 .doclap-scope .logo sup {font-size:12px;vertical-align:top;margin-left:4px}
 .doclap-scope .topnav nav a {font-size:14px;color:var(--doclap-fg);display:flex;align-items:center;position:relative}
 .doclap-scope .topnav nav a:after {content:'';position:absolute;bottom:7px;left:0;width:100%;height:1px;background:var(--doclap-fg);transform:scaleX(0);transform-origin:left;transition:transform .3s}
 .doclap-scope .topnav nav a:hover:after {transform:scaleX(1)}
-.doclap-scope .nav-contact {display:flex;gap:20px;align-items:center;font-size:13px;border-bottom:1px solid var(--doclap-fg)}
 .doclap-scope svg.lucide {width:21px;height:21px;stroke-width:1.5;flex-shrink:0}
-.doclap-scope .menu-toggle {display:none;background:transparent;border:1px solid var(--doclap-border);align-items:center;gap:10px;padding:10px}
 .doclap-scope .hero {padding:34px 0 38px;position:relative}
 .doclap-scope .hero-top {display:flex;justify-content:space-between;gap:24px;font:11px var(--doclap-font-mono);letter-spacing:.03em}
 .doclap-scope .hero-center {max-width:none;position:relative;min-height:600px;display:grid;place-items:center;padding:52px 0 50px}
@@ -216,18 +212,9 @@ body {overflow-x:clip}
 .doclap-scope .team-roles {gap:30px}
 .doclap-scope .process-row {grid-template-columns:40px 1fr}
 .doclap-scope .process-row p {grid-column:2}
-.doclap-scope .doclap-menu {gap:24px}
 }
 @media(max-width:640px){
-.doclap-scope .topnav-inner {min-height:80px}
 .doclap-scope .topnav .logo {font-size:28px}
-.doclap-scope .menu-toggle {display:flex}
-.doclap-scope .topnav nav {display:none;position:absolute;top:79px;left:0;right:0;flex-direction:column;padding:24px;background:var(--doclap-bg);border-bottom:1px solid var(--doclap-fg);gap:8px}
-.doclap-scope .topnav nav.open {display:flex}
-.doclap-scope .topnav nav .doclap-menu {flex-direction:column;align-items:stretch;gap:8px;width:100%}
-.doclap-scope .topnav nav .doclap-menu>.menu-item {position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:0;width:100%}
-.doclap-scope .topnav nav .doclap-menu>.menu-item>a {flex:1;display:flex;align-items:center;min-height:52px;font-size:16px}
-.doclap-scope .topnav nav .doclap-menu .sub-menu {position:static;flex:1 0 100%;flex-direction:column;align-items:stretch;width:100%;transform:none;box-shadow:none}
 .doclap-scope .hero {padding-top:24px}
 .doclap-scope .hero-top {display:block;font-size:9px;line-height:1.8}
 .doclap-scope .hero-top .meta {font-size:10px;display:block;margin-top:12px}

@@ -1293,6 +1293,297 @@ $doclap_html = doclap_smoke_render( '<!-- wp:doclap/inner-hero {"headingSource":
 doclap_smoke_render_has( 'inner-hero page-title fallback', $doclap_html, '>Fallback heading.</h1>' );
 $doclap_renders[] = $doclap_html;
 
+/*
+ * The site header against a real WordPress menu. Navigation is stored data, so
+ * the header only holds its contract if the theme walker, Visual Mega
+ * Navigation's delegator and the plugin's item-class filter agree about the same
+ * fixture: an ordinary parent with a child, an enabled mega item with panel
+ * content and a child of its own, and an enabled item with no panel content.
+ *
+ * The fixture is created here and dropped in a `finally`; `doclap_smoke_fail()`
+ * exits without unwinding, so a shutdown function drops it as well and a failed
+ * run cannot leave the menu behind for the next one.
+ */
+
+/**
+ * Whether Visual Mega Navigation is loaded in this WordPress.
+ *
+ * The isolated Playground run mounts the theme without plugins, so the
+ * plugin-owned half of the contract is only asserted where the plugin is.
+ *
+ * @return bool
+ */
+function doclap_smoke_mega_plugin_active(): bool {
+	return class_exists( 'Beplus\\VisualMegaNav\\Frontend\\MegaMenuPanelRenderer' );
+}
+
+/**
+ * Remember or read the header fixture menu id.
+ *
+ * @param int|null $menu_id Menu id to remember.
+ *
+ * @return int Remembered menu id; 0 when there is no fixture.
+ */
+function doclap_smoke_header_menu( ?int $menu_id = null ): int {
+	static $doclap_menu_id = 0;
+
+	if ( null !== $menu_id ) {
+		$doclap_menu_id = $menu_id;
+	}
+
+	return $doclap_menu_id;
+}
+
+/**
+ * Delete the header fixture menu and its items.
+ *
+ * @return void
+ */
+function doclap_smoke_drop_header_menu(): void {
+	$doclap_menu_id = doclap_smoke_header_menu();
+
+	if ( $doclap_menu_id <= 0 ) {
+		return;
+	}
+
+	// A nav menu owns its items, so deleting the menu deletes them with it.
+	wp_delete_nav_menu( $doclap_menu_id );
+	doclap_smoke_header_menu( 0 );
+}
+
+/**
+ * Create the header fixture menu.
+ *
+ * @return int Menu id.
+ */
+function doclap_smoke_create_header_menu(): int {
+	$doclap_menu_id = wp_create_nav_menu( 'Doclap smoke header' );
+
+	if ( is_wp_error( $doclap_menu_id ) || $doclap_menu_id <= 0 ) {
+		doclap_smoke_fail( 'the header fixture menu could not be created' );
+	}
+
+	$doclap_menu_id = (int) $doclap_menu_id;
+
+	$doclap_ordinary = (int) wp_update_nav_menu_item(
+		$doclap_menu_id,
+		0,
+		array(
+			'menu-item-title'  => 'Studio',
+			'menu-item-url'    => home_url( '/studio/' ),
+			'menu-item-status' => 'publish',
+		),
+	);
+
+	wp_update_nav_menu_item(
+		$doclap_menu_id,
+		0,
+		array(
+			'menu-item-title'     => 'Process',
+			'menu-item-url'       => home_url( '/process/' ),
+			'menu-item-status'    => 'publish',
+			'menu-item-parent-id' => $doclap_ordinary,
+		),
+	);
+
+	// A mega item: enabled, with panel content, settings, and a child to suppress.
+	$doclap_mega = (int) wp_update_nav_menu_item(
+		$doclap_menu_id,
+		0,
+		array(
+			'menu-item-title'  => 'Work',
+			'menu-item-url'    => '#',
+			'menu-item-status' => 'publish',
+		),
+	);
+
+	wp_update_nav_menu_item(
+		$doclap_menu_id,
+		0,
+		array(
+			'menu-item-title'     => 'Case studies',
+			'menu-item-url'       => home_url( '/work/' ),
+			'menu-item-status'    => 'publish',
+			'menu-item-parent-id' => $doclap_mega,
+		),
+	);
+
+	update_post_meta( $doclap_mega, '_beplus_vmn_enabled', '1' );
+	update_post_meta( $doclap_mega, '_beplus_vmn_content', '<!-- wp:paragraph --><p>Panel copy</p><!-- /wp:paragraph -->' );
+	update_post_meta(
+		$doclap_mega,
+		'_beplus_vmn_settings',
+		(string) wp_json_encode(
+			array(
+				'width'    => 'container',
+				'position' => 'item-left',
+			),
+		),
+	);
+
+	// An enabled item with no panel content: its ordinary submenu has to survive.
+	$doclap_empty = (int) wp_update_nav_menu_item(
+		$doclap_menu_id,
+		0,
+		array(
+			'menu-item-title'  => 'Notes',
+			'menu-item-url'    => home_url( '/notes/' ),
+			'menu-item-status' => 'publish',
+		),
+	);
+
+	wp_update_nav_menu_item(
+		$doclap_menu_id,
+		0,
+		array(
+			'menu-item-title'     => 'Archive',
+			'menu-item-url'       => home_url( '/notes/archive/' ),
+			'menu-item-status'    => 'publish',
+			'menu-item-parent-id' => $doclap_empty,
+		),
+	);
+
+	update_post_meta( $doclap_empty, '_beplus_vmn_enabled', '1' );
+	update_post_meta( $doclap_empty, '_beplus_vmn_content', '' );
+
+	return $doclap_menu_id;
+}
+
+/**
+ * Opening tag of the list item that owns one menu label.
+ *
+ * The item tag cannot be matched through nested `</li>` elements, so the label is
+ * located first and the nearest preceding `<li>` is the item that owns it.
+ *
+ * @param string $html  Rendered markup.
+ * @param string $label Menu item label.
+ *
+ * @return string Opening `<li>` tag; empty when the label is not a menu item.
+ */
+function doclap_smoke_item_tag( string $html, string $label ): string {
+	$doclap_pattern = '#<li\b[^>]*>(?:(?!<li\b).)*?>' . preg_quote( $label, '#' ) . '</a>#s';
+
+	if ( ! preg_match( $doclap_pattern, $html, $doclap_match ) ) {
+		return '';
+	}
+
+	if ( ! preg_match( '#^<li\b[^>]*>#', $doclap_match[0], $doclap_tag ) ) {
+		return '';
+	}
+
+	return $doclap_tag[0];
+}
+
+/**
+ * Whether an opening tag carries one class.
+ *
+ * @param string $tag        Opening tag.
+ * @param string $class_name Class name.
+ *
+ * @return bool
+ */
+function doclap_smoke_tag_has_class( string $tag, string $class_name ): bool {
+	if ( ! preg_match( '#class="([^"]*)"#', $tag, $doclap_class ) ) {
+		return false;
+	}
+
+	return (bool) preg_match( '#(?:^|\s)' . preg_quote( $class_name, '#' ) . '(?:\s|$)#', $doclap_class[1] );
+}
+
+register_shutdown_function( 'doclap_smoke_drop_header_menu' );
+
+try {
+	$doclap_menu_id = doclap_smoke_create_header_menu();
+	doclap_smoke_header_menu( $doclap_menu_id );
+
+	$doclap_html = doclap_smoke_render( '<!-- wp:doclap/site-header {"menuId":' . $doclap_menu_id . '} /-->' );
+
+	// The navigation element carries the plugin host contract and its own id.
+	if ( ! preg_match( '#<nav\s[^>]*data-doclap-nav[^>]*>#', $doclap_html, $doclap_nav ) ) {
+		doclap_smoke_fail( 'the site header rendered no [data-doclap-nav] element' );
+	}
+
+	if ( ! str_contains( $doclap_nav[0], 'data-beplus-vmn-compact-mode="accordion"' ) ) {
+		doclap_smoke_fail( 'the header navigation does not opt Visual Mega Navigation into compact mode' );
+	}
+
+	// Every nested item that keeps its submenu keeps exactly one control, and
+	// every control points at markup that is actually rendered.
+	$doclap_toggle_count = preg_match_all( '#<button[^>]*class="doclap-submenu-toggle"[^>]*>#', $doclap_html, $doclap_toggles );
+	$doclap_submenu_count = substr_count( $doclap_html, 'nav-submenu' );
+
+	if ( 2 !== $doclap_toggle_count ) {
+		doclap_smoke_fail( 'the header rendered ' . (int) $doclap_toggle_count . ' disclosure controls instead of 2' );
+	}
+
+	if ( $doclap_toggle_count !== $doclap_submenu_count ) {
+		doclap_smoke_fail( 'the header rendered ' . $doclap_submenu_count . ' submenus for ' . $doclap_toggle_count . ' controls' );
+	}
+
+	foreach ( $doclap_toggles[0] as $doclap_toggle ) {
+		if ( ! preg_match( '#aria-controls="([^"]+)"#', $doclap_toggle, $doclap_controls ) ) {
+			doclap_smoke_fail( 'a disclosure control carries no aria-controls' );
+		}
+
+		if ( ! str_contains( $doclap_html, 'id="' . $doclap_controls[1] . '"' ) ) {
+			doclap_smoke_fail( 'a disclosure control points at the missing id ' . $doclap_controls[1] );
+		}
+	}
+
+	$doclap_notes_tag = doclap_smoke_item_tag( $doclap_html, 'Notes' );
+
+	if ( '' === $doclap_notes_tag ) {
+		doclap_smoke_fail( 'the header did not render the fixture menu item Notes' );
+	}
+
+	if ( ! str_contains( $doclap_html, 'Toggle submenu for Notes' ) ) {
+		doclap_smoke_fail( 'the enabled item without panel content lost its ordinary disclosure control' );
+	}
+
+	if ( doclap_smoke_tag_has_class( $doclap_notes_tag, 'has-mega-menu' ) ) {
+		doclap_smoke_fail( 'the enabled item without panel content was marked as a mega item: ' . $doclap_notes_tag );
+	}
+
+	if ( doclap_smoke_mega_plugin_active() ) {
+		$doclap_work_tag = doclap_smoke_item_tag( $doclap_html, 'Work' );
+
+		if ( '' === $doclap_work_tag ) {
+			doclap_smoke_fail( 'the header did not render the fixture menu item Work' );
+		}
+
+		if (
+			! doclap_smoke_tag_has_class( $doclap_work_tag, 'has-mega-menu' )
+			|| ! doclap_smoke_tag_has_class( $doclap_work_tag, 'nav-group-mega' )
+		) {
+			doclap_smoke_fail( 'the mega item did not carry the mega classes: ' . $doclap_work_tag );
+		}
+
+		if ( str_contains( $doclap_html, 'Toggle submenu for Work' ) ) {
+			doclap_smoke_fail( 'the mega item kept the ordinary disclosure control next to its panel' );
+		}
+
+		if ( ! preg_match( '#<div class="beplus-vmn-mega-panel[^"]*"[^>]*>#', $doclap_html, $doclap_panel ) ) {
+			doclap_smoke_fail( 'the mega item rendered no panel' );
+		}
+
+		foreach ( array( 'role="region"', 'data-width="container"', 'data-position="item-left"' ) as $doclap_needle ) {
+			if ( ! str_contains( $doclap_panel[0], $doclap_needle ) ) {
+				doclap_smoke_fail( 'the mega panel does not carry ' . $doclap_needle );
+			}
+		}
+
+		doclap_smoke_pass( 'header-mega plugin-active' );
+	} else {
+		doclap_smoke_render_lacks( 'site-header without the plugin', $doclap_html, 'beplus-vmn-mega-panel' );
+		doclap_smoke_pass( 'header-mega plugin-inactive' );
+	}
+
+	doclap_smoke_pass( 'header-nav' );
+	$doclap_renders[] = $doclap_html;
+} finally {
+	doclap_smoke_drop_header_menu();
+}
+
 // A block that renders one of the split sections can never re-enter itself
 // through the host post's own content.
 foreach ( $doclap_renders as $doclap_index => $doclap_rendered ) {

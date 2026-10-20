@@ -1818,19 +1818,19 @@ body {
   font-size: clamp(32px,3vw,48px);
   letter-spacing: -.025em;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose, .doclap-search-results .prose, .doclap-not-found .prose {
+.doclap-scope .prose {
   font-size: 19px;
   line-height: 1.9;
   max-width: 75ch;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose p, .doclap-search-results .prose p, .doclap-not-found .prose p {
+.doclap-scope .prose p {
   margin: 0 0 24px;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2 {
+.doclap-scope .prose h2 {
   font-size: 44px;
   margin: 56px 0 24px;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h3, .doclap-search-results .prose h3, .doclap-not-found .prose h3 {
+.doclap-scope .prose h3 {
   font-size: 30px;
   margin: 32px 0 16px;
 }
@@ -2360,7 +2360,7 @@ body {
   background: var(--doclap-fg);
   z-index: 50;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote {
+.doclap-scope .prose blockquote {
   font: italic 36px/1.5 var(--doclap-font-display);
   margin: 40px 0;
   padding: 1rem;
@@ -2585,13 +2585,13 @@ body {
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-form .grid-2, .doclap-search-results .contact-form .grid-2, .doclap-not-found .contact-form .grid-2 {
     grid-template-columns: 1fr;
   }
-  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose, .doclap-search-results .prose, .doclap-not-found .prose {
+  .doclap-scope .prose {
     font-size: 17px;
   }
-  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2 {
+  .doclap-scope .prose h2 {
     font-size: 34px;
   }
-  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote {
+  .doclap-scope .prose blockquote {
     font-size: 29px;
   }
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row {
@@ -2787,13 +2787,13 @@ body {
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-form .grid-2, .doclap-search-results .contact-form .grid-2, .doclap-not-found .contact-form .grid-2 {
     grid-template-columns: 1fr;
   }
-  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose, .doclap-search-results .prose, .doclap-not-found .prose {
+  .doclap-scope .prose {
     font-size: 17px;
   }
-  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2, .doclap-search-results .prose h2, .doclap-not-found .prose h2 {
+  .doclap-scope .prose h2 {
     font-size: 34px;
   }
-  :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote, .doclap-search-results .prose blockquote, .doclap-not-found .prose blockquote {
+  .doclap-scope .prose blockquote {
     font-size: 29px;
   }
   :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row, .doclap-search-results .post-row, .doclap-not-found .post-row {
@@ -2862,17 +2862,17 @@ body {
 :is(.doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes).section {
   padding-block: 64px;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose :is(ul, ol), .doclap-search-results .prose :is(ul, ol), .doclap-not-found .prose :is(ul, ol) {
+.doclap-scope .prose :is(ul, ol) {
   margin: 0 0 24px;
   padding-inline-start: 1.2em;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose li + li, .doclap-search-results .prose li + li, .doclap-not-found .prose li + li {
+.doclap-scope .prose li + li {
   margin-top: 8px;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose .wp-block-separator, .doclap-search-results .prose .wp-block-separator, .doclap-not-found .prose .wp-block-separator {
+.doclap-scope .prose .wp-block-separator {
   margin: 48px 0;
 }
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose :is(figure, .wp-block-image, .wp-block-table), .doclap-search-results .prose :is(figure, .wp-block-image, .wp-block-table), .doclap-not-found .prose :is(figure, .wp-block-image, .wp-block-table) {
+.doclap-scope .prose :is(figure, .wp-block-image, .wp-block-table) {
   margin: 0 0 32px;
 }
 .doclap-scope .prose .wp-block-table {
@@ -2973,6 +2973,16 @@ body {
 }
 .doclap-scope .prose .wp-block-table :is(th, td) :is(p, ul, ol, h1, h2, h3, h4) + :is(p, ul, ol) {
   margin-top: 6px;
+}
+.doclap-scope.doclap-page-body.section {
+  padding-block: 64px;
+}
+.doclap-page-content > :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section + .doclap-scope.doclap-page-body.section, .doclap-page-content > .doclap-scope.doclap-page-body.section + :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section {
+  margin-block-start: 0;
+  border-top-color: var(--doclap-fg);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-top-color: color-mix(in oklch,var(--doclap-fg) 18%,transparent);
+  }
 }
 .doclap-comments.section {
   padding-block: 64px;

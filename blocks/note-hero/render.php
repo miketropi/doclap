@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$doclap_post        = doclap_note_queried_post();
+$doclap_post        = doclap_queried_post();
 $doclap_title       = $doclap_post ? get_the_title( $doclap_post ) : __( 'Editorial note', 'doclap' );
 $doclap_title       = '' !== trim( $doclap_title ) ? $doclap_title : __( 'Untitled note', 'doclap' );
 $doclap_excerpt     = $doclap_post

@@ -45,6 +45,7 @@ Surfaces and their blocks:
   | Frequently Asked Questions | `doclap/inner-hero`, `doclap/faq-list`, `doclap/closing-cta` |
   | Archive and Blog Home | `doclap/inner-hero`, `doclap/notes-archive`, `doclap/closing-cta` |
   | Single (note detail) | `doclap/note-hero`, `doclap/note-cover`, `doclap/note-content`, `doclap/related-notes`, the comment thread, `doclap/closing-cta` |
+  | Page (default template) | `doclap/inner-hero` (page-title source), `doclap/page-content`, `doclap/closing-cta` |
 
 * Shared sections — `doclap/inner-hero` (breadcrumb, page title and lead) and
   `doclap/closing-cta` (eyebrow, heading and circular link). Both are reusable on
@@ -70,6 +71,11 @@ Surfaces and their blocks:
   closes the article is WordPress' own Comments block — title, thread with nested
   replies and the comment form — inside a `.doclap-comments` section, so it stays
   editable with core controls and is styled by the theme.
+* Pages — the default Page template composes `doclap/inner-hero` with
+  `headingSource: page-title` (breadcrumb plus the page's own title and excerpt),
+  `doclap/page-content` (the page's own blocks inside the theme's container and
+  prose measure) and `doclap/closing-cta`, so a generic page keeps the inner-page
+  rhythm instead of falling back to a bare title and a core-constrained column.
 * Search — `doclap/search-results` (native WordPress search query).
 * 404 — `doclap/not-found`.
 * Shared header — `doclap/site-header` (sticky bar, WordPress menu with hover or
@@ -180,6 +186,11 @@ conventions apply across all twenty-five blocks.
   (`doclap/principles-grid`, `doclap/closing-cta`) default their headings to the
   band's foreground, so a heading is never invisible on its own band; if you give a
   light section a dark background, set **Heading text** and **Body text** with it.
+* **Hero heading source.** `doclap/inner-hero` either renders the rich heading you
+  edit on the canvas (**Custom heading**) or the title of the page it sits on
+  (**Page title**, used by the Page template): the page-sourced title keeps the
+  page's own data authoritative, falls back to the attribute when no post is in
+  context, and lets the lead fall back to the page excerpt.
 * **Contextual previews.** `doclap/notes-archive`, `doclap/search-results` and the
   four note-detail blocks (`doclap/note-hero`, `doclap/note-cover`,
   `doclap/note-content`, `doclap/related-notes`) read the query of the page they
@@ -430,6 +441,15 @@ Assets:
   page`) carry the previous copy, and the templates place the same sections
   directly, so every section of every page is independently selectable in List
   View.
+* The default Page template was rebuilt on the theme's own sections: a page now
+  opens with `doclap/inner-hero` reading the page title and excerpt (via the new
+  **Heading source** option), renders its content through the new
+  `doclap/page-content` block inside the theme container and prose measure, and
+  closes with `doclap/closing-cta`. The core-constrained wrapper it used before put
+  the title flush against the viewport edge, skipped the breadcrumb and lost the
+  article typography. Prose typography is now scoped to `.doclap-scope .prose`
+  rather than a fixed list of section roots, so any surface that marks its text
+  `.prose` gets the article rhythm.
 * Both paginations (notes archive and search results) share one treatment: the
   search surface now carries the same `navigation pagination index-grid` markup as
   the archive, and the list-flattening rules moved out of one block's stylesheet

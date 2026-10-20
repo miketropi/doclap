@@ -311,17 +311,17 @@ function doclap_rich_accent_label( string $value ): string {
 }
 
 /**
- * The post a query-aware note block should render.
+ * The post the current request is rendering.
  *
- * The note detail surfaces are composed from four independent blocks, each of
- * which resolves the same post: the queried object on a singular request, and the
- * global post as the fallback a block preview or an inner template render needs.
- * A null result means "no note here", which every note renderer answers with its
- * own deterministic fallback copy rather than with a query of its own.
+ * The query-aware sections resolve the same post — the four note-detail blocks and
+ * the page hero: the queried object on a singular request, and the global post as
+ * the fallback a block preview or an inner template render needs. A null result
+ * means "no post here", which every such renderer answers with its own
+ * deterministic fallback copy rather than with a query of its own.
  *
- * @return WP_Post|null Queried note, or null when no post is in context.
+ * @return WP_Post|null Queried post, or null when no post is in context.
  */
-function doclap_note_queried_post(): ?WP_Post {
+function doclap_queried_post(): ?WP_Post {
 	$object = get_queried_object();
 	$post   = $object instanceof WP_Post ? $object : ( $GLOBALS['post'] ?? null );
 

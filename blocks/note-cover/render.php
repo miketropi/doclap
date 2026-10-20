@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$doclap_post         = doclap_note_queried_post();
+$doclap_post         = doclap_queried_post();
 $doclap_id           = $doclap_post ? (int) $doclap_post->ID : 0;
 $doclap_raw          = $doclap_post ? (string) $doclap_post->post_content : '';
 $doclap_categories   = $doclap_id ? get_the_category( $doclap_id ) : array();

@@ -15,6 +15,7 @@
     "sectionText": { "type": "string", "default": "" },
     "breadcrumbHomeLabel": { "type": "string", "default": "Home" },
     "breadcrumbLabel": { "type": "string", "default": "Page" },
+    "headingSource": { "type": "string", "default": "custom" },
     "heading": { "type": "string", "default": "A clear page heading." },
     "headingAccent": { "type": "string", "default": "" },
     "lead": { "type": "string", "default": "A short introduction for this page." }

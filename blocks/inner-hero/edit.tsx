@@ -1,5 +1,5 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
+import { PanelBody, SelectControl, TextControl } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -19,12 +19,6 @@ interface EditProps {
 	setAttributes: (attributes: Partial<InnerHeroAttributes>) => void;
 	isSelected: boolean;
 }
-
-/** Rich values edited in place on the canvas (they render unconditionally). */
-const overlayTargets: RichTextTarget[] = [
-	{ path: 'heading', label: __('Heading', 'doclap'), multiline: true },
-	{ path: 'lead', label: __('Lead', 'doclap'), multiline: true },
-];
 
 export default function Edit({
 	attributes,
@@ -49,10 +43,40 @@ export default function Edit({
 		}
 	}, [attributes.headingAccent, setAttributes]);
 
+	const usesPageTitle = 'page-title' === attributes.headingSource;
+
+	/*
+	 * A page-sourced title is the post's own data, so only the lead is edited in
+	 * place; the custom heading keeps its on-canvas editing.
+	 */
+	const overlayTargets: RichTextTarget[] = [
+		...(usesPageTitle
+			? []
+			: [{ path: 'heading', label: __('Heading', 'doclap'), multiline: true } as RichTextTarget]),
+		{ path: 'lead', label: __('Lead', 'doclap'), multiline: true },
+	];
+
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Hero', 'doclap')} initialOpen>
+					<SelectControl
+						label={__('Heading source', 'doclap')}
+						help={__(
+							'Page title renders the title of the page this block sits on; custom keeps the heading you edit below.',
+							'doclap',
+						)}
+						value={attributes.headingSource ?? 'custom'}
+						options={[
+							{ label: __('Custom heading', 'doclap'), value: 'custom' },
+							{ label: __('Page title', 'doclap'), value: 'page-title' },
+						]}
+						onChange={(value) =>
+							setAttributes({
+								headingSource: 'page-title' === value ? 'page-title' : 'custom',
+							})
+						}
+					/>
 					<TextControl
 						label={__('Home breadcrumb', 'doclap')}
 						value={attributes.breadcrumbHomeLabel ?? ''}

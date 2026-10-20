@@ -10,6 +10,12 @@ export interface InnerHeroAttributes extends Record<string, unknown> {
 	sectionText: string;
 	breadcrumbHomeLabel: string;
 	breadcrumbLabel: string;
+	/**
+	 * Where the hero title comes from: the block's own rich `heading`
+	 * (`custom`), or the title of the page the block is rendered on
+	 * (`page-title`, which falls back to `heading` when there is no post).
+	 */
+	headingSource: 'custom' | 'page-title';
 	heading: string;
 	/**
 	 * Legacy split heading accent. Saved content from before the merge still

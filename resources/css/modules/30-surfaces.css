@@ -363,18 +363,10 @@ html {scroll-behavior:auto}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .aside-title h2,
 .doclap-search-results .aside-title h2,
 .doclap-not-found .aside-title h2{color:var(--doclap-block-heading,var(--doclap-fg));font-size:clamp(32px,3vw,48px);letter-spacing:-.025em}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose,
-.doclap-search-results .prose,
-.doclap-not-found .prose{font-size:19px;line-height:1.9;max-width:75ch}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose p,
-.doclap-search-results .prose p,
-.doclap-not-found .prose p{margin:0 0 24px}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2,
-.doclap-search-results .prose h2,
-.doclap-not-found .prose h2{font-size:44px;margin:56px 0 24px}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h3,
-.doclap-search-results .prose h3,
-.doclap-not-found .prose h3{font-size:30px;margin:32px 0 16px}
+.doclap-scope .prose{font-size:19px;line-height:1.9;max-width:75ch}
+.doclap-scope .prose p{margin:0 0 24px}
+.doclap-scope .prose h2{font-size:44px;margin:56px 0 24px}
+.doclap-scope .prose h3{font-size:30px;margin:32px 0 16px}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).dark-panel,
 .doclap-search-results .dark-panel,
 .doclap-not-found .dark-panel,
@@ -657,9 +649,7 @@ html {scroll-behavior:auto}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .reading-progress,
 .doclap-search-results .reading-progress,
 .doclap-not-found .reading-progress{position:fixed;left:0;top:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;background:var(--doclap-fg);z-index:50}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote,
-.doclap-search-results .prose blockquote,
-.doclap-not-found .prose blockquote{font:italic 36px/1.5 var(--doclap-font-display);margin:40px 0;padding:1rem;border-block:1px solid color-mix(in oklch,var(--doclap-fg) 25%,transparent)}
+.doclap-scope .prose blockquote{font:italic 36px/1.5 var(--doclap-font-display);margin:40px 0;padding:1rem;border-block:1px solid color-mix(in oklch,var(--doclap-fg) 25%,transparent)}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form,
 .doclap-search-results .search-form,
 .doclap-not-found .search-form{display:flex;gap:20px;align-items:center;border-bottom:1px solid var(--doclap-fg);margin-top:45px;padding-bottom:12px}
@@ -808,15 +798,9 @@ html {scroll-behavior:auto}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-form .grid-2,
 .doclap-search-results .contact-form .grid-2,
 .doclap-not-found .contact-form .grid-2{grid-template-columns:1fr}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose,
-.doclap-search-results .prose,
-.doclap-not-found .prose{font-size:17px}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2,
-.doclap-search-results .prose h2,
-.doclap-not-found .prose h2{font-size:34px}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote,
-.doclap-search-results .prose blockquote,
-.doclap-not-found .prose blockquote{font-size:29px}
+.doclap-scope .prose{font-size:17px}
+.doclap-scope .prose h2{font-size:34px}
+.doclap-scope .prose blockquote{font-size:29px}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row,
 .doclap-search-results .post-row,
 .doclap-not-found .post-row{grid-template-columns:1fr 44px;gap:15px}
@@ -982,15 +966,9 @@ html {scroll-behavior:auto}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .contact-form .grid-2,
 .doclap-search-results .contact-form .grid-2,
 .doclap-not-found .contact-form .grid-2{grid-template-columns:1fr}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose,
-.doclap-search-results .prose,
-.doclap-not-found .prose{font-size:17px}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose h2,
-.doclap-search-results .prose h2,
-.doclap-not-found .prose h2{font-size:34px}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote,
-.doclap-search-results .prose blockquote,
-.doclap-not-found .prose blockquote{font-size:29px}
+.doclap-scope .prose{font-size:17px}
+.doclap-scope .prose h2{font-size:34px}
+.doclap-scope .prose blockquote{font-size:29px}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .post-row,
 .doclap-search-results .post-row,
 .doclap-not-found .post-row{grid-template-columns:1fr 44px;gap:15px}
@@ -1066,18 +1044,10 @@ html {scroll-behavior:auto}
    were falling through to the browser and the parent theme's prose layer: no list
    rhythm, a separator margin that ignored the headings around it, and tables with
    browser-default cells inside a 19px prose column. */
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose :is(ul, ol),
-.doclap-search-results .prose :is(ul, ol),
-.doclap-not-found .prose :is(ul, ol) {margin:0 0 24px;padding-inline-start:1.2em}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose li + li,
-.doclap-search-results .prose li + li,
-.doclap-not-found .prose li + li {margin-top:8px}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose .wp-block-separator,
-.doclap-search-results .prose .wp-block-separator,
-.doclap-not-found .prose .wp-block-separator {margin:48px 0}
-:is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose :is(figure, .wp-block-image, .wp-block-table),
-.doclap-search-results .prose :is(figure, .wp-block-image, .wp-block-table),
-.doclap-not-found .prose :is(figure, .wp-block-image, .wp-block-table) {margin:0 0 32px}
+.doclap-scope .prose :is(ul, ol) {margin:0 0 24px;padding-inline-start:1.2em}
+.doclap-scope .prose li + li{margin-top:8px}
+.doclap-scope .prose .wp-block-separator{margin:48px 0}
+.doclap-scope .prose :is(figure, .wp-block-image, .wp-block-table){margin:0 0 32px}
 
 /* A post's table is data, so it follows the treatment `.ds-table` already uses:
    compact cells, a mono header row, hairline rows, a stronger first column and a
@@ -1107,6 +1077,17 @@ html {scroll-behavior:auto}
 .doclap-scope .prose .wp-block-table :is(th, td) :is(p, ul, ol) {margin:0;line-height:inherit}
 .doclap-scope .prose .wp-block-table :is(th, td) :is(p, ul, ol, h1, h2, h3, h4) + :is(p, ul, ol) {margin-top:6px}
 
+
+/* ─── Generic page surface ───────────────────────────────────────────────────
+   A page carries arbitrary blocks rather than a section renderer, so its body is
+   the theme's `.container` and `.prose` on one element: the container gives it the
+   page gutter and ceiling, the prose class the article typography and measure. The
+   band runs on the same 64px rhythm as the article, and the flow layout's block gap
+   is neutralised inside the prose so the article rhythm owns the spacing instead of
+   stacking with it. */
+.doclap-scope.doclap-page-body.section {padding-block:64px}
+.doclap-page-content > :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section + .doclap-scope.doclap-page-body.section,
+.doclap-page-content > .doclap-scope.doclap-page-body.section + :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive).section {margin-block-start:0;border-top-color:color-mix(in oklch,var(--doclap-fg) 18%,transparent)}
 
 /* ─── Discussion ─────────────────────────────────────────────────────────────
    The post template closes with the comment list and form. Both are core blocks

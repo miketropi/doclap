@@ -1,0 +1,10 @@
+/**
+ * Editor canvas styles for doclap/page-content.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet, which the editor also loads.
+ */
+
+.wp-block-doclap-page-content {
+	min-height: 240px;
+}

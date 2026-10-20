@@ -166,6 +166,7 @@ $doclap_expected = array(
 	'doclap/note-hero',
 	'doclap/not-found',
 	'doclap/notes-archive',
+	'doclap/page-content',
 	'doclap/principles-grid',
 	'doclap/related-notes',
 	'doclap/search-results',
@@ -450,6 +451,7 @@ if ( $doclap_expected_home !== $doclap_landing_names ) {
 // full-page compositions and the chrome/utility surfaces.
 $doclap_expected_patterns = array(
 	'doclap/about-us-page',
+	'doclap/basic-page',
 	'doclap/closing-cta',
 	'doclap/contact-form',
 	'doclap/contact-us-page',
@@ -473,6 +475,7 @@ $doclap_expected_patterns = array(
 	'doclap/not-found',
 	'doclap/notes-archive',
 	'doclap/notes-archive-page',
+	'doclap/page-content',
 	'doclap/post-detail-page',
 	'doclap/principles-grid',
 	'doclap/related-notes',
@@ -523,6 +526,7 @@ $doclap_template_patterns = array(
 	'templates/frequently-asked-questions.html' => 'patterns/faq-page.php',
 	'templates/archive.html'                  => 'patterns/notes-archive-page.php',
 	'templates/home.html'                     => 'patterns/notes-archive-page.php',
+	'templates/page.html'                     => 'patterns/basic-page.php',
 	'templates/single.html'                   => 'patterns/post-detail-page.php',
 );
 
@@ -769,7 +773,7 @@ foreach ( $doclap_migrated_attributes as $doclap_name => $doclap_keys ) {
 }
 
 $doclap_section_contract = array(
-	'doclap/inner-hero'      => array( 'breadcrumbHomeLabel', 'breadcrumbLabel', 'heading', 'headingAccent', 'lead' ),
+	'doclap/inner-hero'      => array( 'breadcrumbHomeLabel', 'breadcrumbLabel', 'headingSource', 'heading', 'headingAccent', 'lead' ),
 	'doclap/closing-cta'     => array( 'eyebrow', 'heading', 'headingAccent', 'ctaLabel', 'ctaUrl' ),
 	'doclap/split-narrative' => array( 'label', 'heading', 'headingAccent', 'paragraphs', 'statusNote', 'linkLabel', 'linkUrl' ),
 	'doclap/media-figure'    => array( 'imageId', 'imageUrl', 'imageAlt', 'caption' ),
@@ -1272,6 +1276,21 @@ doclap_smoke_render_has(
 	$doclap_html,
 	'--doclap-block-bg:#ffffff;--doclap-block-heading:#111111;--doclap-block-text:#444444',
 );
+$doclap_renders[] = $doclap_html;
+
+// The page body and the page-sourced hero: with no queried post in this context the
+// body shows its empty copy and the hero falls back to its heading attribute.
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/page-content /-->' );
+
+doclap_smoke_render_root( 'page-content fallback', $doclap_html, array( 'doclap-scope', 'doclap-page-body', 'section' ) );
+doclap_smoke_render_has( 'page-content fallback', $doclap_html, 'class="container"' );
+doclap_smoke_render_has( 'page-content fallback', $doclap_html, '<article class="prose">' );
+doclap_smoke_render_has( 'page-content fallback', $doclap_html, 'This page has no content yet.' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/inner-hero {"headingSource":"page-title","heading":"Fallback heading."} /-->' );
+
+doclap_smoke_render_has( 'inner-hero page-title fallback', $doclap_html, '>Fallback heading.</h1>' );
 $doclap_renders[] = $doclap_html;
 
 // A block that renders one of the split sections can never re-enter itself

@@ -617,7 +617,7 @@ html {scroll-behavior:auto}
 .doclap-not-found .toc{position:sticky;top:128px}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc a,
 .doclap-search-results .toc a,
-.doclap-not-found .toc a{display:block;padding:12px 0;font-size:13px;line-height:1.7;color:var(--doclap-block-text,var(--doclap-muted))}
+.doclap-not-found .toc a{display:block;padding:8px 0;font-size:13px;line-height:1.7;color:var(--doclap-block-text,var(--doclap-muted))}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc a:hover,
 .doclap-search-results .toc a:hover,
 .doclap-not-found .toc a:hover{color:var(--doclap-fg);text-decoration:underline}
@@ -634,7 +634,7 @@ html {scroll-behavior:auto}
 .toc .toc-list .toc-entry:hover .toc-index {color:var(--doclap-accent)}
 .toc .toc-list .toc-text {min-width:0}
 .toc .toc-sublist {display:grid;gap:2px;margin:0 0 10px;padding-inline-start:2.2em}
-.toc .toc-sublist a {display:grid;grid-template-columns:1em minmax(0,1fr);gap:8px;padding:4px 0;font-size:12px;line-height:1.6}
+.toc .toc-sublist a {display:grid;grid-template-columns:1em minmax(0,1fr);gap:8px;padding:4px 0;min-height:auto;font-size:12px;line-height:1.6}
 .toc .toc-sublist a:before {content:'–';font-family:var(--doclap-font-mono);color:var(--doclap-muted)}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-tools,
 .doclap-search-results .article-tools,
@@ -1135,4 +1135,5 @@ html {scroll-behavior:auto}
 .doclap-comments .comment-form input[type=submit] {min-height:48px;padding:16px 26px;border:1px solid var(--doclap-accent);border-radius:0;background:var(--doclap-accent);color:var(--doclap-fg);font:12px/1 var(--doclap-font-mono);letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
 .doclap-comments .comment-form input[type=submit]:hover {background:var(--doclap-fg);border-color:var(--doclap-fg);color:var(--doclap-bg)}
 .doclap-comments .nextora-tiptap-shell {border-radius:0;border:1px solid color-mix(in oklch,var(--doclap-fg) 30%,transparent);background:transparent;box-shadow:none;width:100%!important;max-width:100%}
-.doclap-comments .nextora-tiptap-shell:focus-within {border-bottom-color:var(--doclap-fg);box-shadow:none;outline:none}
+.doclap-comments .nextora-tiptap-shell:focus-within {border-color:var(--doclap-fg);box-shadow:none;outline:none}
+.doclap-comments .nextora-tiptap-shell .nextora-tiptap-toolbar__btn {min-height:32px}

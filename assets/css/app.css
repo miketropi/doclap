@@ -2257,7 +2257,7 @@ body {
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc a, .doclap-search-results .toc a, .doclap-not-found .toc a {
   display: block;
-  padding: 12px 0;
+  padding: 8px 0;
   font-size: 13px;
   line-height: 1.7;
   color: var(--doclap-block-text,var(--doclap-muted));
@@ -2313,6 +2313,7 @@ body {
   grid-template-columns: 1em minmax(0,1fr);
   gap: 8px;
   padding: 4px 0;
+  min-height: auto;
   font-size: 12px;
   line-height: 1.6;
 }
@@ -3178,9 +3179,12 @@ body {
   max-width: 100%;
 }
 .doclap-comments .nextora-tiptap-shell:focus-within {
-  border-bottom-color: var(--doclap-fg);
+  border-color: var(--doclap-fg);
   box-shadow: none;
   outline: none;
+}
+.doclap-comments .nextora-tiptap-shell .nextora-tiptap-toolbar__btn {
+  min-height: 32px;
 }
 .doclap-scope .hero {
   padding: 28px 0 24px;

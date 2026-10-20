@@ -32,23 +32,6 @@
 	font-size: clamp(26px, 2.8vw, 40px);
 }
 
-.doclap-notes-archive .pagination {
-	margin-top: 40px;
-}
-
-.doclap-notes-archive .pagination ul {
-	display: contents;
-	list-style: none;
-}
-
-.doclap-notes-archive .pagination .page-numbers {
-	display: block;
-}
-
-.doclap-notes-archive .pagination .current {
-	font-style: italic;
-}
-
 @media (max-width: 600px) {
 	.doclap-notes-archive .filter-bar a {
 		padding-inline: 12px;

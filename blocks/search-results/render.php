@@ -234,7 +234,7 @@ if ( $doclap_has_work ) {
 					if ( is_string( $doclap_pagination ) && '' !== $doclap_pagination ) :
 						?>
 						<nav
-							class="pagination"
+							class="navigation pagination index-grid"
 							aria-label="<?php echo esc_attr__( 'Search results pages', 'doclap' ); ?>"
 						>
 							<?php echo wp_kses_post( $doclap_pagination ); ?>

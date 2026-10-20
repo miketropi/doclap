@@ -430,6 +430,11 @@ Assets:
   page`) carry the previous copy, and the templates place the same sections
   directly, so every section of every page is independently selectable in List
   View.
+* Both paginations (notes archive and search results) share one treatment: the
+  search surface now carries the same `navigation pagination index-grid` markup as
+  the archive, and the list-flattening rules moved out of one block's stylesheet
+  into the shared surface layer, so the pages spread across the two index columns
+  instead of stacking inside a single cell.
 * The table of contents is a two-level outline: every `h2` is a numbered entry and
   the `h3`s that follow it hang beneath it at 12px with a dash marker, indented to
   the text column so the two levels line up. Nothing deeper is listed, and a

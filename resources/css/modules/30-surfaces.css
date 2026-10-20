@@ -711,6 +711,17 @@ html {scroll-behavior:auto}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .index-grid a,
 .doclap-search-results .index-grid a,
 .doclap-not-found .index-grid a{font:34px var(--doclap-font-display);padding:24px 0;border-top:1px solid var(--doclap-fg-soft)}
+/* `.index-grid` is the theme's chapter-index grid of large links, so a
+   `paginate_links( type: list )` output has to lose its list box and numbering
+   chrome to flow in it. Both paginations (notes archive and search results) share
+   this, so it lives here rather than in one block's stylesheet. */
+.doclap-scope .pagination {margin-top:40px}
+.doclap-scope .pagination ul {display:contents;list-style:none;margin:0;padding:0}
+/* The list itself carries `page-numbers` too, so the item rule has to exclude it:
+   matching the `ul` would replace `display: contents` and stack the pages in one
+   grid cell instead of spreading them across the two index columns. */
+.doclap-scope .pagination li .page-numbers {display:block}
+.doclap-scope .pagination .current {font-style:italic}
 @media(max-width:1150px){
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-layout,
 .doclap-search-results .article-layout,

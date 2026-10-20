@@ -620,7 +620,7 @@ html {scroll-behavior:auto}
 .doclap-not-found .article-layout{grid-template-columns:240px minmax(0,900px);width:1400px;max-width:100%;margin-inline:auto;justify-content:space-between;gap:56px}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc,
 .doclap-search-results .toc,
-.doclap-not-found .toc{position:sticky;top:128px}
+.doclap-not-found .toc{position:sticky;top:50px}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc a,
 .doclap-search-results .toc a,
 .doclap-not-found .toc a{display:block;padding:8px 0;font-size:13px;line-height:1.7;color:var(--doclap-block-text,var(--doclap-muted))}

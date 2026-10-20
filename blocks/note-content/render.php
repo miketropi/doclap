@@ -47,18 +47,22 @@ if ( '' === $doclap_raw || $doclap_is_self_reference ) {
 $doclap_headings    = array();
 $doclap_uid         = wp_unique_id( 'doclap-note-' );
 
+// The table of contents lists one sub-level: an `h2` opens an entry and the `h3`s
+// that follow it become its children. Nothing deeper is offered, so the sidebar
+// stays a two-level outline of the article instead of mirroring every heading.
 $doclap_heading_index = 0;
 $doclap_content       = (string) preg_replace_callback(
-	'/<h2\b([^>]*)>(.*?)<\/h2>/is',
+	'/<h([23])\b([^>]*)>(.*?)<\/h\1>/is',
 	static function ( array $doclap_match ) use ( &$doclap_headings, &$doclap_heading_index, $doclap_uid ): string {
-		$doclap_heading_text = trim( wp_strip_all_tags( $doclap_match[2] ) );
+		$doclap_level        = (int) $doclap_match[1];
+		$doclap_heading_text = trim( wp_strip_all_tags( $doclap_match[3] ) );
 
 		if ( '' === $doclap_heading_text ) {
 			return $doclap_match[0];
 		}
 
 		$doclap_heading_id = '';
-		if ( preg_match( '/\bid=(?:"([^"]+)"|\'([^\']+)\')/i', $doclap_match[1], $doclap_id_match ) ) {
+		if ( preg_match( '/\bid=(?:"([^"]+)"|\'([^\']+)\')/i', $doclap_match[2], $doclap_id_match ) ) {
 			$doclap_heading_id = html_entity_decode(
 				(string) ( $doclap_id_match[1] ?: ( $doclap_id_match[2] ?? '' ) ),
 				ENT_QUOTES,
@@ -67,20 +71,59 @@ $doclap_content       = (string) preg_replace_callback(
 		}
 
 		if ( '' === $doclap_heading_id ) {
-			$doclap_heading_id = $doclap_uid . '-part-' . $doclap_heading_index;
-			$doclap_match[1]  .= ' id="' . esc_attr( $doclap_heading_id ) . '"';
+			$doclap_heading_id  = $doclap_uid . '-part-' . $doclap_heading_index;
+			$doclap_match[2]   .= ' id="' . esc_attr( $doclap_heading_id ) . '"';
 		}
 
 		$doclap_headings[] = array(
-			'id'   => $doclap_heading_id,
-			'text' => $doclap_heading_text,
+			'id'    => $doclap_heading_id,
+			'text'  => $doclap_heading_text,
+			'level' => $doclap_level,
 		);
 		++$doclap_heading_index;
 
-		return '<h2' . $doclap_match[1] . '>' . $doclap_match[2] . '</h2>';
+		return '<h' . $doclap_level . $doclap_match[2] . '>' . $doclap_match[3] . '</h' . $doclap_level . '>';
 	},
 	$doclap_content,
 );
+
+$doclap_toc = array();
+
+/**
+ * Add one heading to the two-level outline.
+ *
+ * A heading opens an entry; a sub-heading that follows it becomes one of that
+ * entry's children and nothing deeper is ever created. A sub-heading with no
+ * heading above it has nowhere to nest, so it opens the outline itself rather
+ * than disappearing.
+ *
+ * @param array<int, array{id: string, text: string, children: array<int, array{id: string, text: string}>}> $toc     Outline so far.
+ * @param array{id: string, text: string, level: int}                                                        $heading Heading record.
+ *
+ * @return array<int, array{id: string, text: string, children: array<int, array{id: string, text: string}>}> Updated outline.
+ */
+$doclap_toc_add = static function ( array $toc, array $heading ): array {
+	if ( 3 !== $heading['level'] || array() === $toc ) {
+		$toc[] = array(
+			'id'       => $heading['id'],
+			'text'     => $heading['text'],
+			'children' => array(),
+		);
+
+		return $toc;
+	}
+
+	$toc[ count( $toc ) - 1 ]['children'][] = array(
+		'id'   => $heading['id'],
+		'text' => $heading['text'],
+	);
+
+	return $toc;
+};
+
+foreach ( $doclap_headings as $doclap_heading ) {
+	$doclap_toc = $doclap_toc_add( $doclap_toc, $doclap_heading );
+}
 
 // Section colours are optional: an empty attribute emits nothing, so an unset
 // colour keeps the theme's default for that property.
@@ -117,20 +160,34 @@ $doclap_wrapper = get_block_wrapper_attributes(
 				<span class="meta">
 					<?php echo esc_html( (string) ( $attributes['tocLabel'] ?? __( 'IN THIS ARTICLE', 'doclap' ) ) ); ?>
 				</span>
-				<?php if ( empty( $doclap_headings ) ) : ?>
+				<?php if ( empty( $doclap_toc ) ) : ?>
 					<span class="form-note">
 						<?php esc_html_e( 'No sections are listed for this article.', 'doclap' ); ?>
 					</span>
 				<?php endif; ?>
-				<?php foreach ( $doclap_headings as $doclap_index => $doclap_heading ) : ?>
-					<a href="#<?php echo esc_attr( $doclap_heading['id'] ); ?>">
-						<?php
-						echo esc_html(
-							doclap_ordinal( $doclap_index ) . ' / ' . $doclap_heading['text'],
-						);
-						?>
-					</a>
-				<?php endforeach; ?>
+				<?php if ( ! empty( $doclap_toc ) ) : ?>
+					<ol class="toc-list">
+						<?php foreach ( $doclap_toc as $doclap_index => $doclap_entry ) : ?>
+							<li>
+								<a class="toc-entry" href="#<?php echo esc_attr( $doclap_entry['id'] ); ?>">
+									<span class="toc-index" aria-hidden="true"><?php echo esc_html( doclap_ordinal( $doclap_index ) ); ?></span>
+									<span class="toc-text"><?php echo esc_html( $doclap_entry['text'] ); ?></span>
+								</a>
+								<?php if ( ! empty( $doclap_entry['children'] ) ) : ?>
+									<ol class="toc-sublist">
+										<?php foreach ( $doclap_entry['children'] as $doclap_child ) : ?>
+											<li>
+												<a href="#<?php echo esc_attr( $doclap_child['id'] ); ?>">
+													<span class="toc-text"><?php echo esc_html( $doclap_child['text'] ); ?></span>
+												</a>
+											</li>
+										<?php endforeach; ?>
+									</ol>
+								<?php endif; ?>
+							</li>
+						<?php endforeach; ?>
+					</ol>
+				<?php endif; ?>
 			<?php endif; ?>
 			<div class="article-tools">
 				<button

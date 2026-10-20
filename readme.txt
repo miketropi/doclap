@@ -63,8 +63,9 @@ Surfaces and their blocks:
   the editorial disclaimer).
 * Note detail — `doclap/note-hero` (breadcrumb, queried title and excerpt, reading
   progress), `doclap/note-cover` (metadata plus the featured image or the
-  accessible fallback artwork), `doclap/note-content` (table of contents,
-  save/copy tools, the filtered note body, disclaimer and archive link) and
+  accessible fallback artwork), `doclap/note-content` (a two-level table of
+  contents — each heading with one level of sub-headings under it — the save/copy
+  tools, the filtered note body, disclaimer and archive link) and
   `doclap/related-notes` (same-category-first related notes). The discussion that
   closes the article is WordPress' own Comments block — title, thread with nested
   replies and the comment form — inside a `.doclap-comments` section, so it stays
@@ -429,6 +430,15 @@ Assets:
   page`) carry the previous copy, and the templates place the same sections
   directly, so every section of every page is independently selectable in List
   View.
+* The table of contents is a two-level outline: every `h2` is a numbered entry and
+  the `h3`s that follow it hang beneath it at 12px with a dash marker, indented to
+  the text column so the two levels line up. Nothing deeper is listed, and a
+  sub-heading that appears before any heading opens the outline itself instead of
+  being dropped. Rendered as an `<ol>` inside the existing `.toc` aside, with
+  hairlines between top-level entries and the article's `--doclap-block-*` colours.
+* Article block quotes sit on 1rem of padding (`border-block` hairlines show above
+  and below the quote) and the comment editor frame is a full-width 1px box instead
+  of a bottom rule, so it matches the fields above it.
 * The article grid is now `240px minmax(0,900px)` inside a 1400px frame
   (`max-width: 100%`, centred), and the reading measure grew from 65ch to 75ch so
   the wider body column and the tables in it are actually used instead of being
@@ -441,10 +451,10 @@ Assets:
   16 / 24 / 32 / 40 / 48 / 56 instead of 18 / 28 / 32 / 45 / 65. Lists, separators
   and figures that arrive with a post's content are styled on the same scale.
 * A post's own tables — which previously fell through to the browser defaults —
-  follow the data-table treatment `ds-table` already used: compact 5×10px cells on
-  13px copy, a mono uppercase header band on a full-strength rule, hairline body
-  rows, a hairline label column and an accent row state on hover, with horizontal
-  scrolling when the table is wider than the prose column. Cells carry the full
+  follow the data-table treatment `ds-table` already used: cells on 1rem of
+  padding with 13px copy, a mono uppercase header band on a full-strength rule,
+  hairline body rows, a hairline label column and an accent row state on hover,
+  with horizontal scrolling when the table is wider than the prose column. Cells carry the full
   heading range — a plan name in `h4`, a price in `h2` — on a compact 20/17/15/13px
   scale with no prose margins, and cell copy keeps the table's own rhythm instead
   of the paragraph gap.

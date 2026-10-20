@@ -621,6 +621,21 @@ html {scroll-behavior:auto}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .toc a:hover,
 .doclap-search-results .toc a:hover,
 .doclap-not-found .toc a:hover{color:var(--doclap-fg);text-decoration:underline}
+
+/* Two-level outline: an `h2` entry owns the `h3`s that follow it and nothing
+   deeper is listed, so the sidebar stays a scannable two-level map. */
+.toc .toc-list,
+.toc .toc-sublist {list-style:none;margin:0;padding:0}
+.toc .toc-list {display:grid;gap:0;margin-bottom:8px}
+.toc .toc-list>li {border-top:1px solid color-mix(in oklch,var(--doclap-fg) 12%,transparent)}
+.toc .toc-list>li:first-child {border-top:0}
+.toc .toc-list .toc-entry {display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:10px;align-items:baseline}
+.toc .toc-index {font:11px/1.7 var(--doclap-font-mono);letter-spacing:.06em;color:var(--doclap-block-text,var(--doclap-muted))}
+.toc .toc-list .toc-entry:hover .toc-index {color:var(--doclap-accent)}
+.toc .toc-list .toc-text {min-width:0}
+.toc .toc-sublist {display:grid;gap:2px;margin:0 0 10px;padding-inline-start:2.2em}
+.toc .toc-sublist a {display:grid;grid-template-columns:1em minmax(0,1fr);gap:8px;padding:4px 0;font-size:12px;line-height:1.6}
+.toc .toc-sublist a:before {content:'–';font-family:var(--doclap-font-mono);color:var(--doclap-muted)}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .article-tools,
 .doclap-search-results .article-tools,
 .doclap-not-found .article-tools{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
@@ -638,7 +653,7 @@ html {scroll-behavior:auto}
 .doclap-not-found .reading-progress{position:fixed;left:0;top:0;height:2px;width:100%;transform:scaleX(0);transform-origin:left;background:var(--doclap-fg);z-index:50}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .prose blockquote,
 .doclap-search-results .prose blockquote,
-.doclap-not-found .prose blockquote{font:italic 36px/1.5 var(--doclap-font-display);margin:40px 0;padding:32px 0;border-block:1px solid color-mix(in oklch,var(--doclap-fg) 25%,transparent)}
+.doclap-not-found .prose blockquote{font:italic 36px/1.5 var(--doclap-font-display);margin:40px 0;padding:1rem;border-block:1px solid color-mix(in oklch,var(--doclap-fg) 25%,transparent)}
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .search-form,
 .doclap-search-results .search-form,
 .doclap-not-found .search-form{display:flex;gap:20px;align-items:center;border-bottom:1px solid var(--doclap-fg);margin-top:45px;padding-bottom:12px}
@@ -1052,7 +1067,7 @@ html {scroll-behavior:auto}
    row state on hover, instead of the browser's 7px cells and no hierarchy. */
 .doclap-scope .prose .wp-block-table {max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .doclap-scope .prose .wp-block-table table {width:100%;margin:0;border-collapse:collapse;font-size:13px;line-height:1.55}
-.doclap-scope .prose .wp-block-table :is(th, td) {padding:5px 10px;text-align:left;vertical-align:top;border:0;border-bottom:1px solid color-mix(in oklch,var(--doclap-fg) 15%,transparent)}
+.doclap-scope .prose .wp-block-table :is(th, td) {padding:1rem!important;text-align:left;vertical-align:top;border:0;border-bottom:1px solid color-mix(in oklch,var(--doclap-fg) 15%,transparent)}
 .doclap-scope .prose .wp-block-table thead th {padding-block:7px;background:color-mix(in oklch,var(--doclap-fg) 8%,transparent);font:10px/1.5 var(--doclap-font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--doclap-block-text,var(--doclap-muted));border-bottom:1px solid var(--doclap-fg);white-space:nowrap}
 .doclap-scope .prose .wp-block-table tbody :is(th, td):first-child {border-right:1px solid color-mix(in oklch,var(--doclap-fg) 12%,transparent)}
 .doclap-scope .prose .wp-block-table tbody th {font-weight:600;color:var(--doclap-block-text,var(--doclap-fg))}
@@ -1119,5 +1134,5 @@ html {scroll-behavior:auto}
 .doclap-comments .comment-form .comment-form-cookies-consent label {font:13px/1.7 var(--doclap-font-body);letter-spacing:0;text-transform:none;color:var(--doclap-block-text,var(--doclap-muted))}
 .doclap-comments .comment-form input[type=submit] {min-height:48px;padding:16px 26px;border:1px solid var(--doclap-accent);border-radius:0;background:var(--doclap-accent);color:var(--doclap-fg);font:12px/1 var(--doclap-font-mono);letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
 .doclap-comments .comment-form input[type=submit]:hover {background:var(--doclap-fg);border-color:var(--doclap-fg);color:var(--doclap-bg)}
-.doclap-comments .nextora-tiptap-shell {border-radius:0;border:0;border-bottom:1px solid color-mix(in oklch,var(--doclap-fg) 40%,transparent);background:transparent;box-shadow:none}
+.doclap-comments .nextora-tiptap-shell {border-radius:0;border:1px solid color-mix(in oklch,var(--doclap-fg) 30%,transparent);background:transparent;box-shadow:none;width:100%!important;max-width:100%}
 .doclap-comments .nextora-tiptap-shell:focus-within {border-bottom-color:var(--doclap-fg);box-shadow:none;outline:none}

@@ -1807,7 +1807,6 @@ body {
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .aside-title, .doclap-search-results .aside-title, .doclap-not-found .aside-title {
   font: 13px/1.8 var(--doclap-font-mono);
-  max-width: 23ch;
   color: var(--doclap-block-text,var(--doclap-muted));
 }
 :is(.doclap-inner-hero, .doclap-closing-cta, .doclap-split-narrative, .doclap-media-figure, .doclap-principles-grid, .doclap-note-hero, .doclap-note-cover, .doclap-note-content, .doclap-related-notes, .doclap-contact-form, .doclap-faq-list, .doclap-notes-archive) .aside-title span, .doclap-search-results .aside-title span, .doclap-not-found .aside-title span {

@@ -59,7 +59,7 @@ $doclap_icon = static fn( string $name ): string => doclap_icon( $name );
 ?></h2></div><p class="voices-intro" data-doclap-rich="testimonialsIntro"><?php
 	echo doclap_rich( (string) ( $attributes['testimonialsIntro'] ?? '' ) );
 	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the helper.
-?></p></div><div class="voices-carousel" role="group" aria-roledescription="carousel" aria-label="<?php echo esc_attr__( 'Client perspective', 'doclap' ); ?>"><div class="voices-viewport"><div class="voices-track"><?php
+?></p></div><div class="voices-carousel" role="group" aria-roledescription="carousel" aria-label="<?php echo esc_attr__( 'Client perspective', 'doclap' ); ?>" data-doclap-carousel><div class="voices-viewport" tabindex="0" data-doclap-carousel-viewport><div class="voices-track"><?php
 	foreach ( $doclap_voices as $doclap_index => $doclap_voice ) :
 		$doclap_voice = is_array( $doclap_voice ) ? $doclap_voice : array();
 		?><article class="voice-card voice-slide" aria-roledescription="slide" aria-label="<?php echo esc_attr( sprintf( __( 'Perspective %1$d of %2$d', 'doclap' ), (int) $doclap_index + 1, $doclap_total ) ); ?>"><div class="voice-top"><span class="voice-label"><?php esc_html_e( 'CLIENT PERSPECTIVE', 'doclap' ); ?></span><?php
@@ -93,7 +93,15 @@ $doclap_icon = static fn( string $name ): string => doclap_icon( $name );
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
 	?></span></div></div></article><?php
 	endforeach;
-?></div></div></div>
+?></div></div><div class="voices-bar" data-doclap-carousel-bar><p class="voices-count" aria-hidden="true" data-doclap-carousel-count><?php
+		echo esc_html( sprintf( '%1$s / %2$s', doclap_ordinal( 0 ), doclap_ordinal( max( 0, $doclap_total - 1 ) ) ) );
+	?></p><div class="voices-controls"><button type="button" class="icon-button" data-doclap-carousel-prev aria-label="<?php echo esc_attr__( 'Previous perspectives', 'doclap' ); ?>" disabled><?php
+		echo $doclap_icon( 'arrow-left' );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
+	?></button><button type="button" class="icon-button" data-doclap-carousel-next aria-label="<?php echo esc_attr__( 'Next perspectives', 'doclap' ); ?>"><?php
+		echo $doclap_icon( 'arrow-right' );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
+	?></button></div></div></div>
 <aside class="voice-editorial">
 	<div class="voice-editorial-head">
 		<span class="voice-label"><?php

@@ -6,19 +6,40 @@
   "title": "Home — Testimonials",
   "category": "doclap",
   "icon": "format-quote",
-  "description": "Perspective carousel, editorial note and transparency footnote.",
-  "keywords": [ "home", "testimonials", "voices", "perspectives", "editorial" ],
+  "description": "Perspective carousel with step controls, editorial note and transparency footnote.",
+  "keywords": [
+    "home",
+    "testimonials",
+    "voices",
+    "perspectives",
+    "editorial"
+  ],
   "textdomain": "doclap",
   "attributes": {
-    "sectionBg": { "type": "string", "default": "" },
-    "sectionHeading": { "type": "string", "default": "" },
-    "sectionText": { "type": "string", "default": "" },
-    "testimonialsEyebrow": { "type": "string", "default": "05 / TESTIMONIAL · AFTER EVERY COLLABORATION" },
+    "sectionBg": {
+      "type": "string",
+      "default": ""
+    },
+    "sectionHeading": {
+      "type": "string",
+      "default": ""
+    },
+    "sectionText": {
+      "type": "string",
+      "default": ""
+    },
+    "testimonialsEyebrow": {
+      "type": "string",
+      "default": "05 / TESTIMONIAL · AFTER EVERY COLLABORATION"
+    },
     "testimonialsHeading": {
       "type": "string",
       "default": "The mark remains.<br><em>Through another voice.</em>"
     },
-    "testimonialsHeadingAccent": { "type": "string", "default": "" },
+    "testimonialsHeadingAccent": {
+      "type": "string",
+      "default": ""
+    },
     "testimonialsIntro": {
       "type": "string",
       "default": "One project ends.<br>A relationship that continues."
@@ -63,22 +84,37 @@
         }
       ]
     },
-    "editorialLabel": { "type": "string", "default": "TRUST CANNOT BE FABRICATED." },
+    "editorialLabel": {
+      "type": "string",
+      "default": "TRUST CANNOT BE FABRICATED."
+    },
     "editorialTitle": {
       "type": "string",
       "default": "Real people.<br>Real projects.<br><em>Real feedback.</em>"
     },
-    "editorialTitleAccent": { "type": "string", "default": "" },
+    "editorialTitleAccent": {
+      "type": "string",
+      "default": ""
+    },
     "editorialCopy": {
       "type": "string",
       "default": "No client profile or testimonial has been provided. Avatars, ratings and links are only published with the information and consent of the sender."
     },
-    "editorialLinkLabel": { "type": "string", "default": "Share a collaboration story" },
-    "editorialLinkUrl": { "type": "string", "default": "#contact" }
+    "editorialLinkLabel": {
+      "type": "string",
+      "default": "Share a collaboration story"
+    },
+    "editorialLinkUrl": {
+      "type": "string",
+      "default": "#contact"
+    }
   },
-  "supports": { "html": false, "anchor": true },
+  "supports": {
+    "html": false,
+    "anchor": true
+  },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
-  "style": "file:./style.css",
+  "viewScript": "file:./view.js",
   "render": "file:./render.php"
 }

@@ -529,10 +529,18 @@
 .doclap-scope .studio-footer .sf-wordmark:hover .sf-sign {transform:none}
 }
 .doclap-scope .voices-carousel {--doclap-vper:3;--doclap-vgap:24px;position:relative}
-.doclap-scope .voices-viewport {overflow:hidden;padding:4px 0 30px;touch-action:pan-y}
-.doclap-scope .voices-track {display:flex;gap:var(--doclap-vgap);transition:transform .8s cubic-bezier(.22,1,.36,1);will-change:transform;touch-action:pan-y}
-.doclap-scope .voices-carousel .voice-slide {flex:0 0 calc((100% - (var(--doclap-vper) - 1) * var(--doclap-vgap)) / var(--doclap-vper));padding:clamp(26px,2.4vw,38px);cursor:grab;transition:border-color .4s,box-shadow .5s}
-.doclap-scope .voices-carousel.is-dragging .voice-slide {cursor:grabbing}
+/*
+ * The viewport is the scroll container, so swipe, wheel, the arrow keys on the
+ * focused viewport and the step buttons all move one native element and nothing
+ * has to animate a transform track. The scrollbar is hidden on purpose: the step
+ * buttons and the counter below are the visible controls, and every slide is a
+ * snap point so a viewport-width step lands on a slide boundary.
+ */
+.doclap-scope .voices-viewport {overflow-x:auto;overflow-y:hidden;padding:4px 0 30px;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none}
+.doclap-scope .voices-viewport::-webkit-scrollbar {display:none}
+.doclap-scope .voices-viewport:focus-visible {outline:2px solid var(--doclap-fg);outline-offset:2px}
+.doclap-scope .voices-track {display:flex;gap:var(--doclap-vgap)}
+.doclap-scope .voices-carousel .voice-slide {flex:0 0 calc((100% - (var(--doclap-vper) - 1) * var(--doclap-vgap)) / var(--doclap-vper));padding:clamp(26px,2.4vw,38px);scroll-snap-align:start;transition:border-color .4s,box-shadow .5s}
 .doclap-scope .voices-carousel .voice-rating {margin-top:26px}
 .doclap-scope .voices-carousel .voice-statement {font-size:clamp(30px,2.8vw,42px);line-height:1.32;text-wrap:balance;margin:22px 0}
 .doclap-scope .voices-carousel .voice-disclaimer {margin-bottom:30px}
@@ -541,12 +549,9 @@
 @media(hover:hover){
 .doclap-scope .voices-carousel .voice-slide:hover {border-color:color-mix(in oklch,var(--doclap-fg) 38%,transparent);box-shadow:0 28px 56px -38px color-mix(in oklch,var(--doclap-fg) 55%,transparent)}
 }
-.doclap-scope .voices-bar {display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:0}
-.doclap-scope .voices-dots {display:flex;align-items:center}
-.doclap-scope .voices-dot {width:44px;height:44px;display:grid;place-items:center;background:transparent;border:0;padding:0;cursor:pointer}
-.doclap-scope .voices-dot:after {content:"";width:9px;height:9px;border-radius:50%;background:color-mix(in oklch,var(--doclap-fg) 24%,transparent);transition:background .3s,transform .3s}
-.doclap-scope .voices-dot:hover:after {background:color-mix(in oklch,var(--doclap-fg) 55%,transparent)}
-.doclap-scope .voices-dot[aria-current="true"]:after {background:var(--doclap-fg);transform:scale(1.35)}
+.doclap-scope .voices-bar {display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:0;flex-wrap:wrap;row-gap:8px}
+.doclap-scope .voices-bar[hidden] {display:none}
+.doclap-scope .voices-count {font:11px/1.8 var(--doclap-font-mono);letter-spacing:.06em;color:var(--doclap-block-text,var(--doclap-muted));margin:0}
 .doclap-scope .voices-controls {display:flex;gap:10px;align-items:center}
 .doclap-scope .voices-controls .icon-button[disabled] {opacity:.28;pointer-events:none}
 .doclap-scope .voice-editorial {display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,4vw,80px);align-items:end;padding:clamp(34px,4vw,56px);margin-top:24px}
@@ -564,13 +569,8 @@
 @media(max-width:820px){
 .doclap-scope .voices-carousel {--doclap-vper:1}
 }
-@media(max-width:600px){
-.doclap-scope .voices-bar {flex-wrap:wrap;row-gap:8px}
-.doclap-scope .voices-dots {width:100%}
-}
 @media(prefers-reduced-motion:reduce){
-.doclap-scope .voices-track {transition:none}
-.doclap-scope .voices-carousel .voice-slide {cursor:auto}
+.doclap-scope .voices-viewport {scroll-behavior:auto}
 }
 .doclap-scope .doclap-discipline {padding:0;overflow:visible;border-block:1px solid color-mix(in oklch,var(--doclap-bg) 16%,transparent)}
 .doclap-scope .doclap-discipline .discipline-list {list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1440px;margin:0 auto;padding:0 clamp(24px,4.5vw,72px)}

@@ -2925,6 +2925,12 @@ body {
   color: var(--doclap-block-text,var(--doclap-muted));
   margin-top: 12px;
 }
+.doclap-scope article.prose a {
+  border-bottom: 1px solid;
+}
+.doclap-scope article.prose a:hover {
+  border-bottom-color: var(--doclap-accent);
+}
 .doclap-scope .prose .wp-block-table :is(th, td) :is(h1, h2, h3, h4) {
   margin: 0;
   font-family: var(--doclap-font-display);

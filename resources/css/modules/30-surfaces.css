@@ -1081,6 +1081,11 @@ html {scroll-behavior:auto}
 .doclap-scope .prose .wp-block-table tbody tr:hover :is(th, td):first-child {border-right-color:color-mix(in oklch,var(--doclap-accent) 55%,transparent)}
 .doclap-scope .prose .wp-block-table tbody tr:last-child :is(th, td) {border-bottom-color:var(--doclap-fg)}
 .doclap-scope .prose .wp-block-table figcaption {font-size:12px;color:var(--doclap-block-text,var(--doclap-muted));margin-top:12px}
+/* Links in the article body carried no marker at all: the theme cancels the
+   browser underline globally, so a link read as plain text. The border follows
+   `currentColor`, so it takes the link colour and the section's text colour. */
+.doclap-scope article.prose a {border-bottom:1px solid}
+.doclap-scope article.prose a:hover {border-bottom-color:var(--doclap-accent)}
 .doclap-scope .prose .wp-block-table :is(th, td) :is(h1, h2, h3, h4) {margin:0;font-family:var(--doclap-font-display);font-weight:500;line-height:1.25;letter-spacing:-.01em;color:var(--doclap-block-heading,var(--doclap-fg))}
 .doclap-scope .prose .wp-block-table :is(th, td) h1 {font-size:20px}
 .doclap-scope .prose .wp-block-table :is(th, td) h2 {font-size:17px}

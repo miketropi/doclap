@@ -518,18 +518,34 @@
 .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle {flex:0 0 48px;min-height:48px;padding:0;border:1px solid color-mix(in oklch,var(--doclap-fg) 22%,transparent)}
 /*
  * The plugin's panel toggle has to read as the same control as this theme's own
- * disclosure button: one 48px square column, one border, one 14px chevron. Only
- * its box is set here — its ARIA state, click handling and expanded rotation stay
+ * disclosure button: one 48px square column, one border, one chevron. Only its
+ * box is set here — its ARIA state, click handling and expanded rotation stay
  * plugin-owned.
  */
 .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle {min-width:48px;width:auto;height:auto;border-radius:0;background:transparent;color:var(--doclap-fg)}
 .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle:is(:hover,
 :focus-visible),
 .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle[aria-expanded=true] {background:var(--doclap-fg-soft);color:var(--doclap-fg)}
-.doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle__icon {width:14px;height:14px}
-/* The panel wraps onto its own full-width line and indents by depth. */
+/*
+ * Both chevrons are the same arrow, so they are drawn at the same size, weight
+ * and speed. The plugin's is a 12x8 inline SVG whose stroke is 1.5 user units;
+ * this theme's is a 24x24 lucide chevron in a 14px box. The box below is that
+ * same geometry — 9.36/12 = 0.78 scale, which paints the same 7x3.5px of ink —
+ * and the `path` carries the 0.875px stroke of the theme's own chevron while the
+ * transition matches its 0.4s, so the two arrows stay in step while they rotate.
+ */
+.doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle__icon {width:9.36px;height:6.24px;transition:transform .4s}
+.doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle__icon svg path {stroke-width:1.123}
+/*
+ * A closed submenu has to leave the flow. It is hidden, not removed, so a static
+ * closed submenu still reserved its own height under every parent — a 68px and a
+ * 117px blank in the drawer on this site. Absolute with auto offsets keeps it
+ * where it would have been while reserving nothing; its own control then turns it
+ * into the in-flow, full-width row that indents by depth.
+ */
 .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu,
-.doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .sub-menu.nav-submenu {position:static;left:auto;top:auto;flex:1 0 100%;width:100%;max-height:none;overflow:visible;margin:0;padding:6px 0 12px 14px;box-shadow:none;transform:none;border-inline-start:1px solid var(--doclap-fg-soft)}
+.doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .sub-menu.nav-submenu {position:absolute;left:auto;top:auto;flex:1 0 100%;width:100%;max-height:none;overflow:visible;margin:0;padding:6px 0 12px 14px;box-shadow:none;transform:none;visibility:hidden;opacity:0;pointer-events:none;border-inline-start:1px solid var(--doclap-fg-soft)}
+.doclap-scope.doclap-site-header .topnav .menu-item>.doclap-submenu-toggle[aria-expanded=true]~.sub-menu.nav-submenu {position:static;visibility:visible;opacity:1;pointer-events:auto}
 .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu>.menu-item {border-top:0;border-bottom:1px solid var(--doclap-fg-soft)}
 .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu>.menu-item:last-child {border-bottom:0}
 .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .doclap-submenu-toggle {flex:0 0 48px;min-height:48px;padding:0}
@@ -689,8 +705,16 @@ body {overflow-wrap:break-word}
 .doclap-scope a,
 .doclap-scope button {transition:background .3s,color .3s,transform .45s,border-color .3s}
 .doclap-scope a:hover { text-decoration-thickness:1px;text-underline-offset:5px}
+/*
+ * The chevron of a plugin-rendered disclosure control is a `span`, so this hover
+ * animation used to take over its transform with `animation-fill-mode: both` and
+ * pin it at `translateY(0)`: the arrow stopped mirroring `aria-expanded` while
+ * the pointer rested on it, which left the mega and ordinary controls looking out
+ * of step. The theme's own control keeps its chevron as the button's only child
+ * SVG, so it never matched this rule.
+ */
 .doclap-scope a:hover>span:first-child,
-.doclap-scope button:hover>span:first-child {animation:soft-blur .55s both}
+.doclap-scope button:hover>span:first-child:not(.beplus-vmn-toggle__icon) {animation:soft-blur .55s both}
 @keyframes soft-blur{from{filter:blur(4px);opacity:.4;transform:translateY(3px)}to{filter:blur(0);opacity:1;transform:translateY(0)}}
 :focus-visible {outline:2px solid var(--doclap-fg);outline-offset:5px}
 .doclap-scope .skip {position:fixed;top:-100px;left:16px;z-index:100;padding:15px;background:var(--doclap-fg);color:var(--doclap-bg)}

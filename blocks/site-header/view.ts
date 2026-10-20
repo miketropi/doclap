@@ -173,6 +173,38 @@ function initHeader(root: HTMLElement): () => void {
 		}
 	};
 
+	/**
+	 * One open item per level, whichever kind it is.
+	 *
+	 * The plugin suppresses the click on its own control
+	 * (`stopPropagation()` in a capture-phase listener), so this menu cannot hear
+	 * that click, and it cannot rely on focus leaving the item either — a tap does
+	 * not move focus on every platform. What it can read is the plugin's own
+	 * `aria-expanded` on the mega item's link, which the plugin sets whenever a
+	 * panel opens, so watching that attribute closes the ordinary submenu at the
+	 * moment a mega panel opens. The link is server-rendered, so this does not
+	 * depend on when the plugin injects its control. Nothing plugin-owned is
+	 * written here; the observer only reads.
+	 */
+	const pluginObserver = new MutationObserver((records) => {
+		const opened = records.some(
+			(record) =>
+				"aria-expanded" === record.attributeName &&
+				"true" === (record.target as Element).getAttribute("aria-expanded"),
+		);
+
+		if (opened) {
+			closeSubmenus();
+		}
+	});
+
+	root.querySelectorAll<HTMLElement>(".has-mega-menu > a").forEach((link) =>
+		pluginObserver.observe(link, {
+			attributes: true,
+			attributeFilter: ["aria-expanded"],
+		}),
+	);
+
 	const onDocumentKeyDown = (event: KeyboardEvent): void => {
 		if (event.key === "Escape") {
 			const open = submenus.find(
@@ -250,6 +282,12 @@ function initHeader(root: HTMLElement): () => void {
 				return;
 			}
 
+			/*
+			 * One open item per level, whichever kind it is: opening this ordinary
+			 * submenu closes an expanded mega panel, so the two chevrons can never
+			 * point up at the same time.
+			 */
+			closePluginPanels();
 			openSubmenu(submenu);
 		};
 
@@ -259,6 +297,7 @@ function initHeader(root: HTMLElement): () => void {
 			}
 
 			event.preventDefault();
+			closePluginPanels();
 			openSubmenu(submenu);
 
 			const focusable = focusableWithin(submenu.list);
@@ -360,6 +399,7 @@ function initHeader(root: HTMLElement): () => void {
 		document.removeEventListener("click", onDocumentClick);
 		document.removeEventListener("keydown", onDocumentKeyDown);
 		mobileQuery.removeEventListener("change", onBreakpointChange);
+		pluginObserver.disconnect();
 
 		if (lockOwned) {
 			document.body.classList.remove(LOCK_CLASS);

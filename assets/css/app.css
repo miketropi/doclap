@@ -4918,11 +4918,15 @@ body {
     color: var(--doclap-fg);
   }
   .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle__icon {
-    width: 14px;
-    height: 14px;
+    width: 9.36px;
+    height: 6.24px;
+    transition: transform .4s;
+  }
+  .doclap-scope.doclap-site-header .topnav .beplus-vmn-toggle__icon svg path {
+    stroke-width: 1.123;
   }
   .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu, .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu .sub-menu.nav-submenu {
-    position: static;
+    position: absolute;
     left: auto;
     top: auto;
     flex: 1 0 100%;
@@ -4933,7 +4937,16 @@ body {
     padding: 6px 0 12px 14px;
     box-shadow: none;
     transform: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
     border-inline-start: 1px solid var(--doclap-fg-soft);
+  }
+  .doclap-scope.doclap-site-header .topnav .menu-item>.doclap-submenu-toggle[aria-expanded=true]~.sub-menu.nav-submenu {
+    position: static;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
   }
   .doclap-scope.doclap-site-header .topnav .sub-menu.nav-submenu>.menu-item {
     border-top: 0;
@@ -5473,7 +5486,7 @@ body {
   text-decoration-thickness: 1px;
   text-underline-offset: 5px;
 }
-.doclap-scope a:hover>span:first-child, .doclap-scope button:hover>span:first-child {
+.doclap-scope a:hover>span:first-child, .doclap-scope button:hover>span:first-child:not(.beplus-vmn-toggle__icon) {
   animation: soft-blur .55s both;
 }
 @keyframes soft-blur {

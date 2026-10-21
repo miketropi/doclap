@@ -13,8 +13,11 @@ parameters:
 		- patterns
 	excludePaths:
 		analyse:
-			- vendor
-			- node_modules
+			# `(?)` marks a path that may legitimately be absent: dependency trees
+			# only exist after an install, and PHPStan 2 refuses an exclude entry that
+			# matches nothing (the CI PHP job has no `node_modules`).
+			- vendor (?)
+			- node_modules (?)
 			- tests
 			- blocks/*/index.js
 			- blocks/*/view.js

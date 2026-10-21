@@ -24,7 +24,7 @@ jobs:
     name: PHP — static analysis, standards, unit tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # PHPUnit 11 needs 8.2, so the toolchain runs there; `minimum-php` proves the
       # shipped code still parses on the 8.1 the theme declares.
@@ -55,10 +55,10 @@ jobs:
     name: TypeScript, build and artefact freshness
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -92,7 +92,7 @@ jobs:
     name: PHP 8.1 — syntax of the shipped code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up PHP 8.1
         uses: shivammathur/setup-php@v2

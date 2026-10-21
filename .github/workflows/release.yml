@@ -41,12 +41,12 @@ jobs:
       zip: ${{ steps.version.outputs.zip }}
     steps:
       - name: Check out the tagged tree
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.inputs.tag || github.ref }}
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -115,7 +115,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the tagged tree
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.inputs.tag || github.ref }}
 
@@ -144,13 +144,13 @@ jobs:
       ZIP: ${{ needs.verify.outputs.zip }}
     steps:
       - name: Check out the tagged tree
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.inputs.tag || github.ref }}
           fetch-depth: 0
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: npm

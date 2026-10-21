@@ -8,6 +8,23 @@
  * a credential from the request. The option is edited on an Appearance submenu
  * and sanitised through the Settings API.
  *
+ * This is deliberate, and it is the opposite of the first iteration, which carried
+ * six delivery attributes on the `doclap/contact-form` block instance. Delivery is
+ * a site fact, not a content fact:
+ *
+ * - a reCAPTCHA secret stored as a block attribute is written into post content,
+ *   so it reaches revisions, the REST API, exports and staging pushes;
+ * - the block is edited with `edit_posts`, while a recipient address and a secret
+ *   must need `manage_options`;
+ * - the same block can be placed on several surfaces, and per-instance attributes
+ *   would let two copies of one form drift apart;
+ * - copying a page, or inserting the pattern on another site, must not copy
+ *   credentials or a recipient.
+ *
+ * The block therefore keeps only what is actually content — the copy, the labels,
+ * the service checkboxes — and the smoke suite fails if a delivery-like attribute
+ * is ever reintroduced on it.
+ *
  * @package Doclap
  */
 
@@ -227,6 +244,36 @@ function doclap_contact_settings_register(): void {
 	);
 }
 add_action( 'admin_init', 'doclap_contact_settings_register' );
+
+/**
+ * Point the contact-form block inspector at this settings screen.
+ *
+ * Delivery is not a block attribute (see the file docblock), so the block is where
+ * an editor looks first while the values live here. Localising the URL and the
+ * capability keeps the link off a role that cannot use it and keeps the page slug
+ * in one place.
+ *
+ * @return void
+ */
+function doclap_contact_settings_editor_hint(): void {
+	$handle = 'doclap-contact-form-editor-script';
+
+	if ( ! wp_script_is( $handle, 'registered' ) ) {
+		return;
+	}
+
+	wp_add_inline_script(
+		$handle,
+		'window.doclapContactSettings = ' . wp_json_encode(
+			array(
+				'url'       => admin_url( 'themes.php?page=doclap-contact' ),
+				'canManage' => current_user_can( 'manage_options' ),
+			),
+		) . ';',
+		'before',
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'doclap_contact_settings_editor_hint' );
 
 /**
  * Render the settings screen.

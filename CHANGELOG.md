@@ -112,3 +112,12 @@ See `README.md` for the architecture, the build commands and the test suites.
   **Appearance → Doclap Contact** was listed but refused with "Sorry, you are not
   allowed to access this page." Registration moved to `admin_menu`, and the screen
   now reports **Settings saved.** after a save.
+- Contact delivery and reCAPTCHA configuration lives in the `doclap_contact_settings`
+  option, edited on that screen, instead of on the `doclap/contact-form` block. The
+  six attributes that used to carry it (`adminEmail`, `adminEmailSubject`,
+  `userEmailSubject`, `enableRecaptcha`, `recaptchaSiteKey`, `recaptchaSecretKey`)
+  are gone with no alias and no shim: a secret in post content reaches revisions,
+  the REST API and every export, and a recipient address needs a capability the
+  block does not. The block inspector now links to the screen. Anything previously
+  saved in those attributes is ignored; the visible form copy and the service
+  checkboxes are untouched.

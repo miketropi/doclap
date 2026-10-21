@@ -176,7 +176,18 @@ The site-header block is also where the brand source lives: **text** or a **medi
 
 The handler verifies the nonce, drops honeypot hits, requires consent/name/email/message, allowlists the service checkboxes, and rate-limits repeated submissions with a short transient keyed by a hash of IP and email. **No personal data is stored.**
 
-Delivery is configured once per site, under **Appearance → Doclap Contact**, in the `doclap_contact_settings` option: recipient address (defaults to the site admin email), the admin and visitor subjects, and the reCAPTCHA v3 switch with its keys. The secret is read server-side from that option and never rendered into markup, a post, a revision or an export — delivery settings are not block attributes, so changing recipients never means editing pages.
+Delivery is configured once per site, under **Appearance → Doclap Contact**, in the `doclap_contact_settings` option: recipient address (defaults to the site admin email), the admin and visitor subjects, and the reCAPTCHA v3 switch with its keys. The block inspector links straight to that screen, and only for a user who can act on it.
+
+### Why delivery is not a block attribute
+
+The first iteration did store it there — six attributes on the `doclap/contact-form` instance. They were removed on purpose, and the smoke suite now fails if a delivery-like attribute (`secret`, `recaptcha`, `subject`, `adminEmail`) comes back:
+
+- **A secret in content is a leaked secret.** A block attribute is written into post content, so a reCAPTCHA secret key would reach revisions, the REST API, exports, staging pushes and the editor's own state. The option is read server-side and never rendered.
+- **Different capability.** The block is edited with `edit_posts`; a recipient address and a credential must require `manage_options`.
+- **One form, many placements.** The same block can be dropped on several surfaces, and per-instance attributes let two copies of one form send somewhere different.
+- **Content has to stay portable.** Copying a page — or inserting the pattern on another site — must not carry credentials or a recipient.
+
+So the block keeps what is content (copy, labels, service checkboxes) and the option keeps what is infrastructure.
 
 Filters, when the option is not enough:
 

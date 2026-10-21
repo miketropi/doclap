@@ -1,5 +1,6 @@
 import { InspectorControls } from "@wordpress/block-editor";
 import {
+  Notice,
   PanelBody,
   TextControl,
   TextareaControl,
@@ -23,6 +24,19 @@ interface EditProps {
   isSelected: boolean;
 }
 
+/**
+ * Delivery hint localised by `doclap_contact_settings_editor_hint()`.
+ *
+ * Delivery is a site-level option rather than a block attribute, so the inspector
+ * names it and links to it — that is the whole reason the settings screen is
+ * separate from this block.
+ */
+declare global {
+  interface Window {
+    doclapContactSettings?: { url?: string; canManage?: boolean };
+  }
+}
+
 /** Rich values edited in place on the canvas (they render unconditionally). */
 const overlayTargets: RichTextTarget[] = [
   {
@@ -41,10 +55,23 @@ export default function Edit({
 }: EditProps): JSX.Element {
   const services = attributes.services ?? [];
   const steps = (attributes.asideSteps ?? []).map((value) => ({ value }));
+  const settingsHint =
+    typeof window === "undefined" ? undefined : window.doclapContactSettings;
 
   return (
     <>
       <InspectorControls>
+        {settingsHint?.url && settingsHint.canManage ? (
+          <Notice status="info" isDismissible={false}>
+            {__(
+              "Delivery is configured once per site — recipient, subjects and reCAPTCHA — so it never travels with this block or a copy of this page.",
+              "doclap",
+            )}{" "}
+            <a href={settingsHint.url}>
+              {__("Open Doclap Contact settings", "doclap")}
+            </a>
+          </Notice>
+        ) : null}
         <PanelBody title={__("Aside", "doclap")} initialOpen>
           <TextControl
             label={__("Meta", "doclap")}

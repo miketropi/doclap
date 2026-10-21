@@ -1,0 +1,110 @@
+name: CI
+
+# Everything that can be checked without a WordPress install, on every commit and
+# every pull request. The release workflow re-runs the same gates on a tag and adds
+# packaging; the WordPress smoke suite is a manual/local check (see README) because
+# it drives `npx @wp-playground/cli@latest`, which is a floating dependency.
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+  workflow_dispatch:
+
+# A newer commit on the same branch makes the older run irrelevant.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  php:
+    name: PHP — static analysis, standards, unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # PHPUnit 11 needs 8.2, so the toolchain runs there; `minimum-php` proves the
+      # shipped code still parses on the 8.1 the theme declares.
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+          coverage: none
+          cache: composer
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Validate the Composer manifest and lock file
+        run: composer validate --strict --no-check-publish
+
+      - name: Static analysis (PHPStan level 8)
+        run: composer phpstan
+
+      - name: Coding standards (PHP-CS-Fixer, dry run)
+        run: composer php-cs-fixer:check
+
+      - name: Unit tests
+        run: composer test
+
+  assets:
+    name: TypeScript, build and artefact freshness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      # The compiled bundles are committed because WordPress loads them directly,
+      # so a source change without a rebuild is a bug the branch must not carry.
+      # Only the `*.asset.php` cache versions move in this rebuild, which is why the
+      # diff is scoped to the artefacts themselves.
+      - name: Check the committed assets match the sources
+        run: |
+          set -euo pipefail
+          if ! git diff --exit-code -- \
+              assets/css/app.css \
+              assets/js/main.js \
+              'blocks/*/index.js' \
+              'blocks/*/view.js'; then
+            echo "::error::compiled assets are stale — run 'npm run build' and commit the result"
+            exit 1
+          fi
+
+  minimum-php:
+    name: PHP 8.1 — syntax of the shipped code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP 8.1
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      # Catches a stray 8.2+ feature that the newer toolchain would happily accept.
+      - name: Lint every shipped PHP file
+        run: |
+          set -euo pipefail
+          php -v | head -n1
+          find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -print0 \
+            | xargs -0 -r -n1 -P4 php -l > /dev/null
+          echo "linted $(find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' | wc -l) files"

@@ -1,5 +1,7 @@
 # Doclap
 
+[![CI](https://github.com/miketropi/doclap/actions/workflows/ci.yml/badge.svg)](https://github.com/miketropi/doclap/actions/workflows/ci.yml)
+
 An editorial portfolio theme for WordPress: a child theme of **[Nextora](https://github.com/miketropi/nextora)** where every surface — home, about, contact, FAQ, notes archive, note detail, search, 404 — is composed from Doclap's own dynamic blocks instead of hard-coded templates. Content stays in the block editor; markup, behaviour and typography stay in this repository.
 
 <p align="center">
@@ -207,6 +209,18 @@ Two layers, both runnable without a browser:
 The smoke suite creates and deletes its own menu fixture, so it is repeatable and leaves the site as it found it. Use `--wp-cli` against a real site when you need `WP_CONTENT_DIR`, the active plugins or the exact menu data of that site.
 
 Nothing in the test suite loads a browser; front-end behaviour is verified by hand against the checklist in the commit history (pointer, keyboard, touch, hybrid pointer profiles, reduced motion, and with scripting disabled).
+
+### Continuous integration
+
+`.github/workflows/ci.yml` runs on every push to any branch and on every pull request, as three parallel jobs:
+
+| Job | Gates |
+|---|---|
+| **PHP** (8.2) | `composer validate --strict`, PHPStan level 8, PHP-CS-Fixer dry run, PHPUnit |
+| **TypeScript** (`.nvmrc`) | `tsc --noEmit`, `npm run build`, then fails if the committed `assets/css/app.css`, `assets/js/main.js` or any `blocks/*/index.js` / `view.js` differs from what the sources compile to — a source edit without a rebuild cannot land |
+| **PHP 8.1** | `php -l` over every shipped PHP file, so a stray 8.2+ feature cannot ship |
+
+The WordPress smoke suite is deliberately **not** in CI: it drives `npx @wp-playground/cli@latest`, a floating dependency whose current release requires Node ≥ 24.18 while `.nvmrc` pins only the major (it failed to boot on Node 24.16 here). It stays a local check — `npm run test:wp`, or `npm run test:wp -- --wp-cli` against a real site — and the release workflow re-runs the CI gates on every tag.
 
 ## Releasing
 

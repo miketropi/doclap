@@ -125,7 +125,31 @@ function doclap_contact_form_recaptcha_is_enabled( array $settings ): bool {
 }
 
 /**
- * Register the setting, the settings section and the Appearance submenu.
+ * Register the Appearance submenu.
+ *
+ * Menu registration has to run on `admin_menu`. WordPress resolves the current
+ * screen's access at the end of that hook (`wp-admin/includes/menu.php` →
+ * `user_can_access_admin_page()`, which fires before `admin_init`), so a page
+ * added later still appends itself to the Appearance list — that array is updated
+ * immediately — and is then refused when it is opened with "Sorry, you are not
+ * allowed to access this page."
+ *
+ * @return void
+ */
+function doclap_contact_settings_menu(): void {
+	add_submenu_page(
+		'themes.php',
+		__( 'Doclap Contact', 'doclap' ),
+		__( 'Doclap Contact', 'doclap' ),
+		'manage_options',
+		'doclap-contact',
+		'doclap_contact_settings_render_page',
+	);
+}
+add_action( 'admin_menu', 'doclap_contact_settings_menu' );
+
+/**
+ * Register the setting, the settings section and the settings fields.
  */
 function doclap_contact_settings_register(): void {
 	register_setting(
@@ -138,15 +162,6 @@ function doclap_contact_settings_register(): void {
 			'default'           => doclap_contact_settings_defaults(),
 			'show_in_rest'      => false,
 		),
-	);
-
-	add_submenu_page(
-		'themes.php',
-		__( 'Doclap Contact', 'doclap' ),
-		__( 'Doclap Contact', 'doclap' ),
-		'manage_options',
-		'doclap-contact',
-		'doclap_contact_settings_render_page',
 	);
 
 	add_settings_section(
@@ -223,6 +238,14 @@ function doclap_contact_settings_render_page(): void {
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'Doclap Contact', 'doclap' ); ?></h1>
+		<?php
+		/*
+		 * `settings_fields()` only prints the nonce: without this call the screen
+		 * redirects back after a save and shows nothing, so the editor cannot tell
+		 * whether the form was stored.
+		 */
+		settings_errors();
+		?>
 		<form method="post" action="options.php">
 			<?php
 			settings_fields( DOCLAP_CONTACT_SETTINGS_GROUP );

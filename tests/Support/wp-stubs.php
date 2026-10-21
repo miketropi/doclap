@@ -35,6 +35,9 @@ $GLOBALS['doclap_test'] = array(
 	'settings_fields'    => array(),
 	'recaptcha_body'     => null,
 	'nonce_valid'        => true,
+	// Hook wiring performed while the theme files load; kept across resets so a
+	// test can assert which hook a boot-time callback is attached to.
+	'boot_actions'       => array(),
 );
 
 /**
@@ -74,6 +77,12 @@ if ( ! defined( 'DAY_IN_SECONDS' ) ) {
 
 function add_action( string $hook, $callback, int $priority = 10, int $accepted_args = 1 ): bool {
 	$GLOBALS['doclap_test']['actions'][] = compact( 'hook', 'callback', 'priority', 'accepted_args' );
+
+	$wiring = $hook . ':' . ( is_string( $callback ) ? $callback : 'closure' );
+
+	if ( ! in_array( $wiring, $GLOBALS['doclap_test']['boot_actions'], true ) ) {
+		$GLOBALS['doclap_test']['boot_actions'][] = $wiring;
+	}
 
 	return true;
 }

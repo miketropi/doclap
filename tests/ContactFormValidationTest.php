@@ -198,6 +198,7 @@ final class ContactFormValidationTest extends TestCase {
 
 	public function test_settings_register_the_option_and_the_appearance_screen(): void {
 		\doclap_contact_settings_register();
+		\doclap_contact_settings_menu();
 
 		$registered = $GLOBALS['doclap_test']['settings']['doclap_contact_settings'] ?? array();
 
@@ -225,6 +226,24 @@ final class ContactFormValidationTest extends TestCase {
 		foreach ( $GLOBALS['doclap_test']['settings_fields'] as $field ) {
 			self::assertSame( 'doclap-contact', $field['page'] );
 		}
+	}
+
+	/**
+	 * The Appearance screen has to be registered on `admin_menu`.
+	 *
+	 * WordPress resolves the current screen's access at the end of that hook
+	 * (`wp-admin/includes/menu.php` → `user_can_access_admin_page()`), before
+	 * `admin_init` runs. A page registered on `admin_init` therefore appears in the
+	 * Appearance list — the submenu array is appended immediately — and is still
+	 * refused when it is opened with "Sorry, you are not allowed to access this
+	 * page."
+	 */
+	public function test_the_appearance_screen_is_registered_on_admin_menu(): void {
+		$wiring = (array) ( $GLOBALS['doclap_test']['boot_actions'] ?? array() );
+
+		self::assertContains( 'admin_menu:doclap_contact_settings_menu', $wiring );
+		self::assertNotContains( 'admin_init:doclap_contact_settings_menu', $wiring );
+		self::assertContains( 'admin_init:doclap_contact_settings_register', $wiring );
 	}
 
 	// -----------------------------------------------------------------------

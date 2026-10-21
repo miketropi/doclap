@@ -107,3 +107,8 @@ See `README.md` for the architecture, the build commands and the test suites.
   through one helper, so the attachment wins over the stored URL, the URL covers a
   logo whose attachment was deleted, and an image source with nothing selected
   falls back to the text mark instead of leaving an unlabelled link.
+- The contact delivery screen opens again. Its Appearance submenu was registered on
+  `admin_init`, which runs *after* WordPress has already resolved screen access, so
+  **Appearance → Doclap Contact** was listed but refused with "Sorry, you are not
+  allowed to access this page." Registration moved to `admin_menu`, and the screen
+  now reports **Settings saved.** after a save.

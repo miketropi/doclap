@@ -2,6 +2,12 @@
 
 An editorial portfolio theme for WordPress: a child theme of **[Nextora](https://github.com/miketropi/nextora)** where every surface — home, about, contact, FAQ, notes archive, note detail, search, 404 — is composed from Doclap's own dynamic blocks instead of hard-coded templates. Content stays in the block editor; markup, behaviour and typography stay in this repository.
 
+<p align="center">
+  <a href="https://pub-0645c3b9d3674132af6b362484df0f3c.r2.dev/Nextora/doclap/doclap-preview-image.png">
+    <img src="https://pub-0645c3b9d3674132af6b362484df0f3c.r2.dev/Nextora/doclap/doclap-preview-image.png" alt="Doclap — full-page preview of the home surface" width="440">
+  </a>
+</p>
+
 - **26 dynamic blocks**, one `render.php` each, all server-rendered.
 - **Scoped CSS** compiled from five ordered modules into `assets/css/app.css`.
 - **A small TypeScript runtime** (`assets/js/main.js`) plus per-block view scripts.

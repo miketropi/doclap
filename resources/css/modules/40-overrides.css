@@ -603,7 +603,13 @@ body.doclap-nav-locked {overflow:hidden}
 .doclap-scope .studio-footer .sf-wordmark:hover .sf-sign {transform:rotate(45deg);background:color-mix(in oklch,var(--doclap-bg) 8%,var(--doclap-fg))}
 .doclap-scope .studio-footer .sf-bottom {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;padding:24px 0 30px;font-size:12px}
 .doclap-scope .studio-footer .sf-signature {font:10px/1.8 var(--doclap-font-mono);letter-spacing:.05em}
-.doclap-scope .studio-footer .sf-back {display:inline-flex;align-items:center;gap:16px;min-height:44px;color:var(--doclap-bg)}
+/*
+ * A bare text control in the colophon row: without this reset the button keeps
+ * the platform's own chrome — a light `ButtonFace` fill, a 2px outset border and
+ * the user agent's 1px 6px padding — which reads as a grey widget on the dark
+ * footer and shifts the label off the baseline of the spans beside it.
+ */
+.doclap-scope .studio-footer .sf-back {display:inline-flex;align-items:center;gap:16px;min-height:44px;padding:0;border:none;background:none;appearance:none;color:var(--doclap-bg)}
 .doclap-scope .studio-footer .sf-back:hover {text-decoration:underline;text-underline-offset:5px}
 .doclap-scope .studio-footer .sf-back:hover svg {transform:translateY(-4px)}
 .doclap-scope .studio-footer :focus-visible {outline:2px solid var(--doclap-bg);outline-offset:5px}

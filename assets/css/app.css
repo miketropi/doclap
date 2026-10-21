@@ -5135,6 +5135,10 @@ body {
   align-items: center;
   gap: 16px;
   min-height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  appearance: none;
   color: var(--doclap-bg);
 }
 .doclap-scope .studio-footer .sf-back:hover {

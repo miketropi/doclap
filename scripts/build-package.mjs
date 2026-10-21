@@ -84,6 +84,7 @@ const excludes = [
 	`${ THEME_SLUG }/AGENTS.md`,
 	`${ THEME_SLUG }/.mcp.json`,
 	`${ THEME_SLUG }/README.md`,
+	`${ THEME_SLUG }/CHANGELOG.md`,
 
 	// Sources (compiled output lives in assets/ and blocks/*/index.js)
 	`${ THEME_SLUG }/resources/*`,

@@ -196,8 +196,10 @@ jobs:
               exit 1
             fi
           done
-          sha256sum "$target" > "$target.sha256"
-          cat "$target.sha256"
+          # Record the bare file name: a checksum file listing the runner's absolute
+          # path cannot be verified with `sha256sum -c` on anyone else's machine.
+          ( cd "$GITHUB_WORKSPACE" && sha256sum "$ARCHIVE" > "$ARCHIVE.sha256" )
+          cat "$GITHUB_WORKSPACE/$ARCHIVE.sha256"
 
       - name: Publish the release
         if: github.event.inputs.dry_run != 'true'

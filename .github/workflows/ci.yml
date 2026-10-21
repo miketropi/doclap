@@ -34,7 +34,6 @@ jobs:
           php-version: '8.2'
           tools: composer:v2
           coverage: none
-          cache: composer
 
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist

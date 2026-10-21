@@ -77,6 +77,31 @@ function doclap_smoke_fail( string $message ): void {
 	exit( 1 );
 }
 
+/**
+ * Assert the declared type and default of block attributes.
+ *
+ * @param string                                    $label      Block description, e.g. `the site header`.
+ * @param array<string, mixed>                      $attributes The block's declared attributes.
+ * @param array<string, array{0: string, 1: mixed}> $contract   Attribute => [type, default].
+ */
+function doclap_smoke_assert_attributes( string $label, array $attributes, array $contract ): void {
+	foreach ( $contract as $doclap_key => $doclap_expected ) {
+		$doclap_attribute = $attributes[ $doclap_key ] ?? null;
+
+		if (
+			! is_array( $doclap_attribute )
+			|| $doclap_expected[0] !== ( $doclap_attribute['type'] ?? null )
+			|| $doclap_expected[1] !== ( $doclap_attribute['default'] ?? null )
+		) {
+			doclap_smoke_fail(
+				$label . ' does not declare '
+				. $doclap_key . ' as ' . (string) $doclap_expected[0]
+				. ' with the default ' . wp_json_encode( $doclap_expected[1] ),
+			);
+		}
+	}
+}
+
 $doclap_dir     = doclap_smoke_theme_dir();
 $doclap_uri     = 'http://example.test/wp-content/themes/doclap';
 $doclap_restore = array(
@@ -896,30 +921,32 @@ foreach ( array( 'doclap/site-header', 'doclap/site-footer' ) as $doclap_name ) 
 // source (text or a media-library logo), never a mirrored menu tree or a logo URL
 // detached from its attachment.
 $doclap_header_attributes = (array) ( $doclap_manifests['doclap/site-header']['attributes'] ?? array() );
-$doclap_header_contract   = array(
-	'menuId'        => array( 'number', 0 ),
-	'menuDepth'     => array( 'number', 4 ),
-	'brandMode'     => array( 'string', 'text' ),
-	'brandMediaId'  => array( 'number', 0 ),
-	'brandMediaUrl' => array( 'string', '' ),
-	'brandMediaAlt' => array( 'string', '' ),
+
+doclap_smoke_assert_attributes(
+	'the site header',
+	$doclap_header_attributes,
+	array(
+		'menuId'        => array( 'number', 0 ),
+		'menuDepth'     => array( 'number', 4 ),
+		'brandMode'     => array( 'string', 'text' ),
+		'brandMediaId'  => array( 'number', 0 ),
+		'brandMediaUrl' => array( 'string', '' ),
+		'brandMediaAlt' => array( 'string', '' ),
+	),
 );
 
-foreach ( $doclap_header_contract as $doclap_key => $doclap_expected ) {
-	$doclap_attribute = $doclap_header_attributes[ $doclap_key ] ?? null;
-
-	if (
-		! is_array( $doclap_attribute )
-		|| $doclap_expected[0] !== ( $doclap_attribute['type'] ?? null )
-		|| $doclap_expected[1] !== ( $doclap_attribute['default'] ?? null )
-	) {
-		doclap_smoke_fail(
-			'the site header does not declare '
-			. $doclap_key . ' as ' . (string) $doclap_expected[0]
-			. ' with the default ' . wp_json_encode( $doclap_expected[1] ),
-		);
-	}
-}
+// The footer offers the same two brand sources, so a site can use a logo below
+// the fold as well; the defaults keep every existing footer on its text mark.
+doclap_smoke_assert_attributes(
+	'the site footer',
+	(array) ( $doclap_manifests['doclap/site-footer']['attributes'] ?? array() ),
+	array(
+		'brandMode'     => array( 'string', 'text' ),
+		'brandMediaId'  => array( 'number', 0 ),
+		'brandMediaUrl' => array( 'string', '' ),
+		'brandMediaAlt' => array( 'string', '' ),
+	),
+);
 
 foreach ( array( 'navItems', 'quickLinks', 'closePanelLabel' ) as $doclap_key ) {
 	if ( array_key_exists( $doclap_key, $doclap_header_attributes ) ) {
@@ -1291,6 +1318,42 @@ $doclap_renders[] = $doclap_html;
 $doclap_html = doclap_smoke_render( '<!-- wp:doclap/inner-hero {"headingSource":"page-title","heading":"Fallback heading."} /-->' );
 
 doclap_smoke_render_has( 'inner-hero page-title fallback', $doclap_html, '>Fallback heading.</h1>' );
+$doclap_renders[] = $doclap_html;
+
+/*
+ * The footer wordmark has two sources. The default stays the text mark, an image
+ * source renders the selected media in its place, and an image source with no
+ * media selected falls back to the text mark rather than leaving an empty link.
+ */
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/site-footer /-->' );
+
+doclap_smoke_render_has( 'site-footer text brand', $doclap_html, 'class="pagefoot studio-footer"' );
+doclap_smoke_render_has( 'site-footer text brand', $doclap_html, 'class="sf-wordmark"' );
+doclap_smoke_render_has( 'site-footer text brand', $doclap_html, '<span>độc lập</span>' );
+doclap_smoke_render_has( 'site-footer text brand', $doclap_html, '<sup>®</sup>' );
+doclap_smoke_render_has( 'site-footer text brand', $doclap_html, 'aria-label="độc lập — back to home"' );
+doclap_smoke_render_lacks( 'site-footer text brand', $doclap_html, 'sf-wordmark-image' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render(
+	'<!-- wp:doclap/site-footer {"brandMode":"image","brandMediaUrl":"https://example.test/logo.png","brandMediaAlt":"A \u0026 B studio"} /-->',
+);
+
+doclap_smoke_render_has( 'site-footer image brand', $doclap_html, 'class="sf-wordmark sf-wordmark--image"' );
+doclap_smoke_render_has(
+	'site-footer image brand',
+	$doclap_html,
+	'class="sf-wordmark-image" src="' . esc_url( 'https://example.test/logo.png' ) . '"',
+);
+doclap_smoke_render_has( 'site-footer image brand', $doclap_html, 'alt="A &amp; B studio"' );
+doclap_smoke_render_has( 'site-footer image brand', $doclap_html, 'aria-label="A &amp; B studio — back to home"' );
+doclap_smoke_render_lacks( 'site-footer image brand', $doclap_html, '<sup>' );
+$doclap_renders[] = $doclap_html;
+
+$doclap_html = doclap_smoke_render( '<!-- wp:doclap/site-footer {"brandMode":"image"} /-->' );
+
+doclap_smoke_render_has( 'site-footer image brand without media', $doclap_html, 'class="sf-wordmark"' );
+doclap_smoke_render_lacks( 'site-footer image brand without media', $doclap_html, 'sf-wordmark-image' );
 $doclap_renders[] = $doclap_html;
 
 /*

@@ -295,6 +295,15 @@ The `Doclap site footer` is still attribute-driven and never depends on a
 registered nav menu, so it works on a fresh site with no menus configured and
 its studio/discover link groups are edited directly in the block.
 
+Its wordmark offers the same two brand sources as the header
+(**Brand and colophon → Brand source**): the text mark with its superscript, or a
+logo picked from the media library. Both blocks resolve a brand image through the
+same helper, so the attachment wins over the stored URL, the URL covers a logo
+whose attachment was deleted, and an image mode with nothing selected falls back
+to the text mark instead of rendering an empty link. The footer logo is capped at
+`min(70vw, 520px)` wide and `clamp(48px, 9vw, 140px)` tall so a wide logo cannot
+push the signature out or overflow the colophon.
+
 == Contact form ==
 
 `POST /doclap/v1/contact` validates a `wp_rest` nonce (`doclap_contact_form`
@@ -496,3 +505,9 @@ Assets:
   their headings in the band's foreground colour, which fixes a dark heading on a
   dark band, and every other piece of text in a section follows the body-text
   colour.
+* The `Doclap site footer` wordmark offers the same two brand sources as the
+  header: the text mark with its superscript, or a logo from the media library
+  (**Brand and colophon → Brand source**). Both blocks now resolve a brand image
+  through one helper, so the attachment wins over the stored URL, the URL covers a
+  logo whose attachment was deleted, and an image source with nothing selected
+  falls back to the text mark instead of leaving an unlabelled link.

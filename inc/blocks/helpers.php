@@ -84,6 +84,85 @@ function doclap_scope_class( string $class_name, array $extra = array() ): strin
 }
 
 /**
+ * Resolve a block's brand source into an image tag.
+ *
+ * The header and the footer both offer the brand as text or as a media-library
+ * logo, and both have to agree on the fallback order, so the chain lives here
+ * once: the attachment id wins over the stored URL (it keeps `srcset` and the
+ * intrinsic dimensions), the URL covers a logo whose attachment was deleted, and
+ * an empty return tells the caller to render its own text brand. A brand with
+ * neither a selected attachment nor a URL is therefore never a broken image.
+ *
+ * @param array<string, mixed> $attributes Block attributes.
+ * @param string               $class_name Class the image carries.
+ * @param string               $loading    `eager` above the fold, `lazy` below it.
+ *
+ * @return string Image markup, or an empty string when the brand is text.
+ */
+function doclap_brand_image( array $attributes, string $class_name, string $loading = 'eager' ): string {
+	if ( 'image' !== ( $attributes['brandMode'] ?? 'text' ) ) {
+		return '';
+	}
+
+	$media_id  = absint( $attributes['brandMediaId'] ?? 0 );
+	$media_url = trim( (string) ( $attributes['brandMediaUrl'] ?? '' ) );
+	$alt       = doclap_brand_alt( $attributes, $media_id );
+
+	if ( $media_id > 0 ) {
+		$image = wp_get_attachment_image(
+			$media_id,
+			'full',
+			false,
+			array_filter(
+				array(
+					'class'   => $class_name,
+					'alt'     => $alt,
+					'loading' => $loading,
+				),
+			),
+		);
+
+		if ( '' !== $image ) {
+			return (string) $image;
+		}
+	}
+
+	if ( '' === $media_url ) {
+		return '';
+	}
+
+	return sprintf(
+		'<img class="%1$s" src="%2$s" alt="%3$s" loading="%4$s" decoding="async">',
+		esc_attr( $class_name ),
+		esc_url( $media_url ),
+		esc_attr( $alt ),
+		esc_attr( $loading ),
+	);
+}
+
+/**
+ * Accessible name for a brand image.
+ *
+ * The brand links home, so it needs a name: the block attribute, then the media
+ * library value, then the site name. A decorative logo would otherwise leave the
+ * link unlabelled for assistive technology.
+ *
+ * @param array<string, mixed> $attributes Block attributes.
+ * @param int                  $media_id   Attachment id, when the brand has one.
+ *
+ * @return string Alternative text, never empty.
+ */
+function doclap_brand_alt( array $attributes, int $media_id = 0 ): string {
+	$alt = trim( (string) ( $attributes['brandMediaAlt'] ?? '' ) );
+
+	if ( '' === $alt && $media_id > 0 ) {
+		$alt = trim( (string) get_post_meta( $media_id, '_wp_attachment_image_alt', true ) );
+	}
+
+	return '' === $alt ? trim( (string) get_bloginfo( 'name' ) ) : $alt;
+}
+
+/**
  * Estimate reading time in minutes for a piece of content.
  *
  * @param string $content Raw content, HTML or plain text.

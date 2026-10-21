@@ -591,6 +591,13 @@ body.doclap-nav-locked {overflow:hidden}
 .doclap-scope .studio-footer .sf-wordmark {display:flex;align-items:baseline;gap:12px;color:var(--doclap-bg);padding:12px 0 26px;border-bottom:1px solid color-mix(in oklch,var(--doclap-bg) 24%,var(--doclap-fg));text-decoration:none;min-width:0}
 .doclap-scope .studio-footer .sf-wordmark>span:first-child {font:500 clamp(80px,13vw,206px)/1.4 var(--doclap-font-body);letter-spacing:-.075em;animation:none}
 .doclap-scope .studio-footer .sf-wordmark sup {font:400 clamp(18px,2.2vw,34px)/1 var(--doclap-font-body);align-self:flex-start;margin-top:3.2vw}
+/*
+ * Logo source: the wordmark keeps its rule, padding and sign, and the image takes
+ * the text mark's place at the same scale, capped so a wide logo cannot push the
+ * sign out or overflow the footer on a narrow screen.
+ */
+.doclap-scope .studio-footer .sf-wordmark--image {align-items:center}
+.doclap-scope .studio-footer .sf-wordmark-image {display:block;width:auto;height:auto;max-height:clamp(48px,9vw,140px);max-width:min(70vw,520px);object-fit:contain}
 .doclap-scope .studio-footer .sf-sign {margin-left:auto;align-self:center;width:clamp(50px,8vw,120px);height:clamp(50px,8vw,120px);display:grid;place-items:center;border:1px solid color-mix(in oklch,var(--doclap-bg) 35%,var(--doclap-fg));border-radius:50%;color:var(--doclap-accent);transition:transform .7s,background .5s}
 .doclap-scope .studio-footer .sf-sign svg {width:44%;height:44%}
 .doclap-scope .studio-footer .sf-wordmark:hover .sf-sign {transform:rotate(45deg);background:color-mix(in oklch,var(--doclap-bg) 8%,var(--doclap-fg))}

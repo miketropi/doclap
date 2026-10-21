@@ -5080,6 +5080,17 @@ body {
   align-self: flex-start;
   margin-top: 3.2vw;
 }
+.doclap-scope .studio-footer .sf-wordmark--image {
+  align-items: center;
+}
+.doclap-scope .studio-footer .sf-wordmark-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: clamp(48px,9vw,140px);
+  max-width: min(70vw,520px);
+  object-fit: contain;
+}
 .doclap-scope .studio-footer .sf-sign {
   margin-left: auto;
   align-self: center;

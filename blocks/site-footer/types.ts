@@ -22,6 +22,11 @@ export interface SiteFooterAttributes extends Record<string, unknown> {
   navGroups: FooterNavGroup[];
   brandText: string;
   brandMark: string;
+  /** `text` renders `brandText` and `brandMark`; `image` renders the selected media. */
+  brandMode?: "text" | "image";
+  brandMediaId?: number;
+  brandMediaUrl?: string;
+  brandMediaAlt?: string;
   brandUrl: string;
   copyrightPrefix: string;
   copyrightText: string;

@@ -1,9 +1,15 @@
 import { InspectorControls } from "@wordpress/block-editor";
-import { Button, PanelBody, TextControl } from "@wordpress/components";
+import {
+  Button,
+  PanelBody,
+  SelectControl,
+  TextControl,
+} from "@wordpress/components";
 import { __, sprintf } from "@wordpress/i18n";
 
 import BlockPreview from "../../resources/ts/editor/block-preview";
 import ColourControls from "../../resources/ts/editor/colour-controls";
+import MediaControl from "../../resources/ts/editor/media-control";
 import Repeater, {
   type RepeaterField,
   type RepeaterItem,
@@ -38,6 +44,7 @@ export default function Edit({
   isSelected,
 }: EditProps): JSX.Element {
   const navGroups = attributes.navGroups ?? [];
+  const brandMode = "image" === attributes.brandMode ? "image" : "text";
   const updateGroup = (index: number, patch: Partial<FooterNavGroup>): void => {
     setAttributes({
       navGroups: navGroups.map((group, position) =>
@@ -142,16 +149,77 @@ export default function Edit({
           title={__("Brand and colophon", "doclap")}
           initialOpen={false}
         >
-          <TextControl
-            label={__("Brand text", "doclap")}
-            value={attributes.brandText ?? ""}
-            onChange={(brandText) => setAttributes({ brandText })}
+          <SelectControl
+            label={__("Brand source", "doclap")}
+            options={[
+              { label: __("Text", "doclap"), value: "text" },
+              { label: __("Image", "doclap"), value: "image" },
+            ]}
+            value={brandMode}
+            onChange={(value) =>
+              setAttributes({ brandMode: "image" === value ? "image" : "text" })
+            }
+            help={
+              "image" === brandMode
+                ? __(
+                    "Until a logo is selected the brand text is used instead.",
+                    "doclap",
+                  )
+                : undefined
+            }
           />
-          <TextControl
-            label={__("Brand mark", "doclap")}
-            value={attributes.brandMark ?? ""}
-            onChange={(brandMark) => setAttributes({ brandMark })}
-          />
+          {"image" === brandMode ? (
+            <MediaControl
+              value={{
+                id: attributes.brandMediaId ?? 0,
+                url: attributes.brandMediaUrl ?? "",
+                alt: attributes.brandMediaAlt ?? "",
+              }}
+              labels={{
+                title: __("Brand logo", "doclap"),
+                select: __(
+                  "Select a logo from the media library or upload a new one.",
+                  "doclap",
+                ),
+                replace: __("Replace logo", "doclap"),
+                remove: __("Remove logo", "doclap"),
+                alt: __("Logo alternative text", "doclap"),
+                altHelp: __(
+                  "Read out instead of the logo. The media library value, then the site name, are used while this is empty.",
+                  "doclap",
+                ),
+              }}
+              onSelect={(media) =>
+                setAttributes({
+                  brandMediaId: media.id,
+                  brandMediaUrl: media.url,
+                  brandMediaAlt: media.alt,
+                })
+              }
+              onRemove={() =>
+                setAttributes({
+                  brandMediaId: 0,
+                  brandMediaUrl: "",
+                  brandMediaAlt: "",
+                })
+              }
+              onChangeAlt={(brandMediaAlt) => setAttributes({ brandMediaAlt })}
+            />
+          ) : (
+            <>
+              <TextControl
+                label={__("Brand text", "doclap")}
+                value={attributes.brandText ?? ""}
+                onChange={(brandText) => setAttributes({ brandText })}
+              />
+              <TextControl
+                label={__("Brand mark", "doclap")}
+                help={__("Rendered as a superscript, e.g. ®.", "doclap")}
+                value={attributes.brandMark ?? ""}
+                onChange={(brandMark) => setAttributes({ brandMark })}
+              />
+            </>
+          )}
           <TextControl
             label={__("Brand URL", "doclap")}
             help={`${urlHelp} ${__("Leave empty to link to the site home.", "doclap")}`}

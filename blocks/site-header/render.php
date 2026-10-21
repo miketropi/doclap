@@ -25,58 +25,12 @@ $doclap_brand_mark = (string) ( $attributes['brandSuffix'] ?? '®' );
 $doclap_brand_url  = doclap_resolve_url( (string) ( $attributes['brandUrl'] ?? '' ) );
 
 /*
- * The brand is either the text mark or a media-library logo. The attachment id
- * wins over the stored URL so `srcset` and the intrinsic dimensions stay right;
- * the URL is the fallback for a logo whose attachment was deleted, and the text
- * mark is the fallback for an image mode with nothing selected yet.
+ * The brand is either the text mark or a media-library logo; the shared resolver
+ * owns that fallback chain, and the text mark is what renders when it returns an
+ * empty image.
  */
-$doclap_brand_is_image = 'image' === ( $attributes['brandMode'] ?? 'text' );
-$doclap_brand_image    = '';
-
-if ( $doclap_brand_is_image ) {
-	$doclap_brand_media_id  = absint( $attributes['brandMediaId'] ?? 0 );
-	$doclap_brand_media_url = (string) ( $attributes['brandMediaUrl'] ?? '' );
-
-	/*
-	 * The logo links home, so it needs a name: the block attribute, then the
-	 * media library value, then the site name — a decorative logo would leave the
-	 * brand link unlabelled for assistive technology.
-	 */
-	$doclap_brand_alt = trim( (string) ( $attributes['brandMediaAlt'] ?? '' ) );
-
-	if ( '' === $doclap_brand_alt && $doclap_brand_media_id > 0 ) {
-		$doclap_brand_alt = trim( (string) get_post_meta( $doclap_brand_media_id, '_wp_attachment_image_alt', true ) );
-	}
-
-	if ( '' === $doclap_brand_alt ) {
-		$doclap_brand_alt = trim( (string) get_bloginfo( 'name' ) );
-	}
-
-	if ( $doclap_brand_media_id > 0 ) {
-		$doclap_brand_image = wp_get_attachment_image(
-			$doclap_brand_media_id,
-			'full',
-			false,
-			array_filter(
-				array(
-					'class'   => 'logo-image',
-					'alt'     => $doclap_brand_alt,
-					'loading' => 'eager',
-				),
-			),
-		);
-	}
-
-	if ( '' === $doclap_brand_image && '' !== $doclap_brand_media_url ) {
-		$doclap_brand_image = sprintf(
-			'<img class="logo-image" src="%1$s" alt="%2$s" loading="eager" decoding="async">',
-			esc_url( $doclap_brand_media_url ),
-			esc_attr( $doclap_brand_alt ),
-		);
-	}
-
-	$doclap_brand_is_image = '' !== $doclap_brand_image;
-}
+$doclap_brand_image    = doclap_brand_image( $attributes, 'logo-image', 'eager' );
+$doclap_brand_is_image = '' !== $doclap_brand_image;
 $doclap_nav_label  = (string) ( $attributes['navLabel'] ?? __( 'Main navigation', 'doclap' ) );
 $doclap_skip_label = (string) ( $attributes['skipLabel'] ?? __( 'Skip to content', 'doclap' ) );
 $doclap_menu_label = (string) ( $attributes['menuLabel'] ?? __( 'Menu', 'doclap' ) );

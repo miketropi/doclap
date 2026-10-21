@@ -41,6 +41,20 @@ $brand_url      = '' === trim( $brand_url )
 	: doclap_resolve_url( $brand_url );
 $brand_text     = (string) ( $attributes['brandText'] ?? '' );
 $privacy_url    = trim( (string) ( $attributes['privacyUrl'] ?? '' ) );
+
+/*
+ * The wordmark is either the text mark or a media-library logo; the shared
+ * resolver owns that fallback chain, so an image mode with nothing selected still
+ * renders the text mark rather than an empty link.
+ */
+$brand_image = doclap_brand_image( $attributes, 'sf-wordmark-image', 'lazy' );
+$brand_name  = '' !== $brand_image
+	? doclap_brand_alt( $attributes, absint( $attributes['brandMediaId'] ?? 0 ) )
+	: $brand_text;
+
+if ( '' === $brand_name ) {
+	$brand_name = $brand_text;
+}
 ?>
 <div <?php echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?>>
 	<footer
@@ -112,12 +126,16 @@ $privacy_url    = trim( (string) ( $attributes['privacyUrl'] ?? '' ) );
 			</div>
 
 			<a
-				class="sf-wordmark"
+				class="<?php echo esc_attr( '' === $brand_image ? 'sf-wordmark' : 'sf-wordmark sf-wordmark--image' ); ?>"
 				href="<?php echo esc_url( $brand_url ); ?>"
-				aria-label="<?php echo esc_attr( sprintf( __( '%s — back to home', 'doclap' ), $brand_text ) ); ?>"
+				aria-label="<?php echo esc_attr( sprintf( __( '%s — back to home', 'doclap' ), $brand_name ) ); ?>"
 			>
-				<span><?php echo esc_html( $brand_text ); ?></span>
-				<sup><?php echo esc_html( (string) ( $attributes['brandMark'] ?? '' ) ); ?></sup>
+				<?php if ( '' !== $brand_image ) : ?>
+					<?php echo $brand_image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- `wp_get_attachment_image()` or escaped above.?>
+				<?php else : ?>
+					<span><?php echo esc_html( $brand_text ); ?></span>
+					<sup><?php echo esc_html( (string) ( $attributes['brandMark'] ?? '' ) ); ?></sup>
+				<?php endif; ?>
 				<span class="sf-sign" aria-hidden="true">
 					<?php
 					echo doclap_icon( 'arrow-up-right' );

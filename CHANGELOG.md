@@ -6,7 +6,7 @@ current version is in `inc/bootstrap/version.php`, and the theme header in
 
 See `README.md` for the architecture, the build commands and the test suites.
 
-## 1.0.0
+## 1.0.1
 
 - The **Colours** panel now reaches every block it appears on. Background was only
   consumed for the roots that happen to carry `.process`, `.contact`, `.pagefoot`,
@@ -17,6 +17,9 @@ See `README.md` for the architecture, the build commands and the test suites.
   panel untouched renders exactly the design defaults it did before. The disciplines
   band's title is a `<span>`, not an `h1`–`h4`, so it never received the Heading
   colour; it does now, with the band's own light-on-dark colour as the fallback.
+
+## 1.0.0
+
 - First release: twenty-five Doclap blocks — the home landing page split into nine
   section blocks (`doclap/home-hero` … `doclap/home-contact`) plus the sixteen
   remaining surfaces — self-hosted editorial fonts, Doclap colour and font

@@ -132,7 +132,7 @@ Every block is dynamic: `render.php` renders, `block.json` declares. There is no
 
 `resources/css/app.css` imports the modules in a deliberate order: tokens → base → components → surfaces → overrides. Everything is written under `.doclap-scope`, which every Doclap block root carries (via `doclap_scope_class()`), so no rule can leak into Nextora or the editor UI. The same compiled stylesheet is registered with `add_editor_style()`, so the canvas is styled by the same rules as the front end.
 
-Section colours are attributes (`sectionBg`, `sectionHeading`, `sectionText`), emitted as `--doclap-block-*` custom properties on the block root — an unset colour emits nothing and the theme default applies.
+Section colours are attributes (`sectionBg`, `sectionHeading`, `sectionText`), emitted as `--doclap-block-*` custom properties on the block root — an unset colour emits nothing and the theme default applies. The contract is general rather than a list: the root paints `--doclap-block-bg` whenever the property is present (`.doclap-scope[style*="--doclap-block-bg"]`), headings read `--doclap-block-heading`, and the root colour cascades the body text from `--doclap-block-text`. A new section block therefore needs no CSS entry to honour the panel; a display-type element that is not an `h1`–`h4` (the disciplines band's title) has to name the heading variable itself.
 
 ### TypeScript: one runtime, per-block behaviour
 

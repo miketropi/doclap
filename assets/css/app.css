@@ -5415,7 +5415,7 @@ body {
 .doclap-scope .doclap-discipline .discipline-title {
   font: 400 clamp(26px,2.5vw,36px)/1.22 var(--doclap-font-display);
   letter-spacing: -.025em;
-  color: var(--doclap-block-text,var(--doclap-bg));
+  color: var(--doclap-block-heading,var(--doclap-bg));
   text-wrap: balance;
 }
 .doclap-scope .doclap-discipline .discipline-caption {
@@ -5555,6 +5555,9 @@ body {
 }
 .doclap-scope :is(h1,h2,h3,h4) {
   color: var(--doclap-block-heading,var(--doclap-fg));
+}
+.doclap-scope[style*="--doclap-block-bg"] {
+  background-color: var(--doclap-block-bg);
 }
 .doclap-scope.process, .doclap-scope.contact, .doclap-scope.pagefoot, .doclap-scope.dark-panel, .doclap-scope.closing, .doclap-scope .process, .doclap-scope .contact, .doclap-scope .pagefoot, .doclap-scope .dark-panel, .doclap-scope .closing {
   background: var(--doclap-block-bg,var(--doclap-fg));

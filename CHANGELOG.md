@@ -8,6 +8,15 @@ See `README.md` for the architecture, the build commands and the test suites.
 
 ## 1.0.0
 
+- The **Colours** panel now reaches every block it appears on. Background was only
+  consumed for the roots that happen to carry `.process`, `.contact`, `.pagefoot`,
+  `.dark-panel` or `.closing`, or the hand-written list of twelve inner-page blocks,
+  so picking a background on a home section (hero, work, about, team, journal,
+  testimonials) or on the footer changed nothing. One rule keyed on the custom
+  property being present now paints the block root for any block, and leaving the
+  panel untouched renders exactly the design defaults it did before. The disciplines
+  band's title is a `<span>`, not an `h1`–`h4`, so it never received the Heading
+  colour; it does now, with the band's own light-on-dark colour as the fallback.
 - First release: twenty-five Doclap blocks — the home landing page split into nine
   section blocks (`doclap/home-hero` … `doclap/home-contact`) plus the sixteen
   remaining surfaces — self-hosted editorial fonts, Doclap colour and font

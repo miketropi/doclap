@@ -1,0 +1,200 @@
+name: Release
+
+# Packages the theme on every release tag and attaches the zip (plus its
+# checksum) to the matching GitHub release. Run it by hand with `tag` to
+# re-publish an existing tag.
+#
+# The theme declares PHP 8.1, but its dev toolchain does not (PHPUnit 11 needs
+# 8.2), so verification runs on 8.2 while a separate job lints the shipped PHP on
+# 8.1 — the declared minimum is proven, just not with the test runner.
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to package and publish, e.g. v1.0.0
+        required: true
+        type: string
+      dry_run:
+        description: Build and check the archive, but do not publish a release
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  TAG: ${{ github.event.inputs.tag || github.ref_name }}
+
+jobs:
+  verify:
+    name: Verify the tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.value }}
+      zip: ${{ steps.version.outputs.zip }}
+    steps:
+      - name: Check out the tagged tree
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+          coverage: none
+
+      - name: Read the theme version and check it matches the tag
+        id: version
+        run: |
+          set -euo pipefail
+          version="$(sed -nE "s/.*DOCLAP_VERSION'[[:space:]]*,[[:space:]]*'([^']+)'.*/\1/p" inc/bootstrap/version.php | head -n1)"
+          header="$(sed -nE 's/^Version:[[:space:]]*(.*)$/\1/p' style.css | head -n1)"
+          echo "DOCLAP_VERSION=$version  style.css=$header  tag=$TAG"
+          if [ -z "$version" ]; then
+            echo "::error::could not read DOCLAP_VERSION from inc/bootstrap/version.php"
+            exit 1
+          fi
+          if [ "$version" != "$header" ]; then
+            echo "::error::style.css says $header but DOCLAP_VERSION is $version — bump both together"
+            exit 1
+          fi
+          if [ "v$version" != "$TAG" ]; then
+            echo "::error::tag $TAG does not match the theme version v$version — bump the version, commit, then tag"
+            exit 1
+          fi
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+          echo "zip=doclap-v$version.zip" >> "$GITHUB_OUTPUT"
+
+      - name: Install dependencies
+        run: |
+          set -euo pipefail
+          npm ci
+          composer install --no-interaction --prefer-dist
+
+      - name: Typecheck and test
+        run: |
+          set -euo pipefail
+          npm run typecheck
+          composer phpstan
+          composer test
+
+      # A tag must ship the compiled assets its sources produce. The build is
+      # deterministic for the CSS and JS bundles; only the `*.asset.php` cache
+      # versions move, so the diff is scoped to the artefacts themselves.
+      - name: Check the committed assets match the sources
+        run: |
+          set -euo pipefail
+          npm run build
+          if ! git diff --exit-code -- \
+              assets/css/app.css \
+              assets/js/main.js \
+              'blocks/*/index.js' \
+              'blocks/*/view.js'; then
+            echo "::error::compiled assets are stale — run 'npm run build' and commit before tagging"
+            exit 1
+          fi
+
+  minimum-php:
+    name: Lint the shipped PHP on 8.1
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the tagged tree
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up PHP 8.1
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      # Catches a stray 8.2+ feature that the 8.2 toolchain would happily accept.
+      - name: Lint every shipped PHP file
+        run: |
+          set -euo pipefail
+          php -v | head -n1
+          find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -print0 \
+            | xargs -0 -r -n1 -P4 php -l > /dev/null
+          echo "linted $(find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' | wc -l) files"
+
+  package:
+    name: Package and publish
+    needs: [verify, minimum-php]
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      VERSION: ${{ needs.verify.outputs.version }}
+      ZIP: ${{ needs.verify.outputs.zip }}
+    steps:
+      - name: Check out the tagged tree
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+          coverage: none
+
+      # The zip must not carry the dev autoloader, and the theme has no runtime
+      # Composer dependencies, so a production-only install is all it needs.
+      - name: Install the production autoloader
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Build the archive
+        run: |
+          set -euo pipefail
+          npm run build:package
+          test -f "$ZIP" || { echo "::error::$ZIP was not created"; exit 1; }
+          ls -lh "$ZIP"
+
+      - name: Check the archive contents
+        run: |
+          set -euo pipefail
+          listing="$(unzip -l "$ZIP")"
+          for required in 'doclap/style.css' 'doclap/assets/css/app.css' 'doclap/assets/js/main.js' 'doclap/functions.php'; do
+            grep -qF "$required" <<<"$listing" || { echo "::error::$ZIP is missing $required"; exit 1; }
+          done
+          for forbidden in 'doclap/node_modules/' 'doclap/tests/' 'doclap/resources/' 'doclap/.git/' 'doclap/README.md' 'doclap/package.json'; do
+            if grep -qF "$forbidden" <<<"$listing"; then
+              echo "::error::$ZIP contains $forbidden"
+              exit 1
+            fi
+          done
+          sha256sum "$ZIP" > "$ZIP.sha256"
+          cat "$ZIP.sha256"
+
+      - name: Publish the release
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          set -euo pipefail
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --title "$TAG" --verify-tag --generate-notes
+          fi
+          gh release upload "$TAG" "$ZIP" "$ZIP.sha256" --clobber

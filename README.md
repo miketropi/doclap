@@ -208,6 +208,32 @@ The smoke suite creates and deletes its own menu fixture, so it is repeatable an
 
 Nothing in the test suite loads a browser; front-end behaviour is verified by hand against the checklist in the commit history (pointer, keyboard, touch, hybrid pointer profiles, reduced motion, and with scripting disabled).
 
+## Releasing
+
+Tags are `vX.Y.Z` and must agree with the theme version, which is declared twice:
+
+- `inc/bootstrap/version.php` — `DOCLAP_VERSION`, the single source of truth (the release zip is named from it);
+- `style.css` — the `Version:` header.
+
+To cut a release:
+
+1. Bump both to the new version.
+2. `npm run build` and commit the regenerated assets — the workflow refuses a tag whose committed CSS/JS differs from what the sources compile to.
+3. `npm run test:wp` if you have a WordPress to point it at; the release job cannot run the smoke suite (it needs a real WordPress plus the Nextora parent).
+4. `git tag vX.Y.Z && git push origin vX.Y.Z`.
+
+`.github/workflows/release.yml` then, on that tag:
+
+- refuses a tag that disagrees with `DOCLAP_VERSION` or with the `style.css` header, so a mislabelled zip cannot be published;
+- runs `tsc --noEmit`, PHPStan and PHPUnit on **PHP 8.2** — the dev toolchain's floor, because PHPUnit 11 needs it;
+- lints every shipped PHP file on **PHP 8.1**, the version the theme actually declares, so a stray 8.2+ feature cannot ship;
+- rebuilds and fails if `assets/css/app.css`, `assets/js/main.js` or any `blocks/*/index.js` / `view.js` differs from the committed file;
+- prunes the dev autoloader and runs `npm run build:package`, which produces `doclap-vX.Y.Z.zip` from the script the repo already uses;
+- asserts the archive ships `style.css`, `assets/css/app.css`, `assets/js/main.js` and `functions.php` and carries none of `node_modules/`, `tests/`, `resources/`, `.git/`, `README.md` or `package.json`;
+- attaches the zip and its `.sha256` to the release, creating it with generated notes if it does not exist yet.
+
+To republish an existing tag without moving it, run the workflow from the Actions tab (`workflow_dispatch`) with the tag name; the asset is uploaded with `--clobber`.
+
 ## Conventions
 
 - **PHP**: `declare(strict_types=1)`, tabs, `array()` syntax, WordPress coding standards, PHPStan level 8. Render code escapes on output (`esc_attr`/`esc_url`/`wp_kses_post`), never on input.

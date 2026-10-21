@@ -141,7 +141,10 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       VERSION: ${{ needs.verify.outputs.version }}
-      ZIP: ${{ needs.verify.outputs.zip }}
+      # Not `ZIP`: Info-ZIP reads a `ZIP` environment variable as its output
+      # archive name, so exporting one makes `zip` ignore the path it is given and
+      # write into its working directory instead.
+      ARCHIVE: ${{ needs.verify.outputs.zip }}
     steps:
       - name: Check out the tagged tree
         uses: actions/checkout@v5
@@ -171,24 +174,30 @@ jobs:
         run: |
           set -euo pipefail
           npm run build:package
-          test -f "$ZIP" || { echo "::error::$ZIP was not created"; exit 1; }
-          ls -lh "$ZIP"
+          target="$GITHUB_WORKSPACE/$ARCHIVE"
+          if [ ! -f "$target" ]; then
+            echo "::error::$ARCHIVE was not created at $target"
+            ls -la "$GITHUB_WORKSPACE"
+            exit 1
+          fi
+          ls -lh "$target"
 
       - name: Check the archive contents
         run: |
           set -euo pipefail
-          listing="$(unzip -l "$ZIP")"
+          target="$GITHUB_WORKSPACE/$ARCHIVE"
+          listing="$(unzip -l "$target")"
           for required in 'doclap/style.css' 'doclap/assets/css/app.css' 'doclap/assets/js/main.js' 'doclap/functions.php'; do
-            grep -qF "$required" <<<"$listing" || { echo "::error::$ZIP is missing $required"; exit 1; }
+            grep -qF "$required" <<<"$listing" || { echo "::error::$ARCHIVE is missing $required"; exit 1; }
           done
           for forbidden in 'doclap/node_modules/' 'doclap/tests/' 'doclap/resources/' 'doclap/.git/' 'doclap/README.md' 'doclap/package.json'; do
             if grep -qF "$forbidden" <<<"$listing"; then
-              echo "::error::$ZIP contains $forbidden"
+              echo "::error::$ARCHIVE contains $forbidden"
               exit 1
             fi
           done
-          sha256sum "$ZIP" > "$ZIP.sha256"
-          cat "$ZIP.sha256"
+          sha256sum "$target" > "$target.sha256"
+          cat "$target.sha256"
 
       - name: Publish the release
         if: github.event.inputs.dry_run != 'true'
@@ -197,4 +206,5 @@ jobs:
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --title "$TAG" --verify-tag --generate-notes
           fi
-          gh release upload "$TAG" "$ZIP" "$ZIP.sha256" --clobber
+          target="$GITHUB_WORKSPACE/$ARCHIVE"
+          gh release upload "$TAG" "$target" "$target.sha256" --clobber

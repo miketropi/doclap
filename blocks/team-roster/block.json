@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/team-roster",
+  "version": "1.0.0",
+  "title": "Team roster",
+  "category": "doclap",
+  "icon": "groups",
+  "description": "Studio photograph with a caption beside the discipline cards and the practice note.",
+  "keywords": [ "team", "roster", "disciplines", "studio", "roles" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "teamEyebrow": { "type": "string", "default": "03 / PEOPLE & PRACTICE" },
+    "teamHeading": { "type": "string", "default": "Independent spirit.<br>Collective possibility." },
+    "teamHeadingAccent": { "type": "string", "default": "" },
+    "teamDescription": {
+      "type": "string",
+      "default": "The right disciplines, brought together around the idea. Never a team assembled just for appearances."
+    },
+    "teamMeta": { "type": "string", "default": "" },
+    "teamImageId": { "type": "number", "default": 0 },
+    "teamImageUrl": { "type": "string", "default": "" },
+    "teamImageAlt": {
+      "type": "string",
+      "default": "Bright studio space with a desk and creative materials"
+    },
+    "teamImageCaption": {
+      "type": "string",
+      "default": "Atmosphere study / Unsplash. Illustrative space, not a photograph of our office or team."
+    },
+    "teamNote": {
+      "type": "string",
+      "default": "A map of the practice, not a staff roster. Individual collaborators are introduced when their involvement is confirmed."
+    },
+    "teamCards": {
+      "type": "array",
+      "default": [
+        {
+          "meta": "01",
+          "title": "Design direction",
+          "copy": "Structure, visual identity and digital experiences. A clear thread from the first idea to the smallest detail."
+        },
+        {
+          "meta": "02",
+          "title": "Motion & interaction",
+          "copy": "Timing, rhythm and the quiet transitions that make an experience feel connected."
+        },
+        {
+          "meta": "03",
+          "title": "Creative development",
+          "copy": "Responsive systems, browser experiments and real interactions that carry the idea through."
+        }
+      ]
+    }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

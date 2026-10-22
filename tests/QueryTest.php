@@ -90,4 +90,35 @@ final class QueryTest extends TestCase {
 		self::assertSame( array(), \doclap_search_post_types( 'attachment' ) );
 		self::assertSame( array( 'page', 'post' ), \doclap_search_query_types( 'attachment' ) );
 	}
+
+	public function test_journal_carousel_defaults_query_published_posts(): void {
+		$args = \doclap_journal_carousel_query_args( array() );
+
+		self::assertSame( 'post', $args['post_type'] );
+		self::assertSame( 'publish', $args['post_status'] );
+		self::assertSame( 3, $args['posts_per_page'] );
+		self::assertTrue( $args['no_found_rows'] );
+		self::assertFalse( $args['ignore_sticky_posts'] );
+		self::assertFalse( $args['update_post_meta_cache'] );
+		self::assertArrayNotHasKey( 'paged', $args );
+		self::assertArrayNotHasKey( 'post__not_in', $args );
+	}
+
+	/**
+	 * The carousel never paginates, so a nonsense page size must land on the
+	 * bounds rather than inside the query: `0` must not become "every post" and a
+	 * large number must not ask WordPress for the whole table.
+	 */
+	public function test_journal_carousel_clamps_the_page_size(): void {
+		self::assertSame( 1, \doclap_journal_carousel_query_args( array( 'postsPerPage' => 0 ) )['posts_per_page'] );
+		self::assertSame( 1, \doclap_journal_carousel_query_args( array( 'postsPerPage' => -5 ) )['posts_per_page'] );
+		self::assertSame( 24, \doclap_journal_carousel_query_args( array( 'postsPerPage' => 999 ) )['posts_per_page'] );
+		self::assertSame( 8, \doclap_journal_carousel_query_args( array( 'postsPerPage' => 8 ) )['posts_per_page'] );
+		self::assertSame( 3, \doclap_journal_carousel_query_args( array( 'postsPerPage' => 'not-a-number' ) )['posts_per_page'] );
+	}
+
+	public function test_journal_carousel_excludes_only_a_positive_id(): void {
+		self::assertSame( array( 42 ), \doclap_journal_carousel_query_args( array(), 42 )['post__not_in'] );
+		self::assertArrayNotHasKey( 'post__not_in', \doclap_journal_carousel_query_args( array(), 0 ) );
+	}
 }

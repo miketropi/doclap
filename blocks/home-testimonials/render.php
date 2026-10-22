@@ -22,6 +22,13 @@ $doclap_voices  = is_array( $attributes['testimonials'] ?? null )
 	: array();
 $doclap_total   = count( $doclap_voices );
 $doclap_anchor  = (string) ( $attributes['anchor'] ?? '' );
+/*
+ * Two card layouts: `voices` is the anatomy this block has always rendered and
+ * `preview` is the editorial quote card of the design source. An unrecognised
+ * value keeps `voices`, so content saved before this attribute existed renders
+ * exactly as it did.
+ */
+$doclap_is_preview = 'preview' === (string) ( $attributes['testimonialsVariant'] ?? 'voices' );
 // Section colours: the attribute values land as custom properties on the block
 // root, and an empty attribute emits nothing so the theme default keeps applying.
 $doclap_colour_style = '';
@@ -40,23 +47,111 @@ foreach (
 	}
 }
 
-$doclap_wrapper = get_block_wrapper_attributes(
-	array(
-		'id'    => '' !== $doclap_anchor ? $doclap_anchor : 'testimonials',
-		'class' => doclap_scope_class( 'doclap-home-testimonials', array( 'section', 'voices' ) ),
-		'style' => $doclap_colour_style,
+$doclap_wrapper_attributes = array(
+	'id'    => '' !== $doclap_anchor ? $doclap_anchor : 'testimonials',
+	'class' => doclap_scope_class(
+		'doclap-home-testimonials',
+		$doclap_is_preview ? array( 'section', 'voices-preview' ) : array( 'section', 'voices' ),
 	),
+	'style' => $doclap_colour_style,
 );
+
+$doclap_wrapper = get_block_wrapper_attributes( $doclap_wrapper_attributes );
 $doclap_url  = static fn( string $value ): string => esc_url( doclap_resolve_url( $value ) );
 $doclap_icon = static fn( string $name ): string => doclap_icon( $name );
 ?>
 <section <?php
 	echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by core.
-?>><div class="container"><div class="section-head"><div><p class="eyebrow"><?php
+?>><div class="container"><?php
+/*
+ * The preview layout groups its heading row and its strip in one element: that
+ * element is the root the shared carousel runtime boots on, exactly as
+ * `.voices-carousel` is for the voices layout. The voices layout emits no such
+ * element, so this stays inside the variant guard.
+ */
+if ( $doclap_is_preview && $doclap_total > 0 ) :
+	?><div class="carousel-preview" role="group" aria-roledescription="carousel" aria-label="<?php
+	echo esc_attr__( 'Client perspective layout previews', 'doclap' );
+	?>" data-doclap-carousel><?php
+endif;
+?><div class="section-head"><div><p class="eyebrow"><?php
 	echo esc_html( (string) ( $attributes['testimonialsEyebrow'] ?? '' ) );
 ?></p><h2 data-doclap-rich="testimonialsHeading"><?php
 	echo doclap_rich( doclap_rich_accent( (string) ( $attributes['testimonialsHeading'] ?? '' ), (string) ( $attributes['testimonialsHeadingAccent'] ?? '' ), '<br><em>' ) );
-?></h2></div><p class="voices-intro" data-doclap-rich="testimonialsIntro"><?php
+?></h2><?php
+/*
+ * Preview layout: the editorial card of the design source. The step controls
+ * move into the heading row, the counter becomes a live region and the closing
+ * note replaces the editorial aside. Every hook the shared runtime reads is
+ * kept — viewport, slide class, counter, step buttons and bar — so `view.ts`
+ * drives this markup without knowing which variant rendered it.
+ */
+if ( $doclap_is_preview && $doclap_total > 0 ) :
+	?><div class="carousel-controls" data-doclap-carousel-bar><span class="meta" data-doclap-carousel-count aria-live="polite"><?php
+		echo esc_html( sprintf( '%1$s / %2$s', doclap_ordinal( 0 ), doclap_ordinal( max( 0, $doclap_total - 1 ) ) ) );
+	?></span><button type="button" class="round-button" data-doclap-carousel-prev aria-label="<?php
+		echo esc_attr__( 'Previous perspectives', 'doclap' );
+	?>" disabled><?php
+		echo $doclap_icon( 'arrow-left' );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
+	?></button><button type="button" class="round-button" data-doclap-carousel-next aria-label="<?php
+		echo esc_attr__( 'Next perspectives', 'doclap' );
+	?>"><?php
+		echo $doclap_icon( 'arrow-right' );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
+	?></button></div><?php
+endif;
+?></div><?php
+if ( $doclap_is_preview ) :
+	if ( $doclap_total > 0 ) :
+		?><div class="carousel-viewport" role="group" aria-label="<?php
+		echo esc_attr__( 'Testimonial previews; use arrow keys to browse', 'doclap' );
+		?>" tabindex="0" data-doclap-carousel-viewport><?php
+		foreach ( $doclap_voices as $doclap_index => $doclap_voice ) :
+			$doclap_voice       = is_array( $doclap_voice ) ? $doclap_voice : array();
+			$doclap_card_label  = trim( (string) ( $doclap_voice['label'] ?? '' ) );
+			$doclap_person_note = trim( (string) ( $doclap_voice['personNote'] ?? '' ) );
+			?><article class="carousel-card voice-demo voice-slide" aria-roledescription="slide" aria-label="<?php
+			echo esc_attr( sprintf( __( 'Perspective %1$d of %2$d', 'doclap' ), (int) $doclap_index + 1, $doclap_total ) );
+			?>"><div class="voice-top"><span class="meta"><?php
+			echo esc_html( '' !== $doclap_card_label ? $doclap_card_label : __( 'CLIENT PERSPECTIVE', 'doclap' ) );
+			?></span><span class="meta"><?php
+			echo esc_html( trim( (string) ( $doclap_voice['previewLabel'] ?? '' ) ) );
+			?></span></div><blockquote><?php
+			echo doclap_rich( (string) ( $doclap_voice['quote'] ?? '' ) );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the helper.
+			?></blockquote><p><?php
+			echo doclap_rich( (string) ( $doclap_voice['disclaimer'] ?? '' ) );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the helper.
+			?></p><div class="voice-person"><div class="voice-avatar" role="img" aria-label="<?php
+			echo esc_attr__( 'Portrait not published', 'doclap' );
+			?>"><?php
+			echo $doclap_icon( 'user-round' );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
+			?></div><div><strong><?php
+			echo esc_html( (string) ( $doclap_voice['status'] ?? '' ) );
+			?></strong><small><?php
+			echo esc_html( $doclap_person_note );
+			?></small></div></div><div class="voice-caption"><span><?php
+			echo esc_html( trim( (string) ( $doclap_voice['captionLeft'] ?? '' ) ) );
+			?></span><span><?php
+			echo esc_html( trim( (string) ( $doclap_voice['captionRight'] ?? '' ) ) );
+			?></span></div></article><?php
+		endforeach;
+		?></div></div><?php
+	endif;
+
+	$doclap_note = trim( (string) ( $attributes['testimonialsNote'] ?? '' ) );
+
+	if ( '' !== $doclap_note ) :
+		?><p class="pricing-note" data-doclap-rich="testimonialsNote"><?php
+		echo doclap_rich( $doclap_note );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the helper.
+		?></p><?php
+	endif;
+else :
+	// —— voices layout: unchanged ——
+	?><p class="voices-intro" data-doclap-rich="testimonialsIntro"><?php
 	echo doclap_rich( (string) ( $attributes['testimonialsIntro'] ?? '' ) );
 	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by the helper.
 ?></p></div><div class="voices-carousel" role="group" aria-roledescription="carousel" aria-label="<?php echo esc_attr__( 'Client perspective', 'doclap' ); ?>" data-doclap-carousel><div class="voices-viewport" tabindex="0" data-doclap-carousel-viewport><div class="voices-track"><?php
@@ -123,4 +218,6 @@ $doclap_icon = static fn( string $name ): string => doclap_icon( $name );
 <div class="voices-note">
 	<span class="gallery-dot"></span>
 	<span><?php esc_html_e( 'Transparent down to the smallest detail — no identities or testimonials are fabricated.', 'doclap' ); ?></span>
-</div></div></section>
+</div><?php
+endif;
+?></div></section>

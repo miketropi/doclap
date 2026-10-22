@@ -44,6 +44,45 @@ function doclap_notes_archive_query_args( array $attributes, int $paged, int $ex
 }
 
 /**
+ * Build the query arguments for the journal carousel block.
+ *
+ * The carousel always shows the newest published notes, so the arguments are a
+ * fixed list plus the editor's page size and an optional exclusion. The strip
+ * never paginates and only reads its cards' terms, so the row count and the
+ * post-meta cache are both skipped.
+ *
+ * @param array<string, mixed> $attributes Block attributes.
+ * @param int                  $exclude_id Post id to exclude.
+ *
+ * @return array<string, mixed> Arguments for `WP_Query`.
+ */
+function doclap_journal_carousel_query_args( array $attributes, int $exclude_id = 0 ): array {
+	// A value that is not a number at all is a hand-edited save, not a page size:
+	// it falls back to the attribute default instead of collapsing to one card.
+	$posts_per_page = $attributes['postsPerPage'] ?? 3;
+
+	if ( ! is_numeric( $posts_per_page ) ) {
+		$posts_per_page = 3;
+	}
+
+	$args = array(
+		'post_type'              => 'post',
+		'post_status'            => 'publish',
+		'posts_per_page'         => max( 1, min( 24, (int) $posts_per_page ) ),
+		'ignore_sticky_posts'    => false,
+		'no_found_rows'          => true,
+		'update_post_meta_cache' => false,
+		'update_post_term_cache' => true,
+	);
+
+	if ( $exclude_id > 0 ) {
+		$args['post__not_in'] = array( $exclude_id );
+	}
+
+	return $args;
+}
+
+/**
  * Post types a Doclap search may look in.
  *
  * @return array<int, string> Pages and notes, plus `work` when that post type exists.

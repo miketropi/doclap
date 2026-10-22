@@ -1,0 +1,116 @@
+/**
+ * Plan comparison.
+ *
+ * The table inherits the design system's `.ds-table` frame from
+ * `resources/css/modules/20-components.css`; this file owns the comparison
+ * layout — the fixed column rhythm, the emphasised plan column and the closing
+ * row that pairs the note with the link.
+ */
+
+.doclap-plan-comparison .comparison-table {
+	table-layout: fixed;
+	margin-top: 40px;
+	font-size: 15px;
+}
+
+.doclap-plan-comparison .comparison-table caption {
+	padding: 0 0 22px;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font: 12px / 1.8 var(--doclap-font-mono);
+	text-align: left;
+}
+
+.doclap-plan-comparison .comparison-table th,
+.doclap-plan-comparison .comparison-table td {
+	padding: 23px 20px;
+	border-color: color-mix(in oklch, var(--doclap-fg) 18%, transparent);
+	vertical-align: middle;
+	overflow-wrap: anywhere;
+}
+
+.doclap-plan-comparison .comparison-table thead th {
+	color: var(--doclap-block-heading, var(--doclap-fg));
+	font: 500 30px / 1.25 var(--doclap-font-display);
+	letter-spacing: -0.02em;
+	text-align: center;
+	text-transform: none;
+}
+
+.doclap-plan-comparison .comparison-table th:first-child {
+	width: 34%;
+	text-align: left;
+}
+
+.doclap-plan-comparison .comparison-table tbody th {
+	color: var(--doclap-block-text, var(--doclap-fg));
+	font: 400 15px / 1.7 var(--doclap-font-body);
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.doclap-plan-comparison .comparison-table td {
+	text-align: center;
+	line-height: 1.7;
+}
+
+/*
+ * The middle column is the recommended engagement: it keeps a surface behind it
+ * and an accent rule along its top edge, at every row of the header and the body.
+ */
+.doclap-plan-comparison .comparison-table tr > :nth-child(3) {
+	border-inline: 1px solid color-mix(in oklch, var(--doclap-fg) 18%, transparent);
+	background: var(--doclap-surface);
+}
+
+.doclap-plan-comparison .comparison-table thead tr > :nth-child(3) {
+	border-top: 3px solid var(--doclap-accent);
+}
+
+.doclap-plan-comparison .comparison-table .plan-detail {
+	display: block;
+	margin-top: 12px;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font: 11px / 1.6 var(--doclap-font-mono);
+	letter-spacing: 0;
+}
+
+.doclap-plan-comparison .comparison-table .comparison-group th {
+	padding-block: 16px;
+	background: var(--doclap-fg-soft);
+	font: 11px / 1.6 var(--doclap-font-mono);
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+}
+
+.doclap-plan-comparison .comparison-bottom {
+	display: flex;
+	align-items: start;
+	justify-content: space-between;
+	gap: 35px;
+	margin-top: 28px;
+}
+
+.doclap-plan-comparison .comparison-bottom .pricing-note {
+	max-width: 65ch;
+	margin: 0;
+}
+
+.doclap-plan-comparison .comparison-bottom .text-link {
+	flex-shrink: 0;
+}
+
+@media (max-width: 920px) {
+	.doclap-plan-comparison .comparison-table th,
+	.doclap-plan-comparison .comparison-table td {
+		padding: 18px 12px;
+	}
+
+	.doclap-plan-comparison .comparison-table thead th {
+		font-size: 24px;
+	}
+
+	.doclap-plan-comparison .comparison-bottom {
+		flex-direction: column;
+		gap: 20px;
+	}
+}

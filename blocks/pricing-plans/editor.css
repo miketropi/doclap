@@ -1,0 +1,10 @@
+/**
+ * Editor canvas styles for doclap/pricing-plans.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet plus this block's own style.css, which the editor also loads.
+ */
+
+.wp-block-doclap-pricing-plans {
+	min-height: 240px;
+}

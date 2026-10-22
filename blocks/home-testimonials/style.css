@@ -1,0 +1,76 @@
+/**
+ * Home — Testimonials, preview card layout.
+ *
+ * The voices layout is styled by the theme's compiled child stylesheet; this
+ * file owns the editorial card the `preview` variant emits: its surface, quote
+ * scale and the meta / person / caption rows. The card frame, width and snap
+ * behaviour come from the shared `.carousel-*` primitives, so nothing here
+ * restates them.
+ *
+ * One rule serves the shared runtime: it works the step controls through the
+ * `hidden` attribute, which the inline-flex primitive would otherwise overrule.
+ */
+
+.doclap-home-testimonials.voices-preview .carousel-controls[hidden] {
+	display: none;
+}
+
+.doclap-home-testimonials.voices-preview .voice-demo {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	padding: clamp(26px, 3.5vw, 50px);
+	border: 1px solid color-mix(in oklch, var(--doclap-fg) 18%, transparent);
+	background: var(--doclap-surface);
+}
+
+@media (hover: hover) {
+	.doclap-home-testimonials.voices-preview .voice-demo:hover {
+		border-color: var(--doclap-fg);
+	}
+}
+
+.doclap-home-testimonials.voices-preview .voice-top .meta {
+	font-size: 11px;
+}
+
+.doclap-home-testimonials.voices-preview .voice-demo blockquote {
+	margin: 35px 0 30px;
+	font: clamp(28px, 3vw, 43px) / 1.4 var(--doclap-font-display);
+	letter-spacing: -0.025em;
+}
+
+.doclap-home-testimonials.voices-preview .voice-demo p {
+	margin: 0;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font-size: 14px;
+	line-height: 1.9;
+}
+
+.doclap-home-testimonials.voices-preview .voice-demo .voice-person strong {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.doclap-home-testimonials.voices-preview .voice-demo .voice-person small {
+	display: block;
+	margin-top: 7px;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font-size: 12px;
+}
+
+.doclap-home-testimonials.voices-preview .voice-demo .voice-caption {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 20px;
+	padding-top: 25px;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font: 11px / 1.8 var(--doclap-font-mono);
+}
+
+@media (max-width: 920px) {
+	.doclap-home-testimonials.voices-preview .voice-demo blockquote {
+		font-size: 32px;
+	}
+}

@@ -1,0 +1,10 @@
+/**
+ * Editor canvas styles for doclap/plan-comparison.
+ *
+ * Only editor-specific affordances: the front-end look comes from the compiled
+ * child stylesheet plus this block's own style.css, which the editor also loads.
+ */
+
+.wp-block-doclap-plan-comparison {
+	min-height: 240px;
+}

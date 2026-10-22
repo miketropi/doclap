@@ -1,0 +1,53 @@
+/**
+ * Doclap shared section primitives.
+ *
+ * The building blocks that more than one section block renders: the section
+ * description, the small print that closes a section, the pressed-state toggle
+ * pair, and the native scroll-snap carousel shell shared by the journal and the
+ * testimonial sections.
+ *
+ * Everything here is scoped under ``.doclap-scope`` and uses the design tokens, so
+ * a block only has to emit the class names. The carousel reuses one implementation
+ * on purpose: ``resources/ts/runtime/carousel.ts`` drives both consumers, and the
+ * counter, disabled states and snap behaviour have to stay identical between them.
+ */
+
+/* ─── section heading support ───────────────────────────────────── */
+.doclap-scope .section-description { color:var(--doclap-block-text,var(--doclap-muted)); font-size:var(--doclap-fs-lead); line-height:1.55; max-width:46ch; margin:0; }
+.doclap-scope .pricing-note { color:var(--doclap-block-text,var(--doclap-muted)); font-family:var(--doclap-font-mono); font-size:12px; line-height:1.7; letter-spacing:.02em; max-width:68ch; margin:var(--doclap-gap-lg) 0 0; }
+
+/* ─── pressed-state toggle pair (role="group" of aria-pressed buttons) ── */
+.doclap-scope .mode-toggle { display:inline-flex; align-items:center; gap:4px; padding:4px; border:1px solid var(--doclap-border); border-radius:999px; background:transparent; }
+.doclap-scope .mode-toggle button { appearance:none; min-height:40px; padding:8px 16px; border:0; border-radius:999px; background:transparent; color:var(--doclap-block-text,var(--doclap-muted)); font:500 14px/1.5 var(--doclap-font-body); }
+.doclap-scope .mode-toggle button[aria-pressed="true"] { background:var(--doclap-fg); color:var(--doclap-surface); }
+.doclap-scope .mode-toggle button:is(:hover,
+:focus-visible) { color:var(--doclap-block-text,var(--doclap-fg)); }
+.doclap-scope .mode-toggle button[aria-pressed="true"]:is(:hover,
+:focus-visible) { color:var(--doclap-surface); }
+.doclap-scope .mode-toggle button:focus-visible { outline:2px solid var(--doclap-fg); outline-offset:2px; }
+
+/* ─── carousel shell (journal + testimonials) ───────────────────── */
+.doclap-scope .carousel-controls { display:inline-flex; align-items:center; gap:var(--doclap-gap-sm); }
+.doclap-scope .carousel-controls .meta { font-variant-numeric:tabular-nums; }
+.doclap-scope .round-button { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; padding:0; border:1px solid var(--doclap-border); border-radius:50%; background:transparent; color:var(--doclap-block-text,var(--doclap-fg)); }
+.doclap-scope .round-button:not(:disabled):is(:hover,
+:focus-visible) { background:var(--doclap-fg-soft); border-color:var(--doclap-fg); }
+.doclap-scope .round-button:disabled { opacity:.4; cursor:not-allowed; }
+.doclap-scope .round-button:focus-visible { outline:2px solid var(--doclap-fg); outline-offset:3px; }
+.doclap-scope .round-button .lucide { width:18px; height:18px; }
+/*
+ * The track is the scroll container, so touch, wheel, the arrow keys on the
+ * focused track and the step buttons all move one native element and nothing has
+ * to animate a transform. The scrollbar is hidden deliberately: the counter and
+ * the two step buttons are the affordance.
+ */
+.doclap-scope .carousel-viewport { display:flex; gap:var(--doclap-gap-lg); overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x mandatory; scrollbar-width:none; }
+.doclap-scope .carousel-viewport::-webkit-scrollbar { display:none; }
+.doclap-scope .carousel-viewport:focus-visible { outline:2px solid var(--doclap-fg); outline-offset:4px; }
+.doclap-scope .carousel-card { flex:0 0 calc((100% - 2 * var(--doclap-gap-lg)) / 3); scroll-snap-align:start; }
+@media (max-width: 920px) {
+.doclap-scope .carousel-card { flex:0 0 78%; }
+}
+@media (prefers-reduced-motion: reduce) {
+.doclap-scope .carousel-viewport { scroll-behavior:auto; }
+}

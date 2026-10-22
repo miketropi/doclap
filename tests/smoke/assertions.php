@@ -172,6 +172,7 @@ $doclap_blocks     = array_values(
 sort( $doclap_blocks );
 
 $doclap_expected = array(
+	'doclap/capability-tabs',
 	'doclap/closing-cta',
 	'doclap/contact-form',
 	'doclap/faq-list',
@@ -185,19 +186,24 @@ $doclap_expected = array(
 	'doclap/home-testimonials',
 	'doclap/home-work',
 	'doclap/inner-hero',
+	'doclap/journal-carousel',
 	'doclap/media-figure',
+	'doclap/newsletter-signup',
 	'doclap/note-content',
 	'doclap/note-cover',
 	'doclap/note-hero',
 	'doclap/not-found',
 	'doclap/notes-archive',
 	'doclap/page-content',
+	'doclap/plan-comparison',
+	'doclap/pricing-plans',
 	'doclap/principles-grid',
 	'doclap/related-notes',
 	'doclap/search-results',
 	'doclap/site-footer',
 	'doclap/site-header',
 	'doclap/split-narrative',
+	'doclap/team-roster',
 );
 
 $doclap_missing = array_diff( $doclap_expected, $doclap_blocks );
@@ -473,10 +479,12 @@ if ( $doclap_expected_home !== $doclap_landing_names ) {
 // Every pattern slug the theme ships, declared exactly once: the nine home
 // sections, the home landing composition, the reusable inner-page sections, the
 // three narrowed inner-page blocks, the four note-detail blocks, the five
-// full-page compositions and the chrome/utility surfaces.
+// full-page compositions, the six converted OpenDesign section blocks with their
+// studio overview composition, and the chrome/utility surfaces.
 $doclap_expected_patterns = array(
 	'doclap/about-us-page',
 	'doclap/basic-page',
+	'doclap/capability-tabs',
 	'doclap/closing-cta',
 	'doclap/contact-form',
 	'doclap/contact-us-page',
@@ -493,7 +501,9 @@ $doclap_expected_patterns = array(
 	'doclap/home-testimonials',
 	'doclap/home-work',
 	'doclap/inner-hero',
+	'doclap/journal-carousel',
 	'doclap/media-figure',
+	'doclap/newsletter-signup',
 	'doclap/note-content',
 	'doclap/note-cover',
 	'doclap/note-hero',
@@ -501,13 +511,17 @@ $doclap_expected_patterns = array(
 	'doclap/notes-archive',
 	'doclap/notes-archive-page',
 	'doclap/page-content',
+	'doclap/plan-comparison',
 	'doclap/post-detail-page',
+	'doclap/pricing-plans',
 	'doclap/principles-grid',
 	'doclap/related-notes',
 	'doclap/search-results',
 	'doclap/site-footer',
 	'doclap/site-header',
 	'doclap/split-narrative',
+	'doclap/studio-overview-page',
+	'doclap/team-roster',
 );
 $doclap_pattern_slugs = array();
 

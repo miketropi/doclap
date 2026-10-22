@@ -1,0 +1,111 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/plan-comparison",
+  "version": "1.0.0",
+  "title": "Plan comparison",
+  "category": "doclap",
+  "icon": "editor-table",
+  "description": "Comparison table of the engagement plans, grouped by consideration, with a closing note and link.",
+  "keywords": [ "comparison", "table", "plans", "engagement", "features" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "compareEyebrow": { "type": "string", "default": "01B / PRICING · THE DETAILS" },
+    "compareHeading": {
+      "type": "string",
+      "default": "One clear view.<br>Every consideration."
+    },
+    "compareHeadingAccent": { "type": "string", "default": "" },
+    "compareText": {
+      "type": "string",
+      "default": "Compare the shape of each engagement. Start with what your idea needs, not a list of extras."
+    },
+    "caption": {
+      "type": "string",
+      "default": "Illustrative engagement matrix / final scope and fees agreed in your proposal."
+    },
+    "rowHeaderLabel": { "type": "string", "default": "The engagement" },
+    "columns": {
+      "type": "array",
+      "default": [
+        { "title": "Focused", "detail": "A considered start" },
+        { "title": "Signature", "detail": "Design + build" },
+        { "title": "Partnership", "detail": "An evolving practice" }
+      ]
+    },
+    "groups": {
+      "type": "array",
+      "default": [
+        {
+          "label": "Direction & design",
+          "rows": [
+            {
+              "feature": "Creative direction",
+              "values": [ "Included", "Included", "Ongoing" ],
+              "isNumeric": false
+            },
+            {
+              "feature": "Website scope",
+              "values": [ "Landing page", "Multi-page", "Iterative roadmap" ],
+              "isNumeric": false
+            },
+            {
+              "feature": "Responsive design system",
+              "values": [ "Core system", "Extended system", "Evolving system" ],
+              "isNumeric": false
+            }
+          ]
+        },
+        {
+          "label": "Motion & development",
+          "rows": [
+            {
+              "feature": "Motion & interaction",
+              "values": [ "By agreement", "Included", "As prioritised" ],
+              "isNumeric": false
+            },
+            {
+              "feature": "Creative development",
+              "values": [ "By agreement", "Included", "As prioritised" ],
+              "isNumeric": false
+            },
+            {
+              "feature": "WebGL & 3D experiences",
+              "values": [ "Not in base scope", "Optional", "Optional" ],
+              "isNumeric": false
+            }
+          ]
+        },
+        {
+          "label": "Working together",
+          "rows": [
+            {
+              "feature": "Post-launch support",
+              "values": [ "By agreement", "By agreement", "Ongoing" ],
+              "isNumeric": false
+            },
+            {
+              "feature": "Engagement fee",
+              "values": [ "By scope", "By scope", "By agreement" ],
+              "isNumeric": true
+            }
+          ]
+        }
+      ]
+    },
+    "note": {
+      "type": "string",
+      "default": "A layout demonstration, not a binding service offer. Deliverables, timing, support and pricing are confirmed together before work begins."
+    },
+    "linkLabel": { "type": "string", "default": "Find your fit" },
+    "linkUrl": { "type": "string", "default": "/contact/" }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,10 @@
+/**
+ * Editor canvas styles for doclap/newsletter-signup.
+ *
+ * Only editor-specific affordances: the front-end look comes from the block's
+ * own stylesheet, which the editor canvas loads as well.
+ */
+
+.wp-block-doclap-newsletter-signup {
+	min-height: 240px;
+}

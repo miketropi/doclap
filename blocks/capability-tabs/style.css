@@ -1,0 +1,149 @@
+/**
+ * Capability tabs.
+ *
+ * The reference paints this section as an inverted band and lays a vertical tab
+ * strip beside the open panel. The band itself comes from the theme's `dark-panel`
+ * treatment on the block root; everything below is this block's own layout, on the
+ * theme's tokens.
+ *
+ * The reflow boundary is 920px: the same width the view bundle uses to keep
+ * `aria-orientation` in step with the layout.
+ */
+
+.doclap-capability-tabs.capabilities .eyebrow {
+	color: var(--doclap-block-text, var(--doclap-bg));
+}
+
+.doclap-capability-tabs .capability-layout {
+	display: grid;
+	grid-template-columns: 0.8fr 1.3fr;
+	gap: 8vw;
+}
+
+.doclap-capability-tabs .capability-tabs {
+	display: flex;
+	flex-direction: column;
+	border-top: 1px solid color-mix(in oklch, var(--doclap-block-text, var(--doclap-bg)) 25%, transparent);
+}
+
+.doclap-capability-tabs .capability-tabs button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--doclap-gap-md);
+	padding: 23px 0;
+	border: 0;
+	border-bottom: 1px solid color-mix(in oklch, var(--doclap-block-text, var(--doclap-bg)) 25%, transparent);
+	background: none;
+	color: var(--doclap-block-text, var(--doclap-bg));
+	font: clamp(26px, 3vw, 40px) var(--doclap-font-display);
+	text-align: left;
+}
+
+.doclap-capability-tabs .capability-tabs button:hover {
+	background: color-mix(in oklch, var(--doclap-block-text, var(--doclap-bg)) 8%, transparent);
+}
+
+.doclap-capability-tabs .capability-tabs button small {
+	font: 11px/1.6 var(--doclap-font-mono);
+}
+
+.doclap-capability-tabs .capability-tabs button svg {
+	transition: transform 0.4s;
+}
+
+/* The arrow turns into the selected state's marker, as in the reference. */
+.doclap-capability-tabs .capability-tabs button[aria-selected="true"] svg {
+	color: var(--doclap-accent);
+	transform: rotate(45deg);
+}
+
+/* A panel is focusable so the keyboard can reach the text it just revealed. */
+.doclap-capability-tabs .capability-panel:focus-visible {
+	outline: 2px solid var(--doclap-accent);
+	outline-offset: 4px;
+}
+
+.doclap-capability-tabs .capability-panel h3 {
+	font-size: clamp(38px, 4.8vw, 72px);
+	line-height: 1.2;
+	letter-spacing: -0.035em;
+	max-width: 17ch;
+	margin: 0 0 25px;
+}
+
+.doclap-capability-tabs .capability-panel p {
+	font-size: var(--doclap-fs-body);
+	line-height: 1.9;
+	max-width: 48ch;
+}
+
+.doclap-capability-tabs .capability-deliverables {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--doclap-gap-sm);
+	margin-top: var(--doclap-gap-lg);
+}
+
+.doclap-capability-tabs .capability-deliverables span {
+	border: 1px solid color-mix(in oklch, var(--doclap-block-text, var(--doclap-bg)) 30%, transparent);
+	padding: 9px 13px;
+	font: 11px/1.7 var(--doclap-font-mono);
+}
+
+/* The band is inverted, so the shared link underline has to follow the text. */
+.doclap-capability-tabs .capability-panel .text-link {
+	color: var(--doclap-block-text, var(--doclap-bg));
+	border-bottom-color: currentColor;
+	margin-top: var(--doclap-gap-lg);
+}
+
+.doclap-capability-tabs .capability-panel .text-link:hover {
+	background: color-mix(in oklch, var(--doclap-block-text, var(--doclap-bg)) 8%, transparent);
+}
+
+@media (max-width: 920px) {
+	.doclap-capability-tabs .capability-layout {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+
+	/* Horizontal tab strip above the panel, matching the reflowed orientation. */
+	.doclap-capability-tabs .capability-tabs {
+		flex-direction: row;
+		border-top: 0;
+		gap: var(--doclap-gap-md);
+	}
+
+	.doclap-capability-tabs .capability-tabs button {
+		flex: 1;
+		font-size: 24px;
+		gap: var(--doclap-gap-sm);
+	}
+
+	.doclap-capability-tabs .capability-tabs button small {
+		display: none;
+	}
+}
+
+@media (max-width: 700px) {
+	.doclap-capability-tabs .capability-tabs {
+		gap: var(--doclap-gap-sm);
+	}
+
+	.doclap-capability-tabs .capability-tabs button {
+		flex-direction: column;
+		align-items: start;
+		padding-block: 18px;
+		font-size: 19px;
+	}
+
+	.doclap-capability-tabs .capability-tabs button svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.doclap-capability-tabs .capability-panel h3 {
+		font-size: 42px;
+	}
+}

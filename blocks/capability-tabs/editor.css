@@ -1,0 +1,17 @@
+/**
+ * Editor canvas styles for doclap/capability-tabs.
+ *
+ * Only editor-specific affordances: the front-end look comes from the block's own
+ * stylesheet, which the editor also loads. The tab strip looks interactive but is
+ * inert in the canvas — the shared `.doclap-block-preview__surface` rule in
+ * resources/css/editor.css already disables pointer events there — so the only
+ * rule needed is the pointer cue on the tabs themselves.
+ */
+
+.wp-block-doclap-capability-tabs {
+	min-height: 320px;
+}
+
+.wp-block-doclap-capability-tabs [role="tab"] {
+	cursor: default;
+}

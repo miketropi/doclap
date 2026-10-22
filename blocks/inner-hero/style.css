@@ -1,0 +1,71 @@
+/**
+ * Inner hero — the parts only a composed hero has.
+ *
+ * The breadcrumb, the title and the lead are already styled by the shared
+ * `.doclap-scope` surfaces; this file adds the eyebrow spacing, the collection
+ * stamp beside the lead and the section jump list, all of which the design only
+ * uses on a composed section index.
+ *
+ * `.doclap-inner-hero.inner-hero` beats the shared `.eyebrow` rule on
+ * specificity: both are two classes, and the shared sheet is compiled after the
+ * block stylesheets, so only a higher specificity keeps the intended spacing.
+ */
+
+.doclap-inner-hero.inner-hero .eyebrow {
+	margin: 0 0 28px;
+}
+
+.doclap-inner-hero .collection-stamp {
+	margin-left: auto;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font-family: var(--doclap-font-mono);
+	font-size: 12px;
+	line-height: 1.8;
+	text-align: right;
+}
+
+.doclap-inner-hero .section-index {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 32px;
+	margin-top: 50px;
+	padding-block: 23px;
+	border-block: 1px solid var(--doclap-hairline);
+}
+
+.doclap-inner-hero .section-index a {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 14px;
+}
+
+.doclap-inner-hero .section-index a span {
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font-family: var(--doclap-font-mono);
+	font-size: 11px;
+}
+
+.doclap-inner-hero .section-index a:hover {
+	text-decoration: underline;
+}
+
+.doclap-inner-hero .section-index a:focus-visible {
+	outline: 2px solid var(--doclap-fg);
+	outline-offset: 3px;
+}
+
+@media (max-width: 920px) {
+	.doclap-inner-hero .collection-stamp {
+		display: none;
+	}
+
+	.doclap-inner-hero .section-index {
+		gap: 6px 22px;
+		margin-top: 35px;
+	}
+
+	.doclap-inner-hero .section-index a {
+		font-size: 13px;
+	}
+}

@@ -1,0 +1,60 @@
+/**
+ * Team roster.
+ *
+ * The reference lays the captioned studio figure beside a column of discipline
+ * cards. The figure itself — and its grayscale-to-colour hover — is the shared
+ * `.team-image` treatment the theme already owns, so only the grid, the cards and
+ * the closing note are defined here.
+ *
+ * The reflow boundary is 920px, the theme's layout breakpoint.
+ */
+
+.doclap-team-roster .team-layout {
+	display: grid;
+	grid-template-columns: 1.15fr 1fr;
+	gap: 6vw;
+	align-items: start;
+}
+
+.doclap-team-roster .role-card {
+	display: grid;
+	grid-template-columns: 35px 1fr;
+	gap: var(--doclap-gap-md);
+	padding: 24px 0 26px;
+	border-top: 1px solid color-mix(in oklch, var(--doclap-fg) 25%, transparent);
+}
+
+.doclap-team-roster .role-card h3 {
+	font-size: 30px;
+	margin: 0 0 8px;
+}
+
+.doclap-team-roster .role-card p {
+	font-size: 15px;
+	line-height: 1.8;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	margin: 0;
+}
+
+.doclap-team-roster .role-card .meta {
+	padding-top: 6px;
+	font-size: 11px;
+}
+
+.doclap-team-roster .team-note {
+	font-size: var(--doclap-fs-meta);
+	line-height: 1.8;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	margin-top: var(--doclap-gap-lg);
+}
+
+@media (max-width: 920px) {
+	.doclap-team-roster .team-layout {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+
+	.doclap-team-roster .team-image {
+		max-width: 680px;
+	}
+}

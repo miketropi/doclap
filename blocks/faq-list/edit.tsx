@@ -2,7 +2,9 @@ import { InspectorControls } from '@wordpress/block-editor';
 import {
 	Notice,
 	PanelBody,
+	SelectControl,
 	TextControl,
+	ToggleControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -61,6 +63,23 @@ export default function Edit({
 						value={attributes.asideLabel ?? ''}
 						onChange={(asideLabel) => setAttributes({ asideLabel })}
 					/>
+					<SelectControl
+						label={__('Label style', 'doclap')}
+						help={__(
+							'Meta is the small label this block has always used; eyebrow styles it like a section eyebrow without moving it out of the column.',
+							'doclap',
+						)}
+						value={attributes.introLabelStyle ?? 'meta'}
+						options={[
+							{ label: __('Meta', 'doclap'), value: 'meta' },
+							{ label: __('Eyebrow', 'doclap'), value: 'eyebrow' },
+						]}
+						onChange={(value) =>
+							setAttributes({
+								introLabelStyle: 'eyebrow' === value ? 'eyebrow' : 'meta',
+							})
+						}
+					/>
 					<TextControl
 						label={__('Link URL', 'doclap')}
 						help={urlHelpWithStructuralNote}
@@ -70,6 +89,15 @@ export default function Edit({
 				</PanelBody>
 
 				<PanelBody title={__('Filters', 'doclap')} initialOpen={false}>
+					<ToggleControl
+						label={__('Show filter bar', 'doclap')}
+						help={__(
+							'The group buttons above the questions. Turn it off where the questions are not grouped.',
+							'doclap',
+						)}
+						checked={attributes.showFilters ?? true}
+						onChange={(showFilters) => setAttributes({ showFilters })}
+					/>
 					<TextControl
 						label={__('“All” filter label', 'doclap')}
 						value={attributes.filterAllLabel ?? ''}
@@ -168,6 +196,17 @@ export default function Edit({
 						help={__('Use %d for the number of questions.', 'doclap')}
 						value={attributes.countTemplate ?? ''}
 						onChange={(countTemplate) => setAttributes({ countTemplate })}
+					/>
+					<ToggleControl
+						label={__('Show question count', 'doclap')}
+						help={__(
+							'The live count under the list and the message shown when a group has no questions.',
+							'doclap',
+						)}
+						checked={attributes.showQuestionCount ?? true}
+						onChange={(showQuestionCount) =>
+							setAttributes({ showQuestionCount })
+						}
 					/>
 					<TextControl
 						label={__('No-results message', 'doclap')}

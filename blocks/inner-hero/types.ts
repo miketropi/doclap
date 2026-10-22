@@ -1,3 +1,11 @@
+export interface InnerHeroSectionLink extends Record<string, unknown> {
+	/** Short label shown before the link text, e.g. `01` or `01B`. */
+	index: string;
+	label: string;
+	/** Structural URL or fragment target, resolved by the renderer. */
+	url: string;
+}
+
 export interface InnerHeroAttributes extends Record<string, unknown> {
 	/**
 	 * Optional section colours. Each is stored as the custom property the theme
@@ -24,4 +32,12 @@ export interface InnerHeroAttributes extends Record<string, unknown> {
 	 */
 	headingAccent: string;
 	lead: string;
+	/** Small label above the title. Empty keeps the hero as it was. */
+	eyebrow: string;
+	/** Rich stamp printed beside the lead. Empty emits no stamp node. */
+	summaryStamp: string;
+	/** Jump list of the sections on the page. Empty emits no navigation. */
+	sectionIndex: InnerHeroSectionLink[];
+	/** Whether the decorative mark beside the lead is printed. */
+	showHeroMark: boolean;
 }

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/pricing-plans",
+  "version": "1.0.0",
+  "title": "Pricing plans",
+  "category": "doclap",
+  "icon": "money-alt",
+  "description": "Engagement heading, the project/ongoing mode toggle and the plan cards for each engagement format.",
+  "keywords": [ "pricing", "plans", "engagement", "packages", "rates" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "pricingEyebrow": { "type": "string", "default": "01 / PRICING & ENGAGEMENTS" },
+    "pricingHeading": {
+      "type": "string",
+      "default": "The right shape<br>for your ambition."
+    },
+    "pricingHeadingAccent": { "type": "string", "default": "" },
+    "pricingText": { "type": "string", "default": "" },
+    "modeGroupLabel": { "type": "string", "default": "Engagement type" },
+    "modeProjectLabel": { "type": "string", "default": "Project-based" },
+    "modeOngoingLabel": { "type": "string", "default": "Ongoing" },
+    "modeDefault": { "type": "string", "default": "project" },
+    "note": {
+      "type": "string",
+      "default": "Engagement formats, not fixed-price offers. Every proposal is tailored to the agreed scope, timeline and deliverables."
+    },
+    "plans": {
+      "type": "array",
+      "default": [
+        {
+          "meta": "ENGAGEMENT / 01",
+          "metaExtra": "",
+          "title": "Focused",
+          "copy": "A clear direction. A carefully crafted starting point.",
+          "featured": false,
+          "priceProject": "By scope",
+          "priceOngoing": "By agreement",
+          "captionProject": "For a focused launch",
+          "captionOngoing": "Design direction, as needed",
+          "features": [
+            "Creative direction",
+            "Landing page design",
+            "Responsive design system"
+          ],
+          "ctaLabel": "Discuss a focused project",
+          "ctaUrl": "/contact/"
+        },
+        {
+          "meta": "ENGAGEMENT / 02",
+          "metaExtra": "DESIGN + BUILD",
+          "title": "Signature",
+          "copy": "An expressive website, considered from the first frame to the last interaction.",
+          "featured": true,
+          "priceProject": "By scope",
+          "priceOngoing": "By agreement",
+          "captionProject": "For a complete experience",
+          "captionOngoing": "Continuous design & build",
+          "features": [
+            "Multi-page experience",
+            "Motion direction & interaction",
+            "Creative development"
+          ],
+          "ctaLabel": "Explore a signature project",
+          "ctaUrl": "/contact/"
+        },
+        {
+          "meta": "ENGAGEMENT / 03",
+          "metaExtra": "",
+          "title": "Partnership",
+          "copy": "A continuous creative thread for a brand that keeps evolving.",
+          "featured": false,
+          "priceProject": "By agreement",
+          "priceOngoing": "By agreement",
+          "captionProject": "For an ongoing relationship",
+          "captionOngoing": "A shared creative roadmap",
+          "features": [
+            "Design & development support",
+            "Iteration & new experiences",
+            "A shared creative roadmap"
+          ],
+          "ctaLabel": "Discuss a partnership",
+          "ctaUrl": "/contact/"
+        }
+      ]
+    }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

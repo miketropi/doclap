@@ -6,6 +6,37 @@ current version is in `inc/bootstrap/version.php`, and the theme header in
 
 See `README.md` for the architecture, the build commands and the test suites.
 
+## 1.1.0
+
+- The ten content sections of the OpenDesign `section-showcase` artifact are editable
+  blocks. Six are new dynamic blocks — **Pricing plans**, **Plan comparison**,
+  **Capability tabs**, **Team roster**, **Journal carousel** and **Newsletter signup** —
+  each shipping its own insertion pattern, plus one **Studio overview page** composition
+  that lays the ten sections out in the artifact's order.
+- The other four sections reuse blocks the theme already shipped rather than growing a
+  second convention, and three of them gained additive attributes only:
+  **Inner hero** (eyebrow, summary stamp, section index, and a switch for the hero mark),
+  **FAQ list** (filter bar, question count and intro-label switches) and
+  **Home — Testimonials** (a layout-preview card variant with its own captions and closing
+  note). Every default still renders the markup it did before, so saved content and the
+  home landing pattern are unaffected. The contact section is **Home — Contact** unchanged,
+  seeded by the composition.
+- One carousel implementation now serves both the journal and the testimonial strips
+  (`resources/ts/runtime/carousel.ts`); the testimonial block's private copy of that logic
+  is gone. Its step is now one card instead of one viewport — what the strip's own CSS
+  comment already described, and what the design does — so a press moves the counter by
+  one and the landing card at a snap point is unchanged. Section primitives — carousel
+  shell, step buttons, mode toggle, section description, small print — live in
+  `resources/css/modules/25-sections.css`, and the six new block roots joined the shared
+  inner-page selector lists so they inherit the theme's refinement passes.
+- **Journal carousel** is the only new query-driven block: latest published posts, page
+  size clamped to 1–24, `no_found_rows`, and the deterministic empty state the query
+  helpers already use when nothing is published. **Newsletter signup** stores nothing
+  outside the visitor's browser: a versioned `localStorage` payload, written only with
+  consent, validated on read and removable on request.
+- `check-circle` joined the single icon map. PHPUnit covers the journal carousel's clamp
+  boundaries, and the smoke contract now knows the six blocks and seven patterns.
+
 ## 1.0.1
 
 - The **Colours** panel now reaches every block it appears on. Background was only

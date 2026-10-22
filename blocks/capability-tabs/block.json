@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "doclap/capability-tabs",
+  "version": "1.0.0",
+  "title": "Capability tabs",
+  "category": "doclap",
+  "icon": "columns",
+  "description": "Vertical discipline tabs on a dark band, each opening a panel of copy, deliverables and a link.",
+  "keywords": [ "tabs", "capabilities", "disciplines", "services", "panels" ],
+  "textdomain": "doclap",
+  "attributes": {
+    "sectionBg": { "type": "string", "default": "" },
+    "sectionHeading": { "type": "string", "default": "" },
+    "sectionText": { "type": "string", "default": "" },
+    "tabsEyebrow": { "type": "string", "default": "02 / CONNECTED DISCIPLINES" },
+    "tabsHeading": { "type": "string", "default": "Different tools.<br>The same intention." },
+    "tabsHeadingAccent": { "type": "string", "default": "" },
+    "tabsLabel": { "type": "string", "default": "Creative disciplines" },
+    "tabs": {
+      "type": "array",
+      "default": [
+        {
+          "index": "01",
+          "label": "Web design",
+          "heading": "Clarity, with a point of view.",
+          "copy": "A visual language built around the idea, not a collection of trends. Structure, typography and detail work together to make every page unmistakably yours.",
+          "deliverables": [ "Art direction", "UI design", "Responsive systems" ],
+          "ctaLabel": "Explore the practice",
+          "ctaUrl": "/about-us/"
+        },
+        {
+          "index": "02",
+          "label": "Motion",
+          "heading": "Feeling, with a purpose.",
+          "copy": "Transitions connect ideas. A change in rhythm brings focus. Motion is composed as part of the experience, with the same care given to the moments of stillness.",
+          "deliverables": [ "Interaction design", "Scroll choreography", "Reduced-motion support" ],
+          "ctaLabel": "Explore the practice",
+          "ctaUrl": "/about-us/"
+        },
+        {
+          "index": "03",
+          "label": "Development",
+          "heading": "Expression, without friction.",
+          "copy": "Design comes to life in the browser. Responsive layouts, accessible controls and considered performance make an expressive experience feel effortless.",
+          "deliverables": [ "Creative development", "WebGL & Three.js", "Accessible interactions" ],
+          "ctaLabel": "Explore the practice",
+          "ctaUrl": "/about-us/"
+        }
+      ]
+    }
+  },
+  "supports": { "html": false, "anchor": true },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

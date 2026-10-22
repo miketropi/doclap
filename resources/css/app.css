@@ -34,5 +34,6 @@
 @import "./modules/00-tokens.css";
 @import "./modules/10-base.css";
 @import "./modules/20-components.css";
+@import "./modules/25-sections.css";
 @import "./modules/30-surfaces.css";
 @import "./modules/40-overrides.css";

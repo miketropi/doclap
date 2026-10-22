@@ -10,6 +10,21 @@ export interface Testimonial extends Record<string, unknown> {
 	status: string;
 	role: string;
 	company: string;
+	/**
+	 * Preview layout only. Top-left meta line; empty falls back to
+	 * "CLIENT PERSPECTIVE" in the renderer.
+	 */
+	label?: string;
+	/** Preview layout only. Top-right meta line, e.g. `LAYOUT PREVIEW / 01`. */
+	previewLabel?: string;
+	/** Preview layout only. Rich quote rendered in a `blockquote`. */
+	quote?: string;
+	/** Preview layout only. Small line under the status. */
+	personNote?: string;
+	/** Preview layout only. First caption line under the person block. */
+	captionLeft?: string;
+	/** Preview layout only. Second caption line under the person block. */
+	captionRight?: string;
 }
 
 export interface HomeTestimonialsAttributes extends Record<string, unknown> {
@@ -20,7 +35,14 @@ export interface HomeTestimonialsAttributes extends Record<string, unknown> {
 	testimonialsEyebrow: string;
 	testimonialsHeading: string;
 	testimonialsIntro: string;
+	/**
+	 * Card layout: `voices` is the statement card this block has always
+	 * rendered, `preview` is the editorial quote card of the design source.
+	 */
+	testimonialsVariant: string;
 	testimonials: Testimonial[];
+	/** Closing paragraph of the `preview` layout; empty hides it. */
+	testimonialsNote: string;
 	editorialLabel: string;
 	editorialTitle: string;
 	editorialCopy: string;

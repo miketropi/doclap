@@ -84,7 +84,10 @@
       ]
     },
     "countTemplate": { "type": "string", "default": "%d questions" },
-    "emptyLabel": { "type": "string", "default": "No questions in this group." }
+    "emptyLabel": { "type": "string", "default": "No questions in this group." },
+    "showFilters": { "type": "boolean", "default": true },
+    "showQuestionCount": { "type": "boolean", "default": true },
+    "introLabelStyle": { "type": "string", "default": "meta" }
   },
   "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",

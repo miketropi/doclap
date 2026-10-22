@@ -1,0 +1,10 @@
+/**
+ * Editor canvas styles for doclap/team-roster.
+ *
+ * Only editor-specific affordances: the front-end look comes from the block's own
+ * stylesheet, which the editor also loads.
+ */
+
+.wp-block-doclap-team-roster {
+	min-height: 240px;
+}

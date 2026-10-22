@@ -28,6 +28,7 @@ function doclap_icon_paths(): array {
 		'arrow-right'     => '<path d="M5 12h14m-6-6 6 6-6 6"/>',
 		'chevron-down'    => '<path d="m6 9 6 6 6-6"/>',
 		'check'           => '<path d="M20 6 9 17l-5-5"/>',
+		'check-circle'    => '<path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="9"/>',
 		'x'               => '<path d="m18 6-12 12M6 6l12 12"/>',
 		'menu'            => '<path d="M4 6h16M4 12h16M4 18h16"/>',
 		'search'          => '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',

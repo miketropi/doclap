@@ -29,4 +29,13 @@ export interface FaqListAttributes extends Record<string, unknown> {
 	questions: FaqQuestion[];
 	countTemplate: string;
 	emptyLabel: string;
+	/** Whether the group buttons above the questions are printed. */
+	showFilters: boolean;
+	/** Whether the live count line and its empty-state message are printed. */
+	showQuestionCount: boolean;
+	/**
+	 * Element the aside label uses: `meta` keeps the small `span` the block has
+	 * always printed, `eyebrow` styles it like a section eyebrow (`p.eyebrow`).
+	 */
+	introLabelStyle: 'meta' | 'eyebrow';
 }

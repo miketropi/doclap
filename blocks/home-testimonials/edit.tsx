@@ -1,5 +1,5 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
+import { PanelBody, SelectControl, TextareaControl, TextControl } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -121,6 +121,41 @@ export default function Edit({
 	return (
 		<>
 			<InspectorControls>
+				<PanelBody title={__('Layout', 'doclap')} initialOpen>
+					<SelectControl
+						label={__('Card layout', 'doclap')}
+						help={__(
+							'Voices: the statement cards with rating and social placeholders. Preview: the editorial quote cards — label, quote, person note and caption row — with a closing note instead of the editorial aside.',
+							'doclap',
+						)}
+						value={attributes.testimonialsVariant || 'voices'}
+						options={[
+							{
+								label: __('Voices — statement cards', 'doclap'),
+								value: 'voices',
+							},
+							{
+								label: __('Preview — editorial quote cards', 'doclap'),
+								value: 'preview',
+							},
+						] as Array<{ label: string; value: string }>}
+						onChange={(testimonialsVariant) =>
+							setAttributes({ testimonialsVariant })
+						}
+					/>
+					<TextareaControl
+						label={__('Closing note', 'doclap')}
+						help={__(
+							'Preview layout only: shown under the cards. Empty hides it.',
+							'doclap',
+						)}
+						value={attributes.testimonialsNote ?? ''}
+						onChange={(testimonialsNote) =>
+							setAttributes({ testimonialsNote })
+						}
+					/>
+				</PanelBody>
+
 				<PanelBody title={__('Heading', 'doclap')} initialOpen>
 					<TextControl
 						label={__('Eyebrow', 'doclap')}
@@ -152,6 +187,48 @@ export default function Edit({
 							{ key: 'status', label: __('Status', 'doclap') },
 							{ key: 'role', label: __('Role', 'doclap') },
 							{ key: 'company', label: __('Company', 'doclap') },
+							{
+								key: 'label',
+								label: __('Label', 'doclap'),
+								help: __(
+									'Preview layout: top-left meta line. Empty falls back to CLIENT PERSPECTIVE.',
+									'doclap',
+								),
+								placeholder: 'CLIENT PERSPECTIVE',
+							},
+							{
+								key: 'previewLabel',
+								label: __('Preview label', 'doclap'),
+								help: __(
+									'Preview layout: top-right meta line, for example LAYOUT PREVIEW / 01.',
+									'doclap',
+								),
+							},
+							{
+								key: 'quote',
+								label: __('Quote', 'doclap'),
+								control: 'rich',
+								tagName: 'p',
+								multiline: true,
+							},
+							{
+								key: 'personNote',
+								label: __('Person note', 'doclap'),
+								help: __(
+									'Preview layout: small line under the status.',
+									'doclap',
+								),
+							},
+							{
+								key: 'captionLeft',
+								label: __('Caption (left)', 'doclap'),
+								help: __('Preview layout only.', 'doclap'),
+							},
+							{
+								key: 'captionRight',
+								label: __('Caption (right)', 'doclap'),
+								help: __('Preview layout only.', 'doclap'),
+							},
 						]}
 						onChange={(items) =>
 							setAttributes({ testimonials: items as unknown as Testimonial[] })
@@ -162,8 +239,15 @@ export default function Edit({
 							status: __('Awaiting confirmation', 'doclap'),
 							role: __('Not provided', 'doclap'),
 							company: __('Not provided', 'doclap'),
+							label: '',
+							previewLabel: '',
+							quote: '',
+							personNote: '',
+							captionLeft: '',
+							captionRight: '',
 						})}
 						getItemLabel={(item, index) =>
+							truncateLabel(String(item.quote ?? '')) ||
 							truncateLabel(String(item.statement ?? '')) ||
 							sprintf(__('Perspective %d', 'doclap'), index + 1)
 						}

@@ -44,6 +44,10 @@
       "type": "string",
       "default": "One project ends.<br>A relationship that continues."
     },
+    "testimonialsVariant": {
+      "type": "string",
+      "default": "voices"
+    },
     "testimonials": {
       "type": "array",
       "default": [
@@ -84,6 +88,10 @@
         }
       ]
     },
+    "testimonialsNote": {
+      "type": "string",
+      "default": ""
+    },
     "editorialLabel": {
       "type": "string",
       "default": "TRUST CANNOT BE FABRICATED."
@@ -115,6 +123,7 @@
   },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
   "viewScript": "file:./view.js",
   "render": "file:./render.php"
 }

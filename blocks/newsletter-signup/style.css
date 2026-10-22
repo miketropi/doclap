@@ -1,0 +1,141 @@
+/**
+ * Newsletter signup — block-local layout.
+ *
+ * Two columns until the theme's 920px layout breakpoint, then one. Colours,
+ * font families and the body size come from the theme tokens; the literal sizes
+ * are the ones the design itself fixes.
+ *
+ * Everything is prefixed with the block class so a rule here outranks the shared
+ * `.doclap-scope` primitives, which are compiled after the block stylesheets.
+ */
+
+.doclap-newsletter-signup .newsletter-layout {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: clamp(32px, 5vw, 80px);
+	align-items: center;
+	min-width: 0;
+}
+
+.doclap-newsletter-signup .newsletter-copy h2 {
+	margin: 22px 0 26px;
+	font-size: 46px;
+	line-height: 1.15;
+	letter-spacing: -0.04em;
+}
+
+.doclap-newsletter-signup .newsletter-copy > p:not(.eyebrow) {
+	max-width: 38ch;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font-size: var(--doclap-fs-body);
+	line-height: 1.9;
+}
+
+.doclap-newsletter-signup .newsletter-meta {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 16px;
+	color: var(--doclap-block-text, var(--doclap-muted));
+	font-family: var(--doclap-font-mono);
+	font-size: 11px;
+	line-height: 1.8;
+}
+
+.doclap-newsletter-signup .newsletter-form {
+	display: grid;
+	gap: 23px;
+	min-width: 0;
+	padding-top: 28px;
+	border-top: 1px solid var(--doclap-fg);
+}
+
+.doclap-newsletter-signup .newsletter-form .field {
+	gap: 12px;
+}
+
+.doclap-newsletter-signup .newsletter-form .consent {
+	align-items: center;
+	min-height: 44px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.doclap-newsletter-signup .newsletter-form .consent input {
+	flex-shrink: 0;
+}
+
+.doclap-newsletter-signup .newsletter-form .status {
+	margin: 0;
+	min-height: 3.6em;
+}
+
+.doclap-newsletter-signup .newsletter-entry {
+	display: flex;
+	gap: 16px;
+	align-items: stretch;
+}
+
+.doclap-newsletter-signup .newsletter-entry .input {
+	flex: 1;
+	min-width: 0;
+}
+
+.doclap-newsletter-signup .newsletter-entry button {
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	gap: 20px;
+	padding: 14px 20px;
+	border: 1px solid var(--doclap-fg);
+	background: var(--doclap-fg);
+	color: var(--doclap-bg);
+	font-size: 14px;
+}
+
+/*
+ * The design lightens the filled button on hover; `--doclap-muted` is the one
+ * theme role that is a lighter step of the foreground, so the label keeps its
+ * contrast without a colour of this block's own.
+ */
+.doclap-newsletter-signup .newsletter-entry button:hover {
+	background: var(--doclap-muted);
+	border-color: var(--doclap-muted);
+}
+
+.doclap-newsletter-signup .newsletter-reset {
+	justify-self: start;
+	padding: 8px 0;
+	border: 0;
+	border-bottom: 1px solid var(--doclap-fg);
+	background: none;
+	color: var(--doclap-block-text, var(--doclap-fg));
+	font-size: 13px;
+}
+
+.doclap-newsletter-signup .newsletter-reset:hover {
+	background: var(--doclap-fg-soft);
+}
+
+@media (max-width: 920px) {
+	.doclap-newsletter-signup .newsletter-layout {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+
+	.doclap-newsletter-signup .newsletter-copy h2 {
+		font-size: clamp(36px, 7vw, 48px);
+	}
+}
+
+@media (max-width: 600px) {
+	.doclap-newsletter-signup .newsletter-entry {
+		flex-direction: column;
+		gap: 18px;
+	}
+
+	.doclap-newsletter-signup .newsletter-entry button {
+		justify-content: space-between;
+		min-height: 54px;
+	}
+}

@@ -10,8 +10,8 @@ An editorial portfolio theme for WordPress: a child theme of **[Nextora](https:/
   </a>
 </p>
 
-- **26 dynamic blocks**, one `render.php` each, all server-rendered.
-- **Scoped CSS** compiled from five ordered modules into `assets/css/app.css`.
+- **32 dynamic blocks**, one `render.php` each, all server-rendered.
+- **Scoped CSS** compiled from six ordered modules into `assets/css/app.css`.
 - **A small TypeScript runtime** (`assets/js/main.js`) plus per-block view scripts.
 - **Zero page builders, zero ACF, no icon fonts** — icons are inline SVG paths.
 
@@ -87,14 +87,16 @@ resources/css/
   modules/00-tokens.css   design tokens (`--doclap-*`)
   modules/10-base.css     element baseline
   modules/20-components.css  shared building blocks (container, topnav, cards…)
+  modules/25-sections.css shared section primitives (carousel shell, step buttons, mode toggle)
   modules/30-surfaces.css page-level composition
   modules/40-overrides.css refinement layer, responsive collapse, chrome
 resources/ts/
   main.ts                 front-end entry → assets/js/main.js
   runtime/motion.ts       GSAP motion layer (entrances, scrub, magnetic controls)
   runtime/blocks.ts       `bootBlocks()` — mounts block view scripts with cleanup
+  runtime/carousel.ts     the one scroll-snap carousel (journal + testimonials)
   editor/                 shared editor components (preview, media, repeater, rich text, colours)
-patterns/                 33 block patterns (one per block, plus full-page compositions)
+patterns/                 40 block patterns (one per block, plus full-page compositions)
 templates/                11 block templates (front page, page, single, archive, search, 404…)
 parts/                    header.html, footer.html
 tests/                    PHPUnit unit tests + the WordPress smoke suite
@@ -128,9 +130,9 @@ Every block is dynamic: `render.php` renders, `block.json` declares. There is no
 
 `blocks/*/types.ts` mirrors `block.json`; keep the two in sync — `npm run typecheck` catches drift in editor code, and the smoke suite asserts the manifest contract.
 
-### CSS: five modules, one scope
+### CSS: six modules, one scope
 
-`resources/css/app.css` imports the modules in a deliberate order: tokens → base → components → surfaces → overrides. Everything is written under `.doclap-scope`, which every Doclap block root carries (via `doclap_scope_class()`), so no rule can leak into Nextora or the editor UI. The same compiled stylesheet is registered with `add_editor_style()`, so the canvas is styled by the same rules as the front end.
+`resources/css/app.css` imports the modules in a deliberate order: tokens → base → components → sections → surfaces → overrides. Everything is written under `.doclap-scope`, which every Doclap block root carries (via `doclap_scope_class()`), so no rule can leak into Nextora or the editor UI. The same compiled stylesheet is registered with `add_editor_style()`, so the canvas is styled by the same rules as the front end.
 
 Section colours are attributes (`sectionBg`, `sectionHeading`, `sectionText`), emitted as `--doclap-block-*` custom properties on the block root — an unset colour emits nothing and the theme default applies. The contract is general rather than a list: the root paints `--doclap-block-bg` whenever the property is present (`.doclap-scope[style*="--doclap-block-bg"]`), headings read `--doclap-block-heading`, and the root colour cascades the body text from `--doclap-block-text`. A new section block therefore needs no CSS entry to honour the panel; a display-type element that is not an `h1`–`h4` (the disciplines band's title) has to name the heading variable itself.
 

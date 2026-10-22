@@ -43,7 +43,17 @@ $count_text = false !== strpos( $count_template, '%d' )
 	? str_replace( '%d', (string) count( $questions ), $count_template )
 	: count( $questions ) . ' ' . $count_template;
 $instance_id = wp_unique_id( 'doclap-faq-' );
-$aside_link_url = doclap_resolve_url(
+// Optional surfaces: the filter bar and the running count are each printed only
+// when they are switched on, and the intro label switches element without
+// changing the `aside-title` column it sits in. Every conditional tag sits at the
+// start of its own line and each branch line carries its own indentation, because
+// PHP drops the single newline after a closing tag: the default attributes
+// therefore emit exactly the bytes this renderer emitted before they existed.
+$show_filters      = (bool) ( $attributes['showFilters'] ?? true );
+$show_count        = (bool) ( $attributes['showQuestionCount'] ?? true );
+$intro_label_style = (string) ( $attributes['introLabelStyle'] ?? 'meta' );
+$aside_label       = (string) ( $attributes['asideLabel'] ?? '' );
+$aside_link_url    = doclap_resolve_url(
 	(string) ( $attributes['asideLinkUrl'] ?? '/contact/' ),
 );
 ?>
@@ -52,7 +62,11 @@ $aside_link_url = doclap_resolve_url(
 	?>>
 	<div class="container grid-1-2 body-grid">
 		<aside class="aside-title">
-			<span><?php echo esc_html( (string) ( $attributes['asideLabel'] ?? '' ) ); ?></span>
+<?php if ( 'eyebrow' === $intro_label_style ) : ?>
+			<p class="eyebrow"><?php echo esc_html( $aside_label ); ?></p>
+<?php else : ?>
+			<span><?php echo esc_html( $aside_label ); ?></span>
+<?php endif; ?>
 			<h2 data-doclap-rich="asideHeading">
 				<?php echo doclap_rich( (string) ( $attributes['asideHeading'] ?? '' ) ); ?>
 			</h2>
@@ -69,6 +83,7 @@ $aside_link_url = doclap_resolve_url(
 		</aside>
 
 		<div>
+<?php if ( $show_filters ) : ?>
 			<div
 				class="filter-bar"
 				role="group"
@@ -96,6 +111,7 @@ $aside_link_url = doclap_resolve_url(
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</div>
+<?php endif; ?>
 
 			<div class="faq-list">
 				<?php foreach ( $questions as $index => $question ) : ?>
@@ -126,6 +142,7 @@ $aside_link_url = doclap_resolve_url(
 				<?php endforeach; ?>
 			</div>
 
+<?php if ( $show_count ) : ?>
 			<p
 				class="form-note"
 				role="status"
@@ -138,6 +155,7 @@ $aside_link_url = doclap_resolve_url(
 			<p class="form-note" data-faq-empty hidden>
 				<?php echo esc_html( (string) ( $attributes['emptyLabel'] ?? '' ) ); ?>
 			</p>
+<?php endif; ?>
 		</div>
 	</div>
 </section>

@@ -18,10 +18,15 @@
     "headingSource": { "type": "string", "default": "custom" },
     "heading": { "type": "string", "default": "A clear page heading." },
     "headingAccent": { "type": "string", "default": "" },
-    "lead": { "type": "string", "default": "A short introduction for this page." }
+    "lead": { "type": "string", "default": "A short introduction for this page." },
+    "eyebrow": { "type": "string", "default": "" },
+    "summaryStamp": { "type": "string", "default": "" },
+    "sectionIndex": { "type": "array", "default": [] },
+    "showHeroMark": { "type": "boolean", "default": true }
   },
   "supports": { "html": false, "anchor": true },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
   "render": "file:./render.php"
 }

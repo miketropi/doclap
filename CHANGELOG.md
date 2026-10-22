@@ -8,6 +8,13 @@ See `README.md` for the architecture, the build commands and the test suites.
 
 ## 1.1.1
 
+- **Journal carousel** cards read better. The post title is a card title now — 20–26px,
+  two lines for a real headline — instead of losing to the page prose layer's 30px `h3`,
+  and its measure grew with the smaller type so a long headline does not stack up. The
+  read link also sits on one line again: the card's "title link is a block" rule was
+  catching it too, and because `.doclap-scope svg` is a block, its arrow dropped to a
+  second row. The rule now excludes the link, which keeps the shared `.text-link`
+  inline-flex and puts the label and arrow side by side at every width.
 - The admin no longer inherits the front-end typeface. The compiled child stylesheet was
   registered on `enqueue_block_assets`, which WordPress runs in wp-admin as well as on the
   front end, so its bare `body { font-family: … }` reset — with the page background and

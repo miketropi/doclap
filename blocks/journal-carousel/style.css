@@ -7,7 +7,12 @@
  * in this file: the artwork tile, the two-label metadata row and the title.
  */
 
-.doclap-journal-carousel .journal-card > a {
+/*
+ * Only the title link stacks its artwork, meta row and heading. The read link is a
+ * link row and must keep the shared `.text-link` inline-flex: as a block, its icon
+ * drops to a second line, because `.doclap-scope svg` is `display: block`.
+ */
+.doclap-journal-carousel .journal-card > a:not(.text-link) {
 	display: block;
 }
 
@@ -35,10 +40,15 @@
 	font: 11px var(--doclap-font-mono);
 }
 
-.doclap-journal-carousel .journal-card h3 {
-	max-width: 22ch;
-	font-size: clamp(28px, 3vw, 42px);
-	line-height: 1.3;
+/*
+ * A card title, not a page heading: the page prose layer's `.prose h3` (30px) matches
+ * this node too, so the child combinator both states the intent and outranks it. The
+ * measure grows with the smaller type so a real post title still lands in two lines.
+ */
+.doclap-journal-carousel .journal-card > a > h3 {
+	max-width: 30ch;
+	font-size: clamp(20px, 1.7vw, 26px);
+	line-height: 1.35;
 }
 
 .doclap-journal-carousel .journal-card > a:hover h3 {

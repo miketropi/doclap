@@ -8,6 +8,15 @@ See `README.md` for the architecture, the build commands and the test suites.
 
 ## 1.1.1
 
+- The admin no longer inherits the front-end typeface. The compiled child stylesheet was
+  registered on `enqueue_block_assets`, which WordPress runs in wp-admin as well as on the
+  front end, so its bare `body { font-family: … }` reset — with the page background and
+  text colour beside it — overrode the admin's own typography on every screen, the
+  new-page editor included. It is enqueued on the front end only now; the block editor
+  canvas still receives the same file through `add_editor_style()`, inside the editor
+  iframe, where that reset belongs. Measured on a new page: admin body, admin menu, screen
+  title and sidebar all compute the WordPress system stack again, while the canvas keeps
+  Be Vietnam Pro for body text and Bodoni Moda for headings.
 - **Journal carousel** can be narrowed to categories and tags. Both are multi-select in
   a new Query panel beside the page size, and they combine the way an editor expects:
   a post matches if it is in any chosen category *and* carries any chosen tag. An empty

@@ -38,7 +38,14 @@ function doclap_asset_version( string $relative_path ): string {
 }
 
 /**
- * Enqueue the compiled child stylesheet on the front end and in the editor.
+ * Enqueue the compiled child stylesheet on the front end.
+ *
+ * Deliberately not registered on `enqueue_block_assets`: that hook also runs in
+ * wp-admin, where this sheet's reset — a bare `body { font-family: … }`, plus the
+ * page background and text colour — wins over WordPress's own admin typography and
+ * repaints the whole editor chrome. The block editor canvas still receives the same
+ * file through `add_editor_style()`, which loads inside the editor iframe where the
+ * reset belongs.
  */
 function doclap_enqueue_styles(): void {
 	$relative_path = '/assets/css/app.css';
@@ -65,7 +72,6 @@ function doclap_enqueue_styles(): void {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'doclap_enqueue_styles', 25 );
-add_action( 'enqueue_block_assets', 'doclap_enqueue_styles', 25 );
 
 /**
  * Enqueue the compiled child script after the parent script.

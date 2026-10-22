@@ -122,8 +122,9 @@ add_action( 'enqueue_block_editor_assets', 'doclap_enqueue_block_category_filter
  * blocks — the repeater list editor, the block preview shell, the image picker
  * and the identifier notice — live in the single compiled
  * assets/css/editor.css. The editor canvas already receives assets/css/app.css
- * through `enqueue_block_assets` and `add_editor_style()`, so this handle only
- * adds the inspector layer.
+ * through `add_editor_style()` — inside the editor iframe, never in the admin
+ * document, where its `body` reset would override WordPress's own admin typography
+ * — so this handle only adds the inspector layer.
  */
 function doclap_enqueue_editor_styles(): void {
 	$relative_path = '/assets/css/editor.css';

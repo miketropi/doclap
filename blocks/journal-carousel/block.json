@@ -17,6 +17,8 @@
     "journalHeading": { "type": "string", "default": "A little distance.<br>A different perspective." },
     "journalHeadingAccent": { "type": "string", "default": "" },
     "postsPerPage": { "type": "number", "default": 3 },
+    "categories": { "type": "array", "default": [] },
+    "tags": { "type": "array", "default": [] },
     "viewAllLabel": { "type": "string", "default": "" },
     "viewAllUrl": { "type": "string", "default": "@notes" },
     "ariaLabel": { "type": "string", "default": "Journal carousel" },

@@ -44,17 +44,47 @@ function doclap_notes_archive_query_args( array $attributes, int $paged, int $ex
 }
 
 /**
- * Build the query arguments for the journal carousel block.
+ * Normalise a stored list of term ids.
  *
- * The carousel always shows the newest published notes, so the arguments are a
- * fixed list plus the editor's page size and an optional exclusion. The strip
- * never paginates and only reads its cards' terms, so the row count and the
- * post-meta cache are both skipped.
+ * Block attributes come from saved post content, so a value can be a scalar, a list
+ * of numeric strings, or carry duplicates and zeros. Only positive integers survive,
+ * in the order they were saved, because `category__in` / `tag__in` treat a zero as a
+ * real term id and would otherwise silently filter everything out.
+ *
+ * @param mixed $value Raw attribute value.
+ *
+ * @return array<int, int> Unique positive term ids.
+ */
+function doclap_query_term_ids( mixed $value ): array {
+	$candidates = is_array( $value ) ? $value : array( $value );
+	$ids        = array();
+
+	foreach ( $candidates as $candidate ) {
+		if ( ! is_scalar( $candidate ) ) {
+			continue;
+		}
+
+		$id = (int) $candidate;
+
+		if ( $id > 0 ) {
+			$ids[] = $id;
+		}
+	}
+
+	return array_values( array_unique( $ids ) );
+}
+
+/**
+ * Query args for the journal carousel.
+ *
+ * A plain latest-posts query. The optional taxonomy filters narrow that list
+ * without changing the kind of query it is, so the same helper serves the unfiltered
+ * block and an editor-scoped one: an empty filter list adds no clause at all.
  *
  * @param array<string, mixed> $attributes Block attributes.
- * @param int                  $exclude_id Post id to exclude.
+ * @param int                  $exclude_id Optional post to leave out of the list.
  *
- * @return array<string, mixed> Arguments for `WP_Query`.
+ * @return array<string, mixed>
  */
 function doclap_journal_carousel_query_args( array $attributes, int $exclude_id = 0 ): array {
 	// A value that is not a number at all is a hand-edited save, not a page size:
@@ -77,6 +107,25 @@ function doclap_journal_carousel_query_args( array $attributes, int $exclude_id 
 
 	if ( $exclude_id > 0 ) {
 		$args['post__not_in'] = array( $exclude_id );
+	}
+
+	/*
+	 * Category and tag filters are additive: each list narrows the same
+	 * latest-posts query, and a list with no usable id adds no clause, so an
+	 * unfiltered block keeps exactly the arguments it had before the filters
+	 * existed. Within one list WordPress ORs the terms; across the two taxonomies it
+	 * ANDs them, which is what an editor expects from “in these categories AND
+	 * carrying these tags”.
+	 */
+	$categories = doclap_query_term_ids( $attributes['categories'] ?? array() );
+	$tags       = doclap_query_term_ids( $attributes['tags'] ?? array() );
+
+	if ( array() !== $categories ) {
+		$args['category__in'] = $categories;
+	}
+
+	if ( array() !== $tags ) {
+		$args['tag__in'] = $tags;
 	}
 
 	return $args;

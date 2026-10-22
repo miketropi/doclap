@@ -6,6 +6,16 @@ current version is in `inc/bootstrap/version.php`, and the theme header in
 
 See `README.md` for the architecture, the build commands and the test suites.
 
+## 1.1.1
+
+- **Journal carousel** can be narrowed to categories and tags. Both are multi-select in
+  a new Query panel beside the page size, and they combine the way an editor expects:
+  a post matches if it is in any chosen category *and* carries any chosen tag. An empty
+  list adds no query clause at all, so an unfiltered block still asks for exactly the
+  same latest-posts query it did before, and a term id that is not a positive integer is
+  dropped rather than becoming a filter that matches nothing. The editor says when a
+  preview is showing filtered results.
+
 ## 1.1.0
 
 - The ten content sections of the OpenDesign `section-showcase` artifact are editable

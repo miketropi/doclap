@@ -121,4 +121,41 @@ final class QueryTest extends TestCase {
 		self::assertSame( array( 42 ), \doclap_journal_carousel_query_args( array(), 42 )['post__not_in'] );
 		self::assertArrayNotHasKey( 'post__not_in', \doclap_journal_carousel_query_args( array(), 0 ) );
 	}
+
+	public function test_journal_carousel_maps_category_and_tag_filters(): void {
+		$args = \doclap_journal_carousel_query_args(
+			array(
+				'categories' => array( 3, '7' ),
+				'tags'       => array( 9 ),
+			),
+		);
+
+		self::assertSame( array( 3, 7 ), $args['category__in'] );
+		self::assertSame( array( 9 ), $args['tag__in'] );
+	}
+
+	/**
+	 * An unusable id must add no clause at all: `category__in => array( 0 )` is a
+	 * real restriction in WordPress and would empty the carousel instead of leaving
+	 * it unfiltered.
+	 */
+	public function test_journal_carousel_omits_empty_or_unusable_filters(): void {
+		$args = \doclap_journal_carousel_query_args(
+			array(
+				'categories' => array( 0, -4, 'abc', null ),
+				'tags'       => array(),
+			),
+		);
+
+		self::assertArrayNotHasKey( 'category__in', $args );
+		self::assertArrayNotHasKey( 'tag__in', $args );
+		self::assertArrayNotHasKey( 'category__in', \doclap_journal_carousel_query_args( array() ) );
+	}
+
+	public function test_term_ids_keep_positive_integers_once_in_order(): void {
+		self::assertSame( array( 5, 8 ), \doclap_query_term_ids( array( 5, '8', 5, 0, -2, 'x' ) ) );
+		self::assertSame( array( 4 ), \doclap_query_term_ids( 4 ) );
+		self::assertSame( array(), \doclap_query_term_ids( array() ) );
+		self::assertSame( array(), \doclap_query_term_ids( array( array( 6 ), null, false ) ) );
+	}
 }

@@ -16,5 +16,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'DOCLAP_VERSION' ) ) {
-	define( 'DOCLAP_VERSION', '1.1.0' );
+	define( 'DOCLAP_VERSION', '1.1.1' );
 }

@@ -34,6 +34,12 @@ See `README.md` for the architecture, the build commands and the test suites.
   helpers already use when nothing is published. **Newsletter signup** stores nothing
   outside the visitor's browser: a versioned `localStorage` payload, written only with
   consent, validated on read and removable on request.
+- **Home — Testimonials** takes a rating per perspective now. The star row used to be
+  inert placeholder art with no control behind it; a card can carry 0–5 whole stars, set
+  through the shared repeater's new numeric control, and a rated card fills that many
+  stars and announces “Rated N out of 5” as one image role so the value is not read twice.
+  Leaving it at 0 renders the existing “Not rated yet” placeholder byte-for-byte, so no
+  saved content changes and nothing is published as rated unless an author says so.
 - `check-circle` joined the single icon map. PHPUnit covers the journal carousel's clamp
   boundaries, and the smoke contract now knows the six blocks and seven patterns.
 

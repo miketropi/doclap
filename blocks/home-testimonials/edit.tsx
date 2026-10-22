@@ -188,6 +188,18 @@ export default function Edit({
 							{ key: 'role', label: __('Role', 'doclap') },
 							{ key: 'company', label: __('Company', 'doclap') },
 							{
+								key: 'rating',
+								label: __('Rating (0–5)', 'doclap'),
+								control: 'number',
+								min: 0,
+								max: 5,
+								step: 1,
+								help: __(
+									'Voices layout only. 0 keeps the “not rated yet” placeholder; 1–5 fills that many stars and announces “Rated N out of 5”. Publish a rating only when the client has given one.',
+									'doclap',
+								),
+							},
+							{
 								key: 'label',
 								label: __('Label', 'doclap'),
 								help: __(
@@ -239,6 +251,7 @@ export default function Edit({
 							status: __('Awaiting confirmation', 'doclap'),
 							role: __('Not provided', 'doclap'),
 							company: __('Not provided', 'doclap'),
+							rating: 0,
 							label: '',
 							previewLabel: '',
 							quote: '',

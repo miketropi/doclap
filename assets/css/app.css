@@ -3907,6 +3907,9 @@ body {
   width: 16px;
   height: 16px;
 }
+.doclap-scope .rating-stars .is-filled polygon {
+  fill: currentColor;
+}
 .doclap-scope .voice-statement {
   font: 500 clamp(29px,3.15vw,47px)/1.4 var(--doclap-font-display);
   letter-spacing: -.025em;

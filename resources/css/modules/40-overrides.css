@@ -176,6 +176,11 @@
 .doclap-scope .voice-rating {display:flex;gap:18px;align-items:center;font:11px var(--doclap-font-mono);margin-top:35px}
 .doclap-scope .rating-stars {display:flex;gap:5px}
 .doclap-scope .rating-stars svg {width:16px;height:16px}
+/*
+ * A published rating fills the stars it covers; the icons themselves are stroked
+ * and unfilled, so an unrated card keeps the empty outline row it always had.
+ */
+.doclap-scope .rating-stars .is-filled polygon {fill:currentColor}
 .doclap-scope .voice-statement {font:500 clamp(29px,3.15vw,47px)/1.4 var(--doclap-font-display);letter-spacing:-.025em;margin:24px 0}
 .doclap-scope .voice-disclaimer {font-size:13px;line-height:1.9;max-width:55ch;color:var(--doclap-block-text,var(--doclap-muted));margin:0 0 35px}
 .doclap-scope .voice-person {display:flex;gap:18px;align-items:center;border-top:1px solid color-mix(in oklch,var(--doclap-fg) 15%,transparent);padding-top:25px;margin-top:auto}

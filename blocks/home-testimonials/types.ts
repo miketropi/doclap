@@ -11,6 +11,11 @@ export interface Testimonial extends Record<string, unknown> {
 	role: string;
 	company: string;
 	/**
+	 * Voices layout only. Stars out of five, `0` (default) keeps the card's
+	 * "not rated yet" placeholder and publishes no rating at all.
+	 */
+	rating?: number;
+	/**
 	 * Preview layout only. Top-left meta line; empty falls back to
 	 * "CLIENT PERSPECTIVE" in the renderer.
 	 */

@@ -32,6 +32,7 @@ import {
 	Button,
 	DropdownMenu,
 	Modal,
+	RangeControl,
 	SelectControl,
 	TextControl,
 	TextareaControl,
@@ -53,9 +54,13 @@ export interface RepeaterField {
 	key: string;
 	label: string;
 	help?: string;
-	control?: 'text' | 'textarea' | 'select' | 'toggle' | 'rich';
+	control?: 'text' | 'textarea' | 'select' | 'toggle' | 'rich' | 'number';
 	options?: Array<{ label: string; value: string }>;
 	placeholder?: string;
+	/** `control: 'number'` only: inclusive bounds and step. Defaults `0`, `100`, `1`. */
+	min?: number;
+	max?: number;
+	step?: number;
 	/** `control: 'rich'` only: element the stored HTML represents. Default `p`. */
 	tagName?: 'p' | 'h2' | 'h3' | 'span' | 'li';
 	/** `control: 'rich'` only: allow line breaks. Default `false`. */
@@ -390,6 +395,29 @@ export function Repeater({
 								help={field.help}
 								checked={Boolean(value)}
 								onChange={(next) => updateDraft({ [field.key]: next })}
+							/>
+						);
+					}
+
+					if (field.control === 'number') {
+						const floor = field.min ?? 0;
+						const ceiling = field.max ?? 100;
+
+						return (
+							<RangeControl
+								key={field.key}
+								label={field.label}
+								help={field.help}
+								min={floor}
+								max={ceiling}
+								step={field.step ?? 1}
+								value={Math.min(
+									ceiling,
+									Math.max(floor, Number(value ?? floor) || floor),
+								)}
+								onChange={(next) =>
+									updateDraft({ [field.key]: Number(next ?? floor) })
+								}
 							/>
 						);
 					}

@@ -58,7 +58,7 @@ $doclap_wrapper_attributes = array(
 
 $doclap_wrapper = get_block_wrapper_attributes( $doclap_wrapper_attributes );
 $doclap_url  = static fn( string $value ): string => esc_url( doclap_resolve_url( $value ) );
-$doclap_icon = static fn( string $name ): string => doclap_icon( $name );
+$doclap_icon = static fn( string $name, array $args = array() ): string => doclap_icon( $name, $args );
 ?>
 <section <?php
 	echo $doclap_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by core.
@@ -157,15 +157,30 @@ else :
 ?></p></div><div class="voices-carousel" role="group" aria-roledescription="carousel" aria-label="<?php echo esc_attr__( 'Client perspective', 'doclap' ); ?>" data-doclap-carousel><div class="voices-viewport" tabindex="0" data-doclap-carousel-viewport><div class="voices-track"><?php
 	foreach ( $doclap_voices as $doclap_index => $doclap_voice ) :
 		$doclap_voice = is_array( $doclap_voice ) ? $doclap_voice : array();
+		/*
+		 * A rating is published only when the author sets one. Zero keeps the card's
+		 * existing "not rated" placeholder byte-for-byte, so an instance saved before
+		 * this attribute existed renders exactly as it did.
+		 */
+		$doclap_rating = max( 0, min( 5, (int) ( $doclap_voice['rating'] ?? 0 ) ) );
 		?><article class="voice-card voice-slide" aria-roledescription="slide" aria-label="<?php echo esc_attr( sprintf( __( 'Perspective %1$d of %2$d', 'doclap' ), (int) $doclap_index + 1, $doclap_total ) ); ?>"><div class="voice-top"><span class="voice-label"><?php esc_html_e( 'CLIENT PERSPECTIVE', 'doclap' ); ?></span><?php
 			echo $doclap_icon( 'quote' );
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
-		?></div><div class="voice-rating" role="group" aria-label="<?php echo esc_attr__( 'No rating yet', 'doclap' ); ?>"><span class="rating-stars" aria-hidden="true"><?php
+		?></div><?php if ( $doclap_rating > 0 ) : ?><div class="voice-rating" role="img" aria-label="<?php
+			echo esc_attr( sprintf( /* translators: %d: rating out of five. */ __( 'Rated %d out of 5', 'doclap' ), $doclap_rating ) );
+		?>"><span class="rating-stars" aria-hidden="true"><?php
+			for ( $doclap_star = 1; $doclap_star <= 5; $doclap_star++ ) {
+				echo $doclap_icon( 'star', $doclap_star <= $doclap_rating ? array( 'class' => 'lucide lucide-star is-filled' ) : array() );
+			}
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
+		?></span><span aria-hidden="true"><?php
+			echo esc_html( sprintf( /* translators: %d: rating out of five. */ __( 'Rated %d out of 5', 'doclap' ), $doclap_rating ) );
+		?></span></div><?php else : ?><div class="voice-rating" role="group" aria-label="<?php echo esc_attr__( 'No rating yet', 'doclap' ); ?>"><span class="rating-stars" aria-hidden="true"><?php
 			for ( $doclap_star = 0; $doclap_star < 5; $doclap_star++ ) {
 				echo $doclap_icon( 'star' );
 			}
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- trusted theme helper.
-		?></span><span><?php esc_html_e( 'Not rated yet', 'doclap' ); ?></span></div><h3 class="voice-statement">“<?php
+		?></span><span><?php esc_html_e( 'Not rated yet', 'doclap' ); ?></span></div><?php endif; ?><h3 class="voice-statement">“<?php
 			echo doclap_rich( doclap_rich_accent( (string) ( $doclap_voice['statement'] ?? '' ), (string) ( $doclap_voice['statementAccent'] ?? '' ), ' <em>' ) );
 		?>”</h3><p class="voice-disclaimer"><?php
 			echo doclap_rich( (string) ( $doclap_voice['disclaimer'] ?? '' ) );
